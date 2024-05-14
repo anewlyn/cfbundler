@@ -1,24 +1,43 @@
 {
+  "author": "Assemble Inc.",
   "name": "cycling-frog-bundle",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "commit": "yarn lint:fix && yarn format:fix && tsc -p ./tsconfig.json",
+    "dev": "next dev",
+    "format": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --write",
+    "format:fix": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" > /dev/null",
+    "lint": "eslint \"**/*.{jsx,js,ts,tsx}\"",
+    "lint:fix": "eslint \"**/*.{jsx,js,ts,tsx}\" --fix",
+    "prepare": "husky",
+    "start": "next start"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
+  "extends": "@assemble-inc/tsconfig",
+  "prettier": "@assemble-inc/prettier-config-asm",
   "dependencies": {
+    "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.3"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@assemble-inc/eslint-config-asm": "^0.1.11",
+    "@assemble-inc/prettier-config-asm": "^0.1.13",
+    "@assemble-inc/tsconfig": "^0.1.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5",
+    "typescript": "^5"
   }
 }
