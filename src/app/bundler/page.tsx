@@ -12,14 +12,12 @@ const Bundler = () => {
   // @todo get the data from the Loop API
   const { products } = mockData;
   const maxQty = products[0].limits[0].maxValue;
-
-  // @todo get stock qty from the shopify API
-  const stockQty = 0;
+  const outOfStock = products[0].variants[0].outOfStock
 
   return (
     <div style={{ height: "100%" }}>
       <h1>Bundler</h1>
-      <AddToButton orderQty={qty} maxQty={maxQty} setQty={setQty} stockQty={stockQty} />
+      <AddToButton orderQty={qty} maxQty={maxQty} setQty={setQty} outOfStock={outOfStock} />
     </div>
   );
 }
