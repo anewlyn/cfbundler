@@ -1,0 +1,26 @@
+.subscription-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  justify-content: space-between;
+  height: 40px;
+  background-color: black;
+  padding: 0 10px;
+  text-align: center;
+  width: 100%;
+
+
+  &.not-subscribed {
+    background-color: white;
+    justify-content: center;
+    font-weight: 600;
+    font-size: small;
+  }
+}
+
+.icon-button {
+  border: none;
+  width: 30px;
+  background-color: transparent;
+  color: white;
+}
