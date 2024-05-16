@@ -1,25 +1,29 @@
 'use client';
 
 type IncrementBlockProps = {
-  qty: number;
+  orderQty: number;
   setQty: React.Dispatch<React.SetStateAction<number>>;
+  maxQty: number;
   setSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const IncrementBlock = ({ qty, setQty, setSubscribed }: IncrementBlockProps) => {
+const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBlockProps) => {
 
   // Function to increment the count
   const increment = () => {
-    setQty(qty + 1);
+    if (orderQty >= maxQty) {
+      return;
+    }
+    setQty(orderQty + 1);
   };
 
   // Function to decrement the count
   const decrement = () => {
-    if (qty <= 1) {
+    if (orderQty <= 1) {
       setSubscribed(false)
       return;
     }
-    setQty(qty - 1);
+    setQty(orderQty - 1);
   };
 
   return (
@@ -28,7 +32,7 @@ const IncrementBlock = ({ qty, setQty, setSubscribed }: IncrementBlockProps) => 
         <i className="material-icons">remove</i>
         <span className="sr-only">minus button</span>
       </button>
-      <span className="icon-button">{qty}</span>
+      <span className="icon-button">{orderQty}</span>
       <button name='plus' onClick={increment} className="icon-button">
         <i className="material-icons">add</i>
         <span className="sr-only">plus button</span>

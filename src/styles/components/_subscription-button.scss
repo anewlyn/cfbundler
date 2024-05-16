@@ -4,7 +4,7 @@
   border: none;
   justify-content: space-between;
   height: 40px;
-  background-color: black;
+  background-color: var(--cf-increment-button-background-color);
   padding: 0 10px;
   text-align: center;
   width: 100%;
@@ -22,5 +22,17 @@
   border: none;
   width: 30px;
   background-color: transparent;
-  color: white;
+  color: var(--cf-increment-button-text-color);
+}
+
+.out-of-stock {
+  align-content: center;
+  background-color: transparent;
+  border: 1px solid black;
+  font-size: small;
+  height: 40px;
+  font-weight: 600;
+  padding: 0 10px;
+  text-align: center;
+  width: 100%;
 }

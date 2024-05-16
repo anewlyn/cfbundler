@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import IncrementBlock from "./IncrementBlock";
 
 type AddToButtonProps = {
-  qty: number;
+  orderQty: number;
+  maxQty: number;
+  stockQty: number;
   setQty: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const AddToButton = ({ qty = 1, setQty }: AddToButtonProps) => {
+const AddToButton = ({ orderQty = 1, setQty, maxQty, stockQty }: AddToButtonProps) => {
   const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
 
@@ -32,17 +34,15 @@ const AddToButton = ({ qty = 1, setQty }: AddToButtonProps) => {
     setSubscribed(!subscribed);
   };
 
+
   return (
     <>
+      {stockQty <= 0 && <p className="out-of-stock">OUT OF STOCK</p>}
+      {subscribed && stockQty > 0 && <IncrementBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} setSubscribed={setSubscribed} />}
       {
-        subscribed
-          ?
-          <IncrementBlock qty={qty} setQty={setQty} setSubscribed={setSubscribed} />
-          : <button className={classNames('subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
+        !subscribed && stockQty > 0 && <button className={classNames('subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
       }
     </>
-
-
   );
 }
 
