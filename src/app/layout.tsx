@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
-import "./globals.css";
+import "../styles/globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <body className={inter.className}>{children}</body>
     </html>
   );

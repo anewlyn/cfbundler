@@ -1,0 +1,122 @@
+// Generate margin classes
+@for $i from 0 through 10 {
+  .m-#{$i * 5} {
+    margin: $i * 5 * 0.1rem;
+  }
+
+  .mt-#{$i * 5} {
+    margin-top: $i * 5 * 0.1rem;
+  }
+
+  .mb-#{$i * 5} {
+    margin-bottom: $i * 5 * 0.1rem;
+  }
+
+  .mx-#{$i * 5} {
+    margin-inline: $i * 5 * 0.1rem;
+  }
+
+  .my-#{$i * 5} {
+    margin-block: $i * 5 * 0.1rem;
+  }
+
+  .mr-#{$i * 5} {
+    margin-right: $i * 5 * 0.1rem;
+  }
+
+  .ml-#{$i * 5} {
+    margin-left: $i * 5 * 0.1rem;
+  }
+}
+
+// Generate padding classes
+@for $i from 0 through 10 {
+  .p-#{$i * 5} {
+    padding: $i * 5 * 0.1rem;
+  }
+
+  .pt-#{$i * 5} {
+    padding-top: $i * 5 * 0.1rem;
+  }
+
+  .pb-#{$i * 5} {
+    padding-bottom: $i * 5 * 0.1rem;
+  }
+
+  .px-#{$i * 5} {
+    padding-inline: $i * 5 * 0.1rem;
+  }
+
+  .py-#{$i * 5} {
+    padding-block: $i * 5 * 0.1rem;
+  }
+
+  .pr-#{$i * 5} {
+    padding-right: $i * 5 * 0.1rem;
+  }
+
+  .pl-#{$i * 5} {
+    padding-left: $i * 5 * 0.1rem;
+  }
+}
+
+// Generate line-clamp classes
+@for $i from 1 through 10 {
+  .clamp-#{$i} {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: $i;
+    word-break: break-word;
+  }
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.overflow-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-content-vertically {
+  display: flex;
+  align-items: center;
+}
+
+.max-full {
+  max-width: 100%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.gap-05 {
+  gap: 0.5rem;
+}
+
+.collapsed {
+  margin: 0;
+}
+
+.content-box {
+  box-sizing: content-box;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.hr-border {
+  border: 0;
+  border-top: 1px solid var(--sk-glyph-gray-secondary);
+}
