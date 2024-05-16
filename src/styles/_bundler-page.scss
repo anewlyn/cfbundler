@@ -1,0 +1,10 @@
+.bundler-page {
+  background-color: var(--cf-background-color);
+  margin: 0 auto;
+}
+
+.bp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}

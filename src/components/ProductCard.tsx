@@ -1,0 +1,26 @@
+'use client'
+
+import classNames from "classnames";
+import Image from "next/image";
+import { useState } from "react";
+import AddToButton from "./AddToButton";
+
+
+const ProductCard = ({ product }: any) => {
+  const [qty, setQty] = useState(1);
+
+  const { imageURL, title, price, outOfStock } = product.variants[0];
+  const { maxValue } = product.limits[0];
+  return (
+    <div className={classNames('product-card')}>
+      <Image src={imageURL} alt={title} width={200} height={250} />
+      <p className="product-title">{title}</p>
+      {/* @todo get product-info once we get data */}
+      <p className="product-info">5mg * 6-pack</p>
+      <p>${price}</p>
+      <AddToButton orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} />
+    </div>
+  );
+}
+
+export default ProductCard;

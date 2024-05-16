@@ -1,0 +1,18 @@
+.product-card {
+  // revert to transparent when layout is complete
+  background-color: var(--cf-background-color);
+  width: 250px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: .9rem;
+}
+
+.product-title {
+  font-weight: bold;
+  margin-block-end: 0;
+}
+
+.product-info {
+  color: var(--cf-grey-text);
+  margin-block-start: 0.5rem;
+}
