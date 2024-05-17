@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useLoopContext } from "@/app/contexts/LoopProvider";
 import AddToButton from "./AddToButton";
 
-
 const ProductCard = ({ product }: any) => {
   const { isMobile } = useLoopContext();
   const [qty, setQty] = useState(1);
@@ -24,7 +23,7 @@ const ProductCard = ({ product }: any) => {
       <div className={classNames("product-image", { 'info-button-mobile': isMobile })}>
         <Image src={imageURL} alt={title} width={200} height={250} />
         <div className={"info-screen"}>
-          <button onClick={handleOpenInfoModal} className="info-button">More Info</button>
+          <button onClick={handleOpenInfoModal} className="info-button">MORE INFO</button>
         </div>
       </div>
 

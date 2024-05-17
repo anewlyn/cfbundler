@@ -1,10 +1,10 @@
 .subscription-button {
-  display: flex;
   align-items: center;
-  border: none;
-  justify-content: space-between;
-  height: 40px;
   background-color: var(--cf-increment-button-background-color);
+  border: none;
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
   padding: 0 10px;
   text-align: center;
   width: 100%;
@@ -12,17 +12,17 @@
 
   &.not-subscribed {
     background-color: white;
-    justify-content: center;
-    font-weight: 600;
     font-size: small;
+    font-weight: 600;
+    justify-content: center;
   }
 }
 
 .icon-button {
-  border: none;
-  width: 30px;
   background-color: transparent;
+  border: none;
   color: var(--cf-increment-button-text-color);
+  width: 30px;
 }
 
 .out-of-stock {
@@ -30,8 +30,8 @@
   background-color: transparent;
   border: 1px solid black;
   font-size: small;
-  height: 40px;
   font-weight: 600;
+  height: 40px;
   padding: 0 10px;
   text-align: center;
   width: 100%;

@@ -5,10 +5,12 @@
   margin: 0 auto;
 }
 
+// temporary styles for the bundler page
+// @todo build out the bundler page grid
 .bp-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 
   @include for_breakpoint(tablet) {
     grid-template-columns: 1fr 1fr 1fr;
