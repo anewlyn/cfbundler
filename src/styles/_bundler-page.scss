@@ -1,3 +1,5 @@
+@import "breakpoints";
+
 .bundler-page {
   background-color: var(--cf-background-color);
   margin: 0 auto;
@@ -7,4 +9,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
+
+  @include for_breakpoint(tablet) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @include for_breakpoint(mobile) {
+    grid-template-columns: 1fr 1fr;
+  }
 }

@@ -1,0 +1,28 @@
+$mobile-breakpoint: 320px;
+$tablet-breakpoint: 890px;
+$desktop-breakpoint: 1200px;
+
+/* Media Queries */
+$media_queries : ('mobile' : "only screen and (max-width: #{$mobile-breakpoint})",
+  'tablet' : "only screen and (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint})",
+  'desktop' : "only screen and (min-width: #{$tablet-breakpoint + 1})",
+  'retina2' : "only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi)",
+  'retina3' : "only screen and (-webkit-min-device-pixel-ratio: 3) and (min-resolution: 288dpi)",
+  'landscape' : "screen and (orientation:landscape) ",
+  'portrait' : "screen and (orientation:portrait) "
+);
+
+@mixin for_breakpoint($breakpoints) {
+  $conditions : ();
+
+  @each $breakpoint in $breakpoints {
+    // If the key exists in the map
+    $conditions: append($conditions,
+        #{map-get($media_queries, $breakpoint)},
+        comma);
+  }
+
+  @media #{$conditions} {
+    @content;
+  }
+}
