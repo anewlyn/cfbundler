@@ -3,12 +3,13 @@
 // temporary page to test the subscription button
 import classNames from "classnames";
 import ProductCard from "@/components/ProductCard";
-import mockData from "../data/mockData.js";
+import { useLoopContext, LoopContextType } from "../contexts/LoopProvider";
 
 const Bundler = () => {
 
   // temporary data to test
   // @todo get the data from the Loop API
+  const { mockData } = useLoopContext() as LoopContextType;
   const { products } = mockData;
 
   return (
