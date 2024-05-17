@@ -21,7 +21,7 @@ const ProductCard = ({ product }: any) => {
   return (
     <div className={classNames('product-card')}>
       <div className={classNames("product-image", { 'info-button-mobile': isMobile })}>
-        <Image src={imageURL} alt={title} width={200} height={250} />
+        <Image src={imageURL} alt={title} width={309} height={309} />
         <div className={"info-screen"}>
           <button onClick={handleOpenInfoModal} className="info-button">MORE INFO</button>
         </div>

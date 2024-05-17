@@ -3,12 +3,17 @@
 .bundler-page {
   background-color: var(--cf-background-color);
   margin: 0 auto;
+  min-width: fit-content;
 }
 
 .bp-flex {
   display: flex;
-  flex-wrap: wrap;
-  max-width: 1200px;
+  flex-flow: wrap row;
   justify-content: space-evenly;
   margin: auto;
+
+  @include for_breakpoint('mobile') {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

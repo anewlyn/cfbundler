@@ -6,6 +6,8 @@
   text-align: center;
   width: 250px;
   margin: 0 0.6rem;
+  display: grid;
+  grid-template-rows: repeat(5, auto);
 }
 
 .product-title {
@@ -58,6 +60,10 @@
 .product-image {
   background-color: transparent;
   position: relative;
+
+  img {
+    width: inherit;
+  }
 
   &:hover {
     .info-screen {
