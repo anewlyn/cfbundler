@@ -10,7 +10,7 @@ const ProductGrid = () => {
   const { products } = mockData;
 
   return (
-    <div className="bp-flex">
+    <div className="bp-grid">
       {products.map((product) => (
         <ProductCard key={product.shopifyId} product={product} />
       ))}
