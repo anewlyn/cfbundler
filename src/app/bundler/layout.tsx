@@ -1,5 +1,7 @@
 "use client";
 
+import LoopProvider from "../contexts/LoopProvider";
+
 const BundlerLayout = ({
   children,
 }: {
@@ -7,7 +9,9 @@ const BundlerLayout = ({
 }) => {
 
   return (
-    <section>{children}</section>
+    <LoopProvider>
+      <section>{children}</section>
+    </LoopProvider>
   )
 }
 
