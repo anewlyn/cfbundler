@@ -7,7 +7,7 @@ import ProductGrid from "@/components/ProductGrid";
 const Bundler = () => {
 
   return (
-    <div className={classNames('bundler-page')} style={{ height: "100%" }}>
+    <div className={classNames('bundler-page')}>
       <h1>Bundler</h1>
       <ProductGrid />
     </div>

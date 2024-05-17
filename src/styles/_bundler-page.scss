@@ -5,18 +5,10 @@
   margin: 0 auto;
 }
 
-// temporary styles for the bundler page
-// @todo build out the bundler page grid
-.bp-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-
-  @include for_breakpoint(tablet) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  @include for_breakpoint(mobile) {
-    grid-template-columns: 1fr 1fr;
-  }
+.bp-flex {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  justify-content: space-evenly;
+  margin: auto;
 }
