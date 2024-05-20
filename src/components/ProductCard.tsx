@@ -1,13 +1,10 @@
 'use client'
 
-import classNames from "classnames";
 import Image from "next/image";
 import { useState } from "react";
-import { useLoopContext } from "@/app/contexts/LoopProvider";
 import AddToButton from "./AddToButton";
 
 const ProductCard = ({ product }: any) => {
-  const { isMobile } = useLoopContext();
   const [qty, setQty] = useState(1);
 
   const { imageURL, title, price, outOfStock } = product.variants[0];
@@ -19,8 +16,8 @@ const ProductCard = ({ product }: any) => {
   }
 
   return (
-    <div className={classNames('product-card')}>
-      <div className={classNames("product-image", { 'info-button-mobile': isMobile })}>
+    <div className='product-card'>
+      <div className="product-image">
         <Image src={imageURL} alt={title} width={309} height={309} />
         <div className={"info-screen"}>
           <button onClick={handleOpenInfoModal} className="info-button">MORE INFO</button>
