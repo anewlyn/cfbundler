@@ -3,7 +3,7 @@
   background-color: var(--cf-increment-button-background-color);
   border: none;
   display: flex;
-  height: 52px;
+  height: 40px;
   justify-content: space-between;
   padding: 0 10px;
   text-align: center;
@@ -12,8 +12,8 @@
 
   &.not-subscribed {
     background-color: white;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: small;
+    font-weight: 600;
     justify-content: center;
   }
 }
@@ -29,11 +29,10 @@
   align-content: center;
   background-color: transparent;
   border: 1px solid black;
-  font-size: 16px;
-  font-weight: 700;
-  height: 52px;
+  font-size: small;
+  font-weight: 600;
+  height: 40px;
   padding: 0 10px;
   text-align: center;
   width: 100%;
-  margin: 0;
 }
