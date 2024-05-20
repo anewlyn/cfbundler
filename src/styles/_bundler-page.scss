@@ -3,20 +3,25 @@
 .bundler-page {
   background-color: var(--cf-background-color);
   margin: 0 auto;
+  max-width: 1200px;
+  min-width: fit-content;
 }
 
-// temporary styles for the bundler page
-// @todo build out the bundler page grid
-.bp-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+.bp-flex {
+  display: flex;
+  flex-flow: wrap row;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  justify-content: space-evenly;
+  margin: auto;
 
-  @include for_breakpoint(tablet) {
-    grid-template-columns: 1fr 1fr 1fr;
+  .product-card {
+    flex-basis: 23%;
   }
 
-  @include for_breakpoint(mobile) {
-    grid-template-columns: 1fr 1fr;
+
+  @include for_breakpoint('mobile') {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }

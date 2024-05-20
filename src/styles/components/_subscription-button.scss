@@ -3,7 +3,7 @@
   background-color: var(--cf-increment-button-background-color);
   border: none;
   display: flex;
-  height: 40px;
+  height: 52px;
   justify-content: space-between;
   padding: 0 10px;
   text-align: center;
@@ -12,8 +12,8 @@
 
   &.not-subscribed {
     background-color: white;
-    font-size: small;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     justify-content: center;
   }
 }
@@ -26,13 +26,8 @@
 }
 
 .out-of-stock {
-  align-content: center;
   background-color: transparent;
   border: 1px solid black;
-  font-size: small;
-  font-weight: 600;
-  height: 40px;
-  padding: 0 10px;
+  justify-content: center;
   text-align: center;
-  width: 100%;
 }

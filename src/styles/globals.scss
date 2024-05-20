@@ -10,7 +10,10 @@ html {
 }
 
 body {
+  margin: 0;
+  max-height: max-content;
   min-height: 100%;
+  min-width: fit-content;
 }
 
 * {
