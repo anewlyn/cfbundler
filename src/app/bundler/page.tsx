@@ -2,14 +2,24 @@
 
 // temporary page to test the subscription button
 import classNames from "classnames";
-import ProductGrid from "@/components/ProductGrid";
+import ProductCard from "@/components/ProductCard";
+import { useLoopContext } from "../contexts/LoopProvider";
 
 const Bundler = () => {
 
+  // temporary data to test
+  // @todo get the data from the Loop API
+  const { mockData } = useLoopContext();
+  const { products } = mockData;
+
   return (
-    <div className={classNames('bundler-page')}>
+    <div className={classNames('bundler-page')} style={{ height: "100%" }}>
       <h1>Bundler</h1>
-      <ProductGrid />
+      <div className="bp-grid">
+        {products.map((product) => (
+          <ProductCard key={product.shopifyId} product={product} />
+        ))}
+      </div>
     </div>
   );
 }
