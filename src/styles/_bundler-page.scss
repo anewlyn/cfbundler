@@ -13,6 +13,11 @@
   justify-content: space-evenly;
   margin: auto;
 
+  .product-card {
+    flex-basis: 23%;
+  }
+
+
   @include for_breakpoint('mobile') {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
