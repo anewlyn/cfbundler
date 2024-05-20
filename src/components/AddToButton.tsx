@@ -37,7 +37,7 @@ const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock }: AddToButtonPr
 
   return (
     <>
-      {outOfStock && <p className="out-of-stock">OUT OF STOCK</p>}
+      {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
       {subscribed && !outOfStock && <IncrementBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} setSubscribed={setSubscribed} />}
       {
         !subscribed && !outOfStock && <button className={classNames('subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
