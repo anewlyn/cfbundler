@@ -8,7 +8,9 @@ const Header = () => {
   const handleDeliveryScheduleModal = () => {
     alert('Delivery Schedule Modal')
   }
-  const currentOrderValue = 42; // @todo get from data
+
+  // @todo get from data
+  const currentOrderValue = 42;
   const benefitTiers = [
     { label: '$50', subtitle: 'Min. Order', value: 50 },
     { label: '$100', subtitle: 'Free Shipping', value: 100 },
@@ -59,7 +61,7 @@ const Header = () => {
           currentValue={currentOrderValue}
           tiers={benefitTiers} />
       </header>
-      {ScheduleButton("header-button-mobile")}
+      {ScheduleButton("header-button header-button-mobile")}
     </>
   );
 }

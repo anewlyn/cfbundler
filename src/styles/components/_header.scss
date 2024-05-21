@@ -47,15 +47,19 @@
     font-size: 1.5rem;
     text-align: center;
   }
+}
 
-  .header-button {
-    align-items: center;
-    background-color: var(--cf-background-color);
-    display: flex;
-    justify-content: center;
-    letter-spacing: 3px;
-    width: 100%;
-    font-size: 1rem;
+.header-button {
+  align-items: center;
+  background-color: var(--cf-background-color);
+  display: flex;
+  font-size: 1rem;
+  justify-content: center;
+  letter-spacing: 3px;
+  width: 100%;
+
+  i {
+    vertical-align: middle;
   }
 }
 
@@ -91,17 +95,12 @@
     }
   }
 
-  .mobile-header-button {
-    align-items: center;
-    background-color: var(--cf-background-color);
+  .header-button-mobile {
     display: flex;
-    justify-content: center;
-    letter-spacing: 3px;
-    width: 100%;
-    font-size: 1rem;
+    border-bottom: 1px solid lightgrey;
     border-left: none;
     border-right: none;
     border-top: none;
-    border-bottom: 1px solid lightgrey;
+    width: 100%;
   }
 }
