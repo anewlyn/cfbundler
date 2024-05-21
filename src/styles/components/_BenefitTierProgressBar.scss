@@ -3,34 +3,29 @@
   height: 10px;
   position: relative;
   width: 100%;
+  display: grid;
 }
 
 .tier-marker {
-  height: 100%;
-  position: absolute;
+  display: grid;
+  text-align: right;
+  justify-content: end;
+  align-content: flex-start;
 }
 
 .tier-line {
-  border-left: 1px solid #000;
-  height: 150%;
-  position: absolute;
-  top: 0;
-}
+  border-right: 1px solid #000;
+  top: -10px;
+  height: 20px;
 
-.tier-label {
-  bottom: -30px;
-  position: absolute;
-  right: 0;
-  width: max-content;
+  span {
+    visibility: hidden;
+  }
 }
 
 .tier-subtitle {
-  bottom: -50px;
   font-family: sans-serif;
   font-weight: 400;
-  position: absolute;
-  right: 0;
-  width: max-content;
 }
 
 .progress-bar-overlay {

@@ -1,3 +1,5 @@
+import classNames from "classnames";
+
 interface BenefitTier {
   value: number;
   label: string;
@@ -16,18 +18,24 @@ const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarP
   const overlayWidth = (currentValue / maxTierValue) * 100;
 
   return (
+    // grid
     <div className="progress-bar">
-      {tiers.map((tier, index) => (
-        <div
-          className="tier-marker"
-          key={index}
-          style={{ left: `${(tier.value / maxTierValue) * 100}%` }}
-        >
-          <div className="tier-line" />
-          <div className="tier-label">{tier.label}</div>
-          <div className="tier-subtitle">{tier.subtitle}</div>
-        </div>
-      ))}
+      {/* grid columns */}
+      <div
+        className={classNames(`grid-cols-${tiers.length}`)}
+      >
+        {tiers.map((tier, index) => (
+          <div
+            className={classNames("tier-marker")}
+            key={index}
+          >
+            {/* grid rows */}
+            <div className="tier-line row-1" />
+            <div>{tier.label}</div>
+            <div className="tier-subtitle">{tier.subtitle}</div>
+          </div>
+        ))}
+      </div>
       <div
         className="progress-bar-overlay"
         style={{ width: `${overlayWidth}%` }}
