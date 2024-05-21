@@ -15,6 +15,22 @@ const Header = () => {
     { label: '$150', subtitle: '10% off', value: 150 },
   ];
 
+  const ScheduleButton = (className: string) => {
+    return (
+      <button
+        className={className}
+        onClick={handleDeliveryScheduleModal}
+      >
+        {/* @todo get schedule from data */}
+        <span>
+          DELIVER EVERY &nbsp;
+          <b>{deliverySchedule}</b>
+          <i className="material-icons">expand_more</i>
+        </span>
+      </button>
+    );
+  }
+
 
   return (
     <>
@@ -36,35 +52,14 @@ const Header = () => {
         </div>
         <div className="header-title">
           <h1>MY SUBSCRIPTION</h1>
-          <button
-            className="header-button"
-            onClick={handleDeliveryScheduleModal}
-          >
-            {/* @todo get schedule from data */}
-            <span>
-              DELIVER EVERY &nbsp;
-              <b>{deliverySchedule}</b>
-              <i className="material-icons">expand_more</i>
-            </span>
-          </button>
+          {ScheduleButton("header-button")}
         </div>
 
         <BenefitTierProgressBar
           currentValue={currentOrderValue}
           tiers={benefitTiers} />
-
-
-
       </header>
-      <button
-        className="mobile-header-button"
-        onClick={handleDeliveryScheduleModal}
-      >
-        {/* @todo get schedule from data */}
-        DELIVER EVERY &nbsp;
-        <b>{deliverySchedule}</b>
-        <i className="material-icons">expand_more</i>
-      </button>
+      {ScheduleButton("header-button-mobile")}
     </>
   );
 }
