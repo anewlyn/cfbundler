@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import mockData, { mockDataTypes } from "../data/mockData";
+import mockOrder, { mockOrderTypes } from "../data/mockOrder";
+import mockProducts, { mockProductsTypes } from "../data/mockProducts";
 
 export type LoopContextType = {
-  mockData: mockDataTypes;
+  mockProducts: mockProductsTypes;
+  mockOrder: mockOrderTypes;
   isMobile: boolean;
 };
 
@@ -30,7 +32,8 @@ const LoopProvider = ({ children }: any) => {
 
 
   const contextValue = {
-    mockData,
+    mockProducts,
+    mockOrder,
     isMobile
   };
 
