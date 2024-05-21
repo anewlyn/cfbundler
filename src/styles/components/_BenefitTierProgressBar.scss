@@ -1,0 +1,40 @@
+.progress-bar {
+  background: var(--cf-discount-bar-color);
+  height: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.tier-marker {
+  height: 100%;
+  position: absolute;
+}
+
+.tier-line {
+  border-left: 1px solid #000;
+  height: 150%;
+  position: absolute;
+  top: 0;
+}
+
+.tier-label {
+  bottom: -30px;
+  position: absolute;
+  right: 0;
+  width: max-content;
+}
+
+.tier-subtitle {
+  bottom: -50px;
+  font-family: sans-serif;
+  font-weight: 400;
+  position: absolute;
+  right: 0;
+  width: max-content;
+}
+
+.progress-bar-overlay {
+  background: var(--cf-increment-button-background-color);
+  height: 100%;
+  position: absolute;
+}

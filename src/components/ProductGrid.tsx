@@ -5,8 +5,8 @@ import ProductCard from "./ProductCard";
 const ProductGrid = () => {
   // temporary data to test
   // @todo get the data from the Loop API
-  const { mockData } = useLoopContext();
-  const { products } = mockData;
+  const { mockProducts } = useLoopContext();
+  const { products } = mockProducts;
 
   return (
     <div className="bp-flex">

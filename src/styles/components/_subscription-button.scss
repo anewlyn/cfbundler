@@ -3,7 +3,6 @@
   background-color: var(--cf-increment-button-background-color);
   border: none;
   display: flex;
-  height: 52px;
   justify-content: space-between;
   padding: 0 10px;
   text-align: center;
@@ -28,6 +27,7 @@
 .out-of-stock {
   background-color: transparent;
   border: 1px solid black;
+  height: 52px;
   justify-content: center;
   text-align: center;
 }

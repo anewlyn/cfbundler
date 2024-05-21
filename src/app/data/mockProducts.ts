@@ -1,6 +1,6 @@
 // Temporary file to define the shape of the data that will be used in the app.
 
-export type mockDataTypes = {
+export type mockProductsTypes = {
   id: string;
   name: string;
   description: string;
@@ -83,7 +83,7 @@ export type mockDataTypes = {
   }[];
 };
 
-const mockData = {
+const mockProducts = {
   id: '1',
   name: 'Product 1',
   description: 'This is product 1',
@@ -432,4 +432,4 @@ const mockData = {
   ],
 };
 
-export default mockData;
+export default mockProducts;
