@@ -41,15 +41,19 @@
     top: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
+  }
+}
 
-    @include for_breakpoint('mobile') {
+@include for_breakpoint('mobile') {
+  .info-screen {
+    background-color: transparent;
+    display: block;
+
+    .info-button {
       background-color: transparent;
       color: transparent;
-
-      .info-screen {
-        background-color: transparent;
-        display: block;
-      }
+      height: 100%;
+      width: 100%;
     }
   }
 }
