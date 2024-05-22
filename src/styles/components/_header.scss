@@ -4,11 +4,8 @@
   align-items: center;
   background-color: var(--cf-header-background-color);
   display: grid;
-  grid-auto-rows: min-content;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
   gap: 1rem;
-  justify-content: space-between;
   padding: 0 1.5rem 1.5rem;
   width: 100%;
 }
@@ -69,8 +66,6 @@
 
 @include for_breakpoint('mobile') {
   .header {
-    display: grid;
-    grid-auto-rows: min-content;
     grid-template-columns: max-content 1fr;
     grid-template-rows: auto auto;
 
