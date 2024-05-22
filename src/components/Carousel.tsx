@@ -8,6 +8,7 @@ const Carousel = ({
 }: {
   data: {
     image: string
+    altText: string
   }[]
 }) => {
 
@@ -16,7 +17,7 @@ const Carousel = ({
   // Ensure there are at least 6 images
   const filledData = [...data];
   while (filledData.length < 6) {
-    filledData.push({ image: '/assets/lone-frog.png' });
+    filledData.push({ image: '/assets/lone-frog.png', altText: 'Cycling Frog Logo' });
   }
 
   return (
@@ -28,7 +29,7 @@ const Carousel = ({
               slide.image === '/assets/lone-frog.png' && 'default-image'
             )}
             key={index}>
-            <Image className='carousel-item' src={slide.image} alt="" width={85} height={85} />
+            <Image className='carousel-item' src={slide.image} alt={slide.altText} width={85} height={85} />
           </div>
         ))}
       </div>
