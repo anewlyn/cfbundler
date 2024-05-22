@@ -16,7 +16,6 @@ const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarP
 
   const maxTierValue = Math.max(...tiers.map(tier => tier.value));
   const overlayWidth = Math.min((currentValue / maxTierValue) * 100, 100);
-
   return (
     // grid
     <div className="progress-bar">
@@ -24,17 +23,26 @@ const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarP
       <div
         className={classNames(`grid-cols-${tiers.length}`)}
       >
-        {tiers.map((tier, index) => (
-          <div
+        {tiers.map((tier, index) => {
+
+          const isValueMet = tier.value <= currentValue;
+
+          return <div
             className={classNames("tier-marker")}
             key={index}
           >
             {/* grid rows */}
             <div className="tier-line row-1" />
             <div>{tier.label}</div>
-            <div className="tier-subtitle">{tier.subtitle}</div>
+            <div className="tier-subtitle">
+              <i className={
+                classNames(
+                  "material-icons",
+                  !isValueMet && 'no-display')}>check</i>
+              {tier.subtitle}
+            </div>
           </div>
-        ))}
+        })}
       </div>
       <div
         className="progress-bar-overlay"
