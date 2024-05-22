@@ -1,6 +1,6 @@
 .subscription-button {
   align-items: center;
-  background-color: var(--cf-increment-button-background-color);
+  background-color: var(--cf-black);
   border: none;
   display: flex;
   justify-content: space-between;
@@ -20,7 +20,7 @@
 .icon-button {
   background-color: transparent;
   border: none;
-  color: var(--cf-increment-button-text-color);
+  color: var(--cf-white);
   width: 30px;
 }
 

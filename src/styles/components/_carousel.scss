@@ -1,0 +1,41 @@
+.carousel {
+  align-content: center;
+  margin-left: 1rem;
+  overflow: hidden;
+}
+
+.embla {
+  overflow: hidden;
+  align-self: center;
+  width: calc(95px * 6);
+  overflow: hidden;
+}
+
+.embla__container {
+  display: grid;
+  grid-auto-flow: column;
+  align-content: center;
+  gap: 0.5rem;
+}
+
+.embla__slide {
+  align-content: center;
+  justify-content: center;
+}
+
+.default-image {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  border: 1px dashed var(--cf-grey-border);
+  width: 85px;
+  height: 85px;
+
+  >.carousel-item {
+    opacity: 30%;
+    height: 53px;
+    width: 41px;
+  }
+
+}
