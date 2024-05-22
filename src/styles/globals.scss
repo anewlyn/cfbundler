@@ -1,9 +1,26 @@
 @use 'breakpoints' as *;
 @use 'colors';
 
+@use 'helpers';
 @use 'bundler-page';
-@use 'components/subscription-button';
+@use 'components/BenefitTierProgressBar';
+@use 'components/header';
 @use 'components/product-card';
+@use 'components/subscription-button';
+
+@import url(https://db.onlinewebfonts.com/c/e2e4349461a29b7350c37460ed07c8d9?family=Neuzeit+Office+SR+W04+Bold);
+
+@font-face {
+  font-family: "Neuzeit Office SR W04 Bold";
+  src: url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.eot");
+  src: url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.svg#Neuzeit Office SR W04 Bold")format("svg");
+}
+
+
 
 html {
   height: 100%;
@@ -18,6 +35,7 @@ body {
 
 * {
   box-sizing: border-box;
+  font-family: "Neuzeit Office SR W04 Bold";
 
   &::before,
   &::after {
@@ -35,4 +53,8 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+button {
+  height: 52px;
 }

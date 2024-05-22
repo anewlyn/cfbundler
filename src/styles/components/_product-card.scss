@@ -44,16 +44,17 @@
   }
 }
 
-.info-button-mobile {
-  .info-button {
-    background-color: transparent;
-    color: transparent;
-  }
-
-
+@include for_breakpoint('mobile') {
   .info-screen {
     background-color: transparent;
     display: block;
+
+    .info-button {
+      background-color: transparent;
+      color: transparent;
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 

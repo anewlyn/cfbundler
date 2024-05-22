@@ -1,0 +1,44 @@
+.progress-bar {
+  background: var(--cf-discount-bar-color);
+  height: 10px;
+  position: relative;
+  width: 100%;
+  display: grid;
+}
+
+.tier-marker {
+  display: grid;
+  text-align: right;
+  justify-content: end;
+  align-content: flex-start;
+}
+
+.tier-line {
+  border-right: 1px solid #000;
+  top: -10px;
+  height: 20px;
+
+  span {
+    visibility: hidden;
+  }
+}
+
+.tier-subtitle {
+  font-family: sans-serif;
+  font-weight: 400;
+
+  i {
+    vertical-align: middle;
+  }
+}
+
+.no-display {
+  // this overrides materiale-icons css
+  display: none !important;
+}
+
+.progress-bar-overlay {
+  background: var(--cf-increment-button-background-color);
+  height: 100%;
+  position: absolute;
+}

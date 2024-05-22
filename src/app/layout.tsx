@@ -1,8 +1,6 @@
-import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "../styles/globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +17,7 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet" />
-      <body className={inter.className}>{children}</body>
+      <body >{children}</body>
     </html>
   );
 }

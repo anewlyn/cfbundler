@@ -2,18 +2,19 @@
 
 .bundler-page {
   background-color: var(--cf-background-color);
-  margin: 0 auto;
-  max-width: 1200px;
   min-width: fit-content;
 }
 
 .bp-flex {
+  background-color: var(--cf-background-color);
+  column-gap: 1rem;
   display: flex;
   flex-flow: wrap row;
-  row-gap: 1rem;
-  column-gap: 1rem;
   justify-content: space-evenly;
-  margin: auto;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 1rem;
+  row-gap: 1rem;
 
   .product-card {
     flex-basis: 23%;

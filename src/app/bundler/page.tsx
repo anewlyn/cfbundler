@@ -1,6 +1,6 @@
 "use client";
 
-import classNames from "classnames";
+import Header from "@/components/Header";
 import ProductGrid from "@/components/ProductGrid";
 // temporary page to test the subscription button
 
@@ -8,8 +8,8 @@ import ProductGrid from "@/components/ProductGrid";
 const Bundler = () => {
 
   return (
-    <div className={classNames('bundler-page')}>
-      <h1>Bundler</h1>
+    <div className='bundler-page'>
+      <Header />
       <ProductGrid />
     </div>
   );

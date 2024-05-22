@@ -1,9 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import mockData, { mockDataTypes } from "../data/mockData";
+import { createContext, useContext } from "react";
+import mockOrder, { mockOrderTypes } from "../data/mockOrder";
+import mockProducts, { mockProductsTypes } from "../data/mockProducts";
 
 export type LoopContextType = {
-  mockData: mockDataTypes;
-  isMobile: boolean;
+  mockProducts: mockProductsTypes;
+  mockOrder: mockOrderTypes;
 };
 
 const LoopContext = createContext<LoopContextType>({} as LoopContextType);
@@ -14,24 +15,9 @@ const LoopProvider = ({ children }: any) => {
   // @todo Get data from Loop API
   // @todo Create update functions to update the data
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleDeviceDetection = () => {
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    };
-
-    handleDeviceDetection();
-  }, []);
-
-
   const contextValue = {
-    mockData,
-    isMobile
+    mockProducts,
+    mockOrder,
   };
 
   return (
