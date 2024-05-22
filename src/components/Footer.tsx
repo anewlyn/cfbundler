@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
 import { useLoopContext } from '@/app/contexts/LoopProvider';
 import Carousel from './Carousel';
 
 const StickyFooter = () => {
-  const [COV,] = useState(0); // Replace with actual value
+
   const { mockProducts, mockOrder, benefitTiers, currentOrderValue } = useLoopContext();
 
-  let notice = benefitTiers[0].footerMessage;;
+  let notice = benefitTiers[0].footerMessage;
 
-  const benefitText = benefitTiers.forEach((tier) => {
+  benefitTiers.forEach((tier) => {
     if (currentOrderValue >= tier.value) {
       notice = tier.footerMessage;
     }
   })
-  console.log('benefitText: ', benefitText);
 
   const productImages = mockOrder.productVariants.map((variant) => {
     const product = mockProducts.products[variant.shopifyId];
@@ -30,8 +28,8 @@ const StickyFooter = () => {
       </div>
       <div className='cov-info'>
         <p>{notice}</p>
-        <p>${COV}</p>
-        <button>ADD TO CART</button>
+        <p>${currentOrderValue}</p>
+        <button disabled={currentOrderValue < benefitTiers[0].value} >ADD TO CART</button>
       </div>
     </div>
   );
