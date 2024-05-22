@@ -15,7 +15,7 @@ interface BenefitTierProgressBarProps {
 const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarProps) => {
 
   const maxTierValue = Math.max(...tiers.map(tier => tier.value));
-  const overlayWidth = (currentValue / maxTierValue) * 100;
+  const overlayWidth = Math.min((currentValue / maxTierValue) * 100, 100);
 
   return (
     // grid
