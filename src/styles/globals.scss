@@ -31,11 +31,11 @@ body {
   max-height: max-content;
   min-height: 100%;
   min-width: fit-content;
-  font-family: "Neuzeit Office SR W04 Bold";
 }
 
 * {
   box-sizing: border-box;
+  font-family: "Neuzeit Office SR W04 Bold";
 
   &::before,
   &::after {

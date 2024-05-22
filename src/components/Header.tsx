@@ -23,13 +23,13 @@ const Header = () => {
         className={className}
         onClick={handleDeliveryScheduleModal}
       >
-        {/* @todo get schedule from data */}
         <span>
-          DELIVER EVERY &nbsp;
+          {/* @todo get schedule from data */}
+          <span className="sans-serif">DELIVER EVERY &nbsp;</span>
           <b>{deliverySchedule}</b>
           <i className="material-icons">expand_more</i>
         </span>
-      </button>
+      </button >
     );
   }
 

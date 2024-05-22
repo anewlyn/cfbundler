@@ -26,8 +26,8 @@ const ProductCard = ({ product }: any) => {
 
       <p className="product-title">{title}</p>
       {/* @todo get product-info once we get data */}
-      <p className="product-info">5mg * 6-pack</p>
-      <p>${price}</p>
+      <p className="product-info sans-serif">5mg * 6-pack</p>
+      <p className="sans-serif">${price}</p>
       <AddToButton orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} />
     </div>
   );
