@@ -5,7 +5,7 @@ import mockProducts, { mockProductsTypes } from "../data/mockProducts";
 export type LoopContextType = {
   mockProducts: mockProductsTypes;
   mockOrder: mockOrderTypes;
-  benefitTiers: { label: string; subtitle: string; value: number }[];
+  benefitTiers: { label: string; subtitle: string; footerMessage: string; value: number }[];
   currentOrderValue: number;
 };
 
@@ -17,12 +17,12 @@ const LoopProvider = ({ children }: any) => {
   // @todo Get data from Loop API
   // @todo Create update functions to update the data
   const benefitTiers = [
-    { label: '$50', subtitle: 'Min. Order', value: 50 },
-    { label: '$100', subtitle: 'Free Shipping', value: 100 },
-    { label: '$150', subtitle: '10% off', value: 150 },
+    { label: '$50', subtitle: 'Min. Order', footerMessage: 'Subscriptions require a $50 minimum order.', value: 50 },
+    { label: '$100', footerMessage: 'Yay! You have free shipping.', subtitle: 'Free Shipping', value: 100 },
+    { label: '$150', footerMessage: 'Yay! You have free shipping and a 10% discount.', subtitle: '10% off', value: 150 },
   ];
 
-  const currentOrderValue = 42;
+  const currentOrderValue = 170;
 
   const contextValue = {
     mockProducts,

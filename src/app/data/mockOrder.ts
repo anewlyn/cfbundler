@@ -36,6 +36,18 @@ const mockOrder = {
       shopifyId: 7,
       quantity: 1,
     },
+    {
+      shopifyId: 7,
+      quantity: 1,
+    },
+    {
+      shopifyId: 2,
+      quantity: 1,
+    },
+    {
+      shopifyId: 7,
+      quantity: 1,
+    },
   ],
   boxSizeId: '01',
   discountId: '012',
