@@ -38,12 +38,14 @@ const Header = () => {
     <>
       <header className="header">
         <div className="header-logo">
+          {/* @todo route back to website */}
           <a
             className="back-anchor"
             href='/bundler'
           >
             <i className="material-icons back-arrow">west</i>BACK
           </a>
+          {/* @todo get better logo */}
           <Image
             alt="Logo"
             className="logo"
