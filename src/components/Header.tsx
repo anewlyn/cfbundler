@@ -1,8 +1,10 @@
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
 import { useLoopContext } from "@/app/contexts/LoopProvider";
 import BenefitTierProgressBar from "./BenefitTierProgressBar";
 const Header = () => {
   const { mockOrder } = useLoopContext();
+  const router = useRouter();
   const { deliverySchedule } = mockOrder;
 
   const handleDeliveryScheduleModal = () => {
@@ -39,12 +41,12 @@ const Header = () => {
       <header className="header">
         <div className="header-logo">
           {/* @todo route back to website */}
-          <a
+          <button
             className="back-anchor"
-            href='/bundler'
+            onClick={() => router.back()}
           >
             <i className="material-icons back-arrow">west</i>BACK
-          </a>
+          </button>
           {/* @todo get better logo */}
           <Image
             alt="Logo"
