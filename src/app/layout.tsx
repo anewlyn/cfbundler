@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import type { Metadata } from "next";
 import "../styles/globals.scss";
 
