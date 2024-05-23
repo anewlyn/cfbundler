@@ -54,7 +54,7 @@ export type mockProductsTypes = {
     }[];
   }[];
   products: {
-    shopifyId: string;
+    shopifyId: number;
     title: string;
     handle: string;
     status: string;
@@ -157,7 +157,7 @@ const mockProducts = {
   ],
   products: [
     {
-      shopifyId: 'product1',
+      shopifyId: 1,
       title: 'Wild Cherry THC Seltzer',
       handle: 'product-1',
       status: 'Available',
@@ -192,7 +192,7 @@ const mockProducts = {
     },
 
     {
-      shopifyId: 'product2',
+      shopifyId: 2,
       title: 'Black Currant THC Seltzer',
       handle: 'product-2',
       status: 'Available',
@@ -226,7 +226,7 @@ const mockProducts = {
       ],
     },
     {
-      shopifyId: 'product3',
+      shopifyId: 3,
       title: 'Ruby Grapefruit THC Seltzer',
       handle: 'product-3',
       status: 'Available',
@@ -260,7 +260,7 @@ const mockProducts = {
       ],
     },
     {
-      shopifyId: 'product1',
+      shopifyId: 4,
       title: 'Wild Cherry THC Seltzer',
       handle: 'product-1',
       status: 'Available',
@@ -294,7 +294,7 @@ const mockProducts = {
       ],
     },
     {
-      shopifyId: 'product2',
+      shopifyId: 5,
       title: 'Black Currant THC Seltzer',
       handle: 'product-2',
       status: 'Available',
@@ -328,7 +328,7 @@ const mockProducts = {
       ],
     },
     {
-      shopifyId: 'product3',
+      shopifyId: 6,
       title: 'Ruby Grapefruit THC Seltzer',
       handle: 'product-3',
       status: 'Available',
@@ -362,7 +362,7 @@ const mockProducts = {
       ],
     },
     {
-      shopifyId: 'product2',
+      shopifyId: 7,
       title: 'Black Currant THC Seltzer',
       handle: 'product-2',
       status: 'Available',
@@ -396,7 +396,143 @@ const mockProducts = {
       ],
     },
     {
-      shopifyId: 'product3',
+      shopifyId: 8,
+      title: 'Ruby Grapefruit THC Seltzer',
+      handle: 'product-3',
+      status: 'Available',
+      options: [
+        {
+          id: 'option3',
+          name: 'Size',
+          values: ['Small', 'Large'],
+          position: 1,
+        },
+      ],
+      variants: [
+        {
+          shopifyId: 'variant3',
+          title: 'Ruby Grapefruit THC Seltzer',
+          price: 19.99,
+          position: 1,
+          taxable: true,
+          imageURL: '/assets/ruby-grapefruit.png',
+          requiresShipping: true,
+          outOfStock: true,
+        },
+      ],
+      categoryId: 'category1',
+      limits: [
+        {
+          boxSizeId: 'box1',
+          categoryId: 'category 1',
+          maxValue: 5,
+        },
+      ],
+    },
+    {
+      shopifyId: 5,
+      title: 'Black Currant THC Seltzer',
+      handle: 'product-2',
+      status: 'Available',
+      options: [
+        {
+          id: 'option2',
+          name: 'Size',
+          values: ['Small', 'Large'],
+          position: 1,
+        },
+      ],
+      variants: [
+        {
+          shopifyId: 'variant2',
+          title: 'Black Currant THC Seltzer',
+          price: 11.99,
+          position: 1,
+          taxable: true,
+          imageURL: '/assets/black-currant.png',
+          requiresShipping: true,
+          outOfStock: true,
+        },
+      ],
+      categoryId: 'category1',
+      limits: [
+        {
+          boxSizeId: 'box1',
+          categoryId: 'category 1',
+          maxValue: 5,
+        },
+      ],
+    },
+    {
+      shopifyId: 6,
+      title: 'Ruby Grapefruit THC Seltzer',
+      handle: 'product-3',
+      status: 'Available',
+      options: [
+        {
+          id: 'option3',
+          name: 'Size',
+          values: ['Small', 'Large'],
+          position: 1,
+        },
+      ],
+      variants: [
+        {
+          shopifyId: 'variant3',
+          title: 'Ruby Grapefruit THC Seltzer',
+          price: 19.99,
+          position: 1,
+          taxable: true,
+          imageURL: '/assets/ruby-grapefruit.png',
+          requiresShipping: true,
+          outOfStock: true,
+        },
+      ],
+      categoryId: 'category1',
+      limits: [
+        {
+          boxSizeId: 'box1',
+          categoryId: 'category 1',
+          maxValue: 5,
+        },
+      ],
+    },
+    {
+      shopifyId: 7,
+      title: 'Black Currant THC Seltzer',
+      handle: 'product-2',
+      status: 'Available',
+      options: [
+        {
+          id: 'option2',
+          name: 'Size',
+          values: ['Small', 'Large'],
+          position: 1,
+        },
+      ],
+      variants: [
+        {
+          shopifyId: 'variant2',
+          title: 'Black Currant THC Seltzer',
+          price: 11.99,
+          position: 1,
+          taxable: true,
+          imageURL: '/assets/black-currant.png',
+          requiresShipping: true,
+          outOfStock: true,
+        },
+      ],
+      categoryId: 'category1',
+      limits: [
+        {
+          boxSizeId: 'box1',
+          categoryId: 'category 1',
+          maxValue: 5,
+        },
+      ],
+    },
+    {
+      shopifyId: 8,
       title: 'Ruby Grapefruit THC Seltzer',
       handle: 'product-3',
       status: 'Available',

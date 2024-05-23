@@ -3,21 +3,13 @@ import { useRouter } from 'next/navigation'
 import { useLoopContext } from "@/app/contexts/LoopProvider";
 import BenefitTierProgressBar from "./BenefitTierProgressBar";
 const Header = () => {
-  const { mockOrder } = useLoopContext();
+  const { mockOrder, benefitTiers, currentOrderValue } = useLoopContext();
   const router = useRouter();
   const { deliverySchedule } = mockOrder;
 
   const handleDeliveryScheduleModal = () => {
     alert('Delivery Schedule Modal')
   }
-
-  // @todo get from data
-  const currentOrderValue = 42;
-  const benefitTiers = [
-    { label: '$50', subtitle: 'Min. Order', value: 50 },
-    { label: '$100', subtitle: 'Free Shipping', value: 100 },
-    { label: '$150', subtitle: '10% off', value: 150 },
-  ];
 
   const ScheduleButton = (className: string) => {
     return (

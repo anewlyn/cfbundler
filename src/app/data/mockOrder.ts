@@ -17,8 +17,16 @@ const mockOrder = {
   deliverySchedule: '4 WEEKS',
   productVariants: [
     {
-      shopifyId: 456,
+      shopifyId: 3,
       quantity: 2,
+    },
+    {
+      shopifyId: 2,
+      quantity: 1,
+    },
+    {
+      shopifyId: 7,
+      quantity: 1,
     },
   ],
   boxSizeId: '01',
