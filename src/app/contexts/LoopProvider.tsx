@@ -22,7 +22,7 @@ const LoopProvider = ({ children }: any) => {
     { label: '$150', footerMessage: 'Yay! You have free shipping and a 10% discount.', subtitle: '10% off', value: 150 },
   ];
 
-  const currentOrderValue = 170;
+  const currentOrderValue = 50;
 
   const contextValue = {
     mockProducts,
