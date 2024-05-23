@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import type { Metadata } from "next";
 import "../styles/globals.scss";
 
@@ -14,9 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet" />
+      <Head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+      </Head>
       <body >{children}</body>
     </html>
   );

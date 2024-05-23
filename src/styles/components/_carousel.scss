@@ -30,12 +30,12 @@
   justify-content: center;
   border: 1px dashed var(--cf-grey-border);
   width: 85px;
-  height: 85px;
+  height: auto;
 
   >.carousel-item {
     opacity: 30%;
     height: 53px;
-    width: 41px;
+    width: auto;
   }
 
 }
