@@ -3,24 +3,24 @@
 import Image from "next/image";
 import { useState } from "react";
 import AddToButton from "./AddToButton";
+interface ProductCardProps {
+  product: any;
+  handleOpenInfoModal: (arg0: any) => void;
+  isPriority: boolean;
+}
 
-const ProductCard = ({ product }: any) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
   const [qty, setQty] = useState(1);
 
   const { imageURL, title, price, outOfStock } = product.variants[0];
   const { maxValue } = product.limits[0];
 
-  const handleOpenInfoModal = () => {
-    // @todo open modal with product info
-    alert('info modal opened')
-  }
-
   return (
     <div className='product-card'>
       <div className="product-image">
-        <Image src={imageURL} alt={title} width={309} height={309} />
+        <Image src={imageURL} alt={title} width={309} height={309} priority={isPriority} />
         <div className={"info-screen"}>
-          <button onClick={handleOpenInfoModal} className="info-button">MORE INFO</button>
+          <button onClick={() => handleOpenInfoModal(product)} className="info-button">MORE INFO</button>
         </div>
       </div>
 
