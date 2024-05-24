@@ -9,9 +9,10 @@ type AddToButtonProps = {
   maxQty: number;
   outOfStock: boolean;
   setQty: React.Dispatch<React.SetStateAction<number>>;
+  className?: string;
 };
 
-const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock }: AddToButtonProps) => {
+const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock, className }: AddToButtonProps) => {
   const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
 
@@ -40,7 +41,7 @@ const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock }: AddToButtonPr
       {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
       {subscribed && !outOfStock && <IncrementBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} setSubscribed={setSubscribed} />}
       {
-        !subscribed && !outOfStock && <button className={classNames('subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
+        !subscribed && !outOfStock && <button className={classNames(className, 'subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
       }
     </>
   );

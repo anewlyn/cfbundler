@@ -1,17 +1,55 @@
 import Image from "next/image";
+import { useState } from "react";
+import AddToButton from "./AddToButton";
+import StarRating from "./StarRatings";
 
 const InfoCard = ({ data }: { data: any }) => {
-  const { imageURL, title, price } = data.variants[0];
+  const [qty, setQty] = useState(1);
+
+  // @todo set image to imageURL when the Loop API is connected
+  const {
+    // imageURL,
+    title, price, outOfStock
+  } = data.variants[0];
+
+  const { maxValue } = data.limits[0];
+
+  // @todo get the following data from the Shopify API
+  const rating = 4.5;
+  const numberOfReviews = 120;
+  const headline = 'ENJOY AN UPLIFTING BUZZ WITHOUT THE BOOZE';
+
+  // @todo get product images from the Shopify API
+  const filledData = [
+    { image: '/assets/black-currant.png', altText: 'Cycling Frog Logo' },
+    { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
+    { image: '/assets/ruby-grapefruit.png', altText: 'Cycling Frog Logo' },
+    { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' }
+  ];
   return (
     <div className='info-card'>
-      <div className="info-image">
-        <Image src={imageURL} alt={title} width={309} height={309} />
+      <div className="info-image-block">
+        <img src={'/assets/guava-passion-six-pack.png'} alt={title} />
+        <div className="alt-images">
+          {filledData.map((slide, index) => (
+            <div
+              key={index}>
+              <Image src={slide.image} alt={slide.altText} width={85} height={85} />
+            </div>
+          ))}
+        </div>
       </div>
       <div className="info-content">
         <h1>{data.title}</h1>
-        <p>ENJOY AN UPLIFTING BUZZ WITHOUT THE BOOZE
-          The better-than-booze, alcohol-free summertime tonic you need in your cooler! Our Guava Passionfruit THC seltzer channels tropical serenity with every sip. With 5mg THC and 10mg CBD per can, this THC beverage is built to help you unwind, laugh, and above all else, have fun.</p>
-        <p>{price}</p>
+        <p className="sans-serif">{price}</p>
+        <hr />
+        <StarRating rating={rating} reviews={numberOfReviews} />
+        <section className="description">
+          <h2>{headline}</h2>
+          <p className="sans-serif">
+            The better-than-booze, alcohol-free summertime tonic you need in your cooler! Our Guava Passionfruit THC seltzer channels tropical serenity with every sip. With 5mg THC and 10mg CBD per can, this THC beverage is built to help you unwind, laugh, and above all else, have fun.</p>
+        </section>
+        <AddToButton className='info-add-button' orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} />
       </div>
     </div>
   );
