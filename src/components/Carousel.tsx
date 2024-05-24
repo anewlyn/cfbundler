@@ -1,11 +1,12 @@
 'use client'
 
 import useEmblaCarousel from 'embla-carousel-react'
+import { ReactNode } from 'react'
 
 const Carousel = ({
   children
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) => {
 
   const [emblaRef] = useEmblaCarousel({ loop: false, align: 'start' })
