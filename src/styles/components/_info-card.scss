@@ -69,7 +69,6 @@
 }
 
 .alt-image-block {
-  border: 1px solid black;
   height: 85px;
   position: relative;
   width: 85px;
@@ -77,6 +76,10 @@
   img {
     height: 100%;
     width: 100%;
+  }
+
+  button {
+    z-index: 5;
   }
 
   .alt-image-button {
@@ -87,10 +90,9 @@
     padding: 0;
     position: absolute;
     top: 0;
-
   }
-
 }
+
 
 @include for_breakpoint('mobile') {
   .info-image-block {

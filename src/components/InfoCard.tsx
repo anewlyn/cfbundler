@@ -7,17 +7,18 @@ import StarRating from "./StarRatings";
 
 const InfoCard = ({ data }: { data: any }) => {
   const [qty, setQty] = useState(1);
-
-  const handleOpenChangeImage = (imageIndex: number) => {
-    console.log('imageIndex: ', imageIndex);
-    // @todo change image
-  }
-
   // @todo set image to imageURL when the Loop API is connected
   const {
     // imageURL,
     title, price, outOfStock
   } = data.variants[0];
+
+  const [selectedImageURL, setSelectedImageURL] = useState(0);
+
+  const handleOpenChangeImage = (imageIndex: number) => {
+    setSelectedImageURL(imageIndex);
+  }
+
 
   const { maxValue } = data.limits[0];
 
@@ -36,7 +37,7 @@ const InfoCard = ({ data }: { data: any }) => {
   return (
     <div className='info-card'>
       <div className="info-image-block">
-        <img src={'/assets/guava-passion-six-pack.png'} alt={title} />
+        <img src={`${filledData[selectedImageURL].image}`} alt={title} />
       </div>
       <div className="info-content">
         <section className="description">
@@ -54,7 +55,7 @@ const InfoCard = ({ data }: { data: any }) => {
       <Carousel>
         {filledData.map((slide, index) => (
           <div
-            className={classNames("embla__slide", "alt-image-block")}
+            className={classNames("embla__slide", "alt-image-block", { 'base-border-2': selectedImageURL === index })}
             key={index}>
             <button onClick={() => handleOpenChangeImage(index)} className="alt-image-button">switch images</button>
             <Image className='carousel-item alt-image-button' src={slide.image} alt={slide.altText} width={271} height={271} />
