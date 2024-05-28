@@ -23,18 +23,18 @@
 }
 
 .info-content {
-  position: relative;
-  grid-template-rows: auto;
   align-content: space-between;
   display: grid;
+  grid-template-rows: auto;
+  position: relative;
 
   h1 {
     margin-top: 0;
   }
 
   hr {
-    border: 0;
     border-top: 1px solid var(--cf-divider);
+    border: 0;
   }
 
   .subscription-button {
@@ -111,10 +111,10 @@
   }
 
   .alt-image-block {
+    border: none !important;
     height: 271px;
-    width: 271px;
     overflow: hidden;
-    border: none;
+    width: 271px;
   }
 
   .alt-images {
