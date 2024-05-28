@@ -46,7 +46,7 @@ const Bundler = () => {
       <ProductGrid>
         {renderProductCards()}
       </ProductGrid>
-      <Modal open={modalOpen} onClose={handleCloseInfoModal} ariaModalLabel="Product Info Modal">
+      <Modal open={modalOpen} onClose={handleCloseInfoModal} ariaModalLabel="Product Info Modal" hasMobileClose>
         {/* @todo add product info modal */}
         <InfoCard data={modalProduct} />
       </Modal>

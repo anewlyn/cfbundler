@@ -1,3 +1,5 @@
+@import 'breakpoints';
+
 .modal-overlay {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
@@ -34,4 +36,24 @@
   .material-icons {
     font-size: 1.5rem;
   }
+}
+
+.modal-close-mobile-button {
+  display: none;
+}
+
+@include for_breakpoint('mobile') {
+  .modal-close-button {
+    display: none;
+  }
+
+  .modal-close-mobile-button {
+    background-color: var(--cf-white);
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
 }

@@ -7,14 +7,15 @@ import { Portal } from './Portal';
 export type ModalProps = {
   open: boolean;
   onClose: (e: any) => void;
-  closeButtonIcon?: string | React.ReactNode;
+  closeButtonIcon?: string;
   children: ReactNode;
   ariaModalLabel: string; // Describes the modal
   ariaCloseLabel?: string;
   appendClassName?: string;
+  hasMobileClose?: boolean;
 };
 
-export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel = 'Close modal', closeButtonIcon = 'close', appendClassName }: ModalProps): JSX.Element | null => {
+export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel = 'Close modal', closeButtonIcon = 'close', appendClassName, hasMobileClose }: ModalProps): JSX.Element | null => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
@@ -75,6 +76,17 @@ export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel 
           <div className='modal'>
             <div className='modal-content'>
               {children}
+              {
+                hasMobileClose && (
+                  <button
+                    onClick={onClose}
+                    className="modal-close-mobile-button"
+                    aria-label={ariaCloseLabel}
+                  >
+                    {closeButtonIcon.toUpperCase()}
+                  </button>
+                )
+              }
             </div>
             <button
               onClick={onClose}
@@ -83,7 +95,7 @@ export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel 
             >
               <i className="material-icons">{closeButtonIcon}</i>
             </button>
-            <i className="material-icons">close</i>
+
           </div>
         </aside>
       </Portal>
