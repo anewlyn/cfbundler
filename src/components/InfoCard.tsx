@@ -1,10 +1,17 @@
+import classNames from "classnames";
 import Image from "next/image";
 import { useState } from "react";
 import AddToButton from "./AddToButton";
+import Carousel from "./Carousel";
 import StarRating from "./StarRatings";
 
 const InfoCard = ({ data }: { data: any }) => {
   const [qty, setQty] = useState(1);
+
+  const handleOpenChangeImage = (imageIndex: number) => {
+    console.log('imageIndex: ', imageIndex);
+    // @todo change image
+  }
 
   // @todo set image to imageURL when the Loop API is connected
   const {
@@ -21,7 +28,7 @@ const InfoCard = ({ data }: { data: any }) => {
 
   // @todo get product images from the Shopify API
   const filledData = [
-    { image: '/assets/black-currant.png', altText: 'Cycling Frog Logo' },
+    { image: '/assets/guava-passion-six-pack.png', altText: 'Cycling Frog Logo' },
     { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
     { image: '/assets/ruby-grapefruit.png', altText: 'Cycling Frog Logo' },
     { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' }
@@ -43,11 +50,16 @@ const InfoCard = ({ data }: { data: any }) => {
         </section>
         <AddToButton className='info-add-button' orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} />
       </div>
-      <div className="alt-images">
+      <Carousel>
         {filledData.map((slide, index) => (
-          <Image key={index} src={slide.image} alt={slide.altText} width={85} height={85} />
+          <div
+            className={classNames("embla__slide", "alt-image-block")}
+            key={index}>
+            <button onClick={() => handleOpenChangeImage(index)} className="alt-image-button">switch images</button>
+            <Image className='carousel-item alt-image-button' src={slide.image} alt={slide.altText} width={85} height={85} />
+          </div>
         ))}
-      </div>
+      </Carousel>
     </div>
   );
 }

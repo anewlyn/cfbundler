@@ -20,7 +20,6 @@ const Bundler = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenInfoModal = (product: any) => {
-    console.log('product: ', product);
     // @todo open modal with product info
     setModalProduct(product);
     setModalOpen(true);

@@ -5,17 +5,16 @@
 }
 
 .embla {
-  overflow: hidden;
   align-self: center;
-  width: calc(95px * 6);
   overflow: hidden;
+  width: calc(95px * 6);
 }
 
 .embla__container {
-  display: grid;
-  grid-auto-flow: column;
   align-content: center;
+  display: grid;
   gap: 0.5rem;
+  grid-auto-flow: column;
 }
 
 .embla__slide {
@@ -24,17 +23,17 @@
 }
 
 .default-image {
+  align-content: center;
+  border: 1px dashed var(--cf-grey-border);
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
-  border: 1px dashed var(--cf-grey-border);
-  width: 85px;
   height: auto;
+  justify-content: center;
+  width: 85px;
 
   >.carousel-item {
-    opacity: 30%;
     height: 53px;
+    opacity: 30%;
     width: auto;
   }
 
