@@ -24,12 +24,14 @@
 }
 
 .modal-close-button {
-  background: red;
+  background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 20px;
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 100px
+
+  .material-icons {
+    font-size: 1.5rem;
+  }
 }

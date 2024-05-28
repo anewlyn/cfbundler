@@ -13,6 +13,8 @@
 }
 
 .info-image-block {
+  align-self: flex-start;
+
   img {
     height: 100%;
     max-inline-size: 100%;
@@ -22,6 +24,9 @@
 
 .info-content {
   position: relative;
+  grid-template-rows: auto;
+  align-content: space-between;
+  display: grid;
 
   h1 {
     margin-top: 0;
@@ -46,11 +51,6 @@
   span {
     margin-left: 5px;
   }
-}
-
-.info-add-button {
-  bottom: 0;
-  position: absolute;
 }
 
 .alt-images {
@@ -84,10 +84,26 @@
 }
 
 @include for_breakpoint('mobile') {
+  .info-image-block {
+    display: none;
+
+  }
+
   .info-card {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
     margin-right: 0;
+
+    .embla {
+      grid-row: 1;
+      width: auto;
+    }
+  }
+
+  .alt-image-block {
+    height: 271px;
+    width: 271px;
+    overflow: hidden;
+    border: none;
   }
 
   .alt-images {

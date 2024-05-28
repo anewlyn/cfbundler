@@ -39,11 +39,12 @@ const InfoCard = ({ data }: { data: any }) => {
         <img src={'/assets/guava-passion-six-pack.png'} alt={title} />
       </div>
       <div className="info-content">
-        <h1>{data.title}</h1>
-        <p className="sans-serif">{price}</p>
-        <hr />
-        <StarRating rating={rating} reviews={numberOfReviews} />
         <section className="description">
+          <h1>{data.title}</h1>
+          <p className="sans-serif">{price}</p>
+          <hr />
+          <StarRating rating={rating} reviews={numberOfReviews} />
+
           <h2>{headline}</h2>
           <p className="sans-serif">
             The better-than-booze, alcohol-free summertime tonic you need in your cooler! Our Guava Passionfruit THC seltzer channels tropical serenity with every sip. With 5mg THC and 10mg CBD per can, this THC beverage is built to help you unwind, laugh, and above all else, have fun.</p>
@@ -56,7 +57,7 @@ const InfoCard = ({ data }: { data: any }) => {
             className={classNames("embla__slide", "alt-image-block")}
             key={index}>
             <button onClick={() => handleOpenChangeImage(index)} className="alt-image-button">switch images</button>
-            <Image className='carousel-item alt-image-button' src={slide.image} alt={slide.altText} width={85} height={85} />
+            <Image className='carousel-item alt-image-button' src={slide.image} alt={slide.altText} width={271} height={271} />
           </div>
         ))}
       </Carousel>

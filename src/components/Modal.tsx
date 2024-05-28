@@ -2,22 +2,19 @@
 
 import classNames from 'classnames';
 import { ReactNode, useEffect, useRef } from 'react';
-import Icon from './Icon';
 import { Portal } from './Portal';
 
 export type ModalProps = {
   open: boolean;
   onClose: (e: any) => void;
   closeButtonIcon?: string | React.ReactNode;
-  closeButtonIconSize?: 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'massive';
-  closeButtonIconColor?: string;
   children: ReactNode;
   ariaModalLabel: string; // Describes the modal
   ariaCloseLabel?: string;
   appendClassName?: string;
 };
 
-export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel = 'Close modal', closeButtonIcon = 'close', closeButtonIconSize, closeButtonIconColor = '#333', appendClassName }: ModalProps): JSX.Element | null => {
+export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel = 'Close modal', closeButtonIcon = 'close', appendClassName }: ModalProps): JSX.Element | null => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
@@ -84,8 +81,9 @@ export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel 
               className="modal-close-button"
               aria-label={ariaCloseLabel}
             >
-              {typeof closeButtonIcon === 'string' ? <Icon size={closeButtonIconSize} color={closeButtonIconColor} name={closeButtonIcon} /> : <Icon size={closeButtonIconSize} color={closeButtonIconColor}>{closeButtonIcon}</Icon>}
+              <i className="material-icons">{closeButtonIcon}</i>
             </button>
+            <i className="material-icons">close</i>
           </div>
         </aside>
       </Portal>
