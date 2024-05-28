@@ -37,6 +37,15 @@
     border-top: 1px solid var(--cf-divider);
   }
 
+  .subscription-button {
+    &.not-subscribed {
+      background-color: var(--cf-black);
+      color: var(--cf-white);
+      font-size: 16px;
+      font-weight: 700;
+      justify-content: center;
+    }
+  }
 }
 
 .icon-fill {

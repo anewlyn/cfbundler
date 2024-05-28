@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
       {/* @todo get product-info once we get data */}
       <p className="product-info sans-serif">5mg * 6-pack</p>
       <p className="sans-serif">${price}</p>
-      <AddToButton orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} />
+      <AddToButton orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} text={'+ ADD TO SUBSCRIPTION'} mobileText={'+ ADD'} />
     </div>
   );
 }

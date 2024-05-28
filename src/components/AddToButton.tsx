@@ -10,26 +10,29 @@ type AddToButtonProps = {
   outOfStock: boolean;
   setQty: React.Dispatch<React.SetStateAction<number>>;
   className?: string;
+  text?: string;
+  mobileText?: string;
 };
 
-const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock, className }: AddToButtonProps) => {
+const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock, className, text, mobileText }: AddToButtonProps) => {
   const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setButtonText('+ ADD');
-      } else {
-        setButtonText('+ ADD TO SUBSCRIPTION');
-      }
-    };
+    if (mobileText && text) {
+      const handleResize = () => {
+        if (window.innerWidth <= 768) {
+          setButtonText(mobileText);
+        } else {
+          setButtonText(text);
+        }
+      };
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+      window.addEventListener('resize', handleResize);
+      handleResize();
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [mobileText, text]);
 
   const handleClick = () => {
     setSubscribed(!subscribed);

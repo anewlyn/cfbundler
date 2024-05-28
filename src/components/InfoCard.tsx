@@ -49,7 +49,7 @@ const InfoCard = ({ data }: { data: any }) => {
           <p className="sans-serif">
             The better-than-booze, alcohol-free summertime tonic you need in your cooler! Our Guava Passionfruit THC seltzer channels tropical serenity with every sip. With 5mg THC and 10mg CBD per can, this THC beverage is built to help you unwind, laugh, and above all else, have fun.</p>
         </section>
-        <AddToButton className='info-add-button' orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} />
+        <AddToButton className='info-add-button' orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} text={'+ ADD TO SUBSCRIPTION'} />
       </div>
       <Carousel>
         {filledData.map((slide, index) => (
