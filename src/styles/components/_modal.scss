@@ -1,0 +1,64 @@
+@import 'breakpoints';
+
+.modal-overlay {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--cf-background-color);
+  margin: 1.5rem;
+  position: relative;
+}
+
+.modal-content {
+  margin: 1.5rem;
+  ;
+}
+
+.modal-close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  .material-icons {
+    font-size: 1.5rem;
+  }
+}
+
+.modal-close-mobile-button {
+  display: none;
+}
+
+@include for_breakpoint('mobile') {
+  .modal {
+    margin: 0;
+    width: 100%;
+  }
+
+  .modal-close-button {
+    display: none;
+  }
+
+  .modal-close-mobile-button {
+    background-color: var(--cf-white);
+    border: none;
+    cursor: pointer;
+    display: block;
+    font-size: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+}

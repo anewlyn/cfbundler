@@ -9,26 +9,30 @@ type AddToButtonProps = {
   maxQty: number;
   outOfStock: boolean;
   setQty: React.Dispatch<React.SetStateAction<number>>;
+  className?: string;
+  text?: string;
+  mobileText?: string;
 };
 
-const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock }: AddToButtonProps) => {
+const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock, className, text, mobileText }: AddToButtonProps) => {
   const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setButtonText('+ ADD');
-      } else {
-        setButtonText('+ ADD TO SUBSCRIPTION');
-      }
-    };
+    if (mobileText && text) {
+      const handleResize = () => {
+        if (window.innerWidth <= 768) {
+          setButtonText(mobileText);
+        } else {
+          setButtonText(text);
+        }
+      };
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+      window.addEventListener('resize', handleResize);
+      handleResize();
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [mobileText, text]);
 
   const handleClick = () => {
     setSubscribed(!subscribed);
@@ -40,7 +44,7 @@ const AddToButton = ({ orderQty = 1, setQty, maxQty, outOfStock }: AddToButtonPr
       {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
       {subscribed && !outOfStock && <IncrementBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} setSubscribed={setSubscribed} />}
       {
-        !subscribed && !outOfStock && <button className={classNames('subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
+        !subscribed && !outOfStock && <button className={classNames(className, 'subscription-button', { 'not-subscribed': !subscribed })} onClick={handleClick}>{buttonText}</button>
       }
     </>
   );

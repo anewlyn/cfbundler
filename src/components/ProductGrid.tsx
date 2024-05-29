@@ -1,20 +1,14 @@
-import { useLoopContext } from "@/app/contexts/LoopProvider";
-import ProductCard from "./ProductCard";
+import { ReactNode } from "react";
 
-const ProductGrid = () => {
-  // temporary data to test
-  // @todo get the data from the Loop API
-  const { mockProducts } = useLoopContext();
-  const { products } = mockProducts;
+const ProductGrid = ({
+  children
+}: {
+  children: ReactNode
+}) => {
 
   return (
     <div className="bp-flex">
-      {products.map((product, index) => {
-        // This sets the images above the fold as priority
-        const isPriority = index <= 7;
-
-        return <ProductCard key={`${product.shopifyId}${index}`} product={product} isPriority={isPriority} />
-      })}
+      {children}
     </div>
   );
 }

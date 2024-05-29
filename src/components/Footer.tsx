@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+import Image from 'next/image';
 import { useLoopContext } from '@/app/contexts/LoopProvider';
 import Carousel from './Carousel';
 
@@ -39,7 +41,17 @@ const StickyFooter = () => {
   return (
     <div className='sticky-footer'>
       <div className='carousel'>
-        <Carousel data={filledData} />
+        <Carousel>
+          {filledData.map((slide, index) => (
+            <div
+              className={classNames("embla__slide",
+                slide.image === '/assets/lone-frog.png' && 'default-image'
+              )}
+              key={index}>
+              <Image className='carousel-item' src={slide.image} alt={slide.altText} width={85} height={85} />
+            </div>
+          ))}
+        </Carousel>
       </div>
       <div className='order-info'>
         <p className='sans-serif'>{notice}</p>

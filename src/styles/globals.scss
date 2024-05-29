@@ -2,7 +2,9 @@
 @use 'colors';
 
 @use 'helpers';
+@use 'components/modal';
 @use 'bundler-page';
+@use 'components/info-card';
 @use 'components/BenefitTierProgressBar';
 @use 'components/header';
 @use 'components/product-card';
@@ -59,4 +61,8 @@ body {
 
 button {
   height: 52px;
+}
+
+p {
+  font-size: 18px;
 }

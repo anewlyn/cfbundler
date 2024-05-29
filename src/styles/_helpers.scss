@@ -101,6 +101,13 @@
   }
 }
 
+// Generate border classes
+@for $i from 0 through 4 {
+  .base-border-#{$i} {
+    border: $i * 0.1rem solid var(--cf-black);
+  }
+}
+
 .sans-serif {
   font-family: sans-serif;
 }
