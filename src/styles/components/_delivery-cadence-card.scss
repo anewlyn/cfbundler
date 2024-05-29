@@ -1,0 +1,42 @@
+@import 'breakpoints';
+
+.cadance-card {
+  display: flex;
+  background-color: var(--cf-background-color);
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 50vw;
+}
+
+.cadance-card-button {
+  background-color: transparent;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.cadance-card-button.selected {
+  background-color: black;
+  color: white;
+}
+
+.cadance-card-button.cancel {
+  background-color: var(--cf-white);
+  color: var(--cf-black);
+}
+
+hr {
+  width: 100%;
+  color: black;
+  margin: 2rem 0;
+}
+
+@include for_breakpoint('mobile') {
+  .cadance-card {
+    width: auto;
+  }
+}

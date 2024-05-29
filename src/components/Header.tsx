@@ -4,18 +4,17 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
-const Header = () => {
+type HeaderProps = {
+  handleOpenCadenceModal: () => void;
+};
+const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const { mockOrder, benefitTiers, currentOrderValue } = useLoopContext();
   const router = useRouter();
   const { deliverySchedule } = mockOrder;
 
-  const handleDeliveryScheduleModal = () => {
-    alert('Delivery Schedule Modal');
-  };
-
   const ScheduleButton = (className: string) => {
     return (
-      <button className={className} onClick={handleDeliveryScheduleModal}>
+      <button className={className} onClick={handleOpenCadenceModal}>
         <span>
           {/* @todo get schedule from data */}
           <span className="sans-serif">DELIVER EVERY &nbsp;</span>
