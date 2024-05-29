@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import classNames from 'classnames';
 import { ReactNode, useEffect, useRef } from 'react';
@@ -6,6 +6,7 @@ import { Portal } from './Portal';
 
 export type ModalProps = {
   open: boolean;
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   onClose: (e: any) => void;
   closeButtonIcon?: string;
   children: ReactNode;
@@ -15,27 +16,36 @@ export type ModalProps = {
   hasMobileClose?: boolean;
 };
 
-export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel = 'Close modal', closeButtonIcon = 'close', appendClassName, hasMobileClose }: ModalProps): JSX.Element | null => {
+export const Modal = ({
+  open,
+  onClose,
+  children,
+  ariaModalLabel,
+  ariaCloseLabel = 'Close modal',
+  closeButtonIcon = 'close',
+  appendClassName,
+  hasMobileClose,
+}: ModalProps): JSX.Element | null => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflow = 'auto';
     }
 
     return () => {
-      document.body.style.overflow = 'auto'
-    }
-  }, [open])
+      document.body.style.overflow = 'auto';
+    };
+  }, [open]);
 
   useEffect(() => {
     modalRef.current?.focus();
-
+    /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
     const trapFocus = (e: any) => {
       const focusableEls = modalRef.current?.querySelectorAll(
-        'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+        'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])',
       );
       const firstFocusableEl = focusableEls && focusableEls[0];
       const lastFocusableEl = focusableEls && focusableEls[focusableEls.length - 1];
@@ -73,29 +83,22 @@ export const Modal = ({ open, onClose, children, ariaModalLabel, ariaCloseLabel 
           aria-label={ariaModalLabel}
           tabIndex={-1}
         >
-          <div className='modal'>
-            <div className='modal-content'>
+          <div className="modal">
+            <div className="modal-content">
               {children}
-              {
-                hasMobileClose && (
-                  <button
-                    onClick={onClose}
-                    className="modal-close-mobile-button"
-                    aria-label={ariaCloseLabel}
-                  >
-                    {closeButtonIcon.toUpperCase()}
-                  </button>
-                )
-              }
+              {hasMobileClose && (
+                <button
+                  onClick={onClose}
+                  className="modal-close-mobile-button"
+                  aria-label={ariaCloseLabel}
+                >
+                  {closeButtonIcon.toUpperCase()}
+                </button>
+              )}
             </div>
-            <button
-              onClick={onClose}
-              className="modal-close-button"
-              aria-label={ariaCloseLabel}
-            >
+            <button onClick={onClose} className="modal-close-button" aria-label={ariaCloseLabel}>
               <i className="material-icons">{closeButtonIcon}</i>
             </button>
-
           </div>
         </aside>
       </Portal>

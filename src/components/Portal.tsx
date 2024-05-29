@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 export type PortalProps = {
-  onClose: (e: any) => void;
-  children: React.ReactNode | React.ReactNode[]
+  onClose: (e: KeyboardEvent) => void;
+  children: React.ReactNode | React.ReactNode[];
 };
 
 export const Portal = ({ children, onClose }: PortalProps): JSX.Element => {
   useEffect(() => {
-    const modalKeyDown = (event: any) => {
+    const modalKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' || event.key === 'Esc') {
         onClose(event);
       }
@@ -25,8 +25,5 @@ export const Portal = ({ children, onClose }: PortalProps): JSX.Element => {
     };
   }, []);
 
-  return createPortal(
-    <>{children}</>,
-    document.body
-  );
+  return createPortal(<>{children}</>, document.body);
 };

@@ -1,4 +1,4 @@
-@import "breakpoints";
+@import 'breakpoints';
 
 .info-card {
   display: grid;
@@ -13,7 +13,6 @@
 }
 
 .info-image-block {
-
   img {
     height: 100%;
     max-inline-size: 100%;
@@ -92,7 +91,6 @@
   }
 }
 
-
 @include for_breakpoint('mobile') {
   .info-image-block {
     display: none;
@@ -118,12 +116,10 @@
   .alt-images {
     display: none;
   }
-
 }
 
 @include for_breakpoint('tablet') {
   .info-image-block {
     align-self: flex-start;
   }
-
 }

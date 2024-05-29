@@ -1,10 +1,12 @@
-'use client'
+'use client';
 
-import Image from "next/image";
-import { useState } from "react";
-import AddToButton from "./AddToButton";
+import Image from 'next/image';
+import { useState } from 'react';
+import AddToButton from './AddToButton';
 interface ProductCardProps {
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   product: any;
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   handleOpenInfoModal: (arg0: any) => void;
   isPriority: boolean;
 }
@@ -16,11 +18,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
   const { maxValue } = product.limits[0];
 
   return (
-    <div className='product-card'>
+    <div className="product-card">
       <div className="product-image">
         <Image src={imageURL} alt={title} width={309} height={309} priority={isPriority} />
-        <div className={"info-screen"}>
-          <button onClick={() => handleOpenInfoModal(product)} className="info-button">MORE INFO</button>
+        <div className={'info-screen'}>
+          <button onClick={() => handleOpenInfoModal(product)} className="info-button">
+            MORE INFO
+          </button>
         </div>
       </div>
 
@@ -28,9 +32,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
       {/* @todo get product-info once we get data */}
       <p className="product-info sans-serif">5mg * 6-pack</p>
       <p className="sans-serif">${price}</p>
-      <AddToButton orderQty={qty} maxQty={maxValue} outOfStock={outOfStock} setQty={setQty} text={'+ ADD TO SUBSCRIPTION'} mobileText={'+ ADD'} />
+      <AddToButton
+        orderQty={qty}
+        maxQty={maxValue}
+        outOfStock={outOfStock}
+        setQty={setQty}
+        text={'+ ADD TO SUBSCRIPTION'}
+        mobileText={'+ ADD'}
+      />
     </div>
   );
-}
+};
 
 export default ProductCard;

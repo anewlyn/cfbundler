@@ -15,16 +15,17 @@
 @import url(https://db.onlinewebfonts.com/c/e2e4349461a29b7350c37460ed07c8d9?family=Neuzeit+Office+SR+W04+Bold);
 
 @font-face {
-  font-family: "Neuzeit Office SR W04 Bold";
-  src: url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.eot");
-  src: url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.svg#Neuzeit Office SR W04 Bold")format("svg");
+  font-family: 'Neuzeit Office SR W04 Bold';
+  src: url('https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.eot');
+  src:
+    url('https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.eot?#iefix')
+      format('embedded-opentype'),
+    url('https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.woff2') format('woff2'),
+    url('https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.woff') format('woff'),
+    url('https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.ttf') format('truetype'),
+    url('https://db.onlinewebfonts.com/t/e2e4349461a29b7350c37460ed07c8d9.svg#Neuzeit Office SR W04 Bold')
+      format('svg');
 }
-
-
 
 html {
   height: 100%;
@@ -39,7 +40,7 @@ body {
 
 * {
   box-sizing: border-box;
-  font-family: "Neuzeit Office SR W04 Bold";
+  font-family: 'Neuzeit Office SR W04 Bold';
 
   &::before,
   &::after {

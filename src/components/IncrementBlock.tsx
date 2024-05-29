@@ -8,7 +8,6 @@ type IncrementBlockProps = {
 };
 
 const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBlockProps) => {
-
   // Function to increment the count
   const increment = () => {
     if (orderQty >= maxQty) {
@@ -20,7 +19,7 @@ const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBl
   // Function to decrement the count
   const decrement = () => {
     if (orderQty <= 1) {
-      setSubscribed(false)
+      setSubscribed(false);
       return;
     }
     setQty(orderQty - 1);
@@ -33,12 +32,12 @@ const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBl
         <span className="sr-only">minus button</span>
       </button>
       <span className="icon-button">{orderQty}</span>
-      <button name='plus' onClick={increment} className="icon-button">
+      <button name="plus" onClick={increment} className="icon-button">
         <i className="material-icons">add</i>
         <span className="sr-only">plus button</span>
       </button>
     </div>
   );
-}
+};
 
 export default IncrementBlock;

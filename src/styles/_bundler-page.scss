@@ -1,4 +1,4 @@
-@import "breakpoints";
+@import 'breakpoints';
 
 .bundler-page {
   background-color: var(--cf-background-color);
@@ -19,7 +19,6 @@
   .product-card {
     flex-basis: 23%;
   }
-
 
   @include for_breakpoint('mobile') {
     display: grid;
