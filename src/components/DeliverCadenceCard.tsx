@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import classNames from 'classnames';
 import { useState } from 'react';
@@ -24,8 +24,12 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
   return (
     <div className="cadance-card">
       {deliverCadence.map((buttonText, index) => (
-        <button key={index}
-          className={classNames('cadance-card-button base-border-1', selectedButton === index ? 'selected' : '')}
+        <button
+          key={index}
+          className={classNames(
+            'cadance-card-button base-border-1',
+            selectedButton === index ? 'selected' : '',
+          )}
           onClick={() => handleClick(index)}
         >
           {buttonText}
