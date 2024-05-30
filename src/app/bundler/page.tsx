@@ -19,7 +19,7 @@ const Bundler = () => {
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const [modalProduct, setModalProduct] = useState<any>(null);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
-  const [cadenceModalOpen, setCadenceModalOpen] = useState(true);
+  const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
 
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const handleOpenInfoModal = (product: any) => {
