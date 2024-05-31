@@ -1,6 +1,8 @@
 'use client';
 
 import { createContext, useContext } from 'react';
+import getBundles from '@/api/loop/getBundles';
+import getProducts from '@/api/loop/getProducts';
 import mockOrder, { mockOrderTypes } from '@/data/mockOrder';
 import mockProducts, { mockProductsTypes } from '@/data/mockProducts';
 
@@ -18,6 +20,10 @@ const useLoopContext = () => useContext(LoopContext);
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const LoopProvider = ({ children }: any) => {
   // @todo Get data from Loop API
+  const bundles = getBundles();
+  console.log('bundles: ', bundles);
+  const product = getProducts();
+  console.log('product: ', product);
   // @todo Create update functions to update the data
   const benefitTiers = [
     {
