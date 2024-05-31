@@ -14,8 +14,10 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
   const [qty, setQty] = useState(1);
 
-  const { imageURL, title, price, outOfStock } = product.variants[0];
+  const { imageURL, price, outOfStock } = product.variants[0];
+  const { title } = product;
   const { maxValue } = product.limits[0];
+  const titleInfo = title.split(',');
 
   return (
     <div className="product-card">
@@ -28,9 +30,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
         </div>
       </div>
 
-      <p className="product-title">{title}</p>
+      <p className="product-title">{titleInfo[0]}</p>
       {/* @todo get product-info once we get data */}
-      <p className="product-info sans-serif">5mg * 6-pack</p>
+      <p className="product-info sans-serif">{titleInfo[1]}</p>
       <p className="sans-serif">${price}</p>
       <AddToButton
         orderQty={qty}

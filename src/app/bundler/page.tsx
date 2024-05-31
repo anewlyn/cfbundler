@@ -7,17 +7,23 @@ import InfoCard from '@/components/InfoCard';
 import { Modal } from '@/components/Modal';
 import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
-import { useLoopContext } from '@/contexts/LoopProvider';
+import useBundle from '../hooks/use-bundle';
 // temporary page to test the subscription button
 
 const Bundler = () => {
   // temporary data to test
   // @todo get the data from the Loop API
-  const { mockProducts } = useLoopContext();
-  const { products } = mockProducts;
+
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const [modalProduct, setModalProduct] = useState<any>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { data, isLoading } = useBundle();
+
+  if (isLoading) {
+    return null;
+  }
+
+  const { products } = data.data;
 
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const handleOpenInfoModal = (product: any) => {
@@ -31,7 +37,8 @@ const Bundler = () => {
   };
 
   const renderProductCards = () => {
-    return products.map((product, index) => {
+    /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
+    return products.map((product: any, index: any) => {
       // This sets the images above the fold as priority
       const isPriority = index <= 7;
 

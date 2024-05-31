@@ -1,3 +1,5 @@
+// 'use server';
+
 import axios from 'axios';
 
 const getBundles = () => {
@@ -6,9 +8,8 @@ const getBundles = () => {
       const options = {
         headers: {
           accept: 'application/json',
-          content: 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_LOOP_API_KEY}`,
-          'Access-Control-Allow-Origin': '*', // added this line
+          Authorization: process.env.NEXT_PUBLIC_LOOP_API_KEY,
+          'Access-Control-Allow-Origin': '*',
         },
       };
 

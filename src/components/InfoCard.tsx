@@ -9,20 +9,15 @@ import StarRating from './StarRatings';
 const InfoCard = ({ data }: { data: any }) => {
   const [qty, setQty] = useState(1);
   // @todo set image to imageURL when the Loop API is connected
-  const {
-    // imageURL,
-    title,
-    price,
-    outOfStock,
-  } = data.variants[0];
+  const { imageURL, price, outOfStock } = data.variants[0];
+  const { title } = data;
+  const { maxValue } = data.limits[0];
 
   const [selectedImageURL, setSelectedImageURL] = useState(0);
 
   const handleOpenChangeImage = (imageIndex: number) => {
     setSelectedImageURL(imageIndex);
   };
-
-  const { maxValue } = data.limits[0];
 
   // @todo get the following data from the Shopify API
   const rating = 4.5;
@@ -31,7 +26,7 @@ const InfoCard = ({ data }: { data: any }) => {
 
   // @todo get product images from the Shopify API
   const filledData = [
-    { image: '/assets/guava-passion-six-pack.png', altText: 'Cycling Frog Logo' },
+    { image: imageURL, altText: 'Cycling Frog Logo' },
     { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
     { image: '/assets/ruby-grapefruit.png', altText: 'Cycling Frog Logo' },
     { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
