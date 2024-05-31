@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import DeliverCadenceCard from '@/components/DeliverCadenceCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import InfoCard from '@/components/InfoCard';
@@ -14,9 +15,10 @@ const Bundler = () => {
   // temporary data to test
   // @todo get the data from the Loop API
 
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const [modalProduct, setModalProduct] = useState<any>(null);
-  const [modalOpen, setModalOpen] = useState(false);
   const { data, isLoading } = useBundle();
 
   if (isLoading) {
@@ -29,11 +31,19 @@ const Bundler = () => {
   const handleOpenInfoModal = (product: any) => {
     // @todo open modal with product info
     setModalProduct(product);
-    setModalOpen(true);
+    setInfoModalOpen(true);
   };
 
   const handleCloseInfoModal = () => {
-    setModalOpen(false);
+    setInfoModalOpen(false);
+  };
+
+  const handleCloseCadenceModal = () => {
+    setCadenceModalOpen(false);
+  };
+
+  const handleOpenCadenceModal = () => {
+    setCadenceModalOpen(true);
   };
 
   const renderProductCards = () => {
@@ -55,15 +65,22 @@ const Bundler = () => {
 
   return (
     <div className="bundler-page">
-      <Header />
+      <Header handleOpenCadenceModal={handleOpenCadenceModal} />
+      <Modal
+        open={cadenceModalOpen}
+        onClose={handleCloseCadenceModal}
+        ariaModalLabel="Delivery Cadence Modal"
+      >
+        <DeliverCadenceCard onClose={handleCloseCadenceModal} />
+      </Modal>
       <ProductGrid>{renderProductCards()}</ProductGrid>
       <Modal
-        open={modalOpen}
+        open={infoModalOpen}
         onClose={handleCloseInfoModal}
         ariaModalLabel="Product Info Modal"
         hasMobileClose
+        hasCloseButton
       >
-        {/* @todo add product info modal */}
         <InfoCard data={modalProduct} />
       </Modal>
       <Footer />

@@ -5,10 +5,11 @@ import mockOrder, { mockOrderTypes } from '@/data/mockOrder';
 import mockProducts, { mockProductsTypes } from '@/data/mockProducts';
 
 export type LoopContextType = {
-  mockProducts: mockProductsTypes;
-  mockOrder: mockOrderTypes;
   benefitTiers: { label: string; subtitle: string; footerMessage: string; value: number }[];
   currentOrderValue: number;
+  deliverCadence: string[];
+  mockOrder: mockOrderTypes;
+  mockProducts: mockProductsTypes;
 };
 
 const LoopContext = createContext<LoopContextType>({} as LoopContextType);
@@ -46,13 +47,16 @@ const LoopProvider = ({ children }: any) => {
     },
   ];
 
+  const deliverCadence = ['2 WEEKS', '4 WEEKS', '6 WEEKS', '8 WEEKS'];
+
   const currentOrderValue = 50;
 
   const contextValue = {
-    mockProducts,
-    mockOrder,
     benefitTiers,
     currentOrderValue,
+    deliverCadence,
+    mockOrder,
+    mockProducts,
   };
 
   return <LoopContext.Provider value={contextValue}>{children}</LoopContext.Provider>;
