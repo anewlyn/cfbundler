@@ -8,7 +8,7 @@ type AddToButtonProps = {
   orderQty: number;
   maxQty: number;
   outOfStock: boolean;
-  setQty: React.Dispatch<React.SetStateAction<number>>;
+  setQty: (qty: number) => void;
   className?: string;
   text?: string;
   mobileText?: string;
@@ -43,6 +43,7 @@ const AddToButton = ({
   }, [mobileText, text]);
 
   const handleClick = () => {
+    setQty(1);
     setSubscribed(!subscribed);
   };
 

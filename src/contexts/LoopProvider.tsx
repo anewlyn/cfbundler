@@ -73,7 +73,9 @@ const LoopProvider = ({ children }: any) => {
       } else {
         setCart((prevCart) => ({
           ...prevCart,
-          productVariants: [...prevCart.productVariants, { shopifyId, quantity }],
+          productVariants: prevCart.productVariants.map((variant) =>
+            variant.shopifyId === shopifyId ? { ...variant, quantity: quantity } : variant,
+          ),
         }));
       }
     } else {

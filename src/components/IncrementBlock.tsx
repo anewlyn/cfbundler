@@ -2,7 +2,7 @@
 
 type IncrementBlockProps = {
   orderQty: number;
-  setQty: React.Dispatch<React.SetStateAction<number>>;
+  setQty: (qty: number) => void;
   maxQty: number;
   setSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -19,6 +19,7 @@ const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBl
   // Function to decrement the count
   const decrement = () => {
     if (orderQty <= 1) {
+      setQty(orderQty - 1);
       setSubscribed(false);
       return;
     }
