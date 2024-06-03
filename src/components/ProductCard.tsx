@@ -31,10 +31,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
 
       <p className="product-title">{titleInfo[0]}</p>
       <p className="product-info sans-serif">{titleInfo[1]}</p>
-      <p className="sans-serif">{Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(price)}</p>
+      <p className="sans-serif">
+        {Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(price)}
+      </p>
       <AddToButton
         orderQty={qty}
         maxQty={maxValue > 0 ? maxValue : 1000}

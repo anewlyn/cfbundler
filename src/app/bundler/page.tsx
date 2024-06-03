@@ -21,7 +21,6 @@ const Bundler = () => {
   const [modalProduct, setModalProduct] = useState<any>(null);
   const { products } = useLoopContext();
 
-
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const handleOpenInfoModal = (product: any) => {
     // @todo open modal with product info
