@@ -56,6 +56,7 @@ export const setProductsForRender = (products: ProductTypes[]) => {
           outOfStock: variant.outOfStock,
           shopifyId: variant.shopifyId,
           title: variant.title,
+          limits: product.limits,
         };
       });
 

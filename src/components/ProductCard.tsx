@@ -14,15 +14,14 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
   const [qty, setQty] = useState(1);
 
-  const { imageURL, price, outOfStock } = product.variants[0];
-  const { title } = product;
-  const { maxValue } = product.limits[0];
-  const titleInfo = title.split(',');
+  const { imageURL, price, outOfStock, limits, productTitle } = product;
+  const { maxValue } = limits[0];
+  const titleInfo = productTitle.split(',');
 
   return (
     <div className="product-card">
       <div className="product-image">
-        <Image src={imageURL} alt={title} width={309} height={309} priority={isPriority} />
+        <Image src={imageURL} alt={productTitle} width={309} height={309} priority={isPriority} />
         <div className={'info-screen'}>
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">
             MORE INFO
@@ -31,12 +30,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
       </div>
 
       <p className="product-title">{titleInfo[0]}</p>
-      {/* @todo get product-info once we get data */}
       <p className="product-info sans-serif">{titleInfo[1]}</p>
-      <p className="sans-serif">${price}</p>
+      <p className="sans-serif">{Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(price)}</p>
       <AddToButton
         orderQty={qty}
-        maxQty={maxValue}
+        maxQty={maxValue > 0 ? maxValue : 1000}
         outOfStock={outOfStock}
         setQty={setQty}
         text={'+ ADD TO SUBSCRIPTION'}

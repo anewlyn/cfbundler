@@ -8,6 +8,11 @@ export type VariantTypes = {
   imageURL: string;
   requiresShipping: boolean;
   outOfStock: boolean;
+  limits: {
+    boxSizeId: string;
+    categoryId: string;
+    maxValue: number;
+  }[];
 };
 
 export type AllProductVariants = {

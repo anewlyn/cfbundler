@@ -8,7 +8,7 @@ import InfoCard from '@/components/InfoCard';
 import { Modal } from '@/components/Modal';
 import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
-import useBundle from '../hooks/use-bundle';
+import { useLoopContext } from '@/contexts/LoopProvider';
 // temporary page to test the subscription button
 
 const Bundler = () => {
@@ -19,14 +19,8 @@ const Bundler = () => {
   const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const [modalProduct, setModalProduct] = useState<any>(null);
-  const { data, isLoading } = useBundle();
+  const { products } = useLoopContext();
 
-  if (isLoading) {
-    return null;
-  }
-  console.log('data: ', data.data);
-
-  const { products } = data.data;
 
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   const handleOpenInfoModal = (product: any) => {
