@@ -4,7 +4,7 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 import Carousel from './Carousel';
 
 const StickyFooter = () => {
-  const { mockProducts, mockOrder, benefitTiers, currentOrderValue } = useLoopContext();
+  const { products, cart, benefitTiers, currentOrderValue } = useLoopContext();
 
   // sets the footer message based on the current order value
   let notice = benefitTiers[0].footerMessage;
@@ -20,19 +20,21 @@ const StickyFooter = () => {
     alert('Add to cart clicked');
   };
 
-  // creates an array of product images and alt text for the carousel
-  const productImages = mockOrder.productVariants.map((variant) => {
-    const product = mockProducts.products[variant.shopifyId];
-    return {
-      image: product.variants[0]?.imageURL,
-      altText: product.variants[0].title,
-    };
+  const filledData = cart.productVariants.map((cartProduct) => {
+    const product = products.find((product) => {
+      return product.shopifyId === cartProduct.shopifyId;
+    });
+    if (product) {
+      return {
+        imageURL: product.imageURL,
+        productTitle: product.productTitle,
+      };
+    }
+    return product;
   });
 
-  // Ensure there are at least 6 images
-  const filledData = [...productImages];
   while (filledData.length < 6) {
-    filledData.push({ image: '/assets/lone-frog.png', altText: 'Cycling Frog Logo' });
+    filledData.push({ imageURL: '/assets/lone-frog.png', productTitle: 'Cycling Frog Logo' });
   }
 
   return (
@@ -43,14 +45,14 @@ const StickyFooter = () => {
             <div
               className={classNames(
                 'embla__slide',
-                slide.image === '/assets/lone-frog.png' && 'default-image',
+                slide?.imageURL === '/assets/lone-frog.png' && 'default-image',
               )}
               key={index}
             >
               <Image
                 className="carousel-item"
-                src={slide.image}
-                alt={slide.altText}
+                src={slide?.imageURL || '/assets/lone-frog.png'}
+                alt={slide?.productTitle || 'Cycling Frog Logo'}
                 width={85}
                 height={85}
               />

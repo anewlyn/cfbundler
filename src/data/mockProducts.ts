@@ -1,6 +1,45 @@
 // Temporary file to define the shape of the data that will be used in the app.
+export type VariantTypes = {
+  shopifyId: number;
+  title: string;
+  price: number;
+  position: number;
+  taxable: boolean;
+  imageURL: string;
+  requiresShipping: boolean;
+  outOfStock: boolean;
+};
 
-export type mockProductsTypes = {
+export type AllProductVariants = {
+  productTitle: string;
+  imageURL: string;
+  price: number;
+  outOfStock: boolean;
+  shopifyId: number;
+  title: string;
+};
+
+export type ProductTypes = {
+  shopifyId: number;
+  title: string;
+  handle: string;
+  status: string;
+  options: {
+    id: string;
+    name: string;
+    values: string[];
+    position: number;
+  }[];
+  variants: VariantTypes[];
+  categoryId: string;
+  limits: {
+    boxSizeId: string;
+    categoryId: string;
+    maxValue: number;
+  }[];
+};
+
+export type BundleTypes = {
   id: string;
   name: string;
   description: string;
@@ -30,7 +69,7 @@ export type mockProductsTypes = {
     appliesOnEachItem: boolean;
   }[];
   sellingPlans: {
-    shopifyId: string;
+    shopifyId: number;
     name: string;
     description: string;
     discounts: {
@@ -53,34 +92,7 @@ export type mockProductsTypes = {
       maxValue: number;
     }[];
   }[];
-  products: {
-    shopifyId: number;
-    title: string;
-    handle: string;
-    status: string;
-    options: {
-      id: string;
-      name: string;
-      values: string[];
-      position: number;
-    }[];
-    variants: {
-      shopifyId: string;
-      title: string;
-      price: number;
-      position: number;
-      taxable: boolean;
-      imageURL: string;
-      requiresShipping: boolean;
-      outOfStock: boolean;
-    }[];
-    categoryId: string;
-    limits: {
-      boxSizeId: string;
-      categoryId: string;
-      maxValue: number;
-    }[];
-  }[];
+  products: ProductTypes[];
 };
 
 const mockProducts = {

@@ -24,6 +24,7 @@ const Bundler = () => {
   if (isLoading) {
     return null;
   }
+  console.log('data: ', data.data);
 
   const { products } = data.data;
 
