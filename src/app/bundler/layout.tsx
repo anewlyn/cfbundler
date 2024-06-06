@@ -1,10 +1,13 @@
-'use client';
-
 import LoopProvider from '@/contexts/LoopProvider';
+import { getBundle } from '../queries/get-bundle';
 
-const BundlerLayout = ({ children }: { children: React.ReactNode }) => {
+const BundlerLayout = async ({ children }: { children: React.ReactNode }) => {
+  const bundleData = await getBundle();
+
   return (
-    <LoopProvider>
+    <LoopProvider
+      bundleData={bundleData.data}
+    >
       <section>{children}</section>
     </LoopProvider>
   );

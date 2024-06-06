@@ -1,7 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
-import useBundle from '@/app/hooks/use-bundle';
+import { createContext, useContext, useEffect, useState } from 'react';
 import mockOrder, { mockOrderTypes } from '@/data/mockOrder';
 import { AllProductVariants, BundleTypes } from '@/data/mockProducts';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
@@ -34,31 +33,33 @@ export type cartType = {
   quantity: number;
 };
 
-const initialCart = {
-  boxSizeId: '01HHC6A5VTFZQT1DW7A79QCY9F',
-  discountId: '01HHC6AHF4RCWF3X5PBP9CVBK7',
-  sellingPlanId: new Int32Array([765296849]),
-  productVariants: [
-    { shopifyId: 40847671722193, quantity: 1 },
-    { shopifyId: 40249531367633, quantity: 3 },
-    { shopifyId: 41529306185937, quantity: 1 },
-  ],
+const defaultCart: cartType = {
+  boxSizeId: '',
+  discountId: '',
+  sellingPlanId: new Int32Array(),
+  productVariants: [],
   quantity: 0,
 };
+
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-const LoopProvider = ({ children }: any) => {
-  const [cart, setCart] = useState<cartType>(initialCart);
-  const { data, isLoading } = useBundle();
+const LoopProvider = ({
+  bundleData,
+  children,
+}: {
+  bundleData: BundleTypes;
+  children: React.ReactNode;
+}) => {
+  const [cart, setCart] = useState(defaultCart);
+  const [currentOrderValue, setCurrentOrderValue] = useState(0);
+  const { products } = bundleData;
+  const productsForRender = setProductsForRender(products);
 
-  if (isLoading) {
-    return null;
-  }
-
-  const { products } = data.data;
-  // const flatProducts = setProductsForRender(products);
+  useEffect(() => {
+    setCurrentOrderValue(getCartValue(productsForRender, cart));
+  }, [cart, productsForRender]);
 
   const addProductVariant = ({ shopifyId, quantity }: variantType) => {
-    const productVariant = cart.productVariants.find(
+    const productVariant = cart.productVariants?.find(
       (variant: variantType) => variant.shopifyId === shopifyId,
     );
 
@@ -86,8 +87,6 @@ const LoopProvider = ({ children }: any) => {
     }
   };
 
-  const value = getCartValue(products, cart);
-  console.log('value: ', value);
   // const setDiscountId = (discountId: string) => {
   //   const getCartValue = getCartValue()
   // }
@@ -116,17 +115,15 @@ const LoopProvider = ({ children }: any) => {
 
   const deliverCadence = ['2 WEEKS', '4 WEEKS', '6 WEEKS', '8 WEEKS'];
 
-  const currentOrderValue = 50;
-
   const contextValue = {
     addProductVariant,
     benefitTiers,
     cart,
-    currentOrderValue,
+    currentOrderValue: currentOrderValue,
     deliverCadence,
     mockOrder,
-    products: setProductsForRender(products),
-    bundle: data.data,
+    products: productsForRender,
+    bundle: bundleData,
   };
 
   return <LoopContext.Provider value={contextValue}>{children}</LoopContext.Provider>;

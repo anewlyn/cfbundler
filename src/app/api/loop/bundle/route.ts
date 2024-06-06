@@ -15,7 +15,6 @@ export const GET = async () => {
       `https://api.loopsubscriptions.com/storefront/2023-10/bundle?myshopifyDomain=${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`,
       options,
     );
-    console.log('response: ', response.data.data[0].id);
 
     const bundleId = response.data.data[0].id;
 
@@ -23,7 +22,6 @@ export const GET = async () => {
       `https://api.loopsubscriptions.com/storefront/2023-10/bundle/${bundleId}`,
       options,
     );
-    console.log('bundleResponse: ', bundleResponse.data);
 
     // resolve(response);
     return NextResponse.json(bundleResponse.data);
@@ -32,19 +30,3 @@ export const GET = async () => {
     // reject(err);
   }
 };
-
-// export const POST = async (request: NextRequest) => {
-//   // Get JSON payload
-//   const data = await request.json();
-
-//   // Return Response
-//   return NextResponse.json(
-//     {
-//       data,
-//     },
-//     {
-//       status: 200,
-//       // headers: getCorsHeaders(request.headers.get("origin") || ""),
-//     },
-//   );
-// };
