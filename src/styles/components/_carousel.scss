@@ -26,11 +26,11 @@
   border: 1px dashed var(--cf-grey-border);
   display: flex;
   flex-wrap: wrap;
-  height: auto;
+  height: 85px;
   justify-content: center;
   width: 85px;
 
-  > .carousel-item {
+  >.carousel-item {
     height: 53px;
     opacity: 30%;
     width: auto;
