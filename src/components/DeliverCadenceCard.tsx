@@ -19,7 +19,7 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
   const handleSaveChanges = () => {
     const selectedCadence = deliverCadence[selectedButton].shopifyId;
     const newCart = { ...cart, sellingPlanId: selectedCadence };
-    setCart(newCart)
+    setCart(newCart);
     onClose();
   };
 
