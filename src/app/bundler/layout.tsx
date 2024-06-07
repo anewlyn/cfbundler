@@ -1,5 +1,5 @@
 import LoopProvider from '@/contexts/LoopProvider';
-import { getBundle } from '../api/loop/get-bundle';
+import { getBundle } from '../api/loop/getBundle';
 
 const BundlerLayout = async ({ children }: { children: React.ReactNode }) => {
   const bundleData = await getBundle();

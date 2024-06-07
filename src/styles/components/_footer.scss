@@ -45,12 +45,17 @@
 }
 
 .add-button {
-  background-color: var(--cf-button-disabled);
+  background-color: var(--cf-black);
   border: none;
   color: var(--cf-white);
   font-size: 1rem;
   min-width: max-content;
   padding: 0 2rem;
+}
+
+.disabled {
+  background-color: var(--cf-button-disabled);
+  cursor: not-allowed;
 }
 
 @include for_breakpoint('mobile') {

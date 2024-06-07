@@ -1,22 +1,12 @@
 import axios from 'axios';
+import { cartType } from '@/contexts/LoopProvider';
 
-const createTransaction = async (
-  id: string,
-  boxSizeId: string,
-  discountId: string,
-  sellingPlanId: string,
-  productVariants: { shopifyId: string; quantity: number }[],
-) => {
+const createTransaction = async (cart: cartType, id: string) => {
   const options = {
     headers: { accept: 'application/json', 'content-type': 'application/json' },
   };
 
-  const body = {
-    boxSizeId,
-    discountId,
-    sellingPlanId,
-    productVariants,
-  };
+  const body = cart;
 
   try {
     const response = await axios.post(

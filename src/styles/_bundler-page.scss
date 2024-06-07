@@ -3,6 +3,7 @@
 .bundler-page {
   background-color: var(--cf-background-color);
   min-width: fit-content;
+  padding-bottom: 10rem;
 }
 
 .bp-flex {
@@ -19,8 +20,14 @@
   .product-card {
     flex-basis: 23%;
   }
+}
 
-  @include for_breakpoint('mobile') {
+@include for_breakpoint('mobile') {
+  .bundler-page {
+    padding-bottom: 15rem;
+  }
+
+  .bp-flex {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }

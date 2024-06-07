@@ -8,12 +8,10 @@ type HeaderProps = {
   handleOpenCadenceModal: () => void;
 };
 const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
-  const { cart, deliverCadence, benefitTiers, currentOrderValue } = useLoopContext();
+  const { cart, sellingPlans, benefitTiers, currentOrderValue } = useLoopContext();
 
   const router = useRouter();
-  const deliverySchedule = deliverCadence.find(
-    (cadence) => cadence.shopifyId === cart.sellingPlanId,
-  );
+  const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
   const ScheduleButton = (className: string) => {
     return (

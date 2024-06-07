@@ -9,7 +9,7 @@ interface DeliverCadenceCardProps {
 }
 
 const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
-  const { deliverCadence, setCart, cart } = useLoopContext();
+  const { sellingPlans, setCart, cart } = useLoopContext();
   const [selectedButton, setSelectedButton] = useState<number>(0);
 
   const handleClick = (buttonNumber: number) => {
@@ -17,7 +17,7 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
   };
 
   const handleSaveChanges = () => {
-    const selectedCadence = deliverCadence[selectedButton].shopifyId;
+    const selectedCadence = sellingPlans[selectedButton].shopifyId;
     const newCart = { ...cart, sellingPlanId: selectedCadence };
     setCart(newCart);
     onClose();
@@ -25,7 +25,7 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
 
   return (
     <div className="cadance-card">
-      {deliverCadence.map((cadence, index) => (
+      {sellingPlans.map((cadence, index) => (
         <button
           key={index}
           className={classNames(

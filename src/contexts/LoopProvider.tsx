@@ -1,17 +1,19 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import createTransaction from '@/app/api/loop/createTransaction';
 import { AllProductVariants, BundleTypes } from '@/data/mockProducts';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
 
 export type LoopContextType = {
   addProductVariant: ({ shopifyId, quantity }: variantType) => void;
   benefitTiers: { subtitle: string; footerMessage: string; value: number }[];
-  currentOrderValue: number;
-  deliverCadence: BundleTypes['sellingPlans'];
   bundle: BundleTypes;
-  products: AllProductVariants[];
   cart: cartType;
+  currentOrderValue: number;
+  handleTransaction: () => void;
+  products: AllProductVariants[];
+  sellingPlans: BundleTypes['sellingPlans'];
   setCart: (arg0: cartType) => void;
 };
 
@@ -27,9 +29,9 @@ type variantType = {
 export type cartType = {
   boxSizeId: string;
   discountId: string;
-  sellingPlanId: number;
   productVariants: variantType[];
   quantity: number;
+  sellingPlanId: number;
 };
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -40,16 +42,17 @@ const LoopProvider = ({
   bundleData: BundleTypes;
   children: React.ReactNode;
 }) => {
+  console.log('bundleData: ', bundleData);
   const defaultCart: cartType = {
     boxSizeId: bundleData.boxSizes[0].id,
     discountId: bundleData.discounts[0].id,
-    sellingPlanId: bundleData.sellingPlans[0].shopifyId,
     productVariants: [],
     quantity: 0,
+    sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
   const [cart, setCart] = useState<cartType>(defaultCart);
   const [currentOrderValue, setCurrentOrderValue] = useState(0);
-  const { products } = bundleData;
+  const { products, discounts, sellingPlans } = bundleData;
   const productsForRender = setProductsForRender(products);
 
   useEffect(() => {
@@ -85,9 +88,10 @@ const LoopProvider = ({
     }
   };
 
-  // const setDiscountId = (discountId: string) => {
-  //   const getCartValue = getCartValue()
-  // }
+  const handleTransaction = () => {
+    createTransaction(cart, bundleData.id);
+    // @todo navigate to cyclingfrog.com/cart
+  };
 
   const benefitTiers = [
     {
@@ -104,20 +108,19 @@ const LoopProvider = ({
     },
   ].map((tier, index) => ({
     ...tier,
-    value: bundleData.discounts[index].minCartQuantity,
+    value: discounts[index].minCartQuantity,
   }));
-
-  const deliverCadence = bundleData.sellingPlans;
 
   const contextValue = {
     addProductVariant,
     benefitTiers,
+    bundle: bundleData,
     cart,
     currentOrderValue: currentOrderValue,
-    deliverCadence,
+    handleTransaction,
     products: productsForRender,
+    sellingPlans,
     setCart,
-    bundle: bundleData,
   };
 
   return <LoopContext.Provider value={contextValue}>{children}</LoopContext.Provider>;

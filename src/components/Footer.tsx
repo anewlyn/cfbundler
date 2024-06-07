@@ -4,7 +4,7 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 import Carousel from './Carousel';
 
 const StickyFooter = () => {
-  const { products, cart, benefitTiers, currentOrderValue } = useLoopContext();
+  const { products, cart, benefitTiers, currentOrderValue, handleTransaction } = useLoopContext();
 
   // sets the footer message based on the current order value
   let notice = benefitTiers[0].footerMessage;
@@ -16,7 +16,8 @@ const StickyFooter = () => {
   });
 
   // @todo if order meets minimun requirements, add to cart
-  const handleAddToCart = () => {
+  const handlePostTransaction = () => {
+    handleTransaction();
     alert('Add to cart clicked');
   };
 
@@ -74,8 +75,10 @@ const StickyFooter = () => {
             )}
           </p>
           <button
-            onClick={handleAddToCart}
-            className="add-button"
+            onClick={handlePostTransaction}
+            className={classNames('add-button', {
+              disabled: currentOrderValue < benefitTiers[0].value,
+            })}
             disabled={currentOrderValue < benefitTiers[0].value}
           >
             ADD TO CART
