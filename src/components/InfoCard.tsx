@@ -14,7 +14,7 @@ const InfoCard = ({ data }: { data: any }) => {
     cart.productVariants.find((item) => item.shopifyId === data.shopifyId)?.quantity || 0;
 
   const { imageURL, price, outOfStock } = data;
-  const { title } = data;
+  const { productTitle } = data;
   const { maxValue } = data.limits[0];
 
   const [selectedImageURL, setSelectedImageURL] = useState(0);
@@ -27,7 +27,7 @@ const InfoCard = ({ data }: { data: any }) => {
     setSelectedImageURL(imageIndex);
   };
 
-  // @todo get the following data from the Shopify API
+  // @todo get the following data from the Loox API
   const rating = 4.5;
   const numberOfReviews = 120;
   const headline = 'ENJOY AN UPLIFTING BUZZ WITHOUT THE BOOZE';
@@ -42,11 +42,11 @@ const InfoCard = ({ data }: { data: any }) => {
   return (
     <div className="info-card">
       <div className="info-image-block">
-        <img src={`${filledData[selectedImageURL].image}`} alt={title} />
+        <img src={`${filledData[selectedImageURL].image}`} alt={productTitle} />
       </div>
       <div className="info-content">
         <section className="description">
-          <h1>{data.title}</h1>
+          <h1>{productTitle}</h1>
           <p className="sans-serif">{price}</p>
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />

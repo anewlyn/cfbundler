@@ -32,7 +32,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
   return (
     <div className="product-card">
       <div className="product-image">
-        <Image src={imageURL} alt={productTitle} width={309} height={309} priority={isPriority} />
+        <Image src={imageURL} alt={productTitle} width={309} height={309} priority={isPriority} sizes="100vw"
+          style={{
+            width: '100%',
+            height: 'auto',
+          }} />
         <div className={'info-screen'}>
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">
             MORE INFO
