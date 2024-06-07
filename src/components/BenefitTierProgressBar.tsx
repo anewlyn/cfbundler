@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useLoopContext } from '@/contexts/LoopProvider';
 
 interface BenefitTier {
   value: number;
@@ -11,6 +12,7 @@ interface BenefitTierProgressBarProps {
 }
 
 const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarProps) => {
+  const { bundle } = useLoopContext();
   return (
     // grid
     <div className="progress-bar">
@@ -33,7 +35,7 @@ const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarP
               <div>
                 {Intl.NumberFormat('en-US', {
                   style: 'currency',
-                  currency: 'USD',
+                  currency: bundle.currencyCode,
                   maximumFractionDigits: 0,
                 }).format(tier.value)}
               </div>

@@ -12,7 +12,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
-  const { addProductVariant, cart } = useLoopContext();
+  const { addProductVariant, cart, bundle } = useLoopContext();
 
   const cartQty =
     cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
       <p className="sans-serif">
         {Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: 'USD',
+          currency: bundle.currencyCode,
         }).format(price)}
       </p>
       <AddToButton

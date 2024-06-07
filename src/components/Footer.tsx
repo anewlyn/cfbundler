@@ -4,7 +4,8 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 import Carousel from './Carousel';
 
 const StickyFooter = () => {
-  const { products, cart, benefitTiers, currentOrderValue, handleTransaction } = useLoopContext();
+  const { products, cart, benefitTiers, currentOrderValue, handleTransaction, bundle } =
+    useLoopContext();
 
   // sets the footer message based on the current order value
   let notice = benefitTiers[0].footerMessage;
@@ -70,9 +71,10 @@ const StickyFooter = () => {
         <p className="sans-serif">{notice}</p>
         <div className="cov-info">
           <p className="cov">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-              currentOrderValue,
-            )}
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: bundle.currencyCode,
+            }).format(currentOrderValue)}
           </p>
           <button
             onClick={handlePostTransaction}
