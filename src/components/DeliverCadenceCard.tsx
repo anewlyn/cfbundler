@@ -9,21 +9,23 @@ interface DeliverCadenceCardProps {
 }
 
 const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
-  const { deliverCadence } = useLoopContext();
-  const [selectedButton, setSelectedButton] = useState<number | null>(0);
+  const { deliverCadence, setCart, cart } = useLoopContext();
+  const [selectedButton, setSelectedButton] = useState<number>(0);
 
   const handleClick = (buttonNumber: number) => {
     setSelectedButton(buttonNumber);
   };
 
   const handleSaveChanges = () => {
-    // @todo save/set selectedButton as cadence
+    const selectedCadence = deliverCadence[selectedButton].shopifyId;
+    const newCart = { ...cart, sellingPlanId: selectedCadence };
+    setCart(newCart)
     onClose();
   };
 
   return (
     <div className="cadance-card">
-      {deliverCadence.map((buttonText, index) => (
+      {deliverCadence.map((cadence, index) => (
         <button
           key={index}
           className={classNames(
@@ -32,7 +34,7 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
           )}
           onClick={() => handleClick(index)}
         >
-          {buttonText}
+          {`${cadence.deliveryIntervalCount} ${cadence.deliveryInterval}`}
         </button>
       ))}
       <hr />
