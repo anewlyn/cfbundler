@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import mockOrder, { mockOrderTypes } from '@/data/mockOrder';
 import { AllProductVariants, BundleTypes } from '@/data/mockProducts';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
 
@@ -9,11 +8,11 @@ export type LoopContextType = {
   addProductVariant: ({ shopifyId, quantity }: variantType) => void;
   benefitTiers: { subtitle: string; footerMessage: string; value: number }[];
   currentOrderValue: number;
-  deliverCadence: string[];
-  mockOrder: mockOrderTypes;
+  deliverCadence: BundleTypes['sellingPlans'];
   bundle: BundleTypes;
   products: AllProductVariants[];
   cart: cartType;
+  setCart: (arg0: cartType) => void;
 };
 
 const LoopContext = createContext<LoopContextType>({} as LoopContextType);
@@ -28,17 +27,9 @@ type variantType = {
 export type cartType = {
   boxSizeId: string;
   discountId: string;
-  sellingPlanId: Int32Array;
+  sellingPlanId: number;
   productVariants: variantType[];
   quantity: number;
-};
-
-const defaultCart: cartType = {
-  boxSizeId: '',
-  discountId: '',
-  sellingPlanId: new Int32Array(),
-  productVariants: [],
-  quantity: 0,
 };
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -49,7 +40,14 @@ const LoopProvider = ({
   bundleData: BundleTypes;
   children: React.ReactNode;
 }) => {
-  const [cart, setCart] = useState(defaultCart);
+  const defaultCart: cartType = {
+    boxSizeId: bundleData.boxSizes[0].id,
+    discountId: bundleData.discounts[0].id,
+    sellingPlanId: bundleData.sellingPlans[0].shopifyId,
+    productVariants: [],
+    quantity: 0,
+  };
+  const [cart, setCart] = useState<cartType>(defaultCart);
   const [currentOrderValue, setCurrentOrderValue] = useState(0);
   const { products } = bundleData;
   const productsForRender = setProductsForRender(products);
@@ -95,24 +93,21 @@ const LoopProvider = ({
     {
       subtitle: 'Min. Order',
       footerMessage: 'Subscriptions require a $50 minimum order.',
-      value: 50,
     },
     {
       footerMessage: 'Yay! You have free shipping.',
       subtitle: 'Free Shipping',
-      value: 100,
     },
     {
       footerMessage: 'Yay! You have free shipping and a 10% discount.',
       subtitle: '10% off',
-      value: 150,
     },
   ].map((tier, index) => ({
     ...tier,
     value: bundleData.discounts[index].minCartQuantity,
   }));
 
-  const deliverCadence = ['2 WEEKS', '4 WEEKS', '6 WEEKS', '8 WEEKS'];
+  const deliverCadence = bundleData.sellingPlans;
 
   const contextValue = {
     addProductVariant,
@@ -120,8 +115,8 @@ const LoopProvider = ({
     cart,
     currentOrderValue: currentOrderValue,
     deliverCadence,
-    mockOrder,
     products: productsForRender,
+    setCart,
     bundle: bundleData,
   };
 

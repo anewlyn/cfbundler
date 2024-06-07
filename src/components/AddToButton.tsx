@@ -15,7 +15,7 @@ type AddToButtonProps = {
 };
 
 const AddToButton = ({
-  orderQty = 1,
+  orderQty,
   setQty,
   maxQty,
   outOfStock,
@@ -25,6 +25,14 @@ const AddToButton = ({
 }: AddToButtonProps) => {
   const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
+
+  useEffect(() => {
+    if (orderQty > 0) {
+      setSubscribed(true);
+    } else {
+      setSubscribed(false);
+    }
+  }, [orderQty]);
 
   useEffect(() => {
     if (mobileText && text) {

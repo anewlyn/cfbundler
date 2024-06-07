@@ -20,19 +20,23 @@ const StickyFooter = () => {
     alert('Add to cart clicked');
   };
 
-  const filledData =
-    cart.productVariants?.map((cartProduct) => {
-      const product = products.find((product) => {
-        return product.shopifyId === cartProduct.shopifyId;
-      });
-      if (product) {
-        return {
+  const filledData = [];
+  cart.productVariants?.forEach((cartProduct) => {
+    const product = products.find((product) => {
+      return product.shopifyId === cartProduct.shopifyId;
+    });
+
+    if (product) {
+      // add product to filledData array a number of times equal to the quantity
+      for (let i = 0; i < cartProduct.quantity; i++) {
+        filledData.push({
           imageURL: product.imageURL,
           productTitle: product.productTitle,
-        };
+        });
       }
-      return product;
-    }) || [];
+    }
+    return product;
+  });
 
   while (filledData.length < 6) {
     filledData.push({ imageURL: '/assets/lone-frog.png', productTitle: 'Cycling Frog Logo' });

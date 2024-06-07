@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import AddToButton from './AddToButton';
 interface ProductCardProps {
@@ -13,17 +12,22 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
-  const [orderQty, setOrderQty] = useState(1);
-  const { addProductVariant } = useLoopContext();
+  const { addProductVariant, cart } = useLoopContext();
 
-  const handleProductQtyChange = (qty: number) => {
-    setOrderQty(qty);
-    addProductVariant({ shopifyId: product.shopifyId, quantity: qty });
-  };
+  const cartQty =
+    cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
 
-  const { imageURL, price, outOfStock, limits, productTitle } = product;
+  const { imageURL, price, outOfStock, limits, productTitle, title, shopifyId, isVariant } =
+    product;
+
   const { maxValue } = limits[0];
   const titleInfo = productTitle.split(',');
+
+  const handleProductQtyChange = (qty: number) => {
+    addProductVariant({ shopifyId: shopifyId, quantity: qty });
+  };
+
+  const variantTitle = isVariant ? `${titleInfo[0]} (${title})` : titleInfo[0];
 
   return (
     <div className="product-card">
@@ -36,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
         </div>
       </div>
 
-      <p className="product-title">{titleInfo[0]}</p>
+      <p className="product-title">{variantTitle}</p>
       <p className="product-info sans-serif">{titleInfo[1]}</p>
       <p className="sans-serif">
         {Intl.NumberFormat('en-US', {
@@ -45,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
         }).format(price)}
       </p>
       <AddToButton
-        orderQty={orderQty}
+        orderQty={cartQty}
         maxQty={maxValue > 0 ? maxValue : 1000}
         outOfStock={outOfStock}
         setQty={handleProductQtyChange}

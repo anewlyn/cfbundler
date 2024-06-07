@@ -8,17 +8,21 @@ type HeaderProps = {
   handleOpenCadenceModal: () => void;
 };
 const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
-  const { mockOrder, benefitTiers, currentOrderValue } = useLoopContext();
+  const { cart, deliverCadence, benefitTiers, currentOrderValue } = useLoopContext();
   const router = useRouter();
-  const { deliverySchedule } = mockOrder;
+  const deliverySchedule = deliverCadence.find(
+    (cadence) => cadence.shopifyId === cart.sellingPlanId,
+  )?.name;
+
+  const deliveryScheduleArray = deliverySchedule?.match(/(.*?)(\d.*)/) || [];
 
   const ScheduleButton = (className: string) => {
     return (
       <button className={className} onClick={handleOpenCadenceModal}>
         <span>
           {/* @todo get schedule from data */}
-          <span className="sans-serif">DELIVER EVERY &nbsp;</span>
-          <b>{deliverySchedule}</b>
+          <span className="sans-serif">{deliveryScheduleArray[1].toUpperCase()} &nbsp;</span>
+          <b>{deliveryScheduleArray[2].toUpperCase()}</b>
           <i className="material-icons">expand_more</i>
         </span>
       </button>

@@ -1,19 +1,27 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useLoopContext } from '@/contexts/LoopProvider';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import StarRating from './StarRatings';
 
 /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
 const InfoCard = ({ data }: { data: any }) => {
-  const [qty, setQty] = useState(1);
-  // @todo set image to imageURL when the Loop API is connected
-  const { imageURL, price, outOfStock } = data.variants[0];
+  const { cart, addProductVariant } = useLoopContext();
+
+  const cartQty =
+    cart.productVariants.find((item) => item.shopifyId === data.shopifyId)?.quantity || 0;
+
+  const { imageURL, price, outOfStock } = data;
   const { title } = data;
   const { maxValue } = data.limits[0];
 
   const [selectedImageURL, setSelectedImageURL] = useState(0);
+
+  const handleProductQtyChange = (qty: number) => {
+    addProductVariant({ shopifyId: data.shopifyId, quantity: qty });
+  };
 
   const handleOpenChangeImage = (imageIndex: number) => {
     setSelectedImageURL(imageIndex);
@@ -53,10 +61,10 @@ const InfoCard = ({ data }: { data: any }) => {
         </section>
         <AddToButton
           className="info-add-button"
-          orderQty={qty}
-          maxQty={maxValue}
+          orderQty={cartQty}
+          maxQty={maxValue > 0 ? maxValue : 1000}
           outOfStock={outOfStock}
-          setQty={setQty}
+          setQty={handleProductQtyChange}
           text={'+ ADD TO SUBSCRIPTION'}
         />
       </div>

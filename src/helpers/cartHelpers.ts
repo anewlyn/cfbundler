@@ -48,6 +48,7 @@ export const getCartValue = (products: AllProductVariants[], cart: cartType) => 
 export const setProductsForRender = (products: ProductTypes[]) => {
   return products
     .map((product) => {
+      const isVariant = product.variants.length > 1;
       const variants = product.variants.map((variant) => {
         return {
           productTitle: product.title,
@@ -57,6 +58,7 @@ export const setProductsForRender = (products: ProductTypes[]) => {
           shopifyId: variant.shopifyId,
           title: variant.title,
           limits: product.limits,
+          isVariant,
         };
       });
 
