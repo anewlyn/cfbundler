@@ -9,8 +9,9 @@ const createTransaction = async (cart: cartType, id: string) => {
   const body = cart;
 
   try {
+    // @todo this returns a transaction id that needs to be add to
     const response = await axios.post(
-      `https://api.loopsubscriptions.com/storefront/2023-10/bundle/${id}/transaction`,
+      `${process.env.NEXT_PUBLIC_LOOP_API_URL}${process.env.NEXT_PUBLIC_LOOP_API_VERSION}/bundle/${id}/transaction`,
       body,
       options,
     );

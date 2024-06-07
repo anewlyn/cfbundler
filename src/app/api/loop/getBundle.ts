@@ -11,14 +11,14 @@ export async function getBundle() {
     };
 
     const response = await axios.get(
-      `https://api.loopsubscriptions.com/storefront/2023-10/bundle?myshopifyDomain=${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`,
+      `${process.env.NEXT_PUBLIC_LOOP_API_URL}${process.env.NEXT_PUBLIC_LOOP_API_VERSION}/bundle?myshopifyDomain=${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`,
       options,
     );
 
     const bundleId = response.data.data[0].id;
 
     const bundleResponse = await axios.get(
-      `https://api.loopsubscriptions.com/storefront/2023-10/bundle/${bundleId}`,
+      `${process.env.NEXT_PUBLIC_LOOP_API_URL}${process.env.NEXT_PUBLIC_LOOP_API_VERSION}/bundle/${bundleId}`,
       options,
     );
 
