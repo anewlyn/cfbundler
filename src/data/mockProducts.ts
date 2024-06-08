@@ -17,11 +17,19 @@ export type VariantTypes = {
 
 export type AllProductVariants = {
   productTitle: string;
-  imageURL: string;
+  images: { imageURL: string; altText: string }[];
   price: number;
   outOfStock: boolean;
   shopifyId: number;
   title: string;
+  body_html: string;
+  limits: {
+    boxSizeId: string;
+    categoryId: string;
+    maxValue: number;
+  }[];
+  isVariant: boolean;
+  variants: VariantTypes[];
 };
 
 export type ProductTypes = {

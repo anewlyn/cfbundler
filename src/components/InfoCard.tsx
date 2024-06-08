@@ -13,7 +13,7 @@ const InfoCard = ({ data }: { data: any }) => {
   const cartQty =
     cart.productVariants.find((item) => item.shopifyId === data.shopifyId)?.quantity || 0;
 
-  const { imageURL, price, outOfStock } = data;
+  const { images, price, outOfStock } = data;
   const { productTitle } = data;
   const { maxValue } = data.limits[0];
 
@@ -32,17 +32,10 @@ const InfoCard = ({ data }: { data: any }) => {
   const numberOfReviews = 120;
   const headline = 'ENJOY AN UPLIFTING BUZZ WITHOUT THE BOOZE';
 
-  // @todo get product images from the Shopify API
-  const filledData = [
-    { image: imageURL, altText: 'Cycling Frog Logo' },
-    { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
-    { image: '/assets/ruby-grapefruit.png', altText: 'Cycling Frog Logo' },
-    { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
-  ];
   return (
     <div className="info-card">
       <div className="info-image-block">
-        <img src={`${filledData[selectedImageURL].image}`} alt={productTitle} />
+        <img src={images[selectedImageURL].imageURL} alt={productTitle} />
       </div>
       <div className="info-content">
         <section className="description">
@@ -69,7 +62,7 @@ const InfoCard = ({ data }: { data: any }) => {
         />
       </div>
       <Carousel>
-        {filledData.map((slide, index) => (
+        {images.map((slide: { imageURL: string; altText: string }, index: number) => (
           <div
             className={classNames('embla__slide', 'alt-image-block', {
               'base-border-2': selectedImageURL === index,
@@ -81,7 +74,7 @@ const InfoCard = ({ data }: { data: any }) => {
             </button>
             <Image
               className="carousel-item alt-image-button"
-              src={slide.image}
+              src={slide.imageURL}
               alt={slide.altText}
               width={271}
               height={271}

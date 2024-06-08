@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
+import { shopifyProductType } from '@/app/api/shopify/getProducts';
 import { AllProductVariants, BundleTypes } from '@/data/mockProducts';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
 
@@ -37,12 +38,13 @@ export type cartType = {
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const LoopProvider = ({
   bundleData,
+  shopifyProducts,
   children,
 }: {
   bundleData: BundleTypes;
+  shopifyProducts: Record<string, shopifyProductType>;
   children: React.ReactNode;
 }) => {
-  console.log('bundleData: ', bundleData);
   const defaultCart: cartType = {
     boxSizeId: bundleData.boxSizes[0].id,
     discountId: bundleData.discounts[0].id,
@@ -53,7 +55,7 @@ const LoopProvider = ({
   const [cart, setCart] = useState<cartType>(defaultCart);
   const [currentOrderValue, setCurrentOrderValue] = useState(0);
   const { products, discounts, sellingPlans } = bundleData;
-  const productsForRender = setProductsForRender(products);
+  const productsForRender = setProductsForRender(products, shopifyProducts);
 
   useEffect(() => {
     setCurrentOrderValue(getCartValue(productsForRender, cart));

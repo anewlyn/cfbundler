@@ -17,9 +17,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
   const cartQty =
     cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
 
-  const { imageURL, price, outOfStock, limits, productTitle, title, shopifyId, isVariant } =
-    product;
-
+  const { images, price, outOfStock, limits, productTitle, title, shopifyId, isVariant } = product;
+  const imageURl = images[0].imageURL;
   const { maxValue } = limits[0];
   const titleInfo = productTitle.split(',');
 
@@ -33,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={imageURL}
+          src={imageURl}
           alt={productTitle}
           width={309}
           height={309}

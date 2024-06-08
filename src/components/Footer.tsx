@@ -32,7 +32,7 @@ const StickyFooter = () => {
       // add product to filledData array a number of times equal to the quantity
       for (let i = 0; i < cartProduct.quantity; i++) {
         filledData.push({
-          imageURL: product.imageURL,
+          imageURL: product.images[0].imageURL,
           productTitle: product.productTitle,
         });
       }
