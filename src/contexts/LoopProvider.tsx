@@ -3,8 +3,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
 import { shopifyProductType } from '@/app/api/shopify/getProducts';
-import { AllProductVariants, BundleTypes } from '@/data/mockProducts';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
+import { AllProductVariants, BundleTypes } from '@/types/bundleTypes';
 
 export type LoopContextType = {
   addProductVariant: ({ shopifyId, quantity }: variantType) => void;

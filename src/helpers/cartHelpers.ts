@@ -2,7 +2,7 @@
 
 import { shopifyProductType } from '@/app/api/shopify/getProducts';
 import { cartType } from '@/contexts/LoopProvider';
-import { AllProductVariants, ProductTypes } from '@/data/mockProducts';
+import { AllProductVariants, ProductTypes } from '@/types/bundleTypes';
 
 type Discount = {
   id: string;
