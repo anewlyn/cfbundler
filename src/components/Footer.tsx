@@ -22,16 +22,16 @@ const StickyFooter = () => {
     alert('Add to cart clicked');
   };
 
-  const filledData = [];
+  const carouselImages = [];
   cart.productVariants?.forEach((cartProduct) => {
     const product = products.find((product) => {
       return product.shopifyId === cartProduct.shopifyId;
     });
 
     if (product) {
-      // add product to filledData array a number of times equal to the quantity
+      // add product to carouselImages array a number of times equal to the quantity
       for (let i = 0; i < cartProduct.quantity; i++) {
-        filledData.push({
+        carouselImages.push({
           imageURL: product.images[0].imageURL,
           productTitle: product.productTitle,
         });
@@ -40,15 +40,16 @@ const StickyFooter = () => {
     return product;
   });
 
-  while (filledData.length < 6) {
-    filledData.push({ imageURL: '/assets/lone-frog.png', productTitle: 'Cycling Frog Logo' });
+  // add default images to carousel if there are less than 6 products
+  while (carouselImages.length < 6) {
+    carouselImages.push({ imageURL: '/assets/lone-frog.png', productTitle: 'Cycling Frog Logo' });
   }
 
   return (
     <div className="sticky-footer">
       <div className="carousel">
         <Carousel>
-          {filledData.map((slide, index) => (
+          {carouselImages.map((slide, index) => (
             <div
               className={classNames(
                 'embla__slide',

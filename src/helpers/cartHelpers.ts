@@ -53,7 +53,6 @@ export const setProductsForRender = (
   return products
     .map((product) => {
       const body_html = shopifyProducts[product.shopifyId]?.body_html;
-
       const isVariant = product.variants.length > 1;
       const variants = product.variants.map((variant) => {
         const images = [

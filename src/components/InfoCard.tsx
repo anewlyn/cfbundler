@@ -30,7 +30,6 @@ const InfoCard = ({ data }: { data: any }) => {
   // @todo get the following data from the Loox API
   const rating = 4.5;
   const numberOfReviews = 120;
-  const headline = 'ENJOY AN UPLIFTING BUZZ WITHOUT THE BOOZE';
 
   return (
     <div className="info-card">
@@ -44,13 +43,12 @@ const InfoCard = ({ data }: { data: any }) => {
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />
 
-          <h2>{headline}</h2>
-          <p className="sans-serif">
-            The better-than-booze, alcohol-free summertime tonic you need in your cooler! Our Guava
-            Passionfruit THC seltzer channels tropical serenity with every sip. With 5mg THC and
-            10mg CBD per can, this THC beverage is built to help you unwind, laugh, and above all
-            else, have fun.
-          </p>
+          {data.body_html && (
+            <div
+              className="product-description"
+              dangerouslySetInnerHTML={{ __html: data.body_html }}
+            />
+          )}
         </section>
         <AddToButton
           className="info-add-button"
