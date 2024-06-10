@@ -23,6 +23,7 @@ export const Portal = ({ children, onClose }: PortalProps): JSX.Element => {
       document.body.classList.remove('no-scroll');
       window.removeEventListener('keydown', modalKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return createPortal(<>{children}</>, document.body);

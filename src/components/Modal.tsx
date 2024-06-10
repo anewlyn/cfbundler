@@ -72,8 +72,10 @@ export const Modal = ({
     modalRef.current?.addEventListener('keydown', trapFocus);
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       modalRef.current?.removeEventListener('keydown', trapFocus);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalRef.current]);
 
   if (open) {
