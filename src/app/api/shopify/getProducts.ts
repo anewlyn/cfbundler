@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-type imageType = {
+type ImageType = {
   id: number;
   alt: string;
   position: number;
@@ -14,7 +12,7 @@ type imageType = {
   variant_ids: number[];
 };
 
-type optionType = {
+type OptionType = {
   id: number;
   product_id: number;
   name: string;
@@ -22,7 +20,7 @@ type optionType = {
   values: string[];
 };
 
-type variantType = {
+type VariantType = {
   id: number;
   product_id: number;
   title: string;
@@ -52,7 +50,7 @@ type variantType = {
   image_id: number;
 };
 
-export type shopifyProductType = {
+export type ShopifyProductType = {
   id: number;
   title: string;
   body_html: string;
@@ -67,29 +65,31 @@ export type shopifyProductType = {
   tags: string;
   status: string;
   admin_graphql_api_id: string;
-  variants: variantType[];
-  options: optionType[];
-  images: imageType[];
-  image: imageType;
+  variants: VariantType[];
+  options: OptionType[];
+  images: ImageType[];
+  image: ImageType;
 };
 
 const getProducts = async () => {
   try {
-    const options = {
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        'x-shopify-access-token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-        'Access-Control-Allow-Origin': '*',
+        'x-shopify-access-token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
       },
     };
 
-    const response = await axios.get(
+    const response = await fetch(
       `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/admin/api/2021-07/products.json`,
       options,
     );
-    const productsObject = response.data.products.reduce(
-      (obj: shopifyProductType, product: shopifyProductType) => {
+    const data = await response.json();
+
+    const productsObject = data.products.reduce(
+      (obj: ShopifyProductType, product: ShopifyProductType) => {
         return {
           ...obj,
           [product.id]: product,

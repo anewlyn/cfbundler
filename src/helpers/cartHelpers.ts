@@ -1,6 +1,6 @@
 // Desc: This file contains the helper functions for the cart page.
 
-import { shopifyProductType } from '@/app/api/shopify/getProducts';
+import { ShopifyProductType } from '@/app/api/shopify/getProducts';
 import { cartType } from '@/contexts/LoopProvider';
 import { AllProductVariants, ProductTypes } from '@/types/bundleTypes';
 
@@ -48,7 +48,7 @@ export const getCartValue = (products: AllProductVariants[], cart: cartType) => 
 
 export const setProductsForRender = (
   products: ProductTypes[],
-  shopifyProducts: Record<string, shopifyProductType>,
+  shopifyProducts: Record<string, ShopifyProductType>,
 ): AllProductVariants[] => {
   return products
     .map((product) => {

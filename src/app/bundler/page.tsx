@@ -12,9 +12,6 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 // temporary page to test the subscription button
 
 const Bundler = () => {
-  // temporary data to test
-  // @todo get the data from the Loop API
-
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */

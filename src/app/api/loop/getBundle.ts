@@ -1,28 +1,26 @@
-import axios from 'axios';
-
 export async function getBundle() {
   try {
-    const options = {
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: process.env.NEXT_PUBLIC_LOOP_API_KEY,
-        'Access-Control-Allow-Origin': '*',
+        Authorization: process.env.NEXT_PUBLIC_LOOP_API_KEY || '',
       },
     };
 
-    const response = await axios.get(
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_LOOP_API_URL}${process.env.NEXT_PUBLIC_LOOP_API_VERSION}/bundle?myshopifyDomain=${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`,
       options,
     );
 
-    const bundleId = response.data.data[0].id;
+    const bundleId = await response.json();
 
-    const bundleResponse = await axios.get(
-      `${process.env.NEXT_PUBLIC_LOOP_API_URL}${process.env.NEXT_PUBLIC_LOOP_API_VERSION}/bundle/${bundleId}`,
+    const bundleResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_LOOP_API_URL}${process.env.NEXT_PUBLIC_LOOP_API_VERSION}/bundle/${bundleId.data[0].id}`,
       options,
     );
 
-    return bundleResponse.data;
+    return bundleResponse.json();
   } catch (err) {
     console.error(err);
   }

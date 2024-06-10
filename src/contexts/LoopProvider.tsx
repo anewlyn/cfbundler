@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
-import { shopifyProductType } from '@/app/api/shopify/getProducts';
+import { ShopifyProductType } from '@/app/api/shopify/getProducts';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
 import { AllProductVariants, BundleTypes } from '@/types/bundleTypes';
 
@@ -42,7 +42,7 @@ const LoopProvider = ({
   children,
 }: {
   bundleData: BundleTypes;
-  shopifyProducts: Record<string, shopifyProductType>;
+  shopifyProducts: Record<string, ShopifyProductType>;
   children: React.ReactNode;
 }) => {
   const defaultCart: cartType = {
