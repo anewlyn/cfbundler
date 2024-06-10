@@ -23,16 +23,9 @@ const AddToButton = ({
   text,
   mobileText,
 }: AddToButtonProps) => {
-  const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
 
-  useEffect(() => {
-    if (orderQty > 0) {
-      setSubscribed(true);
-    } else {
-      setSubscribed(false);
-    }
-  }, [orderQty]);
+  const subscribed = orderQty > 0;
 
   useEffect(() => {
     if (mobileText && text) {
@@ -52,19 +45,13 @@ const AddToButton = ({
 
   const handleClick = () => {
     setQty(1);
-    setSubscribed(!subscribed);
   };
 
   return (
     <>
       {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
       {subscribed && !outOfStock && (
-        <IncrementBlock
-          orderQty={orderQty}
-          maxQty={maxQty}
-          setQty={setQty}
-          setSubscribed={setSubscribed}
-        />
+        <IncrementBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} />
       )}
       {!subscribed && !outOfStock && (
         <button
