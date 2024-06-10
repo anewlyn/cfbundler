@@ -1,6 +1,6 @@
-import { cartType } from '@/contexts/LoopProvider';
+import { CartType } from '@/contexts/LoopProvider';
 
-const createTransaction = async (cart: cartType, id: string) => {
+const createTransaction = async (cart: CartType, id: string) => {
   const options: RequestInit = {
     method: 'POST',
     headers: {

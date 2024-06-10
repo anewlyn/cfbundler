@@ -1,7 +1,7 @@
 // Desc: This file contains the helper functions for the cart page.
 
 import { ShopifyProductType } from '@/app/api/shopify/getProducts';
-import { cartType } from '@/contexts/LoopProvider';
+import { CartType } from '@/contexts/LoopProvider';
 import { AllProductVariants, ProductTypes } from '@/types/bundleTypes';
 
 type Discount = {
@@ -24,7 +24,7 @@ export const getDiscountId = (discounts: Discount[], cartValue: number) => {
   return discount?.id;
 };
 
-export const getCartValue = (products: AllProductVariants[], cart: cartType) => {
+export const getCartValue = (products: AllProductVariants[], cart: CartType) => {
   if (!cart.productVariants) {
     return 0;
   }

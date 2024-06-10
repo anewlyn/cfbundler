@@ -7,30 +7,30 @@ import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
 import { AllProductVariants, BundleTypes } from '@/types/bundleTypes';
 
 export type LoopContextType = {
-  addProductVariant: ({ shopifyId, quantity }: variantType) => void;
+  addProductVariant: ({ shopifyId, quantity }: VariantType) => void;
   benefitTiers: { subtitle: string; footerMessage: string; value: number }[];
   bundle: BundleTypes;
-  cart: cartType;
+  cart: CartType;
   currentOrderValue: number;
   handleTransaction: () => void;
   products: AllProductVariants[];
   sellingPlans: BundleTypes['sellingPlans'];
-  setCart: (arg0: cartType) => void;
+  setCart: (arg0: CartType) => void;
 };
 
 const LoopContext = createContext<LoopContextType>({} as LoopContextType);
 
 const useLoopContext = () => useContext(LoopContext);
 
-type variantType = {
+type VariantType = {
   shopifyId: number;
   quantity: number;
 };
 
-export type cartType = {
+export type CartType = {
   boxSizeId: string;
   discountId: string;
-  productVariants: variantType[];
+  productVariants: VariantType[];
   quantity: number;
   sellingPlanId: number;
 };
@@ -45,14 +45,14 @@ const LoopProvider = ({
   shopifyProducts: Record<string, ShopifyProductType>;
   children: React.ReactNode;
 }) => {
-  const defaultCart: cartType = {
+  const defaultCart: CartType = {
     boxSizeId: bundleData.boxSizes[0].id,
     discountId: bundleData.discounts[0].id,
     productVariants: [],
     quantity: 0,
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
-  const [cart, setCart] = useState<cartType>(defaultCart);
+  const [cart, setCart] = useState<CartType>(defaultCart);
   const [currentOrderValue, setCurrentOrderValue] = useState(0);
   const { products, discounts, sellingPlans } = bundleData;
   const productsForRender = setProductsForRender(products, shopifyProducts);
@@ -61,9 +61,9 @@ const LoopProvider = ({
     setCurrentOrderValue(getCartValue(productsForRender, cart));
   }, [cart, productsForRender]);
 
-  const addProductVariant = ({ shopifyId, quantity }: variantType) => {
+  const addProductVariant = ({ shopifyId, quantity }: VariantType) => {
     const productVariant = cart.productVariants?.find(
-      (variant: variantType) => variant.shopifyId === shopifyId,
+      (variant: VariantType) => variant.shopifyId === shopifyId,
     );
 
     if (productVariant) {
@@ -71,7 +71,7 @@ const LoopProvider = ({
         setCart((prevCart) => ({
           ...prevCart,
           productVariants: prevCart.productVariants.filter(
-            (variant: variantType) => variant.shopifyId !== shopifyId,
+            (variant: VariantType) => variant.shopifyId !== shopifyId,
           ),
         }));
       } else {
