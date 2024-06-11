@@ -6,6 +6,7 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
+import ResponsiveImage from './ResponsiveImage';
 import StarRating from './StarRatings';
 
 const InfoCard = ({
@@ -42,7 +43,12 @@ const InfoCard = ({
   return (
     <div className="info-card">
       <div className="info-image-block">
-        <img src={images[selectedImageIndex].imageURL} alt="" />
+        <ResponsiveImage
+          src={images[selectedImageIndex].imageURL}
+          alt={productTitle}
+          width={309}
+          height={309}
+        />
       </div>
       <div className="info-content">
         <section className="description">

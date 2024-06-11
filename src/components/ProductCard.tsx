@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
+import ResponsiveImage from './ResponsiveImage';
 interface ProductCardProps {
   product: AllProductVariants;
   handleOpenInfoModal: (product: AllProductVariants) => void;
@@ -31,13 +31,12 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   return (
     <div className="product-card">
       <div className="product-image">
-        <Image
+        <ResponsiveImage
           src={imageURl}
           alt={productTitle}
           width={309}
           height={309}
-          priority={isPriority}
-          sizes="100vw"
+          isPriority={isPriority}
         />
         <div className={'info-screen'}>
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">

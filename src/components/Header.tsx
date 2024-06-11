@@ -40,7 +40,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             className="logo"
             height={93}
             src="/assets/cycling-frog-logo.png"
-            width={139}
+            width={170}
           />
         </div>
         <div className="header-title">
