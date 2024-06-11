@@ -45,9 +45,9 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
         </div>
       </div>
 
-      <p className="product-title">{variantTitle}</p>
-      <p className="product-info">{titleInfo[1]}</p>
-      <p>{currencyFormater(price, bundle.currencyCode)}</p>
+      <span className="product-title">{variantTitle}</span>
+      <span className="product-info">{titleInfo[1]}</span>
+      <span className="product-price">{currencyFormater(price, bundle.currencyCode)}</span>
       <AddToButton
         orderQty={cartQty}
         maxQty={maxValue > 0 ? maxValue : 1000}

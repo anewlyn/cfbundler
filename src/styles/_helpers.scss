@@ -31,32 +31,32 @@
 
 // Generate padding classes
 @for $i from 0 through 10 {
-  .p-#{$i * 5} {
-    padding: $i * 5 * 0.1rem;
+  .p-#{$i} {
+    padding: $i * 0.1rem;
   }
 
-  .pt-#{$i * 5} {
-    padding-top: $i * 5 * 0.1rem;
+  .pt-#{$i} {
+    padding-top: $i * 0.1rem;
   }
 
-  .pb-#{$i * 5} {
-    padding-bottom: $i * 5 * 0.1rem;
+  .pb-#{$i} {
+    padding-bottom: $i * 0.1rem;
   }
 
-  .px-#{$i * 5} {
-    padding-inline: $i * 5 * 0.1rem;
+  .px-#{$i} {
+    padding-inline: $i * 0.1rem;
   }
 
-  .py-#{$i * 5} {
-    padding-block: $i * 5 * 0.1rem;
+  .py-#{$i} {
+    padding-block: $i * 0.1rem;
   }
 
-  .pr-#{$i * 5} {
-    padding-right: $i * 5 * 0.1rem;
+  .pr-#{$i} {
+    padding-right: $i * 0.1rem;
   }
 
-  .pl-#{$i * 5} {
-    padding-left: $i * 5 * 0.1rem;
+  .pl-#{$i} {
+    padding-left: $i * 0.1rem;
   }
 }
 
@@ -119,14 +119,14 @@
 }
 
 .center-content {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
 .center-content-vertically {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .max-full {
