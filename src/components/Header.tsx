@@ -8,7 +8,12 @@ type HeaderProps = {
   handleOpenCadenceModal: () => void;
 };
 const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
-  const { cart, sellingPlans, benefitTiers, currentOrderValue } = useLoopContext();
+  const {
+    benefitTiers,
+    cart,
+    currentOrderValue,
+    sellingPlans,
+  } = useLoopContext();
 
   const router = useRouter();
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
@@ -16,12 +21,10 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const ScheduleButton = (className: string) => {
     return (
       <button className={className} onClick={handleOpenCadenceModal}>
-        <span>
-          {/* @todo get schedule from data */}
-          <span>DELIVER EVERY &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
-          <i className="material-icons">expand_more</i>
-        </span>
+        {/* @todo get schedule from data */}
+        <span>DELIVER EVERY &nbsp;</span>
+        <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+        <i className="material-icons">expand_more</i>
       </button>
     );
   };
