@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image';
 
 type ResponsiveImageProps = {
   className?: string;
@@ -8,7 +8,14 @@ type ResponsiveImageProps = {
   height: number;
   isPriority?: boolean;
 };
-const ResponsiveImage = ({ className, src, alt, width, height, isPriority }: ResponsiveImageProps) => {
+const ResponsiveImage = ({
+  className,
+  src,
+  alt,
+  width,
+  height,
+  isPriority,
+}: ResponsiveImageProps) => {
   return (
     <Image
       className={className}
@@ -18,10 +25,9 @@ const ResponsiveImage = ({ className, src, alt, width, height, isPriority }: Res
       height={height}
       priority={isPriority}
       sizes="100vw"
-
       style={{ width: '100%', height: 'auto' }}
     />
   );
-}
+};
 
 export default ResponsiveImage;
