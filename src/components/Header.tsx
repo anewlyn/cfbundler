@@ -44,7 +44,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             width={170}
           />
         </div>
-        <div className={classNames("header-title", kiro_700.className)}>
+        <div className={classNames('header-title', kiro_700.className)}>
           <h1>MY SUBSCRIPTION</h1>
           {ScheduleButton('header-button')}
         </div>
