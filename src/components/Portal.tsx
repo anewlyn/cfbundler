@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { MouseEventHandler, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 export type PortalProps = {
-  onClose: (e: KeyboardEvent) => void;
+  onClose: (e: KeyboardEvent | MouseEventHandler<HTMLButtonElement>) => void;
   children: React.ReactNode | React.ReactNode[];
 };
 
@@ -23,6 +23,7 @@ export const Portal = ({ children, onClose }: PortalProps): JSX.Element => {
       document.body.classList.remove('no-scroll');
       window.removeEventListener('keydown', modalKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return createPortal(<>{children}</>, document.body);

@@ -2,54 +2,60 @@
 @import 'helpers';
 
 .sticky-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   background-color: var(--cf-white);
+  bottom: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: space-between;
   padding: 1.5rem;
+  position: fixed;
+  width: 100%;
 }
 
 .order-info {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 0.8rem;
   color: var(--cf-gray);
+  display: flex;
+  font-size: 0.8rem;
   font-weight: 400;
+  justify-content: space-between;
+  padding-left: 2rem;
   text-align: right;
-  font-size: 1rem;
 
   p {
+    font-size: 16px;
     width: 100%;
+  }
+
+  .current-value {
+    font-size: 1.5rem;
+    margin: 0;
+    padding-right: 2rem;
   }
 }
 
-.cov-info {
-  display: flex;
+.current-info {
   align-items: center;
-  justify-content: space-between;
-  width: max-content;
-  font-size: 0.8rem;
   color: var(--cf-gray);
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: space-between;
   padding-left: 1rem;
-}
-
-.cov {
-  padding: 0 2rem;
-  font-size: 2rem;
-  margin: 0;
+  width: max-content;
 }
 
 .add-button {
-  color: var(--cf-white);
-  background-color: var(--cf-button-disabled);
-  font-size: 1rem;
+  background-color: var(--cf-black);
   border: none;
-  padding: 0 2rem;
+  color: var(--cf-white);
+  font-size: 1rem;
   min-width: max-content;
+  padding: 0 2rem;
+
+  &:disabled {
+    background-color: var(--cf-button-disabled);
+    cursor: not-allowed;
+  }
 }
 
 @include for_breakpoint('mobile') {
@@ -65,7 +71,7 @@
     }
   }
 
-  .cov-info {
+  .current-info {
     flex-direction: row;
     padding: 0;
   }

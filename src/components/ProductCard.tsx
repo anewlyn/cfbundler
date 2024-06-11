@@ -1,26 +1,44 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useLoopContext } from '@/contexts/LoopProvider';
+import { currencyFormater } from '@/helpers/cartHelpers';
+import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 interface ProductCardProps {
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  product: any;
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  handleOpenInfoModal: (arg0: any) => void;
+  product: AllProductVariants;
+  handleOpenInfoModal: (product: AllProductVariants) => void;
   isPriority: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
-  const [qty, setQty] = useState(1);
+const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
+  const { addProductVariant, cart, bundle } = useLoopContext();
 
-  const { imageURL, title, price, outOfStock } = product.variants[0];
-  const { maxValue } = product.limits[0];
+  const cartQty =
+    cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
+
+  const { images, price, outOfStock, limits, productTitle, title, shopifyId, isVariant } = product;
+  const imageURl = images[0].imageURL;
+  const { maxValue } = limits[0];
+  const titleInfo = productTitle.split(',');
+
+  const handleProductQtyChange = (qty: number) => {
+    addProductVariant({ shopifyId: shopifyId, quantity: qty });
+  };
+
+  const variantTitle = isVariant ? `${titleInfo[0]} (${title})` : titleInfo[0];
 
   return (
     <div className="product-card">
       <div className="product-image">
-        <Image src={imageURL} alt={title} width={309} height={309} priority={isPriority} />
+        <Image
+          src={imageURl}
+          alt={productTitle}
+          width={309}
+          height={309}
+          priority={isPriority}
+          sizes="100vw"
+        />
         <div className={'info-screen'}>
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">
             MORE INFO
@@ -28,15 +46,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
         </div>
       </div>
 
-      <p className="product-title">{title}</p>
-      {/* @todo get product-info once we get data */}
-      <p className="product-info sans-serif">5mg * 6-pack</p>
-      <p className="sans-serif">${price}</p>
+      <p className="product-title">{variantTitle}</p>
+      <p className="product-info sans-serif">{titleInfo[1]}</p>
+      <p className="sans-serif">{currencyFormater(price, bundle.currencyCode)}</p>
       <AddToButton
-        orderQty={qty}
-        maxQty={maxValue}
+        orderQty={cartQty}
+        maxQty={maxValue > 0 ? maxValue : 1000}
         outOfStock={outOfStock}
-        setQty={setQty}
+        setQty={handleProductQtyChange}
         text={'+ ADD TO SUBSCRIPTION'}
         mobileText={'+ ADD'}
       />

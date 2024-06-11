@@ -2,20 +2,20 @@
 
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import IncrementBlock from './IncrementBlock';
+import CounterBlock from './CounterBlock';
 
 type AddToButtonProps = {
   orderQty: number;
   maxQty: number;
   outOfStock: boolean;
-  setQty: React.Dispatch<React.SetStateAction<number>>;
+  setQty: (qty: number) => void;
   className?: string;
   text?: string;
   mobileText?: string;
 };
 
 const AddToButton = ({
-  orderQty = 1,
+  orderQty,
   setQty,
   maxQty,
   outOfStock,
@@ -23,8 +23,9 @@ const AddToButton = ({
   text,
   mobileText,
 }: AddToButtonProps) => {
-  const [subscribed, setSubscribed] = useState(false);
   const [buttonText, setButtonText] = useState('+ ADD TO SUBSCRIPTION');
+
+  const subscribed = orderQty > 0;
 
   useEffect(() => {
     if (mobileText && text) {
@@ -43,19 +44,14 @@ const AddToButton = ({
   }, [mobileText, text]);
 
   const handleClick = () => {
-    setSubscribed(!subscribed);
+    setQty(1);
   };
 
   return (
     <>
       {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
       {subscribed && !outOfStock && (
-        <IncrementBlock
-          orderQty={orderQty}
-          maxQty={maxQty}
-          setQty={setQty}
-          setSubscribed={setSubscribed}
-        />
+        <CounterBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} />
       )}
       {!subscribed && !outOfStock && (
         <button

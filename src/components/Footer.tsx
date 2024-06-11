@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import { currencyFormater } from '@/helpers/cartHelpers';
 import Carousel from './Carousel';
 
 const StickyFooter = () => {
-  const { mockProducts, mockOrder, benefitTiers, currentOrderValue } = useLoopContext();
+  const { products, cart, benefitTiers, currentOrderValue, handleTransaction, bundle } =
+    useLoopContext();
 
   // sets the footer message based on the current order value
   let notice = benefitTiers[0].footerMessage;
@@ -16,41 +18,50 @@ const StickyFooter = () => {
   });
 
   // @todo if order meets minimun requirements, add to cart
-  const handleAddToCart = () => {
+  const handlePostTransaction = () => {
+    handleTransaction();
     alert('Add to cart clicked');
   };
 
-  // creates an array of product images and alt text for the carousel
-  const productImages = mockOrder.productVariants.map((variant) => {
-    const product = mockProducts.products[variant.shopifyId];
-    return {
-      image: product.variants[0]?.imageURL,
-      altText: product.variants[0].title,
-    };
+  const carouselImages = [];
+  cart.productVariants?.forEach((cartProduct) => {
+    const product = products.find((product) => {
+      return product.shopifyId === cartProduct.shopifyId;
+    });
+
+    if (product) {
+      // add product to carouselImages array a number of times equal to the quantity
+      for (let i = 0; i < cartProduct.quantity; i++) {
+        carouselImages.push({
+          imageURL: product.images[0].imageURL,
+          productTitle: product.productTitle,
+        });
+      }
+    }
+    return product;
   });
 
-  // Ensure there are at least 6 images
-  const filledData = [...productImages];
-  while (filledData.length < 6) {
-    filledData.push({ image: '/assets/lone-frog.png', altText: 'Cycling Frog Logo' });
+  // add default images to carousel if there are less than 6 products
+  while (carouselImages.length < 6) {
+    carouselImages.push({ imageURL: '/assets/lone-frog.png', productTitle: 'Cycling Frog Logo' });
   }
 
   return (
     <div className="sticky-footer">
       <div className="carousel">
         <Carousel>
-          {filledData.map((slide, index) => (
+          {carouselImages.map((slide, index) => (
             <div
               className={classNames(
                 'embla__slide',
-                slide.image === '/assets/lone-frog.png' && 'default-image',
+                slide?.imageURL === '/assets/lone-frog.png' && 'default-image',
               )}
               key={index}
             >
               <Image
                 className="carousel-item"
-                src={slide.image}
-                alt={slide.altText}
+                src={slide?.imageURL || '/assets/lone-frog.png'}
+                alt={slide?.productTitle || 'Cycling Frog Logo'}
                 width={85}
                 height={85}
               />
@@ -60,15 +71,15 @@ const StickyFooter = () => {
       </div>
       <div className="order-info">
         <p className="sans-serif">{notice}</p>
-        <div className="cov-info">
-          <p className="cov">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-              currentOrderValue,
-            )}
+        <div className="current-info">
+          <p className="current-value">
+            {currencyFormater(currentOrderValue, bundle.currencyCode)}
           </p>
           <button
-            onClick={handleAddToCart}
-            className="add-button"
+            onClick={handlePostTransaction}
+            className={classNames('add-button', {
+              disabled: currentOrderValue < benefitTiers[0].value,
+            })}
             disabled={currentOrderValue < benefitTiers[0].value}
           >
             ADD TO CART

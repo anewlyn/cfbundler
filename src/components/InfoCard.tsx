@@ -1,75 +1,77 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useState } from 'react';
+import sanitizeHtml from 'sanitize-html';
+import { useLoopContext } from '@/contexts/LoopProvider';
+import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import StarRating from './StarRatings';
 
-/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-const InfoCard = ({ data }: { data: any }) => {
-  const [qty, setQty] = useState(1);
-  // @todo set image to imageURL when the Loop API is connected
-  const {
-    // imageURL,
-    title,
-    price,
-    outOfStock,
-  } = data.variants[0];
+const InfoCard = ({
+  images,
+  price,
+  outOfStock,
+  shopifyId,
+  limits,
+  body_html,
+  productTitle,
+}: AllProductVariants) => {
+  const { cart, addProductVariant } = useLoopContext();
 
-  const [selectedImageURL, setSelectedImageURL] = useState(0);
+  const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
 
-  const handleOpenChangeImage = (imageIndex: number) => {
-    setSelectedImageURL(imageIndex);
+  const { maxValue } = limits[0];
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const handleProductQtyChange = (qty: number) => {
+    addProductVariant({ shopifyId: shopifyId, quantity: qty });
   };
 
-  const { maxValue } = data.limits[0];
+  const handleOpenChangeImage = (imageIndex: number) => {
+    setSelectedImageIndex(imageIndex);
+  };
 
-  // @todo get the following data from the Shopify API
+  // @todo get the following data from the Loox API
   const rating = 4.5;
   const numberOfReviews = 120;
-  const headline = 'ENJOY AN UPLIFTING BUZZ WITHOUT THE BOOZE';
 
-  // @todo get product images from the Shopify API
-  const filledData = [
-    { image: '/assets/guava-passion-six-pack.png', altText: 'Cycling Frog Logo' },
-    { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
-    { image: '/assets/ruby-grapefruit.png', altText: 'Cycling Frog Logo' },
-    { image: '/assets/wild-cherry-seltzer.png', altText: 'Cycling Frog Logo' },
-  ];
+  const body_html_sanitized = body_html && sanitizeHtml(body_html);
+
   return (
     <div className="info-card">
       <div className="info-image-block">
-        <img src={`${filledData[selectedImageURL].image}`} alt={title} />
+        <img src={images[selectedImageIndex].imageURL} alt="" />
       </div>
       <div className="info-content">
         <section className="description">
-          <h1>{data.title}</h1>
+          <h1>{productTitle}</h1>
           <p className="sans-serif">{price}</p>
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />
 
-          <h2>{headline}</h2>
-          <p className="sans-serif">
-            The better-than-booze, alcohol-free summertime tonic you need in your cooler! Our Guava
-            Passionfruit THC seltzer channels tropical serenity with every sip. With 5mg THC and
-            10mg CBD per can, this THC beverage is built to help you unwind, laugh, and above all
-            else, have fun.
-          </p>
+          {body_html_sanitized && (
+            <div
+              className="product-description"
+              dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
+            />
+          )}
         </section>
         <AddToButton
           className="info-add-button"
-          orderQty={qty}
-          maxQty={maxValue}
+          orderQty={cartQty}
+          maxQty={maxValue > 0 ? maxValue : 1000}
           outOfStock={outOfStock}
-          setQty={setQty}
+          setQty={handleProductQtyChange}
           text={'+ ADD TO SUBSCRIPTION'}
         />
       </div>
       <Carousel>
-        {filledData.map((slide, index) => (
+        {images.map((slide: { imageURL: string; altText: string }, index: number) => (
           <div
             className={classNames('embla__slide', 'alt-image-block', {
-              'base-border-2': selectedImageURL === index,
+              'base-border-2': selectedImageIndex === index,
             })}
             key={index}
           >
@@ -78,7 +80,7 @@ const InfoCard = ({ data }: { data: any }) => {
             </button>
             <Image
               className="carousel-item alt-image-button"
-              src={slide.image}
+              src={slide.imageURL}
               alt={slide.altText}
               width={271}
               height={271}

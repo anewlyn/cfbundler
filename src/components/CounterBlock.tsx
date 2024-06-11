@@ -1,13 +1,12 @@
 'use client';
 
-type IncrementBlockProps = {
+type CounterBlockProps = {
   orderQty: number;
-  setQty: React.Dispatch<React.SetStateAction<number>>;
+  setQty: (qty: number) => void;
   maxQty: number;
-  setSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBlockProps) => {
+const CounterBlock = ({ orderQty, setQty, maxQty }: CounterBlockProps) => {
   // Function to increment the count
   const increment = () => {
     if (orderQty >= maxQty) {
@@ -19,7 +18,7 @@ const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBl
   // Function to decrement the count
   const decrement = () => {
     if (orderQty <= 1) {
-      setSubscribed(false);
+      setQty(orderQty - 1);
       return;
     }
     setQty(orderQty - 1);
@@ -40,4 +39,4 @@ const IncrementBlock = ({ orderQty, setQty, maxQty, setSubscribed }: IncrementBl
   );
 };
 
-export default IncrementBlock;
+export default CounterBlock;
