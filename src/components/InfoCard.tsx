@@ -47,7 +47,7 @@ const InfoCard = ({
       <div className="info-content">
         <section className="description">
           <h1>{productTitle}</h1>
-          <p className="sans-serif">{price}</p>
+          <p>{price}</p>
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />
 

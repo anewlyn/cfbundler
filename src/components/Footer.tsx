@@ -70,11 +70,11 @@ const StickyFooter = () => {
         </Carousel>
       </div>
       <div className="order-info">
-        <p className="sans-serif">{notice}</p>
+        <p>{notice}</p>
         <div className="current-info">
-          <p className="current-value">
+          <h1 className="current-value">
             {currencyFormater(currentOrderValue, bundle.currencyCode)}
-          </p>
+          </h1>
           <button
             onClick={handlePostTransaction}
             className={classNames('add-button', {

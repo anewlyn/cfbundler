@@ -18,7 +18,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
       <button className={className} onClick={handleOpenCadenceModal}>
         <span>
           {/* @todo get schedule from data */}
-          <span className="sans-serif">DELIVER EVERY &nbsp;</span>
+          <span>DELIVER EVERY &nbsp;</span>
           <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
           <i className="material-icons">expand_more</i>
         </span>
