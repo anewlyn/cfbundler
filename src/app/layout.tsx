@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import '../styles/globals.scss';
 import localFont from 'next/font/local';
 
-
 const inter = localFont({
   src: [
     {
@@ -11,7 +10,7 @@ const inter = localFont({
       style: 'normal',
     },
   ],
-})
+});
 
 const kiroFont = localFont({
   src: [
@@ -76,7 +75,7 @@ const kiroFont = localFont({
       style: 'italic',
     },
   ],
-})
+});
 
 export default function RootLayout({
   children,
