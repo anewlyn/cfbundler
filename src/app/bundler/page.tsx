@@ -9,18 +9,16 @@ import { Modal } from '@/components/Modal';
 import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import { AllProductVariants } from '@/types/bundleTypes';
 // temporary page to test the subscription button
 
 const Bundler = () => {
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  const [modalProduct, setModalProduct] = useState<any>(null);
+  const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null);
   const { products } = useLoopContext();
 
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  const handleOpenInfoModal = (product: any) => {
-    // @todo open modal with product info
+  const handleOpenInfoModal = (product: AllProductVariants) => {
     setModalProduct(product);
     setInfoModalOpen(true);
   };
@@ -38,8 +36,7 @@ const Bundler = () => {
   };
 
   const renderProductCards = () => {
-    /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-    return products.map((product: any, index: any) => {
+    return products.map((product: AllProductVariants, index: number) => {
       // This sets the images above the fold as priority
       const isPriority = index <= 7;
 
@@ -72,7 +69,20 @@ const Bundler = () => {
         hasMobileClose
         hasCloseButton
       >
-        <InfoCard {...modalProduct} />
+        {modalProduct && (
+          <InfoCard
+            body_html={modalProduct.body_html}
+            images={modalProduct.images}
+            isVariant={modalProduct.isVariant}
+            limits={modalProduct.limits}
+            outOfStock={modalProduct.outOfStock}
+            price={modalProduct.price}
+            productTitle={modalProduct.productTitle}
+            shopifyId={modalProduct.shopifyId}
+            title={modalProduct.title}
+            variants={modalProduct.variants}
+          />
+        )}
       </Modal>
       <Footer />
     </div>

@@ -22,7 +22,7 @@ export type AllProductVariants = {
   outOfStock: boolean;
   shopifyId: number;
   title: string;
-  body_html: string;
+  body_html?: string;
   limits: {
     boxSizeId: string;
     categoryId: string;

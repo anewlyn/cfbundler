@@ -1,12 +1,11 @@
 'use client';
-
 import { createContext, useContext, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
-import { tiers } from '@/content/content';
+
+import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
-import { setBenefitTierContents } from '@/helpers/providerHelpers';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
-import { AllProductVariants, BundleTypes } from '@/types/bundleTypes';
+import { AllProductVariants, BundleTypes, DiscountTypes } from '@/types/bundleTypes';
 
 export type LoopContextType = {
   addProductVariant: ({ shopifyId, quantity }: VariantType) => void;
@@ -35,6 +34,13 @@ export type CartType = {
   productVariants: VariantType[];
   quantity: number;
   sellingPlanId: number;
+};
+
+const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
+  return tiers.map((tier, index) => ({
+    ...tier,
+    value: discounts[index].minCartQuantity,
+  }));
 };
 
 const LoopProvider = ({

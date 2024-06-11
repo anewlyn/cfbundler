@@ -1,9 +1,9 @@
-export type TiersTypes = {
+export type BenefitTierTypes = {
   subtitle: string;
   footerMessage: string;
 }[];
 
-export const tiers: TiersTypes = [
+export const tiers: BenefitTierTypes = [
   {
     subtitle: 'Min. Order',
     footerMessage: 'Subscriptions require a $50 minimum order.',

@@ -7,7 +7,7 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 interface ProductCardProps {
   product: AllProductVariants;
-  handleOpenInfoModal: (arg0: AllProductVariants) => void;
+  handleOpenInfoModal: (product: AllProductVariants) => void;
   isPriority: boolean;
 }
 

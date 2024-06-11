@@ -37,12 +37,12 @@ const InfoCard = ({
   const rating = 4.5;
   const numberOfReviews = 120;
 
-  const body_html_sanitized = sanitizeHtml(body_html);
+  const body_html_sanitized = body_html && sanitizeHtml(body_html);
 
   return (
     <div className="info-card">
       <div className="info-image-block">
-        <img src={images[selectedImageIndex].imageURL} alt={productTitle} />
+        <img src={images[selectedImageIndex].imageURL} alt="" />
       </div>
       <div className="info-content">
         <section className="description">
@@ -51,7 +51,7 @@ const InfoCard = ({
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />
 
-          {body_html && (
+          {body_html_sanitized && (
             <div
               className="product-description"
               dangerouslySetInnerHTML={{ __html: body_html_sanitized }}

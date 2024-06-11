@@ -51,11 +51,11 @@
   font-size: 1rem;
   min-width: max-content;
   padding: 0 2rem;
-}
 
-.disabled {
-  background-color: var(--cf-button-disabled);
-  cursor: not-allowed;
+  &:disabled {
+    background-color: var(--cf-button-disabled);
+    cursor: not-allowed;
+  }
 }
 
 @include for_breakpoint('mobile') {

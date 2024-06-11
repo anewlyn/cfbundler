@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import IncrementBlock from './CounterBlock';
+import CounterBlock from './CounterBlock';
 
 type AddToButtonProps = {
   orderQty: number;
@@ -51,7 +51,7 @@ const AddToButton = ({
     <>
       {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
       {subscribed && !outOfStock && (
-        <IncrementBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} />
+        <CounterBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} />
       )}
       {!subscribed && !outOfStock && (
         <button
