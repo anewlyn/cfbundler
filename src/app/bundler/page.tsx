@@ -72,7 +72,7 @@ const Bundler = () => {
         hasMobileClose
         hasCloseButton
       >
-        <InfoCard data={modalProduct} />
+        <InfoCard {...modalProduct} />
       </Modal>
       <Footer />
     </div>

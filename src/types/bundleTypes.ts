@@ -52,6 +52,19 @@ export type ProductTypes = {
   }[];
 };
 
+export type DiscountTypes = {
+  id: string;
+  name: string;
+  code: string;
+  type: string;
+  value: number;
+  conditionType: string;
+  minCartValue: number;
+  minCartQuantity: number;
+  purchaseType: string;
+  appliesOnEachItem: boolean;
+};
+
 export type BundleTypes = {
   id: string;
   name: string;
@@ -69,18 +82,7 @@ export type BundleTypes = {
     maxSize: number;
     defaultSelected: boolean;
   }[];
-  discounts: {
-    id: string;
-    name: string;
-    code: string;
-    type: string;
-    value: number;
-    conditionType: string;
-    minCartValue: number;
-    minCartQuantity: number;
-    purchaseType: string;
-    appliesOnEachItem: boolean;
-  }[];
+  discounts: DiscountTypes[];
   sellingPlans: {
     shopifyId: number;
     name: string;

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import { currencyFormater } from '@/helpers/cartHelpers';
 import Carousel from './Carousel';
 
 const StickyFooter = () => {
@@ -70,12 +71,9 @@ const StickyFooter = () => {
       </div>
       <div className="order-info">
         <p className="sans-serif">{notice}</p>
-        <div className="cov-info">
-          <p className="cov">
-            {new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: bundle.currencyCode,
-            }).format(currentOrderValue)}
+        <div className="current-info">
+          <p className="current-value">
+            {currencyFormater(currentOrderValue, bundle.currencyCode)}
           </p>
           <button
             onClick={handlePostTransaction}

@@ -1,12 +1,12 @@
 'use client';
 
-type IncrementBlockProps = {
+type CounterBlockProps = {
   orderQty: number;
   setQty: (qty: number) => void;
   maxQty: number;
 };
 
-const IncrementBlock = ({ orderQty, setQty, maxQty }: IncrementBlockProps) => {
+const CounterBlock = ({ orderQty, setQty, maxQty }: CounterBlockProps) => {
   // Function to increment the count
   const increment = () => {
     if (orderQty >= maxQty) {
@@ -39,4 +39,4 @@ const IncrementBlock = ({ orderQty, setQty, maxQty }: IncrementBlockProps) => {
   );
 };
 
-export default IncrementBlock;
+export default CounterBlock;

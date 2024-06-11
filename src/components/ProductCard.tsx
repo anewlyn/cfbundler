@@ -2,16 +2,16 @@
 
 import Image from 'next/image';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import { currencyFormater } from '@/helpers/cartHelpers';
+import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 interface ProductCardProps {
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  product: any;
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  handleOpenInfoModal: (arg0: any) => void;
+  product: AllProductVariants;
+  handleOpenInfoModal: (arg0: AllProductVariants) => void;
   isPriority: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal, isPriority }) => {
+const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
   const { addProductVariant, cart, bundle } = useLoopContext();
 
   const cartQty =
@@ -38,10 +38,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
           height={309}
           priority={isPriority}
           sizes="100vw"
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
         />
         <div className={'info-screen'}>
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">
@@ -52,12 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, handleOpenInfoModal,
 
       <p className="product-title">{variantTitle}</p>
       <p className="product-info sans-serif">{titleInfo[1]}</p>
-      <p className="sans-serif">
-        {Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: bundle.currencyCode,
-        }).format(price)}
-      </p>
+      <p className="sans-serif">{currencyFormater(price, bundle.currencyCode)}</p>
       <AddToButton
         orderQty={cartQty}
         maxQty={maxValue > 0 ? maxValue : 1000}

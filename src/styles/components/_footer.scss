@@ -27,14 +27,14 @@
     width: 100%;
   }
 
-  .cov {
+  .current-value {
     font-size: 1.5rem;
     margin: 0;
     padding-right: 2rem;
   }
 }
 
-.cov-info {
+.current-info {
   align-items: center;
   color: var(--cf-gray);
   display: flex;
@@ -71,7 +71,7 @@
     }
   }
 
-  .cov-info {
+  .current-info {
     flex-direction: row;
     padding: 0;
   }

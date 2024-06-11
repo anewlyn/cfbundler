@@ -1,40 +1,48 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useState } from 'react';
+import sanitizeHtml from 'sanitize-html';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import StarRating from './StarRatings';
 
-/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-const InfoCard = ({ data }: { data: any }) => {
+const InfoCard = ({
+  images,
+  price,
+  outOfStock,
+  shopifyId,
+  limits,
+  body_html,
+  productTitle,
+}: AllProductVariants) => {
   const { cart, addProductVariant } = useLoopContext();
 
-  const cartQty =
-    cart.productVariants.find((item) => item.shopifyId === data.shopifyId)?.quantity || 0;
+  const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
 
-  const { images, price, outOfStock } = data;
-  const { productTitle } = data;
-  const { maxValue } = data.limits[0];
+  const { maxValue } = limits[0];
 
-  const [selectedImageURL, setSelectedImageURL] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const handleProductQtyChange = (qty: number) => {
-    addProductVariant({ shopifyId: data.shopifyId, quantity: qty });
+    addProductVariant({ shopifyId: shopifyId, quantity: qty });
   };
 
   const handleOpenChangeImage = (imageIndex: number) => {
-    setSelectedImageURL(imageIndex);
+    setSelectedImageIndex(imageIndex);
   };
 
   // @todo get the following data from the Loox API
   const rating = 4.5;
   const numberOfReviews = 120;
 
+  const body_html_sanitized = sanitizeHtml(body_html);
+
   return (
     <div className="info-card">
       <div className="info-image-block">
-        <img src={images[selectedImageURL].imageURL} alt={productTitle} />
+        <img src={images[selectedImageIndex].imageURL} alt={productTitle} />
       </div>
       <div className="info-content">
         <section className="description">
@@ -43,10 +51,10 @@ const InfoCard = ({ data }: { data: any }) => {
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />
 
-          {data.body_html && (
+          {body_html && (
             <div
               className="product-description"
-              dangerouslySetInnerHTML={{ __html: data.body_html }}
+              dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
             />
           )}
         </section>
@@ -63,7 +71,7 @@ const InfoCard = ({ data }: { data: any }) => {
         {images.map((slide: { imageURL: string; altText: string }, index: number) => (
           <div
             className={classNames('embla__slide', 'alt-image-block', {
-              'base-border-2': selectedImageURL === index,
+              'base-border-2': selectedImageIndex === index,
             })}
             key={index}
           >

@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import IncrementBlock from './IncrementBlock';
+import IncrementBlock from './CounterBlock';
 
 type AddToButtonProps = {
   orderQty: number;

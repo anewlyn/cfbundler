@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  crossOrigin: 'anonymous',
   sassOptions: {
     includePaths: ['./src/styles/'],
   },

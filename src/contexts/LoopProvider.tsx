@@ -1,9 +1,11 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
-import { ShopifyProductType } from '@/app/api/shopify/getProducts';
+import { tiers } from '@/content/content';
 import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
+import { setBenefitTierContents } from '@/helpers/providerHelpers';
+import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { AllProductVariants, BundleTypes } from '@/types/bundleTypes';
 
 export type LoopContextType = {
@@ -35,7 +37,6 @@ export type CartType = {
   sellingPlanId: number;
 };
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const LoopProvider = ({
   bundleData,
   shopifyProducts,
@@ -53,13 +54,10 @@ const LoopProvider = ({
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
   const [cart, setCart] = useState<CartType>(defaultCart);
-  const [currentOrderValue, setCurrentOrderValue] = useState(0);
   const { products, discounts, sellingPlans } = bundleData;
   const productsForRender = setProductsForRender(products, shopifyProducts);
 
-  useEffect(() => {
-    setCurrentOrderValue(getCartValue(productsForRender, cart));
-  }, [cart, productsForRender]);
+  const currentOrderValue = getCartValue(productsForRender, cart);
 
   const addProductVariant = ({ shopifyId, quantity }: VariantType) => {
     const productVariant = cart.productVariants?.find(
@@ -95,23 +93,7 @@ const LoopProvider = ({
     // @todo navigate to cyclingfrog.com/cart
   };
 
-  const benefitTiers = [
-    {
-      subtitle: 'Min. Order',
-      footerMessage: 'Subscriptions require a $50 minimum order.',
-    },
-    {
-      footerMessage: 'Yay! You have free shipping.',
-      subtitle: 'Free Shipping',
-    },
-    {
-      footerMessage: 'Yay! You have free shipping and a 10% discount.',
-      subtitle: '10% off',
-    },
-  ].map((tier, index) => ({
-    ...tier,
-    value: discounts[index].minCartQuantity,
-  }));
+  const benefitTiers = setBenefitTierContents(discounts, tiers);
 
   const contextValue = {
     addProductVariant,

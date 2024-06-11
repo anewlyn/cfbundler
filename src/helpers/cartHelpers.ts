@@ -1,7 +1,7 @@
 // Desc: This file contains the helper functions for the cart page.
 
-import { ShopifyProductType } from '@/app/api/shopify/getProducts';
 import { CartType } from '@/contexts/LoopProvider';
+import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { AllProductVariants, ProductTypes } from '@/types/bundleTypes';
 
 type Discount = {
@@ -78,4 +78,11 @@ export const setProductsForRender = (
       return variants;
     })
     .flat() as AllProductVariants[];
+};
+
+export const currencyFormater = (value: number, currencyCode: string) => {
+  return Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currencyCode,
+  }).format(value);
 };
