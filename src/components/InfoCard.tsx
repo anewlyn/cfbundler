@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
+import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import { currencyFormater } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
@@ -18,12 +20,10 @@ const InfoCard = ({
   body_html,
   productTitle,
 }: AllProductVariants) => {
-  const { cart, addProductVariant } = useLoopContext();
-
+  const { cart, addProductVariant, bundle } = useLoopContext();
   const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
 
   const { maxValue } = limits[0];
-
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const handleProductQtyChange = (qty: number) => {
@@ -52,8 +52,8 @@ const InfoCard = ({
       </div>
       <div className="info-content">
         <section className="description">
-          <h1>{productTitle}</h1>
-          <p>{price}</p>
+          <h1 className={kiro_bold_400.className}>{productTitle}</h1>
+          <p>{currencyFormater(price, bundle.currencyCode)}</p>
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />
 

@@ -26,7 +26,6 @@ body {
 
 * {
   box-sizing: border-box;
-  font-family: 'Inter';
 
   &::before,
   &::after {
@@ -47,17 +46,14 @@ body {
 }
 
 h1 {
-  font-family: 'Kiro_ExtraBold';
   font-size: 28px;
 }
 
 h2 {
-  font-family: 'Kiro_ExtraBold';
   font-size: 18px;
 }
 
 h3 {
-  font-family: 'Kiro_ExtraBold';
   font-size: 18px;
 }
 
