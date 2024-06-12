@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { kiro_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
-console.log('kiro: ', kiro_700.variable);
+
 type HeaderProps = {
   handleOpenCadenceModal: () => void;
 };
@@ -17,14 +17,22 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
   const ScheduleButton = (className: string) => {
-    return (
-      <button className={className} onClick={handleOpenCadenceModal}>
-        {/* @todo get schedule from data */}
-        <span>DELIVER EVERY &nbsp;</span>
-        <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
-        <i className="material-icons">expand_more</i>
-      </button>
-    );
+    if (sellingPlans.length === 1) {
+      return (
+        <button className={className}>
+          <span>DELIVER EVERY &nbsp;</span>
+          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+        </button>
+      );
+    } else {
+      return (
+        <button className={className} onClick={handleOpenCadenceModal}>
+          <span>DELIVER EVERY &nbsp;</span>
+          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+          <i className="material-icons">expand_more</i>
+        </button>
+      );
+    }
   };
 
   return (
