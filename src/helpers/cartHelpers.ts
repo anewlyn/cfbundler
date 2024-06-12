@@ -81,3 +81,8 @@ export const currencyFormater = (value: number, currencyCode: string) => {
     currency: currencyCode,
   }).format(value);
 };
+
+export const getDiscountValue = (discount: number, price: number) => {
+  const discountAmount = (price * discount) / 100;
+  return price - discountAmount;
+};

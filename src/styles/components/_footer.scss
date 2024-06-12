@@ -25,10 +25,10 @@
   p {
     font-size: 16px;
     width: 100%;
+    min-width: 65px;
   }
 
   .current-value {
-    // font-size: 1.5rem;
     margin: 0;
     padding-right: 2rem;
   }
@@ -40,8 +40,14 @@
   display: flex;
   font-size: 0.8rem;
   justify-content: space-between;
+  margin-right: 1rem;
   padding-left: 1rem;
   width: max-content;
+
+  .product-price {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
 }
 
 .add-button {
@@ -83,7 +89,6 @@
   transition:
     opacity 0.5s,
     visibility 0.5s;
-  // visibility: hidden;
   width: 85px;
 }
 
@@ -138,5 +143,22 @@
   .current-info {
     flex-direction: row;
     padding: 0;
+  }
+}
+
+@include for_breakpoint('tablet') {
+  .current-info {
+    .product-price {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .discount-price {
+      padding: 0;
+    }
+
+    h1 {
+      margin: 0 auto;
+    }
   }
 }

@@ -39,10 +39,9 @@ export type CartType = {
 
 const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
   return tiers.map((tier, index) => {
-    const tierText = tier.subtitle.replace('$$', discounts[index].value.toString());
     return {
       ...tier,
-      subtitle: tierText,
+      subtitle: `${discounts[index].value}% off`,
       value: discounts[index].minCartQuantity,
     };
   });

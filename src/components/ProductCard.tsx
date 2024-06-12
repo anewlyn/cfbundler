@@ -1,7 +1,7 @@
 'use client';
 
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater } from '@/helpers/cartHelpers';
+import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import ResponsiveImage from './ResponsiveImage';
@@ -30,10 +30,7 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
 
   const renderProductPrice = () => {
     if (currentDiscount) {
-      // Calculate the discount amount as a percentage of the price
-      const discountAmount = (price * currentDiscount.value) / 100;
-      // Subtract the discount amount from the original price to get the discounted price
-      const discountedPrice = price - discountAmount;
+      const discountedPrice = getDiscountValue(currentDiscount.value, price);
       return (
         <span className="product-price">
           <span className="discount-price">{currencyFormater(price, bundle.currencyCode)}</span>

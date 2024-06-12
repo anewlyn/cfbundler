@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater } from '@/helpers/cartHelpers';
+import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import Carousel from './Carousel';
 
 type carouselImageTypes = {
@@ -24,13 +24,9 @@ const StickyFooter = () => {
   } = useLoopContext();
 
   // sets the footer message based on the current order value
-  let notice = benefitTiers[0].footerMessage;
-
-  benefitTiers.forEach((tier) => {
-    if (currentOrderValue >= tier.value) {
-      notice = tier.footerMessage;
-    }
-  });
+  const notice = currentDiscount
+    ? `You got ${currentDiscount.value}% off!`
+    : 'Subscriptions require a $50 minimum order.';
 
   // @todo if order meets minimun requirements, add to cart
   const handlePostTransaction = () => {
@@ -104,14 +100,26 @@ const StickyFooter = () => {
     });
   };
 
-  // Calculate the discount amount as a percentage of the currentOrderValue
-  let discountedPrice = currentOrderValue;
+  const renderProductPrice = () => {
+    let discountedPrice = currentOrderValue;
+    if (currentDiscount) {
+      discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
 
-  if (currentDiscount) {
-    const discountAmount = (currentOrderValue * currentDiscount.value) / 100;
-    // Subtract the discount amount from the original currentOrderValue to get the discounted currentOrderValue
-    discountedPrice = currentOrderValue - discountAmount;
-  }
+      return (
+        <div className="product-price grid-cols-2">
+          <h1 className="discount-price">
+            {currencyFormater(currentOrderValue, bundle.currencyCode)}
+          </h1>
+          <h1 className="discounted-price">
+            {currencyFormater(discountedPrice, bundle.currencyCode)}
+          </h1>
+        </div>
+      );
+    }
+    return (
+      <h1 className="current-value">{currencyFormater(discountedPrice, bundle.currencyCode)}</h1>
+    );
+  };
 
   return (
     <div className="sticky-footer">
@@ -121,9 +129,7 @@ const StickyFooter = () => {
       <div className="order-info">
         <p>{notice}</p>
         <div className="current-info">
-          <h1 className="current-value">
-            {currencyFormater(discountedPrice, bundle.currencyCode)}
-          </h1>
+          {renderProductPrice()}
           <button
             onClick={handlePostTransaction}
             className={classNames('add-button', {
