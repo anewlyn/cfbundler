@@ -12,7 +12,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
-  const { addProductVariant, cart, bundle } = useLoopContext();
+  const { addProductVariant, cart, bundle, currentDiscount } = useLoopContext();
 
   const cartQty =
     cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
@@ -27,6 +27,24 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   };
 
   const variantTitle = isVariant ? `${titleInfo[0]} (${title})` : titleInfo[0];
+
+  const renderProductPrice = () => {
+    if (currentDiscount) {
+      // Calculate the discount amount as a percentage of the price
+      const discountAmount = (price * currentDiscount.value) / 100;
+      // Subtract the discount amount from the original price to get the discounted price
+      const discountedPrice = price - discountAmount;
+      return (
+        <span className="product-price">
+          <span className="discount-price">{currencyFormater(price, bundle.currencyCode)}</span>
+          <span className="discounted-price">
+            {currencyFormater(discountedPrice, bundle.currencyCode)}
+          </span>
+        </span>
+      );
+    }
+    return <span className="product-price">{currencyFormater(price, bundle.currencyCode)}</span>;
+  };
 
   return (
     <div className="product-card">
@@ -47,7 +65,8 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
 
       <span className="product-title">{variantTitle}</span>
       <span className="product-info">{titleInfo[1]}</span>
-      <span className="product-price">{currencyFormater(price, bundle.currencyCode)}</span>
+      {renderProductPrice()}
+
       <AddToButton
         orderQty={cartQty}
         maxQty={maxValue > 0 ? maxValue : 1000}

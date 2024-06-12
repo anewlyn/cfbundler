@@ -20,6 +20,7 @@ const StickyFooter = () => {
     handleTransaction,
     bundle,
     addProductVariant,
+    currentDiscount,
   } = useLoopContext();
 
   // sets the footer message based on the current order value
@@ -103,6 +104,15 @@ const StickyFooter = () => {
     });
   };
 
+  // Calculate the discount amount as a percentage of the currentOrderValue
+  let discountedPrice = currentOrderValue;
+
+  if (currentDiscount) {
+    const discountAmount = (currentOrderValue * currentDiscount.value) / 100;
+    // Subtract the discount amount from the original currentOrderValue to get the discounted currentOrderValue
+    discountedPrice = currentOrderValue - discountAmount;
+  }
+
   return (
     <div className="sticky-footer">
       <div className="carousel">
@@ -112,7 +122,7 @@ const StickyFooter = () => {
         <p>{notice}</p>
         <div className="current-info">
           <h1 className="current-value">
-            {currencyFormater(currentOrderValue, bundle.currencyCode)}
+            {currencyFormater(discountedPrice, bundle.currencyCode)}
           </h1>
           <button
             onClick={handlePostTransaction}

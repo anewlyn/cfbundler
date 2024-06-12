@@ -2,26 +2,21 @@
 
 import { CartType } from '@/contexts/LoopProvider';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
-import { AllProductVariants, ProductTypes } from '@/types/bundleTypes';
+import { AllProductVariants, DiscountTypes, ProductTypes } from '@/types/bundleTypes';
 
-type Discount = {
-  id: string;
-  minCartValue: number;
-  name: string;
-  type: string;
-  value: number;
-  purchaseType: string;
-  conditionType: string;
-  appliesOnEachItem: boolean;
-  freeShipping: boolean;
-  code: string;
-  minCartQuantity: number;
-  maxCartQuantity: number;
-};
+export const getDiscount = (discounts: DiscountTypes[], currentOrderValue: number) => {
+  let newDiscount;
 
-export const getDiscountId = (discounts: Discount[], cartValue: number) => {
-  const discount = discounts.find((discount) => discount.minCartValue <= cartValue);
-  return discount?.id;
+  discounts.forEach((discount) => {
+    if (currentOrderValue >= discount.minCartQuantity) {
+      newDiscount = discount;
+    }
+  });
+
+  if (newDiscount) {
+    return newDiscount;
+  }
+  return null;
 };
 
 export const getCartValue = (products: AllProductVariants[], cart: CartType) => {
