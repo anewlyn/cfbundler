@@ -4,7 +4,7 @@
   align-items: center;
   background-color: var(--cf-header-background-color);
   display: grid;
-  gap: 1rem;
+  grid-gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr;
   padding: 0 1.5rem;
   width: 100%;
@@ -76,6 +76,7 @@
 
 @include for_breakpoint('mobile') {
   .header {
+    grid-gap: 1rem;
     grid-template-columns: max-content 1fr;
     grid-template-rows: 1fr 1fr;
 
@@ -87,6 +88,8 @@
   }
 
   .header-title {
+    padding-bottom: 1rem;
+
     .header-button {
       display: none;
     }

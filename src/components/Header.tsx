@@ -43,7 +43,6 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
           <button className="back-anchor" onClick={() => router.back()}>
             <i className="material-icons back-arrow">west</i>BACK
           </button>
-          {/* @todo get better logo */}
           <Image
             alt="Logo"
             className="logo"
