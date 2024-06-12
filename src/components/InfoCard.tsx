@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
-import { kiro_light } from '@/app/ui/fonts';
+import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
@@ -73,7 +73,7 @@ const InfoCard = ({
       </div>
       <div className="info-content">
         <section className="description">
-          <h1 className={kiro_light.className}>{productTitle}</h1>
+          <h1 className={kiro_bold_400.className}>{productTitle}</h1>
           <p>{currencyFormater(price, bundle.currencyCode)}</p>
           <hr />
           <StarRating rating={rating} reviews={numberOfReviews} />

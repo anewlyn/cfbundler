@@ -3,10 +3,10 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { kiro_light } from '@/app/ui/fonts';
+import { kiro_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
-
+console.log('kiro: ', kiro_700.variable);
 type HeaderProps = {
   handleOpenCadenceModal: () => void;
 };
@@ -44,7 +44,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             width={170}
           />
         </div>
-        <div className={classNames('header-title', kiro_light.className)}>
+        <div className={classNames('header-title', kiro_700.className)}>
           <h1>MY SUBSCRIPTION</h1>
           {ScheduleButton('header-button')}
         </div>
