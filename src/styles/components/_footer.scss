@@ -58,6 +58,73 @@
   }
 }
 
+.carousel {
+  .embla {
+    padding: 0.6rem 0;
+  }
+}
+
+.carousel-item-container {
+  position: relative;
+
+  &:hover .carousel-item-overlay {
+    opacity: 0.7;
+    visibility: visible;
+  }
+}
+
+.carousel-item-overlay {
+  background-color: var(--cf-background-color);
+  height: 85px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+  // visibility: hidden;
+  width: 85px;
+}
+
+.close-button {
+  position: absolute;
+  top: -10px;
+  /* Adjust as needed to center */
+  right: -10px;
+  /* Adjust as needed to center */
+  width: 19px;
+  /* Size of the circle */
+  height: 19px;
+  /* Size of the circle */
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  /* Makes it a circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.overlay-text {
+  border: none;
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  height: 68px;
+  left: 6px;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 11px;
+  width: 74px;
+  word-wrap: break-word;
+}
+
+.carousel-item-container:hover .carousel-item-overlay {
+  display: block;
+}
+
 @include for_breakpoint('mobile') {
   .sticky-footer {
     grid-template-columns: 1fr;

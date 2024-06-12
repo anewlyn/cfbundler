@@ -12,7 +12,7 @@
 .embla__container {
   align-content: center;
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 1rem;
   grid-auto-flow: column;
 }
 
@@ -30,7 +30,7 @@
   justify-content: center;
   width: 85px;
 
-  > .carousel-item {
+  >.carousel-item {
     height: 53px;
     opacity: 30%;
     width: auto;

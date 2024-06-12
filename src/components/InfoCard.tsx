@@ -42,13 +42,34 @@ const InfoCard = ({
 
   return (
     <div className="info-card">
-      <div className="info-image-block">
+      <div className="info-image-block carousel">
         <ResponsiveImage
           src={images[selectedImageIndex].imageURL}
           alt={productTitle}
           width={309}
           height={309}
         />
+        <Carousel>
+          {images.map((slide: { imageURL: string; altText: string }, index: number) => (
+            <div
+              className={classNames('embla__slide', 'alt-image-block', {
+                'base-border-2': selectedImageIndex === index,
+              })}
+              key={index}
+            >
+              <button onClick={() => handleOpenChangeImage(index)} className="alt-image-button">
+                switch images
+              </button>
+              <Image
+                className="carousel-item alt-image-button"
+                src={slide.imageURL}
+                alt={slide.altText}
+                width={271}
+                height={271}
+              />
+            </div>
+          ))}
+        </Carousel>
       </div>
       <div className="info-content">
         <section className="description">
@@ -73,27 +94,7 @@ const InfoCard = ({
           text={'+ ADD TO SUBSCRIPTION'}
         />
       </div>
-      <Carousel>
-        {images.map((slide: { imageURL: string; altText: string }, index: number) => (
-          <div
-            className={classNames('embla__slide', 'alt-image-block', {
-              'base-border-2': selectedImageIndex === index,
-            })}
-            key={index}
-          >
-            <button onClick={() => handleOpenChangeImage(index)} className="alt-image-button">
-              switch images
-            </button>
-            <Image
-              className="carousel-item alt-image-button"
-              src={slide.imageURL}
-              alt={slide.altText}
-              width={271}
-              height={271}
-            />
-          </div>
-        ))}
-      </Carousel>
+
     </div>
   );
 };

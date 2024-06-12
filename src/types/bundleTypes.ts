@@ -15,9 +15,14 @@ export type VariantTypes = {
   }[];
 };
 
+export type imageTypes = {
+  imageURL: string;
+  altText: string;
+};
+
 export type AllProductVariants = {
   productTitle: string;
-  images: { imageURL: string; altText: string }[];
+  images: imageTypes[];
   price: number;
   outOfStock: boolean;
   shopifyId: number;
