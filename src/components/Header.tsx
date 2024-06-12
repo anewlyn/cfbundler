@@ -48,8 +48,9 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
           <h1>MY SUBSCRIPTION</h1>
           {ScheduleButton('header-button')}
         </div>
-
-        <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
+        <div className="header-progress-bar">
+          <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
+        </div>
       </header>
       {ScheduleButton('header-button header-button-mobile')}
     </>

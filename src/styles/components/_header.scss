@@ -4,8 +4,8 @@
   align-items: center;
   background-color: var(--cf-header-background-color);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 0 1.5rem;
   width: 100%;
 }
@@ -22,13 +22,13 @@
 
   .back-anchor {
     align-items: center;
+    background-color: transparent;
+    border: none;
     color: inherit;
     cursor: pointer;
     display: flex;
     outline: 0;
     text-decoration: none;
-    background-color: transparent;
-    border: none;
   }
 
   .logo {
@@ -67,12 +67,17 @@
   display: none;
 }
 
+.header-progress-bar {
+  height: 100%;
+  position: relative;
+}
+
 @include for_breakpoint('mobile') {
   .header {
     grid-template-columns: max-content 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
 
-    .progress-bar {
+    .header-progress-bar {
       width: 100%;
       margin-bottom: 2rem;
       grid-column: 1 / span 2;
