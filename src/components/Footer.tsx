@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import Carousel from './Carousel';
@@ -23,6 +24,7 @@ const StickyFooter = () => {
     currentDiscount,
   } = useLoopContext();
 
+  const router = useRouter();
   // sets the footer message based on the current order value
   const notice = currentDiscount
     ? `You got ${currentDiscount.value}% off!`
@@ -31,11 +33,14 @@ const StickyFooter = () => {
   // @todo if order meets minimun requirements, add to cart
   const handlePostTransaction = () => {
     handleTransaction();
-    alert('Add to cart clicked');
   };
 
   const handleRemoveFromCart = (shopifyId: number, qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty - 1 });
+  };
+
+  const handleContactUs = () => {
+    router.push('https://cyclingfrog.com/pages/contact-us');
   };
 
   const carouselImages = [];
@@ -140,6 +145,11 @@ const StickyFooter = () => {
             ADD TO CART
           </button>
         </div>
+      </div>
+      <div className="sticky-button">
+        <button className="round-button" onClick={handleContactUs}>
+          <span>?</span>
+        </button>
       </div>
     </div>
   );
