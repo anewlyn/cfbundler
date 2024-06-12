@@ -9,11 +9,18 @@ type carouselImageTypes = {
   imageURL: string;
   altText: string;
   qty?: number;
-}
+};
 
 const StickyFooter = () => {
-  const { products, cart, benefitTiers, currentOrderValue, handleTransaction, bundle, addProductVariant } =
-    useLoopContext();
+  const {
+    products,
+    cart,
+    benefitTiers,
+    currentOrderValue,
+    handleTransaction,
+    bundle,
+    addProductVariant,
+  } = useLoopContext();
 
   // sets the footer message based on the current order value
   let notice = benefitTiers[0].footerMessage;
@@ -32,7 +39,7 @@ const StickyFooter = () => {
 
   const handleRemoveFromCart = (shopifyId: number, qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty - 1 });
-  }
+  };
 
   const carouselImages = [];
   cart.productVariants?.forEach((cartProduct) => {
@@ -61,41 +68,45 @@ const StickyFooter = () => {
 
   const renderImages = (images: carouselImageTypes[]) => {
     return images.map((slide: carouselImageTypes, index: number) => {
-      const isDefaultImage = slide?.imageURL === '/assets/lone-frog.png'
+      const isDefaultImage = slide?.imageURL === '/assets/lone-frog.png';
       const slideShopifyId = slide?.shopifyId || 0;
       const slideQty = slide?.qty || 0;
-      return <div
-        className={classNames(
-          'carousel-item-container',
-          'embla__slide',
-          isDefaultImage && 'default-image',
-        )}
-        key={index}
-      >
-        <Image
-          className="carousel-item"
-          src={slide?.imageURL || '/assets/lone-frog.png'}
-          alt={slide?.altText || 'Cycling Frog Logo'}
-          width={85}
-          height={85}
-        />
-        {!isDefaultImage && <div className="carousel-item-overlay">
-          <button className="close-button" onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}>
-            X
-          </button>
-          <p className='overlay-text'>{slide?.altText}</p>
+      return (
+        <div
+          className={classNames(
+            'carousel-item-container',
+            'embla__slide',
+            isDefaultImage && 'default-image',
+          )}
+          key={index}
+        >
+          <Image
+            className="carousel-item"
+            src={slide?.imageURL || '/assets/lone-frog.png'}
+            alt={slide?.altText || 'Cycling Frog Logo'}
+            width={85}
+            height={85}
+          />
+          {!isDefaultImage && (
+            <div className="carousel-item-overlay">
+              <button
+                className="close-button"
+                onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
+              >
+                X
+              </button>
+              <p className="overlay-text">{slide?.altText}</p>
+            </div>
+          )}
         </div>
-        }
-      </div>
+      );
     });
-  }
+  };
 
   return (
     <div className="sticky-footer">
       <div className="carousel">
-        <Carousel>
-          {renderImages(carouselImages)}
-        </Carousel>
+        <Carousel>{renderImages(carouselImages)}</Carousel>
       </div>
       <div className="order-info">
         <p>{notice}</p>

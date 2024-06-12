@@ -94,7 +94,6 @@ const InfoCard = ({
           text={'+ ADD TO SUBSCRIPTION'}
         />
       </div>
-
     </div>
   );
 };

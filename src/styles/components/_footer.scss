@@ -80,30 +80,27 @@
   opacity: 0;
   position: absolute;
   top: 0;
-  transition: opacity 0.5s, visibility 0.5s;
+  transition:
+    opacity 0.5s,
+    visibility 0.5s;
   // visibility: hidden;
   width: 85px;
 }
 
 .close-button {
-  position: absolute;
-  top: -10px;
-  /* Adjust as needed to center */
-  right: -10px;
-  /* Adjust as needed to center */
-  width: 19px;
-  /* Size of the circle */
-  height: 19px;
-  /* Size of the circle */
-  background-color: black;
-  color: white;
-  border-radius: 50%;
-  /* Makes it a circle */
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
   cursor: pointer;
+  display: flex;
   font-size: 0.8rem;
+  height: 19px;
+  justify-content: center;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 19px;
 }
 
 .overlay-text {
