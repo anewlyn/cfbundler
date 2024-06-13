@@ -32,12 +32,12 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
     if (currentDiscount) {
       const discountedPrice = getDiscountValue(currentDiscount.value, price);
       return (
-        <span className="product-price">
+        <div className="product-price">
           <span className="discount-price">{currencyFormater(price, bundle.currencyCode)}</span>
           <span className="discounted-price">
             {currencyFormater(discountedPrice, bundle.currencyCode)}
           </span>
-        </span>
+        </div>
       );
     }
     return <span className="product-price">{currencyFormater(price, bundle.currencyCode)}</span>;
