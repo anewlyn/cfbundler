@@ -1,24 +1,25 @@
 .progress-bar {
   background: var(--cf-discount-bar-color);
-  height: 10px;
-  position: relative;
-  width: 100%;
   display: grid;
+  height: 10px;
+  position: absolute;
+  top: 25%;
+  width: 100%;
 }
 
 .tier-marker {
-  display: grid;
-  text-align: right;
-  justify-content: end;
   align-content: flex-start;
-  position: relative;
+  display: grid;
   height: 10px;
+  justify-content: end;
+  position: relative;
+  text-align: right;
 }
 
 .tier-line {
   border-right: 1px solid #000;
-  top: -10px;
   height: 20px;
+  top: -10px;
 
   span {
     visibility: hidden;
@@ -26,8 +27,8 @@
 }
 
 .tier-subtitle {
-  font-family: sans-serif;
   font-weight: 400;
+  text-wrap: pretty;
 
   i {
     vertical-align: middle;

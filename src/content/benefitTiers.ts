@@ -5,15 +5,15 @@ export type BenefitTierTypes = {
 
 export const tiers: BenefitTierTypes = [
   {
-    subtitle: 'Min. Order',
     footerMessage: 'Subscriptions require a $50 minimum order.',
+    subtitle: '$$% off',
   },
   {
-    footerMessage: 'Yay! You have free shipping.',
-    subtitle: 'Free Shipping',
+    footerMessage: 'You got $$% off!',
+    subtitle: '$$% off',
   },
   {
     footerMessage: 'Yay! You have free shipping and a 10% discount.',
-    subtitle: '10% off',
+    subtitle: '$$% off',
   },
 ];

@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
 
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
-import { getCartValue, setProductsForRender } from '@/helpers/cartHelpers';
+import { getCartValue, getDiscount, setProductsForRender } from '@/helpers/cartHelpers';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { AllProductVariants, BundleTypes, DiscountTypes } from '@/types/bundleTypes';
 
@@ -13,6 +13,7 @@ export type LoopContextType = {
   bundle: BundleTypes;
   cart: CartType;
   currentOrderValue: number;
+  currentDiscount: DiscountTypes | null;
   handleTransaction: () => void;
   products: AllProductVariants[];
   sellingPlans: BundleTypes['sellingPlans'];
@@ -30,17 +31,20 @@ type VariantType = {
 
 export type CartType = {
   boxSizeId: string;
-  discountId: string;
+  discountId: string | null;
   productVariants: VariantType[];
   quantity: number;
   sellingPlanId: number;
 };
 
 const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
-  return tiers.map((tier, index) => ({
-    ...tier,
-    value: discounts[index].minCartQuantity,
-  }));
+  return tiers.map((tier, index) => {
+    return {
+      ...tier,
+      subtitle: `${discounts[index].value}% off`,
+      value: discounts[index].minCartQuantity,
+    };
+  });
 };
 
 const LoopProvider = ({
@@ -54,16 +58,17 @@ const LoopProvider = ({
 }) => {
   const defaultCart: CartType = {
     boxSizeId: bundleData.boxSizes[0].id,
-    discountId: bundleData.discounts[0].id,
+    discountId: null,
     productVariants: [],
     quantity: 0,
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
   const [cart, setCart] = useState<CartType>(defaultCart);
   const { products, discounts, sellingPlans } = bundleData;
-  const productsForRender = setProductsForRender(products, shopifyProducts);
 
+  const productsForRender = setProductsForRender(products, shopifyProducts);
   const currentOrderValue = getCartValue(productsForRender, cart);
+  const currentDiscount = getDiscount(discounts, getCartValue(productsForRender, cart));
 
   const addProductVariant = ({ shopifyId, quantity }: VariantType) => {
     const productVariant = cart.productVariants?.find(
@@ -106,7 +111,8 @@ const LoopProvider = ({
     benefitTiers,
     bundle: bundleData,
     cart,
-    currentOrderValue: currentOrderValue,
+    currentOrderValue,
+    currentDiscount,
     handleTransaction,
     products: productsForRender,
     sellingPlans,

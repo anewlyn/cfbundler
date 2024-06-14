@@ -18,17 +18,16 @@
   display: flex;
   font-size: 0.8rem;
   font-weight: 400;
-  justify-content: space-between;
+  justify-content: end;
   padding-left: 2rem;
   text-align: right;
 
   p {
     font-size: 16px;
-    width: 100%;
+    min-width: 65px;
   }
 
   .current-value {
-    font-size: 1.5rem;
     margin: 0;
     padding-right: 2rem;
   }
@@ -40,8 +39,14 @@
   display: flex;
   font-size: 0.8rem;
   justify-content: space-between;
+  margin-right: 1rem;
   padding-left: 1rem;
   width: max-content;
+
+  .product-price {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
 }
 
 .add-button {
@@ -58,9 +63,127 @@
   }
 }
 
+.carousel {
+  max-width: 600px;
+
+  .embla {
+    padding: 0.8rem 0;
+  }
+}
+
+.carousel-item-container {
+  position: relative;
+
+  &:hover .carousel-item-overlay {
+    opacity: 0.7;
+    visibility: visible;
+  }
+}
+
+.carousel-item-overlay {
+  background-color: var(--cf-background-color);
+  height: 85px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition:
+    opacity 0.5s,
+    visibility 0.5s;
+  width: 85px;
+}
+
+.close-button {
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  height: 19px;
+  padding: 0;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 19px;
+}
+
+.overlay-text {
+  border: none;
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  height: 68px;
+  left: 6px;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 11px;
+  width: 74px;
+  word-wrap: break-word;
+}
+
+.carousel-item-container:hover .carousel-item-overlay {
+  display: block;
+}
+
+.round-button {
+  background-color: black;
+  border-radius: 50%;
+  // Makes the button round
+  border: none;
+  color: white;
+  display: inline-block;
+  font-size: 16px;
+  padding: 20px;
+  position: relative;
+  // Needed for positioning the inner span
+  text-align: center;
+  text-decoration: none;
+  width: 57px;
+  // Diameter of the outer circle
+  height: 57px;
+  // Diameter of the outer circle
+}
+
+.round-button span {
+  display: block;
+  background-color: black;
+  border: 3px solid white;
+  // White border
+  color: white;
+  border-radius: 50%;
+  // Makes the span round
+  width: 40px;
+  height: 40px;
+  // Diameter of the inner circle
+  line-height: 38px;
+  // Centers the question mark vertically
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // Centers the span inside the button
+  font-size: 24px;
+  // Size of the question mark
+}
+
+.sticky-button {
+  position: fixed;
+  bottom: 11rem;
+  // Adjusts the position to be 2 rems above the footer
+  align-self: flex-end;
+  right: 1rem;
+  z-index: 10;
+}
+
 @include for_breakpoint('mobile') {
   .sticky-footer {
     grid-template-columns: 1fr;
+  }
+
+  .sticky-button {
+    bottom: 16rem;
   }
 
   .order-info {
@@ -74,5 +197,22 @@
   .current-info {
     flex-direction: row;
     padding: 0;
+  }
+}
+
+@include for_breakpoint('tablet') {
+  .current-info {
+    .product-price {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .discount-price {
+      padding: 0;
+    }
+
+    h1 {
+      margin: 0 auto;
+    }
   }
 }

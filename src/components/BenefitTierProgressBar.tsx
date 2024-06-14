@@ -42,6 +42,7 @@ const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarP
       );
     });
   };
+
   return (
     <div className="progress-bar">
       <div className={classNames(`grid-cols-${tiers.length}`)}>{renderTiers()}</div>

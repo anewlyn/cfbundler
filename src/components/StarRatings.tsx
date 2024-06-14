@@ -31,7 +31,7 @@ const StarRating = ({ rating, reviews }: StarRatingProps) => {
   return (
     <div className="star-rating">
       {stars}
-      <span className="sans-serif">({reviews})</span>
+      <span>({reviews})</span>
     </div>
   );
 };

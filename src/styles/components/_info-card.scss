@@ -14,7 +14,6 @@
 
 .info-image-block {
   img {
-    height: 100%;
     max-inline-size: 100%;
     object-fit: contain;
   }
@@ -119,6 +118,6 @@
 
 @include for_breakpoint('tablet') {
   .info-image-block {
-    align-self: flex-start;
+    // align-self: flex-start;
   }
 }
