@@ -31,7 +31,6 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   const handleProductQtyChange = (qty: number) =>
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
 
-
   const variantTitle = isVariant ? `${titleInfo[0]} (${title})` : titleInfo[0];
 
   const renderProductPrice = () => {
@@ -59,8 +58,9 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
           height={309}
           isPriority={isPriority}
         />
-        <div onTouchStart={toggleInfoVisibility}
-          className={classNames('info-screen', { 'active': isInfoVisible })}
+        <div
+          onTouchStart={toggleInfoVisibility}
+          className={classNames('info-screen', { active: isInfoVisible })}
         >
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">
             MORE INFO
