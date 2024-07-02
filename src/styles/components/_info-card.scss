@@ -90,7 +90,7 @@
 }
 
 @include for_breakpoint('mobile') {
-  .info-image-block {
+  .info-image-block> :first-child {
     display: none;
   }
 
