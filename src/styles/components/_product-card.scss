@@ -62,6 +62,10 @@
     background-color: transparent;
     display: block;
 
+    &.active {
+      display: block;
+    }
+
     .info-button {
       background-color: transparent;
       color: transparent;

@@ -1,5 +1,7 @@
 'use client';
 
+import classNames from 'classnames';
+import { useState } from 'react';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
@@ -12,6 +14,10 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
+  const [isInfoVisible, setIsInfoVisible] = useState(false);
+
+  const toggleInfoVisibility = () => setIsInfoVisible(!isInfoVisible);
+
   const { addProductVariant, cart, bundle, currentDiscount } = useLoopContext();
 
   const cartQty =
@@ -22,9 +28,9 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   const { maxValue } = limits[0];
   const titleInfo = productTitle.split(',');
 
-  const handleProductQtyChange = (qty: number) => {
+  const handleProductQtyChange = (qty: number) =>
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
-  };
+
 
   const variantTitle = isVariant ? `${titleInfo[0]} (${title})` : titleInfo[0];
 
@@ -53,7 +59,9 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
           height={309}
           isPriority={isPriority}
         />
-        <div className={'info-screen'}>
+        <div onTouchStart={toggleInfoVisibility}
+          className={classNames('info-screen', { 'active': isInfoVisible })}
+        >
           <button onClick={() => handleOpenInfoModal(product)} className="info-button">
             MORE INFO
           </button>
