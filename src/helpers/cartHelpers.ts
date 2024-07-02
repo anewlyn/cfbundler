@@ -75,10 +75,15 @@ export const setProductsForRender = (
     .flat() as AllProductVariants[];
 };
 
-export const currencyFormater = (value: number, currencyCode: string) => {
+export const currencyFormater = (
+  value: number,
+  currencyCode: string,
+  maximumFractionDigits = 2,
+) => {
   return Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currencyCode,
+    maximumFractionDigits: maximumFractionDigits,
   }).format(value);
 };
 
