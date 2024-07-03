@@ -25,6 +25,7 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
 
   return (
     <div className="cadance-card">
+      <h1>DELIVER EVERY...</h1>
       {sellingPlans.map((cadence, index) => {
         const interval =
           Number(cadence?.deliveryIntervalCount) > 1

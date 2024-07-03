@@ -198,6 +198,7 @@
 @include for_breakpoint('mobile') {
   .sticky-footer {
     grid-template-columns: 1fr;
+    padding-bottom: 1.5rem;
   }
 
   .has-overflow {
@@ -205,7 +206,7 @@
   }
 
   .sticky-button {
-    bottom: 16rem;
+    bottom: 19rem;
   }
 
   .order-info {
