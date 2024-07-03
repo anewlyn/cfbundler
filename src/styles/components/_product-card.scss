@@ -60,17 +60,33 @@
 @include for_breakpoint('mobile') {
   .info-screen {
     background-color: transparent;
-    display: block;
+    display: none;
 
-    &.active {
-      display: block;
-    }
 
     .info-button {
       background-color: transparent;
       color: transparent;
       height: 100%;
       width: 100%;
+    }
+
+    &.active {
+      background-color: #00000040;
+      display: block;
+
+      .info-button {
+        background-color: var(--cf-background-color);
+        color: var(--cf-text);
+        border: none;
+        font-size: 16px;
+        font-weight: 700;
+        height: 52px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+      }
     }
   }
 }

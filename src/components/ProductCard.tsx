@@ -1,7 +1,7 @@
 'use client';
 
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
@@ -15,8 +15,29 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
+  const infoScreenRef = useRef<HTMLDivElement>(null);
 
-  const toggleInfoVisibility = () => setIsInfoVisible(!isInfoVisible);
+  const toggleInfoVisibilityOn = () => {
+    setIsInfoVisible(true);
+  }
+
+  const toggleInfoVisibilityOff = () => {
+    setIsInfoVisible(false);
+  }
+
+  // toggle info screen visibility off when clicking outside of the info screen. Used specifically for Iphone mobile devices
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (infoScreenRef.current && !infoScreenRef.current.contains(event.target as Node)) {
+        toggleInfoVisibilityOff();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const { addProductVariant, cart, bundle, currentDiscount } = useLoopContext();
 
@@ -50,7 +71,7 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
 
   return (
     <div className="product-card">
-      <div className="product-image">
+      <div className="product-image" onTouchStart={toggleInfoVisibilityOn} >
         <ResponsiveImage
           src={imageURl}
           alt={productTitle}
@@ -59,10 +80,15 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
           isPriority={isPriority}
         />
         <div
-          onTouchStart={toggleInfoVisibility}
-          className={classNames('info-screen', { active: isInfoVisible })}
+          ref={infoScreenRef}
+          className={
+            classNames(
+              'info-screen'
+              , { active: isInfoVisible }
+            )
+          }
         >
-          <button onClick={() => handleOpenInfoModal(product)} className="info-button">
+          <button onClick={() => { handleOpenInfoModal(product); toggleInfoVisibilityOff(); }} className="info-button">
             MORE INFO
           </button>
         </div>
