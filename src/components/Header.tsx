@@ -17,18 +17,22 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
   const ScheduleButton = (className: string) => {
+    const interval =
+      Number(deliverySchedule?.deliveryIntervalCount) > 1
+        ? `${deliverySchedule?.deliveryInterval}S`
+        : deliverySchedule?.deliveryInterval;
     if (sellingPlans.length === 1) {
       return (
         <button className={className}>
           <span>DELIVER EVERY &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+          <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
         </button>
       );
     } else {
       return (
         <button className={className} onClick={handleOpenCadenceModal}>
           <span>DELIVER EVERY &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+          <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
           <i className="material-icons">expand_more</i>
         </button>
       );
