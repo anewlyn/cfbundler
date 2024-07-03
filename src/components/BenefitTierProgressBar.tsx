@@ -29,7 +29,7 @@ const BenefitTierProgressBar = ({ currentValue, tiers }: BenefitTierProgressBarP
       return (
         <div className={classNames('tier-marker')} key={index}>
           <div className="tier-line row-1" />
-          <div>{currencyFormater(tier.value, bundle.currencyCode, 0)}</div>
+          <div className="currency">{currencyFormater(tier.value, bundle.currencyCode, 0)}</div>
           <div className="tier-subtitle">
             <i className={classNames('material-icons', !isValueMet && 'no-display')}>check</i>
             {tier.subtitle}
