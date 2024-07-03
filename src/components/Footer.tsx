@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useRef, useState, useEffect } from 'react';
+import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import Carousel from './Carousel';
@@ -13,6 +15,9 @@ type carouselImageTypes = {
 };
 
 const StickyFooter = () => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+
   const {
     products,
     cart,
@@ -25,6 +30,22 @@ const StickyFooter = () => {
   } = useLoopContext();
 
   const router = useRouter();
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      const el = carouselRef.current;
+      if (el) {
+        const hasHorizontalOverflow = el.scrollWidth > el.clientWidth;
+        const hasVerticalOverflow = el.scrollHeight > el.clientHeight;
+        setHasOverflow(hasHorizontalOverflow || hasVerticalOverflow);
+      }
+    };
+
+    checkOverflow();
+
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, []);
   // sets the footer message based on the current order value
   const notice = currentDiscount
     ? `You got ${currentDiscount.value}% off!`
@@ -112,24 +133,27 @@ const StickyFooter = () => {
 
       return (
         <div className="product-price grid-cols-2">
-          <h1 className="discount-price">
+          <h1 className={classNames('discount-price', kiro_extra_bold_700.className)}>
             {currencyFormater(currentOrderValue, bundle.currencyCode)}
           </h1>
-          <h1 className="discounted-price">
+          <h1 className={classNames('discounted-price', kiro_extra_bold_700.className)}>
             {currencyFormater(discountedPrice, bundle.currencyCode)}
           </h1>
         </div>
       );
     }
     return (
-      <h1 className="current-value">{currencyFormater(discountedPrice, bundle.currencyCode)}</h1>
+      <h1 className={classNames('current-value', kiro_extra_bold_700.className)}>
+        {currencyFormater(discountedPrice, bundle.currencyCode)}
+      </h1>
     );
   };
 
   return (
     <div className="sticky-footer">
       <div className="carousel">
-        <Carousel>{renderImages(carouselImages)}</Carousel>
+        <Carousel ref={carouselRef}>{renderImages(carouselImages)}</Carousel>
+        <div className={classNames({ 'has-overflow': hasOverflow })} />
       </div>
       <div className="order-info">
         <p>{notice}</p>
