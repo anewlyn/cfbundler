@@ -19,11 +19,11 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
 
   const toggleInfoVisibilityOn = () => {
     setIsInfoVisible(true);
-  }
+  };
 
   const toggleInfoVisibilityOff = () => {
     setIsInfoVisible(false);
-  }
+  };
 
   // toggle info screen visibility off when clicking outside of the info screen. Used specifically for Iphone mobile devices
   useEffect(() => {
@@ -71,7 +71,7 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
 
   return (
     <div className="product-card">
-      <div className="product-image" onTouchStart={toggleInfoVisibilityOn} >
+      <div className="product-image" onTouchStart={toggleInfoVisibilityOn}>
         <ResponsiveImage
           src={imageURl}
           alt={productTitle}
@@ -79,16 +79,14 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
           height={309}
           isPriority={isPriority}
         />
-        <div
-          ref={infoScreenRef}
-          className={
-            classNames(
-              'info-screen'
-              , { active: isInfoVisible }
-            )
-          }
-        >
-          <button onClick={() => { handleOpenInfoModal(product); toggleInfoVisibilityOff(); }} className="info-button">
+        <div ref={infoScreenRef} className={classNames('info-screen', { active: isInfoVisible })}>
+          <button
+            onClick={() => {
+              handleOpenInfoModal(product);
+              toggleInfoVisibilityOff();
+            }}
+            className="info-button"
+          >
             MORE INFO
           </button>
         </div>
