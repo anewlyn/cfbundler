@@ -2,6 +2,7 @@
   align-content: center;
   margin-left: 1rem;
   overflow: hidden;
+  padding: 1.5rem 0;
 }
 
 .embla {
@@ -12,8 +13,17 @@
 .embla__container {
   align-content: center;
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 10px;
   grid-auto-flow: column;
+}
+
+.hasOverflow {
+  display: inline;
+  height: 100%;
+  width: 1px;
+  border: 1px inset;
+  margin: 5px;
+  border-right: 1px solid var(--cf-grey-border);
 }
 
 .embla__slide {

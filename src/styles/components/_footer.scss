@@ -7,9 +7,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: space-between;
-  padding: 1.5rem;
+  padding: 0 1.5rem;
   position: fixed;
   width: 100%;
+  box-shadow: 0 -11px 25px -11px var(--cf-drop-shadow);
 }
 
 .order-info {
@@ -24,6 +25,7 @@
 
   p {
     font-size: 16px;
+    margin-block-end: 8px;
     min-width: 65px;
   }
 
@@ -54,6 +56,7 @@
   border: none;
   color: var(--cf-white);
   font-size: 1rem;
+  font-weight: 700;
   min-width: max-content;
   padding: 0 2rem;
 
@@ -65,10 +68,25 @@
 
 .carousel {
   max-width: 600px;
+  position: relative;
 
   .embla {
     padding: 0.8rem 0;
   }
+}
+
+.has-overflow {
+  position: absolute;
+  display: inline;
+  height: 165px;
+  right: 0;
+  top: 0;
+  border-right: 1px solid var(--cf-divider);
+}
+
+.scroll-indicator {
+  height: 100%;
+  border-right: 1px solid var(--cf-grey-border);
 }
 
 .carousel-item-container {
@@ -180,10 +198,15 @@
 @include for_breakpoint('mobile') {
   .sticky-footer {
     grid-template-columns: 1fr;
+    padding-bottom: 1.5rem;
+  }
+
+  .has-overflow {
+    display: none;
   }
 
   .sticky-button {
-    bottom: 16rem;
+    bottom: 19rem;
   }
 
   .order-info {

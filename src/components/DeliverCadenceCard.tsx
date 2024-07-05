@@ -25,18 +25,25 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
 
   return (
     <div className="cadance-card">
-      {sellingPlans.map((cadence, index) => (
-        <button
-          key={index}
-          className={classNames(
-            'cadance-card-button base-border-1',
-            selectedButton === index ? 'selected' : '',
-          )}
-          onClick={() => handleClick(index)}
-        >
-          {`${cadence.deliveryIntervalCount} ${cadence.deliveryInterval}`}
-        </button>
-      ))}
+      <h1>DELIVER EVERY...</h1>
+      {sellingPlans.map((cadence, index) => {
+        const interval =
+          Number(cadence?.deliveryIntervalCount) > 1
+            ? `${cadence?.deliveryInterval}S`
+            : cadence?.deliveryInterval;
+        return (
+          <button
+            key={index}
+            className={classNames(
+              'cadance-card-button base-border-1',
+              selectedButton === index ? 'selected' : '',
+            )}
+            onClick={() => handleClick(index)}
+          >
+            {`${cadence.deliveryIntervalCount} ${interval}`}
+          </button>
+        );
+      })}
       <hr />
       <button className="cadance-card-button selected" onClick={handleSaveChanges}>
         SAVE CHANGES

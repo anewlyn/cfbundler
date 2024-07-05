@@ -3,7 +3,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { kiro_700 } from '@/app/ui/fonts';
+import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
 
@@ -17,18 +17,22 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
   const ScheduleButton = (className: string) => {
+    const interval =
+      Number(deliverySchedule?.deliveryIntervalCount) > 1
+        ? `${deliverySchedule?.deliveryInterval}S`
+        : deliverySchedule?.deliveryInterval;
     if (sellingPlans.length === 1) {
       return (
         <button className={className}>
           <span>DELIVER EVERY &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+          <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
         </button>
       );
     } else {
       return (
         <button className={className} onClick={handleOpenCadenceModal}>
           <span>DELIVER EVERY &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${deliverySchedule?.deliveryInterval}`}</b>
+          <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
           <i className="material-icons">expand_more</i>
         </button>
       );
@@ -51,7 +55,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             width={170}
           />
         </div>
-        <div className={classNames('header-title', kiro_700.className)}>
+        <div className={classNames('header-title', kiro_bold_400.className)}>
           <h1>MY SUBSCRIPTION</h1>
           {ScheduleButton('header-button')}
         </div>
