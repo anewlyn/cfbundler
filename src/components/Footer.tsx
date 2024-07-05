@@ -46,12 +46,15 @@ const StickyFooter = () => {
     window.addEventListener('resize', checkOverflow);
     return () => window.removeEventListener('resize', checkOverflow);
   }, []);
-  // sets the footer message based on the current order value
-  const notice = currentDiscount
-    ? `You got ${currentDiscount.value}% off!`
-    : 'Subscriptions require a $50 minimum order.';
 
-  // @todo if order meets minimun requirements, add to cart
+  const getFooterMessage = () => {
+    const notice = benefitTiers.findLastIndex((tier) => {
+      return currentOrderValue >= tier.value;
+    });
+
+    return notice > 0 ? benefitTiers[notice].footerMessage : benefitTiers[0].footerMessage;
+  };
+
   const handlePostTransaction = () => {
     handleTransaction();
   };
@@ -156,7 +159,7 @@ const StickyFooter = () => {
         <div className={classNames({ 'has-overflow': hasOverflow })} />
       </div>
       <div className="order-info">
-        <p>{notice}</p>
+        <p>{getFooterMessage()}</p>
         <div className="current-info">
           {renderProductPrice()}
           <button

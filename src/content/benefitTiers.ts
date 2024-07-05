@@ -5,15 +5,15 @@ export type BenefitTierTypes = {
 
 export const tiers: BenefitTierTypes = [
   {
-    footerMessage: 'Subscriptions require a $50 minimum order.',
-    subtitle: '$$% off',
+    footerMessage: process.env.NEXT_PUBLIC_BENEFIT_TIER_ONE_FOOTER_TEXT || '',
+    subtitle: process.env.NEXT_PUBLIC_BENEFIT_TIER_ONE_HEADER_TEXT || '',
   },
   {
-    footerMessage: 'You got $$% off!',
-    subtitle: '$$% off',
+    footerMessage: process.env.NEXT_PUBLIC_BENEFIT_TIER_TWO_FOOTER_TEXT || '',
+    subtitle: process.env.NEXT_PUBLIC_BENEFIT_TIER_TWO_HEADER_TEXT || '',
   },
   {
-    footerMessage: 'Yay! You have free shipping and a 10% discount.',
-    subtitle: '$$% off',
+    footerMessage: process.env.NEXT_PUBLIC_BENEFIT_TIER_THREE_FOOTER_TEXT || '',
+    subtitle: process.env.NEXT_PUBLIC_BENEFIT_TIER_THREE_HEADER_TEXT || '',
   },
 ];
