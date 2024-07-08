@@ -1,3 +1,5 @@
+'use client';
+
 import { CartType } from '@/contexts/LoopProvider';
 
 const getCookie = (cookieName: string) => {
