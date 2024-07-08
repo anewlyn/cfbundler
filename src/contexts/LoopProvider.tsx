@@ -72,6 +72,7 @@ const LoopProvider = ({
       const startCart = document ? getCartCookie() : null;
       setCart(startCart || defaultCart);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
