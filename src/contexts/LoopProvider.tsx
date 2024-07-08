@@ -65,10 +65,14 @@ const LoopProvider = ({
     quantity: 0,
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
-  const [cart, setCart] = useState<CartType>(() => {
-    const cartCookie = document ? getCartCookie() : null;
-    return cartCookie || defaultCart;
-  });
+  const [cart, setCart] = useState<CartType>(defaultCart);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const startCart = document ? getCartCookie() : null;
+      setCart(startCart || defaultCart);
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -83,7 +87,7 @@ const LoopProvider = ({
   const currentDiscount = getDiscount(discounts, getCartValue(productsForRender, cart));
 
   const addProductVariant = ({ shopifyId, quantity }: VariantType) => {
-    const productVariant = cart.productVariants?.find(
+    const productVariant = cart?.productVariants?.find(
       (variant: VariantType) => variant.shopifyId === shopifyId,
     );
 
