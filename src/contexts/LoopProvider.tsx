@@ -1,9 +1,10 @@
 'use client';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
 
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
 import { getCartValue, getDiscount, setProductsForRender } from '@/helpers/cartHelpers';
+import { getCartCookie, setCartCookie } from '@/helpers/cookies';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { AllProductVariants, BundleTypes, DiscountTypes } from '@/types/bundleTypes';
 
@@ -64,7 +65,15 @@ const LoopProvider = ({
     quantity: 0,
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
-  const [cart, setCart] = useState<CartType>(defaultCart);
+  const [cart, setCart] = useState<CartType>(() => {
+    const cartCookie = getCartCookie();
+    return cartCookie || defaultCart;
+  });
+
+  useEffect(() => {
+    setCartCookie(cart);
+  }, [cart]);
+
   const { products, discounts, sellingPlans } = bundleData;
 
   const productsForRender = setProductsForRender(products, shopifyProducts);
@@ -98,6 +107,7 @@ const LoopProvider = ({
         productVariants: [...prevCart.productVariants, { shopifyId, quantity }],
       }));
     }
+    setCartCookie(cart);
   };
 
   const handleTransaction = () => {
