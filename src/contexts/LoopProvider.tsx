@@ -74,7 +74,6 @@ const LoopProvider = ({
     if (typeof document !== 'undefined') {
       setCartCookie(cart);
     }
-
   }, [cart]);
 
   const { products, discounts, sellingPlans } = bundleData;
