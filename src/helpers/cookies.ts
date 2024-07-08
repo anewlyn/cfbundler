@@ -1,28 +1,33 @@
 import { CartType } from '@/contexts/LoopProvider';
 
 const getCookie = (cookieName: string) => {
-  // Split document.cookie into an array of cookies
-  const cookies = document.cookie.split('; ');
+  if (document) {
+    // Split document.cookie into an array of cookies
+    const cookies = document.cookie.split('; ');
 
-  // Find the cookie that matches the cookieName
-  const cookie = cookies.find((cookie) => {
-    const [name] = cookie.split('=');
-    return name === cookieName;
-  });
+    // Find the cookie that matches the cookieName
+    const cookie = cookies.find((cookie) => {
+      const [name] = cookie.split('=');
+      return name === cookieName;
+    });
 
-  // Return the cookie value
-  return cookie ? cookie.split('=')[1] : '';
+    // Return the cookie value
+    return cookie ? cookie.split('=')[1] : '';
+  }
+  return '';
 };
 
 const setCookie = (cookieName: string, cookieValue: string, expirationDays: number) => {
-  // Get the current date
-  const date = new Date();
+  if (document) {
+    // Get the current date
+    const date = new Date();
 
-  // Set the expiration date
-  date.setTime(date.getTime() + expirationDays * 24 * 60 * 60 * 1000);
+    // Set the expiration date
+    date.setTime(date.getTime() + expirationDays * 24 * 60 * 60 * 1000);
 
-  // Set the cookie
-  document.cookie = `${cookieName}=${cookieValue}; expires=${date.toUTCString()}; path=/`;
+    // Set the cookie
+    document.cookie = `${cookieName}=${cookieValue}; expires=${date.toUTCString()}; path=/`;
+  }
 };
 
 export const getCartCookie = () => {
