@@ -66,12 +66,15 @@ const LoopProvider = ({
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
   };
   const [cart, setCart] = useState<CartType>(() => {
-    const cartCookie = getCartCookie();
+    const cartCookie = document ? getCartCookie() : null;
     return cartCookie || defaultCart;
   });
 
   useEffect(() => {
-    setCartCookie(cart);
+    if (typeof document !== 'undefined') {
+      setCartCookie(cart);
+    }
+
   }, [cart]);
 
   const { products, discounts, sellingPlans } = bundleData;
