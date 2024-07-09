@@ -12,6 +12,7 @@
     "lint": "eslint \"**/*.{jsx,js,ts,tsx}\"",
     "lint:fix": "eslint \"**/*.{jsx,js,ts,tsx}\" --fix",
     "prepare": "husky",
+    "ryanDev": "yarn next dev --hostname 127.0.0.1",
     "start": "next start"
   },
   "eslintConfig": {

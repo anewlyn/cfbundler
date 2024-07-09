@@ -1,7 +1,6 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
-
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
 import { getCartValue, getDiscount, setProductsForRender } from '@/helpers/cartHelpers';
 import { getCartCookie, setCartCookie } from '@/helpers/cookies';
@@ -36,6 +35,8 @@ export type CartType = {
   productVariants: VariantType[];
   quantity: number;
   sellingPlanId: number;
+  transactionId: string | null;
+  cadence?: string;
 };
 
 const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
@@ -64,6 +65,7 @@ const LoopProvider = ({
     productVariants: [],
     quantity: 0,
     sellingPlanId: bundleData.sellingPlans[0].shopifyId,
+    transactionId: null,
   };
   const [cart, setCart] = useState<CartType>(defaultCart);
 
@@ -84,7 +86,7 @@ const LoopProvider = ({
   }, [cart]);
 
   const { products, discounts, sellingPlans } = bundleData;
-
+  const shopifyDomain = process.env.NEXT_PUBLIC_REDIRECT_URL || '';
   const productsForRender = setProductsForRender(products, shopifyProducts);
   const currentOrderValue = getCartValue(productsForRender, cart);
   const currentDiscount = getDiscount(discounts, getCartValue(productsForRender, cart));
@@ -119,9 +121,35 @@ const LoopProvider = ({
     setCartCookie(cart);
   };
 
-  const handleTransaction = () => {
-    createTransaction(cart, bundleData.id);
-    // @todo navigate to cyclingfrog.com/cart
+  const handleTransaction = async () => {
+    const cadence = sellingPlans.find((plan) => plan.shopifyId === cart.sellingPlanId);
+    const transactionId = await createTransaction(cart, bundleData.id);
+
+    // graphql
+    const response = await fetch('/api/shopify/pushToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        productVariants: cart.productVariants,
+        transactionId,
+        cadence: cadence?.name,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.data && data.data.cartCreate && data.data.cartCreate.cart) {
+      // cart created successfully, leaving cart variable in for now
+      // const cart = data.data.cartCreate.cart;
+      const cartUrl = `${shopifyDomain}/?open_cart=true`;
+
+      // redirect to the cart
+      window.location.href = cartUrl;
+    } else {
+      console.error('Error creating cart:', data.errors);
+    }
   };
 
   const benefitTiers = setBenefitTierContents(discounts, tiers);
