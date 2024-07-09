@@ -70,7 +70,9 @@ const LoopProvider = ({
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const startCart = document ? getCartCookie() : null;
-      setCart(startCart || defaultCart);
+      if (startCart?.productVariants.length > 0) {
+        setCart(startCart);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
