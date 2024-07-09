@@ -9,7 +9,7 @@ const encodeId = (id: number) => {
 
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
-  const { productVariants, transactionId, cadence } = body;
+  const { productVariants, transactionId, cadence, discount } = body;
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
           { key: 'subscription', value: 'true' },
           { key: 'bundleId', value: transactionId },
           { key: 'cadence', value: cadence },
+          { key: 'discount', value: discount?.toString() },
         ],
       })),
     },

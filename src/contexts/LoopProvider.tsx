@@ -37,6 +37,7 @@ export type CartType = {
   sellingPlanId: number;
   transactionId: string | null;
   cadence?: string;
+  discount?: number;
 };
 
 const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
@@ -135,6 +136,7 @@ const LoopProvider = ({
         productVariants: cart.productVariants,
         transactionId,
         cadence: cadence?.name,
+        discount: currentDiscount?.value,
       }),
     });
 

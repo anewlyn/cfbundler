@@ -4,7 +4,10 @@ import { CartType } from '@/contexts/LoopProvider';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { AllProductVariants, DiscountTypes, ProductTypes } from '@/types/bundleTypes';
 
-export const getDiscount = (discounts: DiscountTypes[], currentOrderValue: number) => {
+export const getDiscount = (
+  discounts: DiscountTypes[],
+  currentOrderValue: number,
+): DiscountTypes | null => {
   let newDiscount;
 
   discounts.forEach((discount) => {
