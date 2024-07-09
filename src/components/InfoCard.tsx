@@ -9,7 +9,6 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import ResponsiveImage from './ResponsiveImage';
-import StarRating from './StarRatings';
 
 const InfoCard = ({
   images,
@@ -26,6 +25,10 @@ const InfoCard = ({
   const { maxValue } = limits[0];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+  // loox.io/widget/VJZ5Kxo3Xi/loox.1632874857413.js?shop=cyclingfrog.myshopify.com
+  // https://loox.io/widget/VJZ5Kxo3Xi/ratings?products_ids=no&h=1718658000000
+  // https://cyclingfrog.com/products/bluerazz-gummies?variant=40847671722193#looxReviews
+
   const handleProductQtyChange = (qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
   };
@@ -33,10 +36,6 @@ const InfoCard = ({
   const handleOpenChangeImage = (imageIndex: number) => {
     setSelectedImageIndex(imageIndex);
   };
-
-  // @todo get the following data from the Loox API
-  const rating = 4.5;
-  const numberOfReviews = 120;
 
   const body_html_sanitized = body_html && sanitizeHtml(body_html);
 
@@ -76,7 +75,7 @@ const InfoCard = ({
           <h1 className={kiro_bold_400.className}>{productTitle}</h1>
           <p>{currencyFormater(price, bundle.currencyCode)}</p>
           <hr />
-          <StarRating rating={rating} reviews={numberOfReviews} />
+          <div className="loox-rating" data-fetch data-id={shopifyId} />
 
           {body_html_sanitized && (
             <div
