@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
         merchandiseId: encodeId(variant.shopifyId),
         attributes: [
           { key: 'subscription', value: 'true' },
-          { key: 'bundleId', value: transactionId },
+          { key: '_bundleId', value: transactionId },
           { key: 'cadence', value: cadence },
           { key: 'discount', value: discount?.toString() },
         ],
