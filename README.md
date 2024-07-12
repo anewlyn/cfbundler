@@ -1,4 +1,11 @@
-> yarn set version 4.1.1
+Cloudflare requires yarn 4.1.1+ to build on deployment. you will need to make sure the `.yarn` folder is present and has yarn 4.1.1 inside of it. if you don't, run the following
+
+```
+mkdir -p .yarn/releases
+curl -o .yarn/releases/yarn-4.1.1.cjs https://github.com/yarnpkg/yarn/releases/download/v4.1.1/yarn-4.1.1.cjs
+```
+
+then run `corepack enable` and then finally `yarn set version 4.1.1`.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
