@@ -87,6 +87,7 @@ export async function POST(request: NextRequest) {
       nextResponse.cookies.set('cart', cartCookie, {
         httpOnly: true,
         path: '/',
+        domain: '.cyclingfrog.com',
       });
 
       return nextResponse;
