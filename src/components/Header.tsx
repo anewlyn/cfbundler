@@ -43,7 +43,6 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
     };
   }, []);
 
-
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
   const ScheduleButton = (className: string) => {
