@@ -58,6 +58,7 @@ const Bundler = () => {
         open={cadenceModalOpen}
         onClose={handleCloseCadenceModal}
         ariaModalLabel="Delivery Cadence Modal"
+        hasCloseButton
       >
         <DeliverCadenceCard onClose={handleCloseCadenceModal} />
       </Modal>
