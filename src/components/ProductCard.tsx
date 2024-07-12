@@ -55,7 +55,7 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
           height={309}
           isPriority={isPriority}
         />
-        <div ref={infoScreenRef} className='info-screen'>
+        <div ref={infoScreenRef} className="info-screen">
           <button
             onClick={() => {
               handleOpenInfoModal(product);
