@@ -17,6 +17,7 @@
   background-color: var(--cf-background-color);
   margin: 1.5rem;
   position: relative;
+  // max-height: fill-available;
   max-height: calc(100dvh - 3rem);
   overflow: auto;
 }

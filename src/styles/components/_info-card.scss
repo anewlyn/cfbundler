@@ -10,6 +10,14 @@
   .embla {
     width: fit-content;
   }
+
+  .carousel {
+    padding: 0;
+  }
+}
+
+.modal-content {
+  margin: 2.5rem;
 }
 
 .info-image-block {
@@ -68,6 +76,7 @@
   height: 85px;
   position: relative;
   width: 85px;
+  margin-top: 1rem;
 
   img {
     height: 100%;
@@ -113,11 +122,5 @@
 
   .alt-images {
     display: none;
-  }
-}
-
-@include for_breakpoint('tablet') {
-  .info-image-block {
-    // align-self: flex-start;
   }
 }
