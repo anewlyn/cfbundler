@@ -7,7 +7,7 @@ import { Portal } from './Portal';
 export type ModalProps = {
   open: boolean;
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  onClose: (e: any) => void;
+  onClose: (e?: any) => void;
   closeButtonIcon?: string;
   children: ReactNode;
   ariaModalLabel: string; // Describes the modal
@@ -75,6 +75,18 @@ export const Modal = ({
       modalRef.current?.removeEventListener('keydown', trapFocus);
     };
   }, [modalRef.current]);
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      onClose();
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
 
   if (open) {
     return (
