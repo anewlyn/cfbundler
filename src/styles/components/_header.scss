@@ -84,6 +84,7 @@
       width: 100%;
       margin-bottom: 2rem;
       grid-column: 1 / span 2;
+
     }
   }
 
@@ -110,6 +111,17 @@
     border-right: none;
     border-top: none;
     display: flex;
-    width: 100%;
+    width: calc(100% + 3rem);
+    grid-column: 1 / span 2;
+    margin-left: -1.5rem;
+  }
+
+  .header-sticky {
+    position: sticky;
+    /* Move the header up by half of its height */
+    z-index: 1000;
+    /* Ensure the header is above other content */
+    transition: transform 0.3s ease-in-out;
+    /* Smooth transition for the transform */
   }
 }

@@ -3,6 +3,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
@@ -14,6 +15,35 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const { benefitTiers, cart, currentOrderValue, sellingPlans } = useLoopContext();
 
   const router = useRouter();
+
+  useEffect(() => {
+    const header = document.querySelector('header'); // Adjust the selector as needed
+    const stickyThreshold = 100; // Change this to the scroll threshold you want
+
+    const scrollHandler = () => {
+      if (window.scrollY > stickyThreshold) {
+        const headerHeight = header?.offsetHeight || 0;
+        console.log('headerHeight: ', headerHeight);
+        if (header) {
+          header.classList.add('header-sticky');
+          header.style.top = `-${headerHeight / 3}px`; // Move the header up to benefit tiers
+        }
+      } else {
+        if (header) {
+          header.classList.remove('header-sticky');
+          header.style.top = ''; // Reset the top style when not sticky
+        }
+      }
+    };
+
+    window.addEventListener('scroll', scrollHandler);
+
+    return () => {
+      window.removeEventListener('scroll', scrollHandler);
+    };
+  }, []);
+
+
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
   const ScheduleButton = (className: string) => {
@@ -62,8 +92,8 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
         <div className="header-progress-bar">
           <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
         </div>
+        {ScheduleButton('header-button header-button-mobile')}
       </header>
-      {ScheduleButton('header-button header-button-mobile')}
     </>
   );
 };
