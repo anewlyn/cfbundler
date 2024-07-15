@@ -70,3 +70,57 @@ export type ShopifyProductType = {
   images: ImageType[];
   image: ImageType;
 };
+
+export type ShopifyAttribute = {
+  key: string;
+  value: string;
+};
+
+export type ShopifyCartLine = {
+  id: string;
+  quantity: number;
+  attributes: ShopifyAttribute[];
+  merchandise: {
+    id: string;
+  };
+};
+
+export type ShopifyCart = {
+  id: string;
+  lines: {
+    edges: {
+      node: ShopifyCartLine;
+    }[];
+  };
+};
+
+export type ShopifyError = {
+  message: string;
+  locations: { line: number; column: number }[];
+  path?: string[];
+  extensions?: {
+    code?: string;
+    typeName?: string;
+    fieldName?: string;
+  };
+};
+
+export type ShopifyCartLineEdge = {
+  node: ShopifyCartLine;
+};
+
+export type ShopifyFetchResponse = {
+  data?: {
+    cart?: ShopifyCart;
+  };
+  errors?: ShopifyError[];
+};
+
+export type ShopifyCreateCartResponse = {
+  data?: {
+    cartCreate?: {
+      cart: ShopifyCart;
+    };
+  };
+  errors?: ShopifyError[];
+};

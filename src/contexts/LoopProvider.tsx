@@ -141,8 +141,9 @@ const LoopProvider = ({
     });
 
     const data = await response.json();
+    console.log('data: ', data);
 
-    if (data.data && data.data.cartCreate && data.data.cartCreate.cart) {
+    if (data) {
       // cart created successfully, leaving cart variable in for now
       // const cart = data.data.cartCreate.cart;
       const cartUrl = `${shopifyDomain}/?open_cart=true`;

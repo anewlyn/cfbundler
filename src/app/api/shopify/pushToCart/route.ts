@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CartType } from '@/contexts/LoopProvider';
+import { ShopifyCartLineEdge, ShopifyFetchResponse } from '@/types/app/api/shopifyTypes';
 
 export const runtime = 'edge';
 
@@ -18,6 +19,31 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Server configuration error' }, { status: 500 });
   }
 
+  const fetchCartQuery = `
+    query cart($id: ID!) {
+      cart(id: $id) {
+        id
+        lines(first: 250) {
+          edges {
+            node {
+              id
+              quantity
+              attributes {
+                key
+                value
+              }
+              merchandise {
+                ... on ProductVariant {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
   const createCartQuery = `
     mutation cartCreate($input: CartInput!) {
       cartCreate(input: $input) {
@@ -25,7 +51,7 @@ export async function POST(request: NextRequest) {
           id
           createdAt
           updatedAt
-          lines(first: 10) {
+          lines(first: 250) {
             edges {
               node {
                 id
@@ -47,22 +73,69 @@ export async function POST(request: NextRequest) {
     }
   `;
 
-  const variables = {
-    input: {
-      lines: productVariants.map((variant) => ({
-        quantity: variant.quantity,
-        merchandiseId: encodeId(variant.shopifyId),
-        attributes: [
-          { key: 'subscription', value: 'true' },
-          { key: '_bundleId', value: transactionId },
-          { key: 'cadence', value: cadence },
-          { key: 'discount', value: discount?.toString() },
-        ],
-      })),
-    },
-  };
+  // the idea is this:
+  // we will always create a new cart but we will want to preserve existing
+  // non subscription items and just push updated / new bundler items forward
 
   try {
+    const cartIdCookie = request.cookies.get('cart')?.value;
+    let existingNonSubscriptionLines: ShopifyCartLineEdge[] = [];
+
+    // get existing cart if cartId exists
+    if (cartIdCookie) {
+      const cartId = `gid://shopify/Cart/${cartIdCookie.split('?')[0]}`;
+      const fetchResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Storefront-Access-Token': token,
+        },
+        body: JSON.stringify({
+          query: fetchCartQuery,
+          variables: { id: cartId },
+        }),
+      });
+
+      const fetchData: ShopifyFetchResponse = await fetchResponse.json();
+      if (fetchData.data && fetchData.data.cart) {
+        const existingCartLines = fetchData.data.cart.lines?.edges || [];
+        existingNonSubscriptionLines = existingCartLines.filter(
+          (line) =>
+            !line.node.attributes.some(
+              (attr) => attr.key === 'subscription' && attr.value === 'true',
+            ),
+        );
+      }
+    }
+
+    // prepare the new subscription lines
+    const newSubscriptionLines = productVariants.map((variant) => ({
+      quantity: variant.quantity,
+      merchandiseId: encodeId(variant.shopifyId),
+      attributes: [
+        { key: 'subscription', value: 'true' },
+        { key: '_bundleId', value: transactionId },
+        { key: 'cadence', value: cadence },
+        { key: 'discount', value: discount?.toString() },
+      ],
+    }));
+
+    // prepare all lines for the new cart
+    const allLines = [
+      ...newSubscriptionLines,
+      ...existingNonSubscriptionLines.map((line) => ({
+        quantity: line.node.quantity,
+        merchandiseId: line.node.merchandise.id,
+        attributes: line.node.attributes,
+      })),
+    ];
+
+    // new cart
+    const createCartVariables = {
+      input: {
+        lines: allLines,
+      },
+    };
     const response = await fetch(`https://${store}/api/2023-07/graphql.json`, {
       method: 'POST',
       headers: {
@@ -71,31 +144,30 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         query: createCartQuery,
-        variables: variables,
+        variables: createCartVariables,
       }),
     });
 
     const data = await response.json();
 
-    const cartId = data?.data?.cartCreate?.cart?.id;
-    if (cartId) {
-      const cartCookie = cartId.replace('gid://shopify/Cart/', '');
-      // create a new response with the data
+    if (data.data && data.data.cartCreate) {
+      const newCartId = data.data.cartCreate.cart.id;
+      // extract the actual ID part (remove the prefix and any query parameters)
+      const actualCartId = newCartId.split('/').pop().split('?')[0];
       const nextResponse = NextResponse.json(data);
 
-      // set the cart ID as a cookie
-      nextResponse.cookies.set('cart', cartCookie, {
+      nextResponse.cookies.set('cart', actualCartId, {
         httpOnly: true,
         path: '/',
         domain: '.cyclingfrog.com',
       });
 
       return nextResponse;
-    } else {
-      return NextResponse.json(data);
     }
+
+    return NextResponse.json(data);
   } catch (error) {
-    console.error('Error when pushing to cart:', error);
-    return NextResponse.json({ message: 'Failed to add to cart', error }, { status: 500 });
+    console.error('Error when processing the cart:', error);
+    return NextResponse.json({ message: 'Failed to process the cart', error }, { status: 500 });
   }
 }
