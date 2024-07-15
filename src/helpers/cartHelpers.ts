@@ -44,11 +44,24 @@ export const getCartValue = (products: AllProductVariants[], cart: CartType) => 
   return total;
 };
 
+const moveOutOfStockToEnd = (products: ProductTypes[]) => {
+  const inStock = products.filter((product) => {
+    return product.variants.some((variant) => !variant.outOfStock);
+  });
+
+  const outOfStock = products.filter((product) => {
+    return product.variants.every((variant) => variant.outOfStock);
+  });
+
+  return [...inStock, ...outOfStock];
+};
+
 export const setProductsForRender = (
   products: ProductTypes[],
   shopifyProducts: Record<string, ShopifyProductType>,
 ): AllProductVariants[] => {
-  return products
+  const sortedProducts = moveOutOfStockToEnd(products);
+  return sortedProducts
     .map((product) => {
       const body_html = shopifyProducts[product.shopifyId]?.body_html;
       const isVariant = product.variants.length > 1;
