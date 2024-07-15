@@ -10,7 +10,9 @@ interface DeliverCadenceCardProps {
 
 const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
   const { sellingPlans, setCart, cart } = useLoopContext();
-  const [selectedButton, setSelectedButton] = useState<number>(0);
+  const [selectedButton, setSelectedButton] = useState<number>(() =>
+    sellingPlans.findIndex((cadence) => cadence.shopifyId === cart.sellingPlanId),
+  );
 
   const handleClick = (buttonNumber: number) => {
     setSelectedButton(buttonNumber);
