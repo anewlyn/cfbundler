@@ -37,7 +37,8 @@ export type CartType = {
   sellingPlanId: number;
   transactionId: string | null;
   cadence?: string;
-  discount?: number;
+  discount?: string;
+  discountPercent?: number;
 };
 
 const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
@@ -136,12 +137,12 @@ const LoopProvider = ({
         productVariants: cart.productVariants,
         transactionId,
         cadence: cadence?.name,
-        discount: currentDiscount?.value,
+        discount: currentDiscount?.name,
+        discountPercent: currentDiscount?.value,
       }),
     });
 
     const data = await response.json();
-    console.log('data: ', data);
 
     if (data) {
       // cart created successfully, leaving cart variable in for now

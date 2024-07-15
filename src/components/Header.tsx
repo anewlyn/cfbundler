@@ -23,7 +23,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
     const scrollHandler = () => {
       if (window.scrollY > stickyThreshold) {
         const headerHeight = header?.offsetHeight || 0;
-        console.log('headerHeight: ', headerHeight);
+
         if (header) {
           header.classList.add('header-sticky');
           header.style.top = `-${headerHeight / 3}px`; // Move the header up to benefit tiers
