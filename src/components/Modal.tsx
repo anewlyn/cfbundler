@@ -76,18 +76,6 @@ export const Modal = ({
     };
   }, [modalRef.current]);
 
-  useEffect(() => {
-    const handleClickOutside = () => {
-      onClose();
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [onClose]);
-
   if (open) {
     return (
       <Portal onClose={onClose}>
