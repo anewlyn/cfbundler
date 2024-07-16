@@ -50,7 +50,8 @@ const StickyFooter = () => {
   }, []);
 
   const getFooterMessage = () => {
-    if (currentOrderValue <= Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE)) return process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE_FOOTER_TEXT
+    if (currentOrderValue <= Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE))
+      return process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE_FOOTER_TEXT;
 
     const notice = benefitTiers.findLastIndex((tier) => {
       return currentOrderValue >= tier.value;
