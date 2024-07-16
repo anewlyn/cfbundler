@@ -31,6 +31,8 @@ const StickyFooter = () => {
 
   const router = useRouter();
 
+  const isDisabled = currentOrderValue < Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE);
+
   useEffect(() => {
     const checkOverflow = () => {
       const el = carouselRef.current;
@@ -48,6 +50,8 @@ const StickyFooter = () => {
   }, []);
 
   const getFooterMessage = () => {
+    if (currentOrderValue <= Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE)) return process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE_FOOTER_TEXT
+
     const notice = benefitTiers.findLastIndex((tier) => {
       return currentOrderValue >= tier.value;
     });
@@ -56,6 +60,7 @@ const StickyFooter = () => {
   };
 
   const handlePostTransaction = () => {
+    if (isDisabled) return;
     handleTransaction();
   };
 
@@ -165,9 +170,9 @@ const StickyFooter = () => {
           <button
             onClick={handlePostTransaction}
             className={classNames('add-button', {
-              disabled: currentOrderValue < benefitTiers[0].value,
+              disabled: isDisabled,
             })}
-            disabled={currentOrderValue < benefitTiers[0].value}
+            disabled={isDisabled}
           >
             ADD TO CART
           </button>
