@@ -43,3 +43,41 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# Setting Up Benefit Tier Text with Environment Variables
+
+Loop doesn't provide an option to add text directly to benefit tiers, so we use environment variables for this purpose. Follow these steps to configure them in CloudFlare:
+
+1. **Navigate to Your Site in CloudFlare**:
+
+   - Go to **Workers & Pages**.
+   - Select your site.
+
+2. **Access Environment Variables**:
+
+   - Click on the **Settings** tab at the top.
+   - Locate the **Environment variables** section.
+
+3. **Set the Header and Footer Text**:
+   - Change the following variables to set the header and footer text for the benefit tiers:
+
+```plaintext
+NEXT_PUBLIC_BENEFIT_TIER_ONE_FOOTER_TEXT='Subscriptions require a $50 minimum order.'
+NEXT_PUBLIC_BENEFIT_TIER_ONE_HEADER_TEXT='Min. Order'
+
+NEXT_PUBLIC_BENEFIT_TIER_TWO_FOOTER_TEXT='You got $$% off!'
+NEXT_PUBLIC_BENEFIT_TIER_TWO_HEADER_TEXT='$$% off'
+
+NEXT_PUBLIC_BENEFIT_TIER_THREE_FOOTER_TEXT='Yay! You have free shipping and a $$% discount.'
+NEXT_PUBLIC_BENEFIT_TIER_THREE_HEADER_TEXT='$$% off'
+```
+
+4. **Important Notes**:
+
+   - CloudFlare may sort the variables differently, so double-check that you're modifying the correct ones.
+   - The `$$` symbol is a placeholder that will be replaced with the appropriate values from Loop.
+
+5. **Publish Changes**:
+   - After updating the environment variables, publish your site to apply the changes.
+
+Following these instructions will ensure the benefit tier text is correctly configured and displayed on your site.
