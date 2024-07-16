@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // prepare the new subscription lines
+    // prepare the new subscription lines from productVariants
     const newSubscriptionLines = productVariants.map((variant) => ({
       quantity: variant.quantity,
       merchandiseId: encodeId(variant.shopifyId),
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       ],
     }));
 
-    // prepare all lines for the new cart
+    // combine non-subscription items and new subscription items
     const allLines = [
       ...newSubscriptionLines,
       ...existingNonSubscriptionLines.map((line) => ({
@@ -131,12 +131,13 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
-    // new cart
+    // create new cart (basically forcing an overwrite)
     const createCartVariables = {
       input: {
         lines: allLines,
       },
     };
+
     const response = await fetch(`https://${store}/api/2023-07/graphql.json`, {
       method: 'POST',
       headers: {
@@ -153,9 +154,11 @@ export async function POST(request: NextRequest) {
 
     if (data.data && data.data.cartCreate) {
       const newCartId = data.data.cartCreate.cart.id;
-      // extract the actual ID part (remove the prefix and any query parameters)
       const actualCartId = newCartId.split('/').pop().split('?')[0];
       const nextResponse = NextResponse.json(data);
+
+      // deleting the cookie before setting it to prevent duplicates
+      nextResponse.cookies.delete('cart');
 
       nextResponse.cookies.set('cart', actualCartId, {
         httpOnly: true,
