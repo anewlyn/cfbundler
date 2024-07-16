@@ -153,24 +153,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (data.data && data.data.cartCreate) {
-      const newCartId = data.data.cartCreate.cart.id;
-      const actualCartId = newCartId.split('/').pop().split('?')[0];
       const nextResponse = NextResponse.json(data);
-
-      // trying to delete the existing cart cookie before setting
-      nextResponse.cookies.set('cart', '', {
-        httpOnly: true,
-        path: '/',
-        domain: 'cyclingfrog.com',
-        maxAge: 0,
-        expires: new Date(0),
-      });
-
-      nextResponse.cookies.set('cart', actualCartId, {
-        httpOnly: true,
-        path: '/',
-        domain: 'cyclingfrog.com',
-      });
 
       return nextResponse;
     }

@@ -149,6 +149,15 @@ const LoopProvider = ({
       // const cart = data.data.cartCreate.cart;
       const cartUrl = `${shopifyDomain}/?open_cart=true`;
 
+      document.cookie =
+        'cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=cyclingfrog.com';
+      // 'cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; ';
+
+      // set the new cart cookie (leaving in test strings as well for now)
+      const newCartId = data.data.cartCreate.cart.id.split('/').pop();
+      document.cookie = `cart=${newCartId}; path=/; domain=cyclingfrog.com`;
+      // document.cookie = `cart=${newCartId}; path=/; `;
+
       // redirect to the cart
       window.location.href = cartUrl;
     } else {
