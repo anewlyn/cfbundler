@@ -157,8 +157,14 @@ export async function POST(request: NextRequest) {
       const actualCartId = newCartId.split('/').pop().split('?')[0];
       const nextResponse = NextResponse.json(data);
 
-      // deleting the cookie before setting it to prevent duplicates
-      nextResponse.cookies.delete('cart');
+      // trying to delete the existing cart cookie before setting
+      nextResponse.cookies.set('cart', '', {
+        httpOnly: true,
+        path: '/',
+        domain: 'cyclingfrog.com',
+        maxAge: 0,
+        expires: new Date(0),
+      });
 
       nextResponse.cookies.set('cart', actualCartId, {
         httpOnly: true,
