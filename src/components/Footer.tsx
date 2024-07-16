@@ -31,7 +31,9 @@ const StickyFooter = () => {
 
   const router = useRouter();
 
-  const isDisabled = currentOrderValue < Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE);
+  const isDisabled =
+    currentOrderValue <
+    (Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE) ?? benefitTiers[0].value);
 
   useEffect(() => {
     const checkOverflow = () => {
@@ -50,7 +52,10 @@ const StickyFooter = () => {
   }, []);
 
   const getFooterMessage = () => {
-    if (currentOrderValue <= Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE))
+    if (
+      currentOrderValue <=
+      (Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE) ?? benefitTiers[0].value)
+    )
       return process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE_FOOTER_TEXT;
 
     const notice = benefitTiers.findLastIndex((tier) => {
