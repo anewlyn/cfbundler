@@ -21,6 +21,7 @@ export type imageTypes = {
 };
 
 export type AllProductVariants = {
+  looxReviewId: number;
   productTitle: string;
   images: imageTypes[];
   price: number;

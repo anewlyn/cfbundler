@@ -80,6 +80,7 @@ const Bundler = () => {
             price={modalProduct.price}
             productTitle={modalProduct.productTitle}
             shopifyId={modalProduct.shopifyId}
+            looxReviewId={modalProduct.looxReviewId}
             title={modalProduct.title}
             variants={modalProduct.variants}
           />

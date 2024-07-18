@@ -18,6 +18,7 @@ const InfoCard = ({
   limits,
   body_html,
   productTitle,
+  looxReviewId,
 }: AllProductVariants) => {
   const { cart, addProductVariant, bundle } = useLoopContext();
   const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
@@ -75,7 +76,7 @@ const InfoCard = ({
           <h1 className={kiro_bold_400.className}>{productTitle}</h1>
           <p>{currencyFormater(price, bundle.currencyCode)}</p>
           <hr />
-          <div className="loox-rating" data-fetch data-id={shopifyId} />
+          <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
           {body_html_sanitized && (
             <div

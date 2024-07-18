@@ -75,6 +75,7 @@ export const setProductsForRender = (
 
         return {
           productTitle: product.title,
+          looxReviewId: product.shopifyId,
           images: images,
           price: variant.price,
           outOfStock: variant.outOfStock,
