@@ -155,6 +155,19 @@ export async function POST(request: NextRequest) {
     if (data.data && data.data.cartCreate) {
       const nextResponse = NextResponse.json(data);
 
+      const newCartId = data.data.cartCreate.cart.id;
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 10);
+      const actualCartId = newCartId.split('/').pop();
+      console.log('actualCartId: ', actualCartId);
+      nextResponse.cookies.set('cart', actualCartId, {
+        httpOnly: true,
+        path: '/',
+        sameSite: 'lax',
+        expires: expirationDate,
+        domain: 'cyclingfrog.com',
+      });
+
       return nextResponse;
     }
 
