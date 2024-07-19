@@ -161,7 +161,6 @@ export async function POST(request: NextRequest) {
       const actualCartId = newCartId.split('/').pop();
       console.log('actualCartId: ', actualCartId);
       nextResponse.cookies.set('cart', actualCartId, {
-        httpOnly: true,
         path: '/',
         sameSite: 'lax',
         expires: expirationDate,
