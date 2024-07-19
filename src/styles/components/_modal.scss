@@ -17,7 +17,6 @@
   background-color: var(--cf-background-color);
   margin: 1.5rem;
   position: relative;
-  // max-height: fill-available;
   max-height: calc(100dvh - 3rem);
   overflow: auto;
 }
@@ -48,10 +47,6 @@
     margin: 0;
     width: 100%;
     max-width: 700px;
-  }
-
-  .modal-close-button {
-    display: none;
   }
 
   .modal-close-mobile-button {
