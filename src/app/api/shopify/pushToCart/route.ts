@@ -144,7 +144,6 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': token,
       },
-      credentials: 'include',
       body: JSON.stringify({
         query: createCartQuery,
         variables: createCartVariables,
