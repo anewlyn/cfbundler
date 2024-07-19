@@ -44,24 +44,39 @@ export const getCartValue = (products: AllProductVariants[], cart: CartType) => 
   return total;
 };
 
-const moveOutOfStockToEnd = (products: ProductTypes[]) => {
+const moveOutOfStockToEnd = (products: AllProductVariants[]) => {
   const inStock = products.filter((product) => {
-    return product.variants.some((variant) => !variant.outOfStock);
+    return !product.outOfStock;
   });
 
   const outOfStock = products.filter((product) => {
-    return product.variants.every((variant) => variant.outOfStock);
+    return product.outOfStock;
   });
 
   return [...inStock, ...outOfStock];
+};
+
+export const sortByProductType = (products: AllProductVariants[]) => {
+  const sortOrder = process.env.NEXT_PUBLIC_PRODUCT_SORT_ORDER?.split(',');
+  const orderedByType = [];
+  sortOrder?.forEach((type) => {
+    const sortedProducts = products.filter((product) => {
+      return product.productType?.includes(type);
+    });
+    orderedByType.push(...sortedProducts);
+  });
+  const sortedNonTypedProducts = products.filter((product) => {
+    return sortOrder?.every((type) => !product.productType?.includes(type));
+  });
+  orderedByType.push(...sortedNonTypedProducts);
+  return moveOutOfStockToEnd(orderedByType);
 };
 
 export const setProductsForRender = (
   products: ProductTypes[],
   shopifyProducts: Record<string, ShopifyProductType>,
 ): AllProductVariants[] => {
-  const sortedProducts = moveOutOfStockToEnd(products);
-  return sortedProducts
+  return products
     .map((product) => {
       const body_html = shopifyProducts[product.shopifyId]?.body_html;
       const isVariant = product.variants.length > 1;
@@ -75,6 +90,7 @@ export const setProductsForRender = (
 
         return {
           productTitle: product.title,
+          productType: shopifyProducts[product.shopifyId]?.product_type,
           looxReviewId: product.shopifyId,
           images: images,
           price: variant.price,

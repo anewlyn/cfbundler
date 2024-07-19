@@ -2,7 +2,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
-import { getCartValue, getDiscount, setProductsForRender } from '@/helpers/cartHelpers';
+import {
+  getCartValue,
+  getDiscount,
+  setProductsForRender,
+  sortByProductType,
+} from '@/helpers/cartHelpers';
 import { getCartCookie, setCartCookie } from '@/helpers/cookies';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { AllProductVariants, BundleTypes, DiscountTypes } from '@/types/bundleTypes';
@@ -88,8 +93,10 @@ const LoopProvider = ({
   }, [cart]);
 
   const { products, discounts, sellingPlans } = bundleData;
+
   const shopifyDomain = process.env.NEXT_PUBLIC_REDIRECT_URL || '';
   const productsForRender = setProductsForRender(products, shopifyProducts);
+  const sortProductsByType = sortByProductType(productsForRender);
   const currentOrderValue = getCartValue(productsForRender, cart);
   const currentDiscount = getDiscount(discounts, getCartValue(productsForRender, cart));
 
@@ -166,7 +173,7 @@ const LoopProvider = ({
     currentOrderValue,
     currentDiscount,
     handleTransaction,
-    products: productsForRender,
+    products: sortProductsByType,
     sellingPlans,
     setCart,
   };
