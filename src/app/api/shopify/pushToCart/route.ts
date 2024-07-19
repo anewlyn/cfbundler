@@ -144,6 +144,7 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': token,
       },
+      credentials: 'include',
       body: JSON.stringify({
         query: createCartQuery,
         variables: createCartVariables,
@@ -159,7 +160,6 @@ export async function POST(request: NextRequest) {
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 10);
       const actualCartId = newCartId.split('/').pop();
-      console.log('actualCartId: ', actualCartId);
 
       // trying to erase the base cart cookie first
       nextResponse.cookies.set('cart', '', {
