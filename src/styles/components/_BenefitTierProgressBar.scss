@@ -1,3 +1,5 @@
+@import 'breakpoints';
+
 .progress-bar {
   background: var(--cf-discount-bar-color);
   display: grid;
@@ -48,4 +50,11 @@
   background: var(--cf-black);
   height: 100%;
   position: absolute;
+}
+
+@include for_breakpoint('mobile') {
+  .currency,
+  .tier-subtitle {
+    font-size: 20px;
+  }
 }

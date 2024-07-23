@@ -47,24 +47,26 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
 
   return (
     <div className="product-card">
-      <div className="product-image" onTouchStart={() => handleOpenInfoModal(product)}>
-        <ResponsiveImage
-          src={imageURl}
-          alt={productTitle}
-          width={309}
-          height={309}
-          isPriority={isPriority}
-        />
-        <div ref={infoScreenRef} className="info-screen">
-          <button
-            onClick={() => {
-              handleOpenInfoModal(product);
-            }}
-            className="info-button"
-          >
-            MORE INFO
-          </button>
-        </div>
+      <div className="product-image">
+        <button className="mobile-info-button">
+          <ResponsiveImage
+            src={imageURl}
+            alt={productTitle}
+            width={309}
+            height={309}
+            isPriority={isPriority}
+          />
+          <div ref={infoScreenRef} className="info-screen">
+            <button
+              onClick={() => {
+                handleOpenInfoModal(product);
+              }}
+              className="info-button"
+            >
+              MORE INFO
+            </button>
+          </div>
+        </button>
       </div>
 
       <span className="product-title">{variantTitle}</span>

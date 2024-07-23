@@ -20,7 +20,7 @@
   color: var(--cf-discount-price);
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 1rem;
+  height: 36px;
 }
 
 .product-price {
@@ -57,12 +57,17 @@
   }
 }
 
+.mobile-info-button {
+  border: none;
+  background: transparent;
+}
+
 @include for_breakpoint('mobile') {
   .product-info {
     font-size: 16px;
   }
 
-  .info-screen {
+  button .info-screen {
     background-color: transparent;
     display: none;
 
