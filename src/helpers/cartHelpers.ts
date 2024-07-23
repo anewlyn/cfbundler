@@ -57,6 +57,10 @@ const moveOutOfStockToEnd = (products: AllProductVariants[]) => {
 };
 
 export const sortByProductType = (products: AllProductVariants[]) => {
+  if (!process.env.NEXT_PUBLIC_PRODUCT_SORT_ORDER) {
+    return moveOutOfStockToEnd(products);
+  }
+
   const sortOrder = process.env.NEXT_PUBLIC_PRODUCT_SORT_ORDER?.split(',');
   const orderedByType = [];
   sortOrder?.forEach((type) => {
@@ -69,6 +73,7 @@ export const sortByProductType = (products: AllProductVariants[]) => {
     return sortOrder?.every((type) => !product.productType?.includes(type));
   });
   orderedByType.push(...sortedNonTypedProducts);
+
   return moveOutOfStockToEnd(orderedByType);
 };
 
