@@ -62,13 +62,11 @@ export default async function RootLayout({
 
   const getShopifyIdsFromBundle = (bundleData: BundleTypes) => {
     return bundleData.products.map((product: ProductTypes) => product.shopifyId).join(',');
-  }
+  };
 
   const shopifyIdString = getShopifyIdsFromBundle(bundleData.data);
 
   const shopifyProducts = await getProducts(shopifyIdString);
-
-
 
   return (
     <html lang="en" className={`${inter.className} antialiased`}>
