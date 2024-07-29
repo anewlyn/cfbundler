@@ -7,9 +7,6 @@ const nextConfig = {
   images: {
     domains: ['cdn.shopify.com'],
   },
-
-  // basePath: '/bundler',
-  assetPrefix: '/bundler',
 };
 
 export default nextConfig;
