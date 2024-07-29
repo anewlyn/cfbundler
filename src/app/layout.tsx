@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import '../styles/globals.scss';
 import { inter } from '@/app/ui/fonts';
 import LoopProvider from '@/contexts/LoopProvider';
+import { BundleTypes, ProductTypes } from '@/types/bundleTypes';
 import { getBundle } from './api/loop/getBundle';
 import getProducts from './api/shopify/getProducts';
 
@@ -58,7 +59,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const bundleData = await getBundle();
-  const shopifyProducts = await getProducts();
+
+  const getShopifyIdsFromBundle = (bundleData: BundleTypes) => {
+    return bundleData.products.map((product: ProductTypes) => product.shopifyId).join(',');
+  }
+
+  const shopifyIdString = getShopifyIdsFromBundle(bundleData.data);
+
+  const shopifyProducts = await getProducts(shopifyIdString);
+
+
 
   return (
     <html lang="en" className={`${inter.className} antialiased`}>

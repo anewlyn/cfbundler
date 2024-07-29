@@ -1,6 +1,6 @@
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 
-const getProducts = async () => {
+const getProducts = async (shopifyIdString: string) => {
   try {
     const options: RequestInit = {
       method: 'GET',
@@ -12,9 +12,10 @@ const getProducts = async () => {
     };
 
     const response = await fetch(
-      `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/admin/api/2021-07/products.json`,
+      `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/admin/api/2021-07/products.json?ids=${shopifyIdString}`,
       options,
     );
+
     const data = await response.json();
 
     const productsObject = data.products.reduce(
