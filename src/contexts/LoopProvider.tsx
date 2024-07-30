@@ -135,7 +135,6 @@ const LoopProvider = ({
     const transactionId = await createTransaction(cart, bundleData.id);
     const url =
       process.env.NEXT_PUBLIC_API_URL || 'https://bundler.cyclingfrog.com/api/shopify/pushToCart';
-    console.log('url: ', url);
 
     // graphql
     const response = await fetch(url, {

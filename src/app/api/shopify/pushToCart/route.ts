@@ -173,7 +173,7 @@ export async function POST(request: NextRequest) {
         sameSite: 'lax',
         expires: expirationDate,
         // don't forget to comment this out if you're trying to run locally
-        // domain: 'cyclingfrog.com',
+        domain: 'cyclingfrog.com',
       });
 
       return nextResponse;
