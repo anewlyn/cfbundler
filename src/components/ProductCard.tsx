@@ -56,17 +56,17 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
             height={309}
             isPriority={isPriority}
           />
-          <div ref={infoScreenRef} className="info-screen">
-            <button
-              onClick={() => {
-                handleOpenInfoModal(product);
-              }}
-              className="info-button"
-            >
-              MORE INFO
-            </button>
-          </div>
         </button>
+        <div ref={infoScreenRef} className="info-screen">
+          <button
+            onClick={() => {
+              handleOpenInfoModal(product);
+            }}
+            className="info-button"
+          >
+            MORE INFO
+          </button>
+        </div>
       </div>
 
       <span className="product-title">{variantTitle}</span>
