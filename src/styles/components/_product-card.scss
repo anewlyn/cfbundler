@@ -13,14 +13,15 @@
 .product-title {
   font-weight: 500;
   margin-bottom: 0.5rem;
-  height: 36px;
+  height: auto;
 }
 
 .product-info {
   color: var(--cf-discount-price);
   font-size: 14px;
   font-weight: 400;
-  height: 36px;
+  height: auto;
+  margin-bottom: 0.5rem;
 }
 
 .product-price {

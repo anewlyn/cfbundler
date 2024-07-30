@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeliverCadenceCard from '@/components/DeliverCadenceCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -9,6 +9,7 @@ import { Modal } from '@/components/Modal';
 import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
+import setGridRowWrapHeight from '@/helpers/setGridRowWrapHeight';
 import { AllProductVariants } from '@/types/bundleTypes';
 // temporary page to test the subscription button
 
@@ -34,6 +35,19 @@ const Bundler = () => {
   const handleOpenCadenceModal = () => {
     setCadenceModalOpen(true);
   };
+
+  useEffect(() => {
+    // set product-infos and product-titles row height to the tallest row when text wraps
+    const productInfos = document.querySelectorAll('.product-info');
+    const productTitles = document.querySelectorAll('.product-title');
+    setGridRowWrapHeight(productInfos);
+    setGridRowWrapHeight(productTitles);
+
+    window.addEventListener('resize', () => {
+      setGridRowWrapHeight(productInfos);
+      setGridRowWrapHeight(productTitles);
+    });
+  }, []);
 
   const renderProductCards = () => {
     return products.map((product: AllProductVariants, index: number) => {
