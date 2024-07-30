@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.PROD_ENV === 'production';
 
 const prodDomains = ['cdn.shopify.com', 'bundler.cyclingfrog.com'];
 const nonProdDomains = ['cdn.shopify.com'];
