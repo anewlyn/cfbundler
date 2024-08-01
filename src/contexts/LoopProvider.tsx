@@ -151,9 +151,21 @@ const LoopProvider = ({
       }),
     });
 
+    console.log('response: ', response);
     const data = await response.json();
 
     if (data) {
+      const newCartId = data.data.cartCreate.cart.id;
+      const actualCartId = newCartId.split('/').pop();
+
+      // Set the cookie on the client side
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 10); // 10 days from now
+
+      document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/; domain=cyclingfrog.com; SameSite=Lax; Secure`;
+
+      console.log('Cart cookie set successfully:', actualCartId);
+
       // cart created successfully, leaving cart variable in for now
       // const cart = data.data.cartCreate.cart;
       const cartUrl = `${shopifyDomain}/?open_cart=true`;
