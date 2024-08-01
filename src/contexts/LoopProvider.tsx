@@ -162,7 +162,7 @@ const LoopProvider = ({
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 10); // 10 days from now
 
-      document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/; domain=cyclingfrog.com; SameSite=Lax; Secure`;
+      document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/; domain=cyclingfrog.com;`;
 
       console.log('Cart cookie set successfully:', actualCartId);
 
