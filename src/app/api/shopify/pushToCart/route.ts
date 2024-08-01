@@ -155,18 +155,18 @@ export async function POST(request: NextRequest) {
     if (data.data && data.data.cartCreate) {
       const nextResponse = NextResponse.json(data);
 
-      const newCartId = data.data.cartCreate.cart.id;
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 10);
-      const actualCartId = newCartId.split('/').pop();
+      // const newCartId = data.data.cartCreate.cart.id;
+      // const expirationDate = new Date();
+      // expirationDate.setDate(expirationDate.getDate() + 10);
+      // const actualCartId = newCartId.split('/').pop();
 
-      nextResponse.cookies.set('cart', actualCartId, {
-        path: '/',
-        sameSite: 'lax',
-        expires: expirationDate,
-        // don't forget to comment this out if you're trying to run locally
-        domain: 'cyclingfrog.com',
-      });
+      // nextResponse.cookies.set('cart', actualCartId, {
+      //   path: '/',
+      //   sameSite: 'lax',
+      //   expires: expirationDate,
+      //   // don't forget to comment this out if you're trying to run locally
+      //   domain: 'cyclingfrog.com',
+      // });
 
       return nextResponse;
     }
