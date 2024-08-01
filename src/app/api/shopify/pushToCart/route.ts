@@ -160,14 +160,6 @@ export async function POST(request: NextRequest) {
       expirationDate.setDate(expirationDate.getDate() + 10);
       const actualCartId = newCartId.split('/').pop();
 
-      // trying to erase the base cart cookie first
-      nextResponse.cookies.set('cart', '', {
-        path: '/',
-        domain: 'cyclingfrog.com',
-        expires: new Date(0),
-        sameSite: 'lax',
-      });
-
       nextResponse.cookies.set('cart', actualCartId, {
         path: '/',
         sameSite: 'lax',
