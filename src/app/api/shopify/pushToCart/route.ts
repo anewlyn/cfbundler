@@ -73,17 +73,68 @@ export async function POST(request: NextRequest) {
     }
   `;
 
-  // the idea is this:
-  // we will always create a new cart but we will want to preserve existing
-  // non subscription items and just push updated / new bundler items forward
+  const cartLinesRemoveQuery = `
+    mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+      cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+        cart {
+          id
+          lines(first: 250) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const cartLinesAddQuery = `
+    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          lines(first: 250) {
+            edges {
+              node {
+                id
+                quantity
+                attributes {
+                  key
+                  value
+                }
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
 
   try {
     const cartIdCookie = request.cookies.get('cart')?.value;
+    let cartId: string | null = null;
     let existingNonSubscriptionLines: ShopifyCartLineEdge[] = [];
+    let isNewCart = false;
 
-    // get existing cart if cartId exists
     if (cartIdCookie) {
-      const cartId = `gid://shopify/Cart/${cartIdCookie.split('?')[0]}`;
+      cartId = `gid://shopify/Cart/${cartIdCookie.split('?')[0]}`;
+
+      // Fetch existing cart
       const fetchResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
         method: 'POST',
         headers: {
@@ -97,33 +148,92 @@ export async function POST(request: NextRequest) {
       });
 
       const fetchData: ShopifyFetchResponse = await fetchResponse.json();
+
       if (fetchData.data && fetchData.data.cart) {
-        const existingCartLines = fetchData.data.cart.lines?.edges || [];
+        const existingCartLines = fetchData.data.cart.lines.edges;
+
+        // Separate non-subscription items
         existingNonSubscriptionLines = existingCartLines.filter(
           (line) =>
             !line.node.attributes.some(
               (attr) => attr.key === 'subscription' && attr.value === 'true',
             ),
         );
+
+        // Remove all existing lines
+        const lineIds = existingCartLines.map((line) => line.node.id);
+        if (lineIds.length > 0) {
+          const removeResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Shopify-Storefront-Access-Token': token,
+            },
+            body: JSON.stringify({
+              query: cartLinesRemoveQuery,
+              variables: { cartId, lineIds },
+            }),
+          });
+
+          const removeData = await removeResponse.json();
+          if (
+            removeData.errors ||
+            (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0)
+          ) {
+            console.error(
+              'Error removing existing lines:',
+              removeData.errors || removeData.data.cartLinesRemove.userErrors,
+            );
+            return NextResponse.json(
+              { message: 'Failed to remove existing lines' },
+              { status: 500 },
+            );
+          }
+        }
+      } else {
+        console.error('Failed to fetch existing cart:', fetchData);
+        return NextResponse.json({ message: 'Failed to fetch existing cart' }, { status: 500 });
       }
+    } else {
+      // Create new cart
+      const createCartResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Storefront-Access-Token': token,
+        },
+        body: JSON.stringify({
+          query: createCartQuery,
+          variables: { input: {} },
+        }),
+      });
+
+      const createCartData = await createCartResponse.json();
+      if (createCartData.errors || !createCartData.data || !createCartData.data.cartCreate) {
+        console.error(
+          'Error creating new cart:',
+          createCartData.errors || 'Unexpected response structure',
+        );
+        return NextResponse.json({ message: 'Failed to create new cart' }, { status: 500 });
+      }
+
+      cartId = createCartData.data.cartCreate.cart.id;
+      isNewCart = true;
     }
 
-    // prepare the new subscription lines from productVariants
-    const newSubscriptionLines = productVariants.map((variant) => ({
-      quantity: variant.quantity,
-      merchandiseId: encodeId(variant.shopifyId),
-      attributes: [
-        { key: 'subscription', value: 'true' },
-        { key: '_bundleId', value: transactionId },
-        { key: 'cadence', value: cadence },
-        { key: 'discount_percent', value: discountPercent?.toString() },
-        { key: 'discount', value: discount },
-      ],
-    }));
-
-    // combine non-subscription items and new subscription items
-    const allLines = [
-      ...newSubscriptionLines,
+    // Prepare lines to add: new subscription items and existing non-subscription items
+    const linesToAdd = [
+      ...productVariants.map((variant) => ({
+        quantity: variant.quantity,
+        merchandiseId: encodeId(variant.shopifyId),
+        attributes: [
+          { key: 'subscription', value: 'true' },
+          { key: '_bundleId', value: transactionId },
+          { key: 'cadence', value: cadence },
+          { key: 'discount_percent', value: discountPercent?.toString() },
+          { key: 'discount', value: discount },
+        ],
+      })),
       ...existingNonSubscriptionLines.map((line) => ({
         quantity: line.node.quantity,
         merchandiseId: line.node.merchandise.id,
@@ -131,47 +241,38 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
-    // create new cart (basically forcing an overwrite)
-    const createCartVariables = {
-      input: {
-        lines: allLines,
-      },
-    };
-
-    const response = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+    // Add all lines to cart
+    const addResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': token,
       },
       body: JSON.stringify({
-        query: createCartQuery,
-        variables: createCartVariables,
+        query: cartLinesAddQuery,
+        variables: { cartId, lines: linesToAdd },
       }),
     });
 
-    const data = await response.json();
-
-    if (data.data && data.data.cartCreate) {
-      const nextResponse = NextResponse.json(data);
-
-      // const newCartId = data.data.cartCreate.cart.id;
-      // const expirationDate = new Date();
-      // expirationDate.setDate(expirationDate.getDate() + 10);
-      // const actualCartId = newCartId.split('/').pop();
-
-      // nextResponse.cookies.set('cart', actualCartId, {
-      //   path: '/',
-      //   sameSite: 'lax',
-      //   expires: expirationDate,
-      //   // don't forget to comment this out if you're trying to run locally
-      //   domain: 'cyclingfrog.com',
-      // });
-
-      return nextResponse;
+    const addData = await addResponse.json();
+    if (addData.errors || (addData.data && addData.data.cartLinesAdd.userErrors.length > 0)) {
+      console.error(
+        'Error adding lines to cart:',
+        addData.errors || addData.data.cartLinesAdd.userErrors,
+      );
+      return NextResponse.json({ message: 'Failed to add lines to cart' }, { status: 500 });
     }
 
-    return NextResponse.json(data);
+    const cartResponse = addData.data.cartLinesAdd.cart;
+
+    const responseBody = {
+      cart: cartResponse,
+      isNewCart: isNewCart,
+    };
+
+    const nextResponse = NextResponse.json(responseBody);
+
+    return nextResponse;
   } catch (error) {
     console.error('Error when processing the cart:', error);
     return NextResponse.json({ message: 'Failed to process the cart', error }, { status: 500 });

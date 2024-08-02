@@ -136,44 +136,47 @@ const LoopProvider = ({
     const url =
       process.env.NEXT_PUBLIC_API_URL || 'https://bundler.cyclingfrog.com/api/shopify/pushToCart';
 
-    // graphql
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        productVariants: cart.productVariants,
-        transactionId,
-        cadence: cadence?.name,
-        discount: currentDiscount?.name,
-        discountPercent: currentDiscount?.value,
-      }),
-    });
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productVariants: cart.productVariants,
+          transactionId,
+          cadence: cadence?.name,
+          discount: currentDiscount?.name,
+          discountPercent: currentDiscount?.value,
+        }),
+      });
 
-    console.log('response: ', response);
-    const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    if (data) {
-      const newCartId = data.data.cartCreate.cart.id;
-      const actualCartId = newCartId.split('/').pop();
+      const data = await response.json();
 
-      // Set the cookie on the client side
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 10); // 10 days from now
+      if (data && data.cart) {
+        const newCartId = data.cart.id;
+        const actualCartId = newCartId.split('/').pop();
 
-      document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/; domain=.cyclingfrog.com;`;
+        // Set the cookie on the client side
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1); // 1 day from now
 
-      console.log('Cart cookie set successfully:', actualCartId);
+        document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/; domain=cyclingfrog.com; SameSite=Lax; Secure=false`;
 
-      // cart created successfully, leaving cart variable in for now
-      // const cart = data.data.cartCreate.cart;
-      const cartUrl = `${shopifyDomain}/?open_cart=true`;
+        const cartUrl = `${shopifyDomain}/?open_cart=true`;
 
-      // redirect to the cart
-      window.location.href = cartUrl;
-    } else {
-      console.error('Error creating cart:', data.errors);
+        // redirect to the cart
+        window.location.href = cartUrl;
+      } else {
+        console.error('Error creating cart: Unexpected response structure', data);
+      }
+    } catch (error) {
+      console.error('Error creating cart:', error);
+      // Handle the error (e.g., show an error message to the user)
     }
   };
 
