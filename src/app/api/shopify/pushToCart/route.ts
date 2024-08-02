@@ -127,11 +127,13 @@ export async function POST(request: NextRequest) {
 
   try {
     const cartIdCookie = request.cookies.get('cart')?.value;
+    console.log('cartIdCookie: ', request.cookies);
     let cartId: string | null = null;
     let existingNonSubscriptionLines: ShopifyCartLineEdge[] = [];
     let isNewCart = false;
 
     if (cartIdCookie) {
+      // cookie is setup like: cartId?key=keyValue
       cartId = `gid://shopify/Cart/${cartIdCookie.split('?')[0]}`;
 
       // Fetch existing cart
@@ -268,6 +270,7 @@ export async function POST(request: NextRequest) {
     const responseBody = {
       cart: cartResponse,
       isNewCart: isNewCart,
+      prevCart: cartIdCookie,
     };
 
     const nextResponse = NextResponse.json(responseBody);

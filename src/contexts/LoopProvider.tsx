@@ -161,12 +161,16 @@ const LoopProvider = ({
         const newCartId = data.cart.id;
         const actualCartId = newCartId.split('/').pop();
 
+        console.log('cart stuff', {
+          isNewCart: data.isNewCart,
+          prevCart: data.prevCart,
+        });
         // only set the cookie if it's a new cart
         if (data.isNewCart) {
           const expirationDate = new Date();
           expirationDate.setDate(expirationDate.getDate() + 1); // 1 day from now
 
-          document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/;  SameSite=Lax; Secure=false`;
+          document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/;  SameSite=none; Secure=false`;
 
           console.log('New cart created, cookie set:', actualCartId);
         } else {
