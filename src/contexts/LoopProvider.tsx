@@ -44,6 +44,7 @@ export type CartType = {
   cadence?: string;
   discount?: string;
   discountPercent?: number;
+  existingCartId?: string | null;
 };
 
 const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTypes) => {
@@ -136,6 +137,19 @@ const LoopProvider = ({
     const url =
       process.env.NEXT_PUBLIC_API_URL || 'https://bundler.cyclingfrog.com/api/shopify/pushToCart';
 
+    // pull cookie from the client side
+    let existingCartId = null;
+    if (typeof window !== 'undefined') {
+      const cookies = document.cookie.split('; ');
+      const cartCookie = cookies.find((cookie) => cookie.startsWith('cart='));
+      if (cartCookie) {
+        // strip the cookie and then decode the shopify cartId
+        // cookie is setup like: cartId?key=keyValue
+        existingCartId = decodeURIComponent(cartCookie).split('=')[1].split('?')[0];
+      }
+    }
+    console.log('existingCartId', existingCartId);
+
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -148,6 +162,7 @@ const LoopProvider = ({
           cadence: cadence?.name,
           discount: currentDiscount?.name,
           discountPercent: currentDiscount?.value,
+          existingCartId,
         }),
       });
 

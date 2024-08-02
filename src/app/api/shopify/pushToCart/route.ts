@@ -10,7 +10,8 @@ const encodeId = (id: number) => {
 
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
-  const { productVariants, transactionId, cadence, discount, discountPercent } = body;
+  const { productVariants, transactionId, cadence, discount, discountPercent, existingCartId } =
+    body;
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
@@ -126,15 +127,12 @@ export async function POST(request: NextRequest) {
   `;
 
   try {
-    const cartIdCookie = request.cookies.get('cart')?.value;
-    console.log('cartIdCookie: ', request.cookies);
-    let cartId: string | null = null;
+    let cartId = existingCartId;
     let existingNonSubscriptionLines: ShopifyCartLineEdge[] = [];
     let isNewCart = false;
 
-    if (cartIdCookie) {
-      // cookie is setup like: cartId?key=keyValue
-      cartId = `gid://shopify/Cart/${cartIdCookie.split('?')[0]}`;
+    if (cartId) {
+      cartId = `gid://shopify/Cart/${cartId}`;
 
       // Fetch existing cart
       const fetchResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
@@ -270,7 +268,7 @@ export async function POST(request: NextRequest) {
     const responseBody = {
       cart: cartResponse,
       isNewCart: isNewCart,
-      prevCart: cartIdCookie,
+      prevCart: cartId,
     };
 
     const nextResponse = NextResponse.json(responseBody);
