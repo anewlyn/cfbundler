@@ -161,22 +161,27 @@ const LoopProvider = ({
         const newCartId = data.cart.id;
         const actualCartId = newCartId.split('/').pop();
 
-        // Set the cookie on the client side
-        const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 1); // 1 day from now
+        // only set the cookie if it's a new cart
+        if (data.isNewCart) {
+          const expirationDate = new Date();
+          expirationDate.setDate(expirationDate.getDate() + 1); // 1 day from now
 
-        document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/; domain=cyclingfrog.com; SameSite=Lax; Secure=false`;
+          document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/;  SameSite=Lax; Secure=false`;
+
+          console.log('New cart created, cookie set:', actualCartId);
+        } else {
+          console.log('Existing cart updated, no new cookie set');
+        }
 
         const cartUrl = `${shopifyDomain}/?open_cart=true`;
 
         // redirect to the cart
         window.location.href = cartUrl;
       } else {
-        console.error('Error creating cart: Unexpected response structure', data);
+        console.error('Error processing cart: Unexpected response structure', data);
       }
     } catch (error) {
-      console.error('Error creating cart:', error);
-      // Handle the error (e.g., show an error message to the user)
+      console.error('Error processing cart:', error);
     }
   };
 
