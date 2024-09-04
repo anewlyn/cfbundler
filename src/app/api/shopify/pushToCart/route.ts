@@ -10,8 +10,14 @@ const encodeId = (id: number) => {
 
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
-  const { productVariants, transactionId, cadence, discount, discountPercent, existingCartId } =
-    body;
+  const {
+    productVariants,
+    transactionId,
+    cadence,
+    discountPercent,
+    existingCartId,
+    sellingPlanId,
+  } = body;
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
@@ -226,12 +232,13 @@ export async function POST(request: NextRequest) {
       ...productVariants.map((variant) => ({
         quantity: variant.quantity,
         merchandiseId: encodeId(variant.shopifyId),
+        sellingPlanId,
         attributes: [
           { key: 'subscription', value: 'true' },
           { key: '_bundleId', value: transactionId },
           { key: 'cadence', value: cadence },
           { key: 'discount_percent', value: discountPercent?.toString() },
-          { key: 'discount', value: discount },
+          // { key: 'discount', value: discount },
         ],
       })),
       ...existingNonSubscriptionLines.map((line) => ({
