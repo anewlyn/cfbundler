@@ -234,10 +234,7 @@ export async function POST(request: NextRequest) {
       ...productVariants.map((variant) => ({
         quantity: variant.quantity,
         merchandiseId: encodeId(variant.shopifyId),
-        sellingPlan: {
-          name: 'Bundle',
-          sellingPlanId: sellingPlanId.toString(),
-        },
+        sellingPlanId: sellingPlanId.toString(),
         attributes: [
           { key: 'subscription', value: 'true' },
           { key: '_bundleId', value: transactionId },
