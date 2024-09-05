@@ -149,6 +149,7 @@ const LoopProvider = ({
       }
     }
     console.log('existingCartId', existingCartId);
+    console.log(cart.sellingPlanId);
 
     try {
       const response = await fetch(url, {
