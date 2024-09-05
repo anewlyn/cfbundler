@@ -18,6 +18,8 @@ export async function POST(request: NextRequest) {
     existingCartId,
     sellingPlanId,
   } = body;
+
+  console.log(body);
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
@@ -278,8 +280,6 @@ export async function POST(request: NextRequest) {
       cart: cartResponse,
       isNewCart: isNewCart,
       prevCart: cartId,
-      linesToAdd,
-      token,
     };
 
     const nextResponse = NextResponse.json(responseBody);

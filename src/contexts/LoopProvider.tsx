@@ -163,6 +163,7 @@ const LoopProvider = ({
           discount: currentDiscount?.name,
           discountPercent: currentDiscount?.value,
           existingCartId,
+          sellingPlanId: cart.sellingPlanId,
         }),
       });
 
