@@ -236,7 +236,7 @@ export async function POST(request: NextRequest) {
         merchandiseId: encodeId(variant.shopifyId),
         sellingPlan: {
           name: 'Bundle',
-          sellingPlanId,
+          sellingPlanId: sellingPlanId.toString(),
         },
         attributes: [
           { key: 'subscription', value: 'true' },
