@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     sellingPlanId,
   } = body;
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
-  const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || '';
+  const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
   if (!store || !token) {
     console.error('missing env variables!');
@@ -248,6 +248,8 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
+    console.log(linesToAdd);
+
     // Add all lines to cart
     const addResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
       method: 'POST',
@@ -277,6 +279,7 @@ export async function POST(request: NextRequest) {
       isNewCart: isNewCart,
       prevCart: cartId,
       linesToAdd,
+      token,
     };
 
     const nextResponse = NextResponse.json(responseBody);
