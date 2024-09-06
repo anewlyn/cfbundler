@@ -161,7 +161,7 @@ const LoopProvider = ({
           productVariants: cart.productVariants,
           transactionId,
           cadence: cadence?.name,
-          discount: currentDiscount?.name,
+          discount: currentDiscount?.code,
           discountPercent: currentDiscount?.value,
           existingCartId,
           sellingPlanId: cart.sellingPlanId,
