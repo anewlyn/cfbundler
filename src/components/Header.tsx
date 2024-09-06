@@ -29,6 +29,8 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
 
     window.addEventListener('scroll', scrollHandler);
 
+    scrollHandler();
+
     return () => {
       window.removeEventListener('scroll', scrollHandler);
     };
