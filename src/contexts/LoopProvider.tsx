@@ -95,7 +95,7 @@ const LoopProvider = ({
 
   const { products, discounts, sellingPlans } = bundleData;
 
-  const shopifyDomain = process.env.NEXT_PUBLIC_REDIRECT_URL || '';
+  // const shopifyDomain = process.env.NEXT_PUBLIC_REDIRECT_URL || '';
   const productsForRender = setProductsForRender(products, shopifyProducts);
   const sortProductsByType = sortByProductType(productsForRender);
   const currentOrderValue = getCartValue(productsForRender, cart);
