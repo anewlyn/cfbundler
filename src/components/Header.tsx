@@ -3,7 +3,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
@@ -13,7 +13,9 @@ type HeaderProps = {
 };
 const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [headerTitleHeight, setHeaderTitleHeight] = useState(0);
   const { benefitTiers, cart, currentOrderValue, sellingPlans } = useLoopContext();
+  const headerTitleRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
@@ -22,6 +24,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
 
     const scrollHandler = () => {
       setIsScrolled(window.scrollY > stickyThreshold);
+      setHeaderTitleHeight(headerTitleRef.current?.offsetHeight || 0);
     };
 
     window.addEventListener('scroll', scrollHandler);
@@ -62,7 +65,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
         className="header"
         style={
           {
-            '--header-mobile-top': isScrolled ? '-78px' : '0',
+            '--header-mobile-top': isScrolled ? `-${headerTitleHeight}px` : '0',
           } as React.CSSProperties
         }
       >
@@ -79,7 +82,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             width={170}
           />
         </div>
-        <div className={classNames('header-title', kiro_bold_400.className)}>
+        <div ref={headerTitleRef} className={classNames('header-title', kiro_bold_400.className)}>
           <h1 className="uppercase">My Subscription</h1>
           {ScheduleButton('header-button')}
         </div>
