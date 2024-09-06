@@ -311,7 +311,7 @@ export async function POST(request: NextRequest) {
         'Error applying discount code:',
         applyData.errors || applyData.data.cartDiscountCodesUpdate.userErrors,
       );
-      return NextResponse.json({ message: 'Failed to apply discount code' }, { status: 500 });
+      return NextResponse.json({ message: JSON.stringify(applyData) }, { status: 500 });
     }
     const cartResponse = addData.data.cartLinesAdd.cart;
 
