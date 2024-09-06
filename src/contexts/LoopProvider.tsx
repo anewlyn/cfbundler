@@ -191,7 +191,7 @@ const LoopProvider = ({
           console.log('Existing cart updated, no new cookie set');
         }
 
-        const cartUrl = `${shopifyDomain}/?open_cart=true`;
+        // const cartUrl = `${shopifyDomain}/?open_cart=true`;
 
         // redirect to the cart
         // window.location.href = cartUrl;
