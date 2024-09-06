@@ -3,7 +3,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
@@ -12,28 +12,16 @@ type HeaderProps = {
   handleOpenCadenceModal: () => void;
 };
 const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const { benefitTiers, cart, currentOrderValue, sellingPlans } = useLoopContext();
 
   const router = useRouter();
 
   useEffect(() => {
-    const header = document.querySelector('header'); // Adjust the selector as needed
     const stickyThreshold = 100; // Change this to the scroll threshold you want
 
     const scrollHandler = () => {
-      if (window.scrollY > stickyThreshold) {
-        const headerHeight = header?.offsetHeight || 0;
-
-        if (header) {
-          header.classList.add('header-sticky');
-          header.style.top = `-${headerHeight / 3}px`; // Move the header up to benefit tiers
-        }
-      } else {
-        if (header) {
-          header.classList.remove('header-sticky');
-          header.style.top = ''; // Reset the top style when not sticky
-        }
-      }
+      setIsScrolled(window.scrollY > stickyThreshold);
     };
 
     window.addEventListener('scroll', scrollHandler);
@@ -70,7 +58,14 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
 
   return (
     <>
-      <header className="header">
+      <header
+        className="header"
+        style={
+          {
+            '--header-mobile-top': isScrolled ? '-78px' : '0',
+          } as React.CSSProperties
+        }
+      >
         <div className="header-logo">
           {/* @todo route back to website */}
           <button className="back-anchor uppercase" onClick={() => router.back()}>

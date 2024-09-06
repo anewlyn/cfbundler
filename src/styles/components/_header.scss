@@ -8,7 +8,11 @@
   grid-template-columns: 1fr 2fr 1fr;
   padding: 0 1.5rem;
   width: 100%;
+  top: 0;
+  position: sticky;
+  z-index: 10;
 }
+
 
 .header-logo {
   align-items: center;
@@ -79,6 +83,9 @@
     grid-gap: 1rem;
     grid-template-columns: max-content 1fr;
     grid-template-rows: 1fr 1fr;
+    position: sticky;
+    top: var(--header-mobile-top);
+    transition: top 0.3s ease-in-out;
 
     .header-progress-bar {
       width: 100%;
@@ -116,14 +123,5 @@
     width: calc(100% + 3rem);
     grid-column: 1 / span 2;
     margin-left: -1.5rem;
-  }
-
-  .header-sticky {
-    position: sticky;
-    /* Move the header up by half of its height */
-    z-index: 1000;
-    /* Ensure the header is above other content */
-    transition: transform 0.3s ease-in-out;
-    /* Smooth transition for the transform */
   }
 }
