@@ -291,7 +291,7 @@ export async function POST(request: NextRequest) {
 
     // now apply the selected discount code
 
-    await fetch(`https://${store}/api/2024-04/graphql.json`, {
+    const applyResult = await fetch(`https://${store}/api/2024-04/graphql.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -309,6 +309,7 @@ export async function POST(request: NextRequest) {
       cart: cartResponse,
       isNewCart: isNewCart,
       prevCart: cartId,
+      applyResult,
     };
 
     const nextResponse = NextResponse.json(responseBody);
