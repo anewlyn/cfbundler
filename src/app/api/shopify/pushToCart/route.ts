@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
       cartId = `gid://shopify/Cart/${cartId}`;
 
       // Fetch existing cart
-      const fetchResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+      const fetchResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
         // Remove all existing lines
         const lineIds = existingCartLines.map((line) => line.node.id);
         if (lineIds.length > 0) {
-          const removeResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+          const removeResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Create new cart
-      const createCartResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+      const createCartResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ export async function POST(request: NextRequest) {
     console.log(linesToAdd);
 
     // Add all lines to cart
-    const addResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+    const addResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -291,7 +291,7 @@ export async function POST(request: NextRequest) {
 
     // now apply the selected discount code
 
-    await fetch(`https://${store}/api/2023-07/graphql.json`, {
+    await fetch(`https://${store}/api/2024-04/graphql.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
