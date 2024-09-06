@@ -115,7 +115,7 @@ mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
 `;
 
 const cartDiscountCodesUpdateMutation = `
-  mutation cartDiscountCodesUpdate($cartId: ID!, discountCodes: [String!]) {
+  mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]!) {
     cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
       cart {
         id
