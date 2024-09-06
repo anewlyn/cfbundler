@@ -13,7 +13,6 @@ export type ModalProps = {
   ariaModalLabel: string; // Describes the modal
   ariaCloseLabel?: string;
   appendClassName?: string;
-  hasMobileClose?: boolean;
   hasCloseButton?: boolean;
 };
 
@@ -25,7 +24,6 @@ export const Modal = ({
   ariaCloseLabel = 'Close modal',
   closeButtonIcon = 'close',
   appendClassName,
-  hasMobileClose,
   hasCloseButton,
 }: ModalProps): JSX.Element | null => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
@@ -86,18 +84,7 @@ export const Modal = ({
           tabIndex={-1}
         >
           <div className="modal">
-            <div className="modal-content">
-              {children}
-              {hasMobileClose && (
-                <button
-                  onClick={onClose}
-                  className="modal-close-mobile-button"
-                  aria-label={ariaCloseLabel}
-                >
-                  {closeButtonIcon.toUpperCase()}
-                </button>
-              )}
-            </div>
+            <div className="modal-content">{children}</div>
             {hasCloseButton && (
               <button onClick={onClose} className="modal-close-button" aria-label={ariaCloseLabel}>
                 <i className="material-icons">{closeButtonIcon}</i>

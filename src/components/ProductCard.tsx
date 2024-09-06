@@ -48,7 +48,7 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   return (
     <div className="product-card">
       <div className="product-image">
-        <button className="mobile-info-button">
+        <div className="mobile-info-button">
           <ResponsiveImage
             src={imageURl}
             alt={productTitle}
@@ -56,7 +56,7 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
             height={309}
             isPriority={isPriority}
           />
-        </button>
+        </div>
         <div ref={infoScreenRef} className="info-screen">
           <button
             onClick={() => {

@@ -65,7 +65,6 @@ const Bundler = () => {
         open={infoModalOpen}
         onClose={handleCloseInfoModal}
         ariaModalLabel="Product Info Modal"
-        hasMobileClose
         hasCloseButton
       >
         {modalProduct && (

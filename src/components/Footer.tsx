@@ -124,14 +124,16 @@ const StickyFooter = () => {
             width={85}
             height={85}
           />
+          {!!slide.qty && (
+            <button
+              className="close-button"
+              onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
+            >
+              X
+            </button>
+          )}
           {!isDefaultImage && (
             <div className="carousel-item-overlay">
-              <button
-                className="close-button"
-                onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
-              >
-                X
-              </button>
               <p className="overlay-text">{slide?.altText}</p>
             </div>
           )}
@@ -146,20 +148,20 @@ const StickyFooter = () => {
       discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
 
       return (
-        <div className="product-price grid-cols-2">
-          <h1 className={classNames('discount-price', kiro_extra_bold_700.className)}>
+        <div className="product-price">
+          <p className={classNames('discount-price', kiro_extra_bold_700.className)}>
             {currencyFormater(currentOrderValue, bundle.currencyCode)}
-          </h1>
-          <h1 className={classNames('discounted-price', kiro_extra_bold_700.className)}>
+          </p>
+          <p className={classNames('discounted-price', kiro_extra_bold_700.className)}>
             {currencyFormater(discountedPrice, bundle.currencyCode)}
-          </h1>
+          </p>
         </div>
       );
     }
     return (
-      <h1 className={classNames('current-value', kiro_extra_bold_700.className)}>
+      <p className={classNames('current-value', kiro_extra_bold_700.className)}>
         {currencyFormater(discountedPrice, bundle.currencyCode)}
-      </h1>
+      </p>
     );
   };
 

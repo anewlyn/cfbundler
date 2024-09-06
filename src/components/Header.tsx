@@ -53,14 +53,14 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
     if (sellingPlans.length === 1) {
       return (
         <button className={className}>
-          <span>DELIVER EVERY &nbsp;</span>
+          <span className="uppercase">Deliver Every &nbsp;</span>
           <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
         </button>
       );
     } else {
       return (
         <button className={className} onClick={handleOpenCadenceModal}>
-          <span>DELIVER EVERY &nbsp;</span>
+          <span className="uppercase">Deliver Every &nbsp;</span>
           <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
           <i className="material-icons">expand_more</i>
         </button>
@@ -73,8 +73,8 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
       <header className="header">
         <div className="header-logo">
           {/* @todo route back to website */}
-          <button className="back-anchor" onClick={() => router.back()}>
-            <i className="material-icons back-arrow">west</i>BACK
+          <button className="back-anchor uppercase" onClick={() => router.back()}>
+            <i className="material-icons back-arrow">west</i>back
           </button>
           <Image
             alt="Logo"
@@ -85,7 +85,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
           />
         </div>
         <div className={classNames('header-title', kiro_bold_400.className)}>
-          <h1>MY SUBSCRIPTION</h1>
+          <h1 className="uppercase">My Subscription</h1>
           {ScheduleButton('header-button')}
         </div>
         <div className="header-progress-bar">

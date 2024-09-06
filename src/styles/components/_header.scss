@@ -82,14 +82,17 @@
 
     .header-progress-bar {
       width: 100%;
-      margin-bottom: 2rem;
       grid-column: 1 / span 2;
     }
   }
 
   .header-title {
-    padding-bottom: 1rem;
-    padding-right: 75px;
+    padding-bottom: 0;
+    align-items: end;
+
+    h1 {
+      text-align: right;
+    }
 
     .header-button {
       display: none;
