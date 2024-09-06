@@ -179,6 +179,7 @@ const LoopProvider = ({
         const actualCartId = newCartId.split('/').pop();
 
         console.log('cart stuff', data);
+        console.log('cart stuff', data.applyResult);
         // only set the cookie if it's a new cart
         if (data.isNewCart) {
           const expirationDate = new Date();
@@ -194,7 +195,7 @@ const LoopProvider = ({
         const cartUrl = `${shopifyDomain}/?open_cart=true`;
 
         // redirect to the cart
-        window.location.href = cartUrl;
+        // window.location.href = cartUrl;
       } else {
         console.error('Error processing cart: Unexpected response structure', data);
       }
