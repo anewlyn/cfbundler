@@ -302,13 +302,24 @@ export async function POST(request: NextRequest) {
         variables: { cartId, discountCodes: [discount] },
       }),
     });
+    const applyData = await applyResult.json();
+    if (
+      applyData.errors ||
+      (applyData.data && applyData.data.cartDiscountCodesUpdate.userErrors.length > 0)
+    ) {
+      console.error(
+        'Error applying discount code:',
+        applyData.errors || applyData.data.cartDiscountCodesUpdate.userErrors,
+      );
+      return NextResponse.json({ message: 'Failed to apply discount code' }, { status: 500 });
+    }
     const cartResponse = addData.data.cartLinesAdd.cart;
 
     const responseBody = {
       cart: cartResponse,
       isNewCart: isNewCart,
       prevCart: cartId,
-      applyResult,
+      applyData,
     };
 
     const nextResponse = NextResponse.json(responseBody);
