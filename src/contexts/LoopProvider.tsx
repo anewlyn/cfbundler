@@ -95,7 +95,7 @@ const LoopProvider = ({
 
   const { products, discounts, sellingPlans } = bundleData;
 
-  // const shopifyDomain = process.env.NEXT_PUBLIC_REDIRECT_URL || '';
+  const shopifyDomain = process.env.NEXT_PUBLIC_REDIRECT_URL || '';
   const productsForRender = setProductsForRender(products, shopifyProducts);
   const sortProductsByType = sortByProductType(productsForRender);
   const currentOrderValue = getCartValue(productsForRender, cart);
@@ -191,10 +191,10 @@ const LoopProvider = ({
           console.log('Existing cart updated, no new cookie set');
         }
 
-        // const cartUrl = `${shopifyDomain}/?open_cart=true`;
+        const cartUrl = `${shopifyDomain}/?open_cart=true`;
 
         // redirect to the cart
-        // window.location.href = cartUrl;
+        window.location.href = cartUrl;
       } else {
         console.error('Error processing cart: Unexpected response structure', data);
       }

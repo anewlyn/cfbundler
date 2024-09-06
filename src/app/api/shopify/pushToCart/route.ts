@@ -265,8 +265,6 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
-    console.log(linesToAdd);
-
     // Add all lines to cart
     const addResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
       method: 'POST',
@@ -303,6 +301,7 @@ export async function POST(request: NextRequest) {
       }),
     });
     const applyData = await applyResult.json();
+
     if (
       applyData.errors ||
       (applyData.data && applyData.data.cartDiscountCodesUpdate.userErrors.length > 0)
@@ -311,7 +310,7 @@ export async function POST(request: NextRequest) {
         'Error applying discount code:',
         applyData.errors || applyData.data.cartDiscountCodesUpdate.userErrors,
       );
-      return NextResponse.json({ message: JSON.stringify(applyData) }, { status: 500 });
+      return NextResponse.json({ message: 'Error applying discount code' }, { status: 500 });
     }
     const cartResponse = addData.data.cartLinesAdd.cart;
 
@@ -319,7 +318,6 @@ export async function POST(request: NextRequest) {
       cart: cartResponse,
       isNewCart: isNewCart,
       prevCart: cartId,
-      applyData,
     };
 
     const nextResponse = NextResponse.json(responseBody);
