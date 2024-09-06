@@ -178,10 +178,7 @@ const LoopProvider = ({
         const newCartId = data.cart.id;
         const actualCartId = newCartId.split('/').pop();
 
-        console.log('cart stuff', {
-          isNewCart: data.isNewCart,
-          prevCart: data.prevCart,
-        });
+        console.log('cart stuff', data);
         // only set the cookie if it's a new cart
         if (data.isNewCart) {
           const expirationDate = new Date();

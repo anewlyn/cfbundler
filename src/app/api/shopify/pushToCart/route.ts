@@ -302,7 +302,6 @@ export async function POST(request: NextRequest) {
         variables: { cartId, discountCodes: [discount] },
       }),
     });
-
     const cartResponse = addData.data.cartLinesAdd.cart;
 
     const responseBody = {
