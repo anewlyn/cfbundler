@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
@@ -28,8 +28,6 @@ const StickyFooter = () => {
     addProductVariant,
     currentDiscount,
   } = useLoopContext();
-
-  const router = useRouter();
 
   const isDisabled =
     currentOrderValue <
@@ -72,10 +70,6 @@ const StickyFooter = () => {
 
   const handleRemoveFromCart = (shopifyId: number, qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty - 1 });
-  };
-
-  const handleContactUs = () => {
-    router.push('https://cyclingfrog.com/pages/contact-us');
   };
 
   const carouselImages = [];
@@ -186,11 +180,9 @@ const StickyFooter = () => {
           </button>
         </div>
       </div>
-      <div className="sticky-button">
-        <button className="round-button" onClick={handleContactUs}>
-          <span>?</span>
-        </button>
-      </div>
+      <Link href="https://cyclingfrog.com/pages/contact-us" className="sticky-button round-button">
+        <span>?</span>
+      </Link>
     </div>
   );
 };

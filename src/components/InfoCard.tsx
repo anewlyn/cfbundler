@@ -38,7 +38,12 @@ const InfoCard = ({
     setSelectedImageIndex(imageIndex);
   };
 
-  const body_html_sanitized = body_html && sanitizeHtml(body_html);
+  const body_html_sanitized =
+    body_html &&
+    sanitizeHtml(body_html, {
+      disallowedTagsMode: 'completelyDiscard',
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p'],
+    });
 
   return (
     <div className="info-card">
