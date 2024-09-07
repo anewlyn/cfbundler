@@ -67,9 +67,9 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
             onClick={() => {
               handleOpenInfoModal(product);
             }}
-            className="info-button"
+            className="info-button uppercase"
           >
-            MORE INFO
+            More info
           </button>
         </div>
       </div>

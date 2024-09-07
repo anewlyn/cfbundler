@@ -75,7 +75,7 @@
 
   .mobile-info-button {
     display: block;
-
+    z-index: 10;
   }
 
   .product-info {
@@ -87,6 +87,7 @@
     display: none;
 
     .info-button {
+      display: none;
       background-color: transparent;
       color: transparent;
       height: 100%;
