@@ -72,7 +72,7 @@ export const Modal = ({
     return () => {
       modalRef.current?.removeEventListener('keydown', trapFocus);
     };
-  }, [modalRef.current]);
+  }, []);
 
   if (open) {
     return (
