@@ -51,7 +51,9 @@ const setBenefitTierContents = (discounts: DiscountTypes[], tiers: BenefitTierTy
   return tiers.map((tier, index) => {
     return {
       ...tier,
-      footerMessage: tier.footerMessage.replace('$$', discounts[index].value.toString()),
+      footerMessage: tier.footerMessage
+        .replace('$$', discounts[index].value.toString())
+        .replace('^^', discounts[index + 1] ? discounts[index + 1].value.toString() : ''),
       subtitle: tier.subtitle.replace('$$', discounts[index].value.toString()),
       value: discounts[index].minCartQuantity,
     };
