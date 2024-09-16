@@ -31,11 +31,17 @@
 
 @include for_breakpoint('tablet') {
   .bp-flex {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @include for_breakpoint('mobile') {
+  .bp-flex {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include for_breakpoint('mini') {
   .bundler-page {
     padding-bottom: 18rem;
   }
