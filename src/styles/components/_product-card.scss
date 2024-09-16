@@ -41,7 +41,7 @@
 .info-screen {
   background-color: #00000040;
   display: none;
-  height: calc(100% - 4px);
+  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
@@ -62,17 +62,15 @@
 }
 
 .mobile-info-button {
-  all: unset;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: none;
+  border: none;
+  display: inline-block;
+  padding: 0;
+  background: transparent;
+  width: 100%;
+  height: inherit;
 }
 
 @include for_breakpoint('mobile') {
-
   .mobile-info-button {
     display: block;
     z-index: 10;
@@ -118,9 +116,14 @@
 .product-image {
   background-color: transparent;
   position: relative;
-  padding-bottom: 5px;
+  margin-bottom: 5px;
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 0;
+  padding-bottom: 100%;
+
+  img {
+    aspect-ratio: 1 / 1;
+  }
 
   &:hover {
     .info-screen {

@@ -8,11 +8,24 @@
   grid-template-columns: 1fr 2fr 1fr;
   padding: 0 1.5rem;
   width: 100%;
-  top: 0;
-  position: sticky;
-  z-index: 10;
+
+  @include for_breakpoint('mobile') {
+    grid-gap: 1rem;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
 }
 
+.header-sticky {
+  @include for_breakpoint('mobile') {
+    position: sticky;
+    /* Move the header up by half of its height */
+    z-index: 1000;
+    /* Ensure the header is above other content */
+    transition: transform 0.3s ease-in-out;
+    /* Smooth transition for the transform */
+  }
+}
 
 .header-logo {
   align-items: center;
@@ -38,6 +51,14 @@
   .logo {
     flex: none;
   }
+
+  @include for_breakpoint('mobile') {
+    justify-content: left;
+
+    .logo {
+      display: none;
+    }
+  }
 }
 
 .header-title {
@@ -45,9 +66,22 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 2rem;
+  position: relative;
+
+  @include for_breakpoint('mobile') {
+    padding-bottom: 1rem;
+    left: -50px;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  @include for_breakpoint('mini') {
+    left: 0;
+  }
 
   h1 {
-
     margin-block-end: 0.5rem;
     text-align: center;
   }
@@ -64,6 +98,10 @@
   padding: 0 1rem;
   width: max-content;
 
+  @include for_breakpoint('mobile') {
+    display: none;
+  }
+
   i {
     vertical-align: middle;
   }
@@ -71,51 +109,8 @@
 
 .header-button-mobile {
   display: none;
-}
 
-.header-progress-bar {
-  height: 100%;
-  min-width: 185px;
-  position: relative;
-}
-
-@include for_breakpoint('mobile') {
-  .header {
-    grid-gap: 0.5rem;
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: 1fr 1fr;
-    position: sticky;
-    top: var(--header-mobile-top);
-    transition: top 0.3s ease-in-out;
-
-    .header-progress-bar {
-      width: 100%;
-      grid-column: 1 / span 2;
-    }
-  }
-
-  .header-title {
-    padding-bottom: 0;
-    align-items: end;
-
-    h1 {
-      text-align: right;
-    }
-
-    .header-button {
-      display: none;
-    }
-  }
-
-  .header-logo {
-    justify-content: left;
-
-    .logo {
-      display: none;
-    }
-  }
-
-  .header-button-mobile {
+  @include for_breakpoint('mobile') {
     border-bottom: 1px solid lightgrey;
     border-left: none;
     border-right: none;
@@ -124,5 +119,17 @@
     width: calc(100% + 3rem);
     grid-column: 1 / span 2;
     margin-left: -1.5rem;
+  }
+}
+
+.header-progress-bar {
+  position: relative;
+  height: 100%;
+  min-width: 185px;
+
+  @include for_breakpoint('mobile') {
+    width: 100%;
+    margin-bottom: 2rem;
+    grid-column: 1 / span 2;
   }
 }
