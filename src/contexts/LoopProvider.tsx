@@ -148,7 +148,6 @@ const LoopProvider = ({
         existingCartId = decodeURIComponent(cartCookie).split('=')[1].split('?')[0];
       }
     }
-    console.log('existingCartId', existingCartId);
 
     try {
       const response = await fetch(url, {
@@ -176,10 +175,6 @@ const LoopProvider = ({
         const newCartId = data.cart.id;
         const actualCartId = newCartId.split('/').pop();
 
-        console.log('cart stuff', {
-          isNewCart: data.isNewCart,
-          prevCart: data.prevCart,
-        });
         // only set the cookie if it's a new cart
         if (data.isNewCart) {
           const expirationDate = new Date();
@@ -187,9 +182,9 @@ const LoopProvider = ({
 
           document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/;  SameSite=none; Secure=false`;
 
-          console.log('New cart created, cookie set:', actualCartId);
+          // console.log('New cart created, cookie set:', actualCartId);
         } else {
-          console.log('Existing cart updated, no new cookie set');
+          // console.log('Existing cart updated, no new cookie set');
         }
 
         const cartUrl = `${shopifyDomain}/?open_cart=true`;

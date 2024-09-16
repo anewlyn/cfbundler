@@ -10,15 +10,16 @@
   background-color: var(--cf-background-color);
   column-gap: 1rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   justify-content: space-evenly;
   margin: 0 auto;
   max-width: 1400px;
   padding: 1.5rem;
   row-gap: 1.5rem;
+}
 
-  .product-card {
-    flex-basis: 23%;
+@include for_breakpoint('xl') {
+  .bp-flex {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -30,7 +31,7 @@
 
 @include for_breakpoint('tablet') {
   .bp-flex {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -41,6 +42,6 @@
 
   .bp-flex {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
