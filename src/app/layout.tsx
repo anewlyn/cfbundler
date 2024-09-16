@@ -10,19 +10,12 @@ export const metadata: Metadata = {
   title: 'Cycling Frog',
   description:
     "Cycling Frog isn't just a brand. It's a statement. It's the belief that cannabis consumption should be normalized. Cannabis should be affordable. Cannabis should be accessible. Cannabis is fun. Cannabis should be enjoyed with the same ease as your favorite sparkling water or beer, and we at Cycling Frog are here to make that happen.",
-  generator: 'Next.js',
-  applicationName: 'Next.js',
+  applicationName: 'Cycling Frog Bundler',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+  },
   referrer: 'origin-when-cross-origin',
-  keywords: ['Next.js', 'React', 'JavaScript'],
-  authors: [
-    { name: 'Travis Cox' },
-    { name: 'Ryan Vaznis' },
-    { name: 'Ryan Canfield' },
-    { name: 'Eva Wood' },
-    { name: 'Kim Franklin' },
-    { name: 'Ethan Grebmeier' },
-    { name: 'Sam Reed' },
-  ],
   creator: 'Assemble Inc.',
   formatDetection: {
     email: false,
