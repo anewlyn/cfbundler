@@ -69,7 +69,7 @@ export default async function RootLayout({
   const shopifyProducts = await getProducts(shopifyIdString);
 
   return (
-    <html lang="en" className={`${inter.className} antialiased`}>
+    <html lang="en" className={`${inter.className} antialiased as`}>
       <meta name="viewport" content="width=device-width" initial-scale="1" />
       <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
