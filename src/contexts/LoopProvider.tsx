@@ -148,6 +148,8 @@ const LoopProvider = ({
         existingCartId = decodeURIComponent(cartCookie).split('=')[1].split('?')[0];
       }
     }
+    // console.log('existingCartId', existingCartId);
+    // console.log(cart.sellingPlanId);
 
     try {
       const response = await fetch(url, {
@@ -159,9 +161,10 @@ const LoopProvider = ({
           productVariants: cart.productVariants,
           transactionId,
           cadence: cadence?.name,
-          discount: currentDiscount?.name,
+          discount: currentDiscount?.code,
           discountPercent: currentDiscount?.value,
           existingCartId,
+          sellingPlanId: cart.sellingPlanId,
         }),
       });
 
@@ -174,6 +177,8 @@ const LoopProvider = ({
       if (data && data.cart) {
         const newCartId = data.cart.id;
         const actualCartId = newCartId.split('/').pop();
+
+        // console.log('cart stuff', data);
 
         // only set the cookie if it's a new cart
         if (data.isNewCart) {

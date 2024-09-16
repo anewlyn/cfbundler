@@ -4,13 +4,21 @@
 .sticky-footer {
   background-color: var(--cf-white);
   bottom: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   padding: 0 1.5rem;
   position: fixed;
   width: 100%;
   box-shadow: 0 -11px 25px -11px var(--cf-drop-shadow);
+
+  .embla__container{
+    grid-auto-columns: 85px;
+  }
+  .embla__slide {
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
 }
 
 .order-info {
@@ -27,11 +35,14 @@
     font-size: 16px;
     margin-block-end: 8px;
     min-width: 65px;
+    margin-block-start: 0;
+    margin-block-end: 0;
   }
 
   .current-value {
     margin: 0;
     padding-right: 2rem;
+    font-size: 24px;
   }
 }
 
@@ -39,14 +50,17 @@
   align-items: center;
   color: var(--cf-gray);
   display: flex;
+  gap: 16px;
   font-size: 0.8rem;
   justify-content: space-between;
-  margin-right: 1rem;
   padding-left: 1rem;
   width: max-content;
 
-  .product-price {
-    margin-right: 1rem;
+  .product-price, .current-value {
+    p {
+      font-size: 24px;
+    }
+    margin-right: 0;
     margin-bottom: 0;
   }
 }
@@ -67,8 +81,9 @@
 }
 
 .carousel {
-  max-width: 600px;
   position: relative;
+
+  max-width: 600px;
 
   .embla {
     padding: 0.8rem 0;
@@ -91,8 +106,15 @@
 
 .carousel-item-container {
   position: relative;
+  transition: all 0.3s ease-in-out;
 
   &:hover .carousel-item-overlay {
+    opacity: 0.7;
+    visibility: visible;
+  }
+
+  &:hover .close-button {
+    display: block;
     opacity: 0.7;
     visibility: visible;
   }
@@ -100,19 +122,24 @@
 
 .carousel-item-overlay {
   background-color: var(--cf-background-color);
-  height: 85px;
+  position: absolute;
+  padding: 4px;
+  right: 0;
+  bottom: 0;
   left: 0;
   opacity: 0;
-  position: absolute;
   top: 0;
   transition:
     opacity 0.5s,
     visibility 0.5s;
-  width: 85px;
 }
 
+
 .close-button {
+  z-index: 10;
   background-color: black;
+  border: none;
+  font-weight: 800;
   border-radius: 50%;
   color: white;
   cursor: pointer;
@@ -123,20 +150,18 @@
   right: -10px;
   top: -10px;
   width: 19px;
+  display: none;
 }
+
 
 .overlay-text {
   border: none;
   color: black;
-  font-size: 14px;
+  font-size: 12px;
+  user-select: none;
   font-weight: 700;
-  height: 68px;
-  left: 6px;
   margin: 0;
   overflow: hidden;
-  position: absolute;
-  top: 11px;
-  width: 74px;
   word-wrap: break-word;
 }
 
@@ -197,8 +222,19 @@
 
 @include for_breakpoint('mobile') {
   .sticky-footer {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     padding-bottom: 1.5rem;
+
+    .carousel {
+      margin: 0 -24px ;
+      max-width: none;
+      padding: 0;
+    }
+
+    .embla {
+      padding: 0.8rem 24px 0.4rem 24px;
+    }
+
   }
 
   .has-overflow {
@@ -206,26 +242,55 @@
   }
 
   .sticky-button {
-    bottom: 19rem;
+    bottom: 15rem;
   }
 
   .order-info {
+    text-align: center;
     flex-direction: column;
-
+    gap: 16px;
+    padding-left: 0;
     p {
       width: auto;
     }
   }
 
   .current-info {
+    width: 100%;
     flex-direction: row;
     padding: 0;
   }
 }
 
+@include for_breakpoint('mobile') {
+
+
+  .carousel-item-container {
+
+    &:hover .carousel-item-overlay {
+      opacity: 0.7;
+      visibility: visible;
+    }
+  }
+  .close-button {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
 @include for_breakpoint('tablet') {
+  .order-info {
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+  }
+
   .current-info {
     .product-price {
+      p {
+        font-size: 24px;
+      }
       grid-template-columns: 1fr;
       grid-template-rows: auto auto;
     }
