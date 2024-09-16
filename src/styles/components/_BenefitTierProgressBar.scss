@@ -53,8 +53,14 @@
 }
 
 @include for_breakpoint('mobile') {
-  .currency,
-  .tier-subtitle {
+  .currency{
     font-size: 20px;
   }
+  .tier-subtitle {
+    font-size: 14px;
+    .material-icons {
+      font-size: 16px;
+    }
+  }
+
 }

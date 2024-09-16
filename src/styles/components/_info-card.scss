@@ -1,24 +1,44 @@
 @import 'breakpoints';
 
+
+
 .info-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 3rem;
   grid-row-gap: 1rem;
   margin-right: 4rem;
+  padding: 4rem 1.5rem;
 
   .carousel {
     padding: 0;
+    max-width: none;
 
     .embla {
       width: fit-content;
-      padding: 0;
     }
+  }
+
+  .product-title {
+    font-size: 24px;
   }
 }
 
+
+.embla__slide {
+  position: relative;
+  width: 80%;
+  aspect-ratio: 1/1;
+}
+
+.carousel-item {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
 .modal-content {
-  margin: 2.5rem;
+  margin: 0;
 }
 
 .info-image-block {
@@ -29,6 +49,7 @@
 }
 
 .info-content {
+
   align-content: space-between;
   display: grid;
   grid-template-rows: auto;
@@ -69,13 +90,12 @@
 
 .alt-images {
   .embla__container {
-    width: fit-content;
+    width: 100%;
   }
 }
 
 .alt-image-block {
   height: 85px;
-  position: relative;
   width: 85px;
   margin-top: 1rem;
 
@@ -107,18 +127,39 @@
   .info-card {
     grid-template-columns: 1fr;
     margin-right: 0;
+    padding: 1rem 0;
 
-    .embla {
-      grid-row: 1;
-      width: auto;
+    .product-description * {
+      font-size: 1rem;
     }
+
+    .carousel {
+      margin-left: 0;
+
+      .embla {
+        margin: 0;
+        padding: 0 24px;
+        grid-row: 1;
+        width: auto;
+      }
+      .embla__container {
+        grid-auto-columns: 60%;
+      }
+    }
+
+  }
+
+  .info-content {
+    padding: 0 1.5rem;
   }
 
   .alt-image-block {
     border: none !important;
-    height: 271px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    width: 271px;
+    object-fit: cover;
+    margin-top: 0;
   }
 
   .alt-images {

@@ -17,16 +17,25 @@
   background-color: var(--cf-background-color);
   margin: 1.5rem;
   position: relative;
-  max-height: calc(100dvh - 3rem);
-  overflow: auto;
+
 }
 
 .modal-content {
+  height: 100%;
   margin: 1.5rem;
+  max-height: calc(100dvh - 3rem);
+  overflow-y: auto;
 }
 
 .modal-close-button {
-  background-color: transparent;
+  background-color: black;
+  color: white;
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   cursor: pointer;
   position: absolute;
@@ -34,7 +43,7 @@
   top: 10px;
 
   .material-icons {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 }
 

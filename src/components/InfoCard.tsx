@@ -38,7 +38,12 @@ const InfoCard = ({
     setSelectedImageIndex(imageIndex);
   };
 
-  const body_html_sanitized = body_html && sanitizeHtml(body_html);
+  const body_html_sanitized =
+    body_html &&
+    sanitizeHtml(body_html, {
+      disallowedTagsMode: 'completelyDiscard',
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p'],
+    });
 
   return (
     <div className="info-card">
@@ -52,7 +57,7 @@ const InfoCard = ({
         <Carousel>
           {images.map((slide: { imageURL: string; altText: string }, index: number) => (
             <div
-              className={classNames('embla__slide', 'alt-image-block', {
+              className={classNames('embla__slide alt-image-block', {
                 'base-border-2': selectedImageIndex === index,
               })}
               key={index}
@@ -61,7 +66,7 @@ const InfoCard = ({
                 switch images
               </button>
               <Image
-                className="carousel-item alt-image-button"
+                className="carousel-item"
                 src={slide.imageURL}
                 alt={slide.altText}
                 width={271}
@@ -73,7 +78,7 @@ const InfoCard = ({
       </div>
       <div className="info-content">
         <section className="description">
-          <h1 className={kiro_bold_400.className}>{productTitle}</h1>
+          <p className={`${kiro_bold_400.className} product-title`}>{productTitle}</p>
           <p>{currencyFormater(price, bundle.currencyCode)}</p>
           <hr />
           <div className="loox-rating" data-fetch data-id={looxReviewId} />

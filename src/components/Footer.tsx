@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
@@ -28,8 +28,6 @@ const StickyFooter = () => {
     addProductVariant,
     currentDiscount,
   } = useLoopContext();
-
-  const router = useRouter();
 
   const isDisabled =
     currentOrderValue <
@@ -72,10 +70,6 @@ const StickyFooter = () => {
 
   const handleRemoveFromCart = (shopifyId: number, qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty - 1 });
-  };
-
-  const handleContactUs = () => {
-    router.push('https://cyclingfrog.com/pages/contact-us');
   };
 
   const carouselImages = [];
@@ -124,14 +118,16 @@ const StickyFooter = () => {
             width={85}
             height={85}
           />
+          {!!slide.qty && (
+            <button
+              className="close-button"
+              onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
+            >
+              X
+            </button>
+          )}
           {!isDefaultImage && (
             <div className="carousel-item-overlay">
-              <button
-                className="close-button"
-                onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
-              >
-                X
-              </button>
               <p className="overlay-text">{slide?.altText}</p>
             </div>
           )}
@@ -146,20 +142,20 @@ const StickyFooter = () => {
       discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
 
       return (
-        <div className="product-price grid-cols-2">
-          <h1 className={classNames('discount-price', kiro_extra_bold_700.className)}>
+        <div className="product-price">
+          <p className={classNames('discount-price', kiro_extra_bold_700.className)}>
             {currencyFormater(currentOrderValue, bundle.currencyCode)}
-          </h1>
-          <h1 className={classNames('discounted-price', kiro_extra_bold_700.className)}>
+          </p>
+          <p className={classNames('discounted-price', kiro_extra_bold_700.className)}>
             {currencyFormater(discountedPrice, bundle.currencyCode)}
-          </h1>
+          </p>
         </div>
       );
     }
     return (
-      <h1 className={classNames('current-value', kiro_extra_bold_700.className)}>
+      <p className={classNames('current-value', kiro_extra_bold_700.className)}>
         {currencyFormater(discountedPrice, bundle.currencyCode)}
-      </h1>
+      </p>
     );
   };
 
@@ -184,11 +180,9 @@ const StickyFooter = () => {
           </button>
         </div>
       </div>
-      <div className="sticky-button">
-        <button className="round-button" onClick={handleContactUs}>
-          <span>?</span>
-        </button>
-      </div>
+      <Link href="https://cyclingfrog.com/pages/contact-us" className="sticky-button round-button">
+        <span>?</span>
+      </Link>
     </div>
   );
 };

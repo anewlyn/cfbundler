@@ -42,7 +42,7 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
 
   return (
     <div ref={modalRef} className="cadance-card">
-      <h1>DELIVER EVERY...</h1>
+      <p className="uppercase">Deliver Every...</p>
       {sellingPlans.map((cadence, index) => {
         const interval =
           Number(cadence?.deliveryIntervalCount) > 1
@@ -62,11 +62,11 @@ const DeliverCadenceCard = ({ onClose }: DeliverCadenceCardProps) => {
         );
       })}
       <hr />
-      <button className="cadance-card-button selected" onClick={handleSaveChanges}>
-        SAVE CHANGES
+      <button className="uppercase cadance-card-button selected" onClick={handleSaveChanges}>
+        Save Changes
       </button>
-      <button className="cadance-card-button cancel" onClick={onClose}>
-        CANCEL
+      <button className="uppercase cadance-card-button cancel" onClick={onClose}>
+        Cancel
       </button>
     </div>
   );

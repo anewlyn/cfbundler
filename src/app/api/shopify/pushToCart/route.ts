@@ -8,6 +8,126 @@ const encodeId = (id: number) => {
   return Buffer.from(`gid://shopify/ProductVariant/${id}`).toString('base64');
 };
 
+const fetchCartQuery = `
+query cart($id: ID!) {
+  cart(id: $id) {
+    id
+    lines(first: 250) {
+      edges {
+        node {
+          id
+          quantity
+          attributes {
+            key
+            value
+          }
+          merchandise {
+            ... on ProductVariant {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+const createCartQuery = `
+mutation cartCreate($input: CartInput!) {
+  cartCreate(input: $input) {
+    cart {
+      id
+      createdAt
+      updatedAt
+      lines(first: 250) {
+        edges {
+          node {
+            id
+            quantity
+            attributes {
+              key
+              value
+            }
+            merchandise {
+              ... on ProductVariant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+const cartLinesRemoveQuery = `
+mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      id
+      lines(first: 250) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`;
+
+const cartLinesAddQuery = `
+mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      id
+      lines(first: 250) {
+        edges {
+          node {
+            id
+            quantity
+            attributes {
+              key
+              value
+            }
+            merchandise {
+              ... on ProductVariant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`;
+
+const cartDiscountCodesUpdateMutation = `
+  mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]!) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        id
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
   const {
@@ -15,9 +135,12 @@ export async function POST(request: NextRequest) {
     transactionId,
     cadence,
     discountPercent,
+    discount,
     existingCartId,
     sellingPlanId,
   } = body;
+
+  console.log(body);
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
@@ -25,112 +148,6 @@ export async function POST(request: NextRequest) {
     console.error('missing env variables!');
     return NextResponse.json({ message: 'Server configuration error' }, { status: 500 });
   }
-
-  const fetchCartQuery = `
-    query cart($id: ID!) {
-      cart(id: $id) {
-        id
-        lines(first: 250) {
-          edges {
-            node {
-              id
-              quantity
-              attributes {
-                key
-                value
-              }
-              merchandise {
-                ... on ProductVariant {
-                  id
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const createCartQuery = `
-    mutation cartCreate($input: CartInput!) {
-      cartCreate(input: $input) {
-        cart {
-          id
-          createdAt
-          updatedAt
-          lines(first: 250) {
-            edges {
-              node {
-                id
-                quantity
-                attributes {
-                  key
-                  value
-                }
-                merchandise {
-                  ... on ProductVariant {
-                    id
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const cartLinesRemoveQuery = `
-    mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
-      cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
-        cart {
-          id
-          lines(first: 250) {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-        }
-        userErrors {
-          field
-          message
-        }
-      }
-    }
-  `;
-
-  const cartLinesAddQuery = `
-    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
-      cartLinesAdd(cartId: $cartId, lines: $lines) {
-        cart {
-          id
-          lines(first: 250) {
-            edges {
-              node {
-                id
-                quantity
-                attributes {
-                  key
-                  value
-                }
-                merchandise {
-                  ... on ProductVariant {
-                    id
-                  }
-                }
-              }
-            }
-          }
-        }
-        userErrors {
-          field
-          message
-        }
-      }
-    }
-  `;
 
   try {
     let cartId = existingCartId;
@@ -141,7 +158,7 @@ export async function POST(request: NextRequest) {
       cartId = `gid://shopify/Cart/${cartId}`;
 
       // Fetch existing cart
-      const fetchResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+      const fetchResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -169,7 +186,7 @@ export async function POST(request: NextRequest) {
         // Remove all existing lines
         const lineIds = existingCartLines.map((line) => line.node.id);
         if (lineIds.length > 0) {
-          const removeResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+          const removeResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -202,7 +219,7 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Create new cart
-      const createCartResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+      const createCartResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -232,7 +249,7 @@ export async function POST(request: NextRequest) {
       ...productVariants.map((variant) => ({
         quantity: variant.quantity,
         merchandiseId: encodeId(variant.shopifyId),
-        sellingPlanId,
+        sellingPlanId: Buffer.from(`gid://shopify/SellingPlan/${sellingPlanId}`).toString('base64'),
         attributes: [
           { key: 'subscription', value: 'true' },
           { key: '_bundleId', value: transactionId },
@@ -249,7 +266,7 @@ export async function POST(request: NextRequest) {
     ];
 
     // Add all lines to cart
-    const addResponse = await fetch(`https://${store}/api/2023-07/graphql.json`, {
+    const addResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -270,6 +287,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Failed to add lines to cart' }, { status: 500 });
     }
 
+    // now apply the selected discount code
+
+    const applyResult = await fetch(`https://${store}/api/2024-04/graphql.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': token,
+      },
+      body: JSON.stringify({
+        query: cartDiscountCodesUpdateMutation,
+        variables: { cartId, discountCodes: [discount] },
+      }),
+    });
+    const applyData = await applyResult.json();
+
+    if (
+      applyData.errors ||
+      (applyData.data && applyData.data.cartDiscountCodesUpdate.userErrors.length > 0)
+    ) {
+      console.error(
+        'Error applying discount code:',
+        applyData.errors || applyData.data.cartDiscountCodesUpdate.userErrors,
+      );
+      return NextResponse.json({ message: 'Error applying discount code' }, { status: 500 });
+    }
     const cartResponse = addData.data.cartLinesAdd.cart;
 
     const responseBody = {

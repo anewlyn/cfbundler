@@ -48,23 +48,28 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   return (
     <div className="product-card">
       <div className="product-image">
-        <button className="mobile-info-button">
-          <ResponsiveImage
-            src={imageURl}
-            alt={productTitle}
-            width={309}
-            height={309}
-            isPriority={isPriority}
-          />
-        </button>
+        <ResponsiveImage
+          src={imageURl}
+          alt={productTitle}
+          width={309}
+          height={309}
+          isPriority={isPriority}
+        />
+        <button
+          className="mobile-info-button"
+          onClick={() => {
+            handleOpenInfoModal(product);
+          }}
+        />
+
         <div ref={infoScreenRef} className="info-screen">
           <button
             onClick={() => {
               handleOpenInfoModal(product);
             }}
-            className="info-button"
+            className="info-button uppercase"
           >
-            MORE INFO
+            More info
           </button>
         </div>
       </div>
