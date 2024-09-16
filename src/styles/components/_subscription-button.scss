@@ -4,7 +4,6 @@
   border: none;
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
   text-align: center;
   width: 100%;
 
@@ -20,7 +19,8 @@
   background-color: transparent;
   border: none;
   color: var(--cf-white);
-  width: 30px;
+  width: 52px;
+  padding: 0;
 }
 
 .out-of-stock {

@@ -12,7 +12,7 @@
   width: 100%;
   box-shadow: 0 -11px 25px -11px var(--cf-drop-shadow);
 
-  .embla__container{
+  .embla__container {
     grid-auto-columns: 85px;
   }
   .embla__slide {
@@ -56,7 +56,8 @@
   padding-left: 1rem;
   width: max-content;
 
-  .product-price, .current-value {
+  .product-price,
+  .current-value {
     p {
       font-size: 24px;
     }
@@ -73,6 +74,7 @@
   font-weight: 700;
   min-width: max-content;
   padding: 0 2rem;
+  text-transform: uppercase;
 
   &:disabled {
     background-color: var(--cf-button-disabled);
@@ -134,25 +136,34 @@
     visibility 0.5s;
 }
 
-
 .close-button {
   z-index: 10;
-  background-color: black;
   border: none;
   font-weight: 800;
-  border-radius: 50%;
   color: white;
   cursor: pointer;
   font-size: 0.8rem;
-  height: 19px;
-  padding: 0;
   position: absolute;
   right: -10px;
   top: -10px;
-  width: 19px;
   display: none;
-}
+  background: none;
+  padding: 6px;
+  height: 18px;
+  width: 18px;
+  box-sizing: content-box;
 
+  span {
+    width: 18px;
+    height: 18px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
 
 .overlay-text {
   border: none;
@@ -226,7 +237,7 @@
     padding-bottom: 1.5rem;
 
     .carousel {
-      margin: 0 -24px ;
+      margin: 0 -24px;
       max-width: none;
       padding: 0;
     }
@@ -234,7 +245,6 @@
     .embla {
       padding: 0.8rem 24px 0.4rem 24px;
     }
-
   }
 
   .has-overflow {
@@ -263,10 +273,7 @@
 }
 
 @include for_breakpoint('mobile') {
-
-
   .carousel-item-container {
-
     &:hover .carousel-item-overlay {
       opacity: 0.7;
       visibility: visible;

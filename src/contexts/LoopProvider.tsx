@@ -17,6 +17,7 @@ export type LoopContextType = {
   benefitTiers: { subtitle: string; footerMessage: string; value: number }[];
   bundle: BundleTypes;
   cart: CartType;
+  submittingCart: boolean;
   currentOrderValue: number;
   currentDiscount: DiscountTypes | null;
   handleTransaction: () => void;
@@ -67,6 +68,7 @@ const LoopProvider = ({
   shopifyProducts: Record<string, ShopifyProductType>;
   children: React.ReactNode;
 }) => {
+  const [submittingCart, setSubmittingCart] = useState(false);
   const defaultCart: CartType = {
     boxSizeId: bundleData.boxSizes[0].id,
     discountId: null,
@@ -132,6 +134,7 @@ const LoopProvider = ({
   };
 
   const handleTransaction = async () => {
+    setSubmittingCart(true);
     const cadence = sellingPlans.find((plan) => plan.shopifyId === cart.sellingPlanId);
     const transactionId = await createTransaction(cart, bundleData.id);
     const url =
@@ -202,6 +205,7 @@ const LoopProvider = ({
     } catch (error) {
       console.error('Error processing cart:', error);
     }
+    setSubmittingCart(false);
   };
 
   const benefitTiers = setBenefitTierContents(discounts, tiers);
@@ -211,6 +215,7 @@ const LoopProvider = ({
     benefitTiers,
     bundle: bundleData,
     cart,
+    submittingCart,
     currentOrderValue,
     currentDiscount,
     handleTransaction,
