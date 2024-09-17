@@ -4,6 +4,7 @@ const getProducts = async (shopifyIdString: string) => {
   try {
     const options: RequestInit = {
       method: 'GET',
+      cache: 'no-store',
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
