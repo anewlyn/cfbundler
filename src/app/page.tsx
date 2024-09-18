@@ -12,6 +12,8 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 // temporary page to test the subscription button
 
+export const runtime = 'edge';
+
 const Bundler = () => {
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
