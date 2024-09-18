@@ -27,6 +27,7 @@ const StickyFooter = () => {
     bundle,
     addProductVariant,
     currentDiscount,
+    submittingCart,
   } = useLoopContext();
 
   const isDisabled =
@@ -122,8 +123,9 @@ const StickyFooter = () => {
             <button
               className="close-button"
               onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
+              aria-label="Remove from cart"
             >
-              X
+              <span>&times;</span>
             </button>
           )}
           {!isDefaultImage && (
@@ -174,9 +176,9 @@ const StickyFooter = () => {
             className={classNames('add-button', {
               disabled: isDisabled,
             })}
-            disabled={isDisabled}
+            disabled={isDisabled || submittingCart}
           >
-            ADD TO CART
+            {submittingCart ? 'Adding to cart...' : 'Add to cart'}
           </button>
         </div>
       </div>
