@@ -140,7 +140,6 @@ export async function POST(request: NextRequest) {
     sellingPlanId,
   } = body;
 
-  console.log(body);
   const store = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_KEY || '';
 
