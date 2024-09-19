@@ -7,12 +7,6 @@ export const metadata: Metadata = {
   description:
     "Cycling Frog isn't just a brand. It's a statement. It's the belief that cannabis consumption should be normalized. Cannabis should be affordable. Cannabis should be accessible. Cannabis is fun. Cannabis should be enjoyed with the same ease as your favorite sparkling water or beer, and we at Cycling Frog are here to make that happen.",
   applicationName: 'Cycling Frog Bundler',
-  icons: [
-    {
-      rel: 'icon',
-      url: 'https://bundler.cyclingfrog.com/favicon.png',
-    },
-  ],
   referrer: 'origin-when-cross-origin',
   creator: 'Assemble Inc.',
   formatDetection: {
@@ -51,6 +45,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.className} antialiased`}>
+      <head>
+        <link rel="icon" href="https://bundler.cyclingfrog.com/favicon.png" sizes="any" />
+      </head>
       <meta name="viewport" content="width=device-width" initial-scale="1" />
       <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
