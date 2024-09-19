@@ -3,7 +3,7 @@ import { CartType } from '@/contexts/LoopProvider';
 const createTransaction = async (cart: CartType, id: string) => {
   const options: RequestInit = {
     method: 'POST',
-    cache: 'no-store',
+    //cache: 'no-store',
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',

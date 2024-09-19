@@ -1,7 +1,7 @@
 export async function getBundle() {
   const options: RequestInit = {
     method: 'GET',
-    cache: 'no-store',
+    //cache: 'no-store',
     headers: {
       accept: 'application/json',
       Authorization: process.env.NEXT_PUBLIC_LOOP_API_KEY || '',
