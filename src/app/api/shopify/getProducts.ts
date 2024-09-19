@@ -3,7 +3,6 @@ import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 const getProducts = async (shopifyIdString: string) => {
   const options: RequestInit = {
     method: 'GET',
-    cache: 'no-store',
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
