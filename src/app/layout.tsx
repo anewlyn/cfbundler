@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: 'icon',
-      url: '/favicon.png',
+      url: 'https://bundler.cyclingfrog.com/favicon.png',
     },
   ],
   referrer: 'origin-when-cross-origin',
