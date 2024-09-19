@@ -7,10 +7,12 @@ export const metadata: Metadata = {
   description:
     "Cycling Frog isn't just a brand. It's a statement. It's the belief that cannabis consumption should be normalized. Cannabis should be affordable. Cannabis should be accessible. Cannabis is fun. Cannabis should be enjoyed with the same ease as your favorite sparkling water or beer, and we at Cycling Frog are here to make that happen.",
   applicationName: 'Cycling Frog Bundler',
-  icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-  },
+  icons: [
+    {
+      rel: 'icon',
+      url: '/favicon.png',
+    },
+  ],
   referrer: 'origin-when-cross-origin',
   creator: 'Assemble Inc.',
   formatDetection: {
