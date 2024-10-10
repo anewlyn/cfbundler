@@ -42,7 +42,7 @@ const InfoCard = ({
     body_html &&
     sanitizeHtml(body_html, {
       disallowedTagsMode: 'completelyDiscard',
-      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p'],
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'span'],
     });
 
   return (
