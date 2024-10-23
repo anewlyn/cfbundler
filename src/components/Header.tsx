@@ -76,6 +76,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
           <button className="back-anchor uppercase" onClick={() => router.back()}>
             <i className="material-icons back-arrow">west</i>back
           </button>
+          <a href="https://cyclingfrog.com">
           <Image
             alt="Logo"
             className="logo"
@@ -83,6 +84,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             src="/assets/cycling-frog-logo.png"
             width={170}
           />
+          </a>
         </div>
         <div ref={headerTitleRef} className={classNames('header-title', kiro_bold_400.className)}>
           <h1 className="uppercase">My Subscription</h1>
