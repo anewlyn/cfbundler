@@ -206,7 +206,7 @@ interface RemoveData {
   };
 }
           
-          const removeData = await removeResponse.json();
+          const removeData: RemoveData = await removeResponse.json();
           if (
             removeData.errors ||
             (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0)
