@@ -197,56 +197,38 @@ export async function POST(request: NextRequest) {
             }),
           });
 
-interface RemoveData {
-  errors?: { message: string }[];
-  data?: {
-    cartLinesRemove: {
-      userErrors: { message: string }[];
-    };
-  };
-}
-          
-          const removeData: RemoveData = await removeResponse.json();
-          if (
-            removeData.errors ||
-            (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0)
-          ) {
-            console.error(
-              'Error removing existing lines:',
-              removeData.errors || removeData.data.cartLinesRemove.userErrors,
-            );
+                    const removeData = await removeResponse.json();
 
-  // Consolidate all error messages
- const removeData = await removeResponse.json();
+                    if (
+                        removeData.errors ||
+                        (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0)
+                    ) {
+                        const messages: string[] = [];
 
-if (
-  removeData.errors ||
-  (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0)
-) {
-  const messages: string[] = [];
+                        if (removeData.errors) {
+                            messages.push(...removeData.errors.map((error: { message: string }) => error.message || "An error occurred."));
+                        }
 
-  if (removeData.errors) {
-    messages.push(...removeData.errors.map((error: { message: string }) => error.message || "An error occurred."));
-  }
+                        if (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0) {
+                            messages.push(
+                                ...removeData.data.cartLinesRemove.userErrors.map(
+                                    (userError: { message: string }) => userError.message || "A user error occurred."
+                                )
+                            );
+                        }
 
-  if (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0) {
-    messages.push(
-      ...removeData.data.cartLinesRemove.userErrors.map(
-        (userError: { message: string }) => userError.message || "A user error occurred."
-      )
-    );
-  }
+                        console.error('Error removing existing lines:', messages);
 
-  console.error('Error removing existing lines:', messages);
-
-  return NextResponse.json(
-              { message: 'Failed to remove existing lines' ,
-               error:  messages},
-              { status: 500 },
-            );
-          }
-        }
-      } else {
+                        return NextResponse.json(
+                            {
+                                message: 'Failed to remove existing lines',
+                                errors: messages,
+                            },
+                            { status: 500 }
+                        );
+                    }
+                }
+            } else {
         console.error('Failed to fetch existing cart:', fetchData);
         return NextResponse.json({ message: 'Failed to fetch existing cart' }, { status: 500 });
       }
