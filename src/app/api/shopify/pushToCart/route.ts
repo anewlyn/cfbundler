@@ -197,6 +197,15 @@ export async function POST(request: NextRequest) {
             }),
           });
 
+interface RemoveData {
+  errors?: { message: string }[];
+  data?: {
+    cartLinesRemove: {
+      userErrors: { message: string }[];
+    };
+  };
+}
+          
           const removeData = await removeResponse.json();
           if (
             removeData.errors ||
