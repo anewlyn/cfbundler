@@ -224,8 +224,8 @@ export async function POST(request: NextRequest) {
 
             
             return NextResponse.json(
-              { message: 'Failed to remove existing lines' },
-              { error:  messages},
+              { message: 'Failed to remove existing lines' ,
+               error:  messages},
               { status: 500 },
             );
           }
