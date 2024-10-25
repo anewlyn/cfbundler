@@ -217,22 +217,29 @@ interface RemoveData {
             );
 
   // Consolidate all error messages
-  const messages = [];
+ const removeData = await removeResponse.json();
+
+if (
+  removeData.errors ||
+  (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0)
+) {
+  const messages: string[] = [];
 
   if (removeData.errors) {
-    messages.push(...removeData.errors.map(error => error.message || "An error occurred."));
+    messages.push(...removeData.errors.map((error: { message: string }) => error.message || "An error occurred."));
   }
 
   if (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0) {
     messages.push(
       ...removeData.data.cartLinesRemove.userErrors.map(
-        userError => userError.message || "A user error occurred."
+        (userError: { message: string }) => userError.message || "A user error occurred."
       )
     );
   }
 
-            
-            return NextResponse.json(
+  console.error('Error removing existing lines:', messages);
+
+  return NextResponse.json(
               { message: 'Failed to remove existing lines' ,
                error:  messages},
               { status: 500 },
