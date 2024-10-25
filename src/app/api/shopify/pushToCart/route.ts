@@ -206,8 +206,26 @@ export async function POST(request: NextRequest) {
               'Error removing existing lines:',
               removeData.errors || removeData.data.cartLinesRemove.userErrors,
             );
+
+  // Consolidate all error messages
+  const messages = [];
+
+  if (removeData.errors) {
+    messages.push(...removeData.errors.map(error => error.message || "An error occurred."));
+  }
+
+  if (removeData.data && removeData.data.cartLinesRemove.userErrors.length > 0) {
+    messages.push(
+      ...removeData.data.cartLinesRemove.userErrors.map(
+        userError => userError.message || "A user error occurred."
+      )
+    );
+  }
+
+            
             return NextResponse.json(
               { message: 'Failed to remove existing lines' },
+              { error:  messages},
               { status: 500 },
             );
           }
