@@ -23,7 +23,7 @@ const encodeId = (id: number) => {
   return Buffer.from(gid://shopify/ProductVariant/${id}).toString('base64');
 };
 
-const fetchCartQuery = 
+const fetchCartQuery = `
 query cart($id: ID!) {
   cart(id: $id) {
     id
@@ -46,9 +46,9 @@ query cart($id: ID!) {
     }
   }
 }
-;
+`;
 
-const createCartQuery = 
+const createCartQuery = `
 mutation cartCreate($input: CartInput!) {
   cartCreate(input: $input) {
     cart {
@@ -75,9 +75,9 @@ mutation cartCreate($input: CartInput!) {
     }
   }
 }
-;
+`;
 
-const cartLinesRemoveQuery = 
+const cartLinesRemoveQuery = `
 mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
     cart {
@@ -96,9 +96,9 @@ mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
     }
   }
 }
-;
+`;
 
-const cartLinesAddQuery = 
+const cartLinesAddQuery = `
 mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
   cartLinesAdd(cartId: $cartId, lines: $lines) {
     cart {
@@ -127,9 +127,9 @@ mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     }
   }
 }
-;
+`;
 
-const cartDiscountCodesUpdateMutation = 
+const cartDiscountCodesUpdateMutation = `
   mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]!) {
     cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
       cart {
@@ -141,7 +141,7 @@ const cartDiscountCodesUpdateMutation =
       }
     }
   }
-;
+`;
 
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
