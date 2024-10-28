@@ -161,7 +161,7 @@ export async function POST(request: NextRequest) {
   try {
     // Retrieve cart ID and key from cookie if `existingCartId` is not provided
     const cookieCart = getCartCookie(request);
-    let cartId = existingCartId || cookieCart;
+    let cartId = cookieCart || existingCartId;
     let existingNonSubscriptionLines: ShopifyCartLineEdge[] = [];
     let isNewCart = false;
 
