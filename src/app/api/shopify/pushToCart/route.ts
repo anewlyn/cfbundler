@@ -19,10 +19,6 @@ const getCartCookie = (req: NextRequest): { cartId: string | null, cartKey: stri
   return { cartId: cartId || null, cartKey: cartKey || null };
 };
 
-const encodeId = (id: number) => {
-  return Buffer.from(gid://shopify/ProductVariant/${id}).toString('base64');
-};
-
 const fetchCartQuery = `
 query cart($id: ID!) {
   cart(id: $id) {
@@ -276,9 +272,85 @@ export async function POST(request: NextRequest) {
       isNewCart = true;
     }
 
-    // Add lines, apply discount, etc. (continue with original logic)
+    // Prepare lines to add: new subscription items and existing non-subscription items
+    const linesToAdd = [
+      ...productVariants.map((variant) => ({
+        quantity: variant.quantity,
+        merchandiseId: encodeId(variant.shopifyId),
+        sellingPlanId: Buffer.from(`gid://shopify/SellingPlan/${sellingPlanId}`).toString('base64'),
+        attributes: [
+          { key: 'subscription', value: 'true' },
+          { key: '_bundleId', value: transactionId },
+          { key: 'cadence', value: cadence },
+          { key: 'discount_percent', value: discountPercent?.toString() },
+          // { key: 'discount', value: discount },
+        ],
+      })),
+      ...existingNonSubscriptionLines.map((line) => ({
+        quantity: line.node.quantity,
+        merchandiseId: line.node.merchandise.id,
+        attributes: line.node.attributes,
+      })),
+    ];
 
-    return NextResponse.json(responseBody);
+    // Add all lines to cart
+    const addResponse = await fetch(`https://${store}/api/2024-04/graphql.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': token,
+      },
+      body: JSON.stringify({
+        query: cartLinesAddQuery,
+        variables: { cartId, lines: linesToAdd },
+      }),
+    });
+
+    const addData = await addResponse.json();
+    if (addData.errors || (addData.data && addData.data.cartLinesAdd.userErrors.length > 0)) {
+      console.error(
+        'Error adding lines to cart:',
+        addData.errors || addData.data.cartLinesAdd.userErrors,
+      );
+      return NextResponse.json({ message: 'Failed to add lines to cart' }, { status: 500 });
+    }
+
+    // now apply the selected discount code
+
+    const applyResult = await fetch(`https://${store}/api/2024-04/graphql.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': token,
+      },
+      body: JSON.stringify({
+        query: cartDiscountCodesUpdateMutation,
+        variables: { cartId, discountCodes: [discount] },
+      }),
+    });
+    const applyData = await applyResult.json();
+
+    if (
+      applyData.errors ||
+      (applyData.data && applyData.data.cartDiscountCodesUpdate.userErrors.length > 0)
+    ) {
+      console.error(
+        'Error applying discount code:',
+        applyData.errors || applyData.data.cartDiscountCodesUpdate.userErrors,
+      );
+      return NextResponse.json({ message: 'Error applying discount code' }, { status: 500 });
+    }
+    const cartResponse = addData.data.cartLinesAdd.cart;
+
+    const responseBody = {
+      cart: cartResponse,
+      isNewCart: isNewCart,
+      prevCart: cartId,
+    };
+
+    const nextResponse = NextResponse.json(responseBody);
+
+    return nextResponse;
   } catch (error) {
     console.error('Error when processing the cart:', error);
     return NextResponse.json({ message: 'Failed to process the cart', error }, { status: 500 });
