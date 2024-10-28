@@ -8,16 +8,15 @@ const encodeId = (id: number) => {
   return Buffer.from(`gid://shopify/ProductVariant/${id}`).toString('base64');
 };
 
-const getCartCookie = (req: NextRequest): { cartId: string | null, cartKey: string | null } => {
-  const cartCookie = req.headers.get('cookie')?.split('; ').find(c => c.startsWith('cart='));
-  if (!cartCookie) return { cartId: null, cartKey: null };
-
-  // Decode and parse the cart cookie value
-  const decodedValue = decodeURIComponent(cartCookie.split('=')[1]);
-  const [cartId, cartKey] = decodedValue.split('?key=');
+const getCartCookie = (req: NextRequest): string | null => {
+    const cartCookie = req.headers.get('cookie')?.split('; ').find(c => c.startsWith('cart='));
+    if (!cartCookie) return null;
   
-  return { cartId: cartId || null, cartKey: cartKey || null };
-};
+    // Decode the entire cart cookie value, which is already in the format "cartId?key=cartKey"
+    const decodedValue = decodeURIComponent(cartCookie.split('=')[1]);
+    
+    return decodedValue || null;
+  };
 
 const fetchCartQuery = `
 query cart($id: ID!) {
@@ -161,7 +160,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Retrieve cart ID and key from cookie if `existingCartId` is not provided
-    const { cartId: cookieCartId, cartKey } = getCartCookie(request);
+    const { cartId: cookieCartId } = getCartCookie(request);
     let cartId = existingCartId || cookieCartId;
     let existingNonSubscriptionLines: ShopifyCartLineEdge[] = [];
     let isNewCart = false;
