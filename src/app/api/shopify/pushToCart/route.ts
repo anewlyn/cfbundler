@@ -19,7 +19,129 @@ const getCartCookie = (req: NextRequest): { cartId: string | null, cartKey: stri
   return { cartId: cartId || null, cartKey: cartKey || null };
 };
 
-// Define your GraphQL queries and mutations here (same as in original code)
+const encodeId = (id: number) => {
+  return Buffer.from(gid://shopify/ProductVariant/${id}).toString('base64');
+};
+
+const fetchCartQuery = 
+query cart($id: ID!) {
+  cart(id: $id) {
+    id
+    lines(first: 250) {
+      edges {
+        node {
+          id
+          quantity
+          attributes {
+            key
+            value
+          }
+          merchandise {
+            ... on ProductVariant {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+;
+
+const createCartQuery = 
+mutation cartCreate($input: CartInput!) {
+  cartCreate(input: $input) {
+    cart {
+      id
+      createdAt
+      updatedAt
+      lines(first: 250) {
+        edges {
+          node {
+            id
+            quantity
+            attributes {
+              key
+              value
+            }
+            merchandise {
+              ... on ProductVariant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+;
+
+const cartLinesRemoveQuery = 
+mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      id
+      lines(first: 250) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+;
+
+const cartLinesAddQuery = 
+mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      id
+      lines(first: 250) {
+        edges {
+          node {
+            id
+            quantity
+            attributes {
+              key
+              value
+            }
+            merchandise {
+              ... on ProductVariant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+;
+
+const cartDiscountCodesUpdateMutation = 
+  mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]!) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        id
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+;
 
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
