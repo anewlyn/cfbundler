@@ -1,6 +1,5 @@
 import { Bundle } from '@/components/Bundle';
 import LoopProvider from '@/contexts/LoopProvider';
-import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { BundleTypes, ProductTypes } from '@/types/bundleTypes';
 import { getBundle } from './api/loop/getBundle';
 import getProducts from './api/shopify/getProducts';
