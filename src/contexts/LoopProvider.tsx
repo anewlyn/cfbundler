@@ -123,12 +123,12 @@ const LoopProvider = ({
             if (savedCart?.productVariants.length > 0) {
               // Check if this variant is already in the cart
               const existingVariant = savedCart.productVariants.find(
-                v => v.shopifyId === prefillVariantId
+                (v: VariantType) => v.shopifyId === prefillVariantId
               );
               
               if (existingVariant) {
                 // Update quantity
-                savedCart.productVariants = savedCart.productVariants.map(v =>
+                savedCart.productVariants = savedCart.productVariants.map((v: VariantType) =>
                   v.shopifyId === prefillVariantId
                     ? { ...v, quantity: v.quantity + prefillQuantity }
                     : v
