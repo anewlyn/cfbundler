@@ -1,5 +1,4 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
@@ -71,7 +70,6 @@ const LoopProvider = ({
   shopifyProducts: Record<string, ShopifyProductType>;
   children: React.ReactNode;
 }) => {
-  const searchParams = useSearchParams();
   const [submittingCart, setSubmittingCart] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   
@@ -86,11 +84,12 @@ const LoopProvider = ({
   const [cart, setCart] = useState<CartType>(defaultCart);
 
   useEffect(() => {
-    if (typeof document !== 'undefined' && !isInitialized) {
-      // Check for pre-fill parameters first
-      const variantId = searchParams.get('variant');
-      const productId = searchParams.get('product');
-      const quantity = searchParams.get('quantity');
+    if (typeof window !== 'undefined' && !isInitialized) {
+      // Parse URL parameters from window.location
+      const urlParams = new URLSearchParams(window.location.search);
+      const variantId = urlParams.get('variant');
+      const productId = urlParams.get('product');
+      const quantity = urlParams.get('quantity');
       
       // Check if we have a saved cart
       const savedCart = getCartCookie();
@@ -171,7 +170,7 @@ const LoopProvider = ({
       setIsInitialized(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, isInitialized]);
+  }, [isInitialized]);
 
   useEffect(() => {
     if (typeof document !== 'undefined' && isInitialized) {

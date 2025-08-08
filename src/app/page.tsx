@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { Bundle } from '@/components/Bundle';
 import LoopProvider from '@/contexts/LoopProvider';
 import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
@@ -7,25 +6,6 @@ import { getBundle } from './api/loop/getBundle';
 import getProducts from './api/shopify/getProducts';
 
 export const runtime = 'edge';
-
-// Wrap LoopProvider in a client component that has access to useSearchParams
-const LoopProviderWrapper = ({
-  bundleData,
-  shopifyProducts,
-  children,
-}: {
-  bundleData: BundleTypes;
-  shopifyProducts: Record<string, ShopifyProductType>;
-  children: React.ReactNode;
-}) => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LoopProvider bundleData={bundleData} shopifyProducts={shopifyProducts}>
-        {children}
-      </LoopProvider>
-    </Suspense>
-  );
-};
 
 const Bundler = async () => {
   const bundleData = await getBundle();
@@ -38,9 +18,9 @@ const Bundler = async () => {
   const shopifyProducts = await getProducts(shopifyIdString);
 
   return (
-    <LoopProviderWrapper bundleData={bundleData.data} shopifyProducts={shopifyProducts}>
+    <LoopProvider bundleData={bundleData.data} shopifyProducts={shopifyProducts}>
       <Bundle />
-    </LoopProviderWrapper>
+    </LoopProvider>
   );
 };
 
