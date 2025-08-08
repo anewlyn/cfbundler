@@ -71,8 +71,6 @@ const LoopProvider = ({
   children: React.ReactNode;
 }) => {
   const [submittingCart, setSubmittingCart] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  
   const defaultCart: CartType = {
     boxSizeId: bundleData.boxSizes[0].id,
     discountId: null,
@@ -84,99 +82,70 @@ const LoopProvider = ({
   const [cart, setCart] = useState<CartType>(defaultCart);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && !isInitialized) {
-      // Parse URL parameters from window.location
-      const urlParams = new URLSearchParams(window.location.search);
-      const variantId = urlParams.get('variant');
-      const productId = urlParams.get('product');
-      const quantity = urlParams.get('quantity');
-      
-      // Check if we have a saved cart
-      const savedCart = getCartCookie();
-      
-      if (variantId || productId) {
-        // Pre-fill logic
-        let prefillVariantId: number | null = null;
-        const prefillQuantity = quantity ? parseInt(quantity, 10) : 1;
-        
-        if (variantId) {
-          // Direct variant ID provided
-          prefillVariantId = parseInt(variantId, 10);
-        } else if (productId) {
-          // Product ID provided - find the first variant for this product
-          const productIdNum = parseInt(productId, 10);
-          const product = bundleData.products.find(p => p.shopifyId === productIdNum);
-          if (product && product.variants.length > 0) {
-            prefillVariantId = product.variants[0].shopifyId;
-          }
-        }
-        
-        if (prefillVariantId) {
-          // Check if this variant exists in the bundle
-          const variantExists = bundleData.products.some(product =>
-            product.variants.some(variant => variant.shopifyId === prefillVariantId)
-          );
+    if (typeof document !== 'undefined') {
+      // Check for URL parameters for pre-filling
+      if (typeof window !== 'undefined' && window.location) {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const variantId = urlParams.get('variant');
+          const productId = urlParams.get('product');
+          const quantity = urlParams.get('quantity');
           
-          if (variantExists) {
-            // If we have a saved cart, add to it; otherwise create new cart with pre-filled item
-            if (savedCart?.productVariants.length > 0) {
-              // Check if this variant is already in the cart
-              const existingVariant = savedCart.productVariants.find(
-                (v: VariantType) => v.shopifyId === prefillVariantId
+          // Get saved cart
+          const startCart = getCartCookie();
+          
+          // Handle pre-fill if parameters exist
+          if ((variantId || productId) && cart.productVariants.length === 0 && (!startCart || startCart.productVariants.length === 0)) {
+            let prefillVariantId: number | null = null;
+            const prefillQuantity = quantity ? parseInt(quantity, 10) : 1;
+            
+            if (variantId) {
+              prefillVariantId = parseInt(variantId, 10);
+            } else if (productId) {
+              const productIdNum = parseInt(productId, 10);
+              const product = bundleData.products.find(p => p.shopifyId === productIdNum);
+              if (product && product.variants.length > 0) {
+                prefillVariantId = product.variants[0].shopifyId;
+              }
+            }
+            
+            if (prefillVariantId) {
+              // Verify variant exists in bundle
+              const variantExists = bundleData.products.some(product =>
+                product.variants.some(variant => variant.shopifyId === prefillVariantId)
               );
               
-              if (existingVariant) {
-                // Update quantity
-                savedCart.productVariants = savedCart.productVariants.map((v: VariantType) =>
-                  v.shopifyId === prefillVariantId
-                    ? { ...v, quantity: v.quantity + prefillQuantity }
-                    : v
-                );
-              } else {
-                // Add new variant
-                savedCart.productVariants.push({
-                  shopifyId: prefillVariantId,
-                  quantity: prefillQuantity,
-                });
+              if (variantExists) {
+                setCart(prevCart => ({
+                  ...prevCart,
+                  productVariants: [{
+                    shopifyId: prefillVariantId,
+                    quantity: prefillQuantity,
+                  }],
+                }));
+                return; // Exit early after pre-fill
               }
-              setCart(savedCart);
-            } else {
-              // Create new cart with pre-filled item
-              setCart({
-                ...defaultCart,
-                productVariants: [{
-                  shopifyId: prefillVariantId,
-                  quantity: prefillQuantity,
-                }],
-              });
-            }
-          } else {
-            // Variant not found in bundle, load saved cart or default
-            if (savedCart?.productVariants.length > 0) {
-              setCart(savedCart);
             }
           }
-        } else {
-          // No valid variant found, load saved cart or default
-          if (savedCart?.productVariants.length > 0) {
-            setCart(savedCart);
-          }
+        } catch (error) {
+          console.error('Error processing URL parameters:', error);
         }
-      } else if (savedCart?.productVariants.length > 0) {
-        // No pre-fill params, just load saved cart
-        setCart(savedCart);
       }
       
-      setIsInitialized(true);
+      // Load saved cart if no pre-fill happened
+      const startCart = getCartCookie();
+      if (startCart?.productVariants.length > 0) {
+        setCart(startCart);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isInitialized]);
+  }, []);
 
   useEffect(() => {
-    if (typeof document !== 'undefined' && isInitialized) {
+    if (typeof document !== 'undefined') {
       setCartCookie(cart);
     }
-  }, [cart, isInitialized]);
+  }, [cart]);
 
   const { products, discounts, sellingPlans } = bundleData;
 
