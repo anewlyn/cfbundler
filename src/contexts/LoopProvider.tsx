@@ -1,5 +1,6 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import createTransaction from '@/app/api/loop/createTransaction';
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
 import {
@@ -70,7 +71,10 @@ const LoopProvider = ({
   shopifyProducts: Record<string, ShopifyProductType>;
   children: React.ReactNode;
 }) => {
+  const searchParams = useSearchParams();
   const [submittingCart, setSubmittingCart] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  
   const defaultCart: CartType = {
     boxSizeId: bundleData.boxSizes[0].id,
     discountId: null,
@@ -82,20 +86,98 @@ const LoopProvider = ({
   const [cart, setCart] = useState<CartType>(defaultCart);
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const startCart = document ? getCartCookie() : null;
-      if (startCart?.productVariants.length > 0) {
-        setCart(startCart);
+    if (typeof document !== 'undefined' && !isInitialized) {
+      // Check for pre-fill parameters first
+      const variantId = searchParams.get('variant');
+      const productId = searchParams.get('product');
+      const quantity = searchParams.get('quantity');
+      
+      // Check if we have a saved cart
+      const savedCart = getCartCookie();
+      
+      if (variantId || productId) {
+        // Pre-fill logic
+        let prefillVariantId: number | null = null;
+        let prefillQuantity = quantity ? parseInt(quantity, 10) : 1;
+        
+        if (variantId) {
+          // Direct variant ID provided
+          prefillVariantId = parseInt(variantId, 10);
+        } else if (productId) {
+          // Product ID provided - find the first variant for this product
+          const productIdNum = parseInt(productId, 10);
+          const product = bundleData.products.find(p => p.shopifyId === productIdNum);
+          if (product && product.variants.length > 0) {
+            prefillVariantId = product.variants[0].shopifyId;
+          }
+        }
+        
+        if (prefillVariantId) {
+          // Check if this variant exists in the bundle
+          const variantExists = bundleData.products.some(product =>
+            product.variants.some(variant => variant.shopifyId === prefillVariantId)
+          );
+          
+          if (variantExists) {
+            // If we have a saved cart, add to it; otherwise create new cart with pre-filled item
+            if (savedCart?.productVariants.length > 0) {
+              // Check if this variant is already in the cart
+              const existingVariant = savedCart.productVariants.find(
+                v => v.shopifyId === prefillVariantId
+              );
+              
+              if (existingVariant) {
+                // Update quantity
+                savedCart.productVariants = savedCart.productVariants.map(v =>
+                  v.shopifyId === prefillVariantId
+                    ? { ...v, quantity: v.quantity + prefillQuantity }
+                    : v
+                );
+              } else {
+                // Add new variant
+                savedCart.productVariants.push({
+                  shopifyId: prefillVariantId,
+                  quantity: prefillQuantity,
+                });
+              }
+              setCart(savedCart);
+            } else {
+              // Create new cart with pre-filled item
+              setCart({
+                ...defaultCart,
+                productVariants: [{
+                  shopifyId: prefillVariantId,
+                  quantity: prefillQuantity,
+                }],
+              });
+            }
+          } else {
+            // Variant not found in bundle, load saved cart or default
+            if (savedCart?.productVariants.length > 0) {
+              setCart(savedCart);
+            }
+          }
+        } else {
+          // No valid variant found, load saved cart or default
+          if (savedCart?.productVariants.length > 0) {
+            setCart(savedCart);
+          }
+        }
+      } else if (savedCart?.productVariants.length > 0) {
+        // No pre-fill params, just load saved cart
+        setCart(savedCart);
       }
+      
+      setIsInitialized(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchParams, isInitialized]);
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && isInitialized) {
       setCartCookie(cart);
     }
-  }, [cart]);
+  }, [cart, isInitialized]);
 
   const { products, discounts, sellingPlans } = bundleData;
 
@@ -153,8 +235,6 @@ const LoopProvider = ({
         existingCartId = decodeURIComponent(cartCookie).split('=')[1].split('?')[0];
       }
     }
-    // console.log('existingCartId', existingCartId);
-    // console.log(cart.sellingPlanId);
 
     try {
       const response = await fetch(url, {
@@ -183,18 +263,12 @@ const LoopProvider = ({
         const newCartId = data.cart.id;
         const actualCartId = newCartId.split('/').pop();
 
-        // console.log('cart stuff', data);
-
         // only set the cookie if it's a new cart
         if (data.isNewCart) {
           const expirationDate = new Date();
           expirationDate.setDate(expirationDate.getDate() + 1); // 1 day from now
 
           document.cookie = `cart=${actualCartId}; expires=${expirationDate.toUTCString()}; path=/;  SameSite=none; Secure=false`;
-
-          // console.log('New cart created, cookie set:', actualCartId);
-        } else {
-          // console.log('Existing cart updated, no new cookie set');
         }
 
         const cartUrl = `${shopifyDomain}/?open_cart=true`;
