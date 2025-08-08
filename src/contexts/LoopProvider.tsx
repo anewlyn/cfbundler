@@ -1,6 +1,6 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { createContext, useContext, useEffect, useState } from 'react';
 import createTransaction from '@/app/api/loop/createTransaction';
 import { BenefitTierTypes, tiers } from '@/content/benefitTiers';
 import {
@@ -98,7 +98,7 @@ const LoopProvider = ({
       if (variantId || productId) {
         // Pre-fill logic
         let prefillVariantId: number | null = null;
-        let prefillQuantity = quantity ? parseInt(quantity, 10) : 1;
+        const prefillQuantity = quantity ? parseInt(quantity, 10) : 1;
         
         if (variantId) {
           // Direct variant ID provided
