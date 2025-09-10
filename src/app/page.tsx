@@ -31,7 +31,7 @@ query getBundlerProduct($id: ID!) {
             }
           }
         }
-        image2: metafield(namespace:"custom", key:"media_1") {
+        image2: metafield(namespace:"custom", key:"media_2") {
           reference {
             ...on MediaImage {
               image {
@@ -78,7 +78,7 @@ query getBundlerProduct($id: ID!) {
         }
       }
     }
-    image2: metafield(namespace:"custom", key:"media_1") {
+    image2: metafield(namespace:"custom", key:"media_2") {
       reference {
         ...on MediaImage {
           image {
