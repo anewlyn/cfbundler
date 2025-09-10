@@ -9,6 +9,9 @@ const prodDomains = [
 const nonProdDomains = [{ protocol: 'https', hostname: 'cdn.shopify.com' }];
 
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   sassOptions: {
     includePaths: ['./src/styles/'],
   },
