@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeliverCadenceCard from '@/components/DeliverCadenceCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -11,7 +11,7 @@ import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 
-export const Bundle = () => {
+export const Bundle = (customProductData) => {
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null);
@@ -33,6 +33,7 @@ export const Bundle = () => {
   const handleOpenCadenceModal = () => {
     setCadenceModalOpen(true);
   };
+
   return (
     <div className="bundler-page">
       <Header handleOpenCadenceModal={handleOpenCadenceModal} />
@@ -52,6 +53,7 @@ export const Bundle = () => {
           return (
             <ProductCard
               key={`${product.shopifyId}${index}`}
+              customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
               handleOpenInfoModal={handleOpenInfoModal}
@@ -67,6 +69,7 @@ export const Bundle = () => {
       >
         {modalProduct && (
           <InfoCard
+            customProduct={customProductData.customProductData.find(x => x.productId === modalProduct.looxReviewId)}
             body_html={modalProduct.body_html}
             images={modalProduct.images}
             isVariant={modalProduct.isVariant}
@@ -81,7 +84,7 @@ export const Bundle = () => {
           />
         )}
       </Modal>
-      <Footer />
+      <Footer customProduct={customProductData.customProductData} />
     </div>
   );
 };

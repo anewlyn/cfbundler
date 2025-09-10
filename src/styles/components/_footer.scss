@@ -110,13 +110,17 @@
   position: relative;
   transition: all 0.3s ease-in-out;
 
+  .carousel-item {
+    border-radius: 4px;
+  }
+
   &:hover .carousel-item-overlay {
     opacity: 0.7;
     visibility: visible;
   }
 
   &:hover .close-button {
-    display: block;
+    display: flex;
     opacity: 0.7;
     visibility: visible;
   }
@@ -139,29 +143,29 @@
 .close-button {
   z-index: 10;
   border: none;
-  font-weight: 800;
-  color: white;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 16px;
+  line-height: 16px;
   position: absolute;
-  right: -10px;
-  top: -10px;
+  right: 4px;
+  top: 4px;
   display: none;
   background: none;
-  padding: 6px;
-  height: 18px;
-  width: 18px;
-  box-sizing: content-box;
+  width: 24px;
+  height: 24px;
+  background-color: black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   span {
-    width: 18px;
-    height: 18px;
-    background-color: black;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 800;
+    color: white;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -279,11 +283,11 @@
       visibility: visible;
     }
   }
-  .close-button {
-    display: block;
-    width: 24px;
-    height: 24px;
-  }
+  // .close-button {
+  //   display: block;
+  //   width: 24px;
+  //   height: 24px;
+  // }
 }
 
 @include for_breakpoint('tablet') {

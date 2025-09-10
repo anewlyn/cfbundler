@@ -14,7 +14,7 @@ type carouselImageTypes = {
   qty?: number;
 };
 
-const StickyFooter = () => {
+const StickyFooter = ({customProduct}) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
 
@@ -86,7 +86,7 @@ const StickyFooter = () => {
           qty: cartProduct.quantity,
           shopifyId: product.shopifyId,
           imageURL: product.images[0].imageURL,
-          altText: product.productTitle,
+          altText: product.title,
         });
       }
     }
@@ -125,7 +125,7 @@ const StickyFooter = () => {
               onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
               aria-label="Remove from cart"
             >
-              <span>&times;</span>
+              <span className="material-icons">close</span>
             </button>
           )}
           {!isDefaultImage && (

@@ -25,7 +25,7 @@ const ResponsiveImage = ({
       height={height}
       priority={isPriority}
       sizes="100vw"
-      style={{ width: '100%', height: 'auto' }}
+      // style={{ width: '100%', height: 'auto' }}
     />
   );
 };
