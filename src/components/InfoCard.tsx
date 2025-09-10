@@ -12,7 +12,6 @@ import ResponsiveImage from './ResponsiveImage';
 
 const InfoCard = ({
   customProduct,
-  images,
   price,
   outOfStock,
   shopifyId,
