@@ -1,18 +1,21 @@
 'use client';
 
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import ResponsiveImage from './ResponsiveImage';
+import { kiro_extra_bold_700 } from '@/app/ui/fonts';
+
 interface ProductCardProps {
+  customProduct: object;
   product: AllProductVariants;
   handleOpenInfoModal: (product: AllProductVariants) => void;
   isPriority: boolean;
 }
 
-const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
+const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
   const infoScreenRef = useRef<HTMLDivElement>(null);
 
   const { addProductVariant, cart, bundle, currentDiscount } = useLoopContext();
@@ -21,7 +24,8 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
     cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
 
   const { images, price, outOfStock, limits, productTitle, title, shopifyId, isVariant } = product;
-  const imageURl = images[0].imageURL;
+  const customVariant = customProduct.variants.find(x => x.id === shopifyId)
+  const imageURl = customVariant.images[0].imageURL;
   const { maxValue } = limits[0];
   const titleInfo = productTitle.split(',');
 
@@ -46,7 +50,14 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
   };
 
   return (
-    <div className="product-card">
+    <div className="product-card"
+      style={{
+        '--color1': customProduct.colors[0],
+        '--color2': customProduct.colors[1],
+        '--color3': customProduct.colors[2],
+        '--color4': customProduct.colors[3]
+      } as React.CSSProperties}
+    >
       <div className="product-image">
         <ResponsiveImage
           src={imageURl}
@@ -67,15 +78,15 @@ const ProductCard = ({ product, handleOpenInfoModal, isPriority }: ProductCardPr
             onClick={() => {
               handleOpenInfoModal(product);
             }}
-            className="info-button uppercase"
+            className="info-button"
           >
-            More info
+            More Info
           </button>
         </div>
       </div>
 
-      <span className="product-title">{variantTitle}</span>
-      <span className="product-info">{titleInfo[1]}</span>
+      <span className={`product-title ${kiro_extra_bold_700.className}`}>{customProduct.title}</span>
+      <span className="product-info">{title}</span>
       {renderProductPrice()}
 
       <AddToButton

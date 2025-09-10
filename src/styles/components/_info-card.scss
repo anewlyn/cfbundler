@@ -24,6 +24,12 @@
   }
 }
 
+.info-card .embla__slide {
+  background-color: var(--color2);
+  border-radius: 4px;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
 
 .embla__slide {
   position: relative;
@@ -45,6 +51,21 @@
   img {
     max-inline-size: 100%;
     object-fit: contain;
+  }
+}
+
+.info-image-block-selected {
+  position: relative;
+  width: fit-content;
+  aspect-ratio: 3/4;
+  border-radius: 8px;
+  background-color: var(--color2);
+  overflow: hidden;
+  img {
+    position: relative;
+    top: 0; right: 0; bottom: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
   }
 }
 
@@ -95,8 +116,9 @@
 }
 
 .alt-image-block {
-  height: 85px;
+  // height: 85px;
   width: 85px;
+  aspect-ratio: 3/4;
   margin-top: 1rem;
 
   img {
@@ -171,4 +193,11 @@
   svg.loox-icon {
     color: var(--cf-rating-star);
   }
+}
+
+.info-card-sticky-button {
+  position: sticky;
+  bottom: 0;
+  padding-bottom: 16px;
+  width: 100%;
 }

@@ -3,7 +3,7 @@ import '../styles/globals.scss';
 import { inter } from '@/app/ui/fonts';
 
 export const metadata: Metadata = {
-  title: 'Cycling Frog',
+  title: 'Cycling Frog - Subscribe and Save with Bundles',
   description:
     "Cycling Frog isn't just a brand. It's a statement. It's the belief that cannabis consumption should be normalized. Cannabis should be affordable. Cannabis should be accessible. Cannabis is fun. Cannabis should be enjoyed with the same ease as your favorite sparkling water or beer, and we at Cycling Frog are here to make that happen.",
   applicationName: 'Cycling Frog Bundler',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: 'Cycling Frog',
+    title: 'Cycling Frog - Subscribe and Save with Bundles',
     description:
       "Cycling Frog isn't just a brand. It's a statement. It's the belief that cannabis consumption should be normalized. Cannabis should be affordable. Cannabis should be accessible. Cannabis is fun. Cannabis should be enjoyed with the same ease as your favorite sparkling water or beer, and we at Cycling Frog are here to make that happen.",
     url: 'https://cyclingfrog.com/',

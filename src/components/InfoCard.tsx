@@ -11,6 +11,7 @@ import Carousel from './Carousel';
 import ResponsiveImage from './ResponsiveImage';
 
 const InfoCard = ({
+  customProduct,
   images,
   price,
   outOfStock,
@@ -43,19 +44,30 @@ const InfoCard = ({
     sanitizeHtml(body_html, {
       disallowedTagsMode: 'completelyDiscard',
       allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'span'],
-    });
+  });
+
+  const customVariant = customProduct.variants.find(x => x.id === shopifyId)
 
   return (
-    <div className="info-card">
-      <div className="info-image-block carousel">
-        <ResponsiveImage
-          src={images[selectedImageIndex].imageURL}
-          alt={productTitle}
-          width={309}
-          height={309}
-        />
+    <div className="info-card"
+      style={{
+        '--color1': customProduct.colors[0],
+        '--color2': customProduct.colors[1],
+        '--color3': customProduct.colors[2],
+        '--color4': customProduct.colors[3]
+      } as React.CSSProperties}
+    >
+      <div className="info-image-block carousel"> 
+        <div className='info-image-block-selected'>
+          <ResponsiveImage
+            src={customVariant.images[selectedImageIndex].imageURL}
+            alt={productTitle}
+            width={309}
+            height={309}
+          />
+        </div>
         <Carousel>
-          {images.map((slide: { imageURL: string; altText: string }, index: number) => (
+          {customVariant.images.map((slide: { imageURL: string; altText: string }, index: number) => slide.imageURL && (
             <div
               className={classNames('embla__slide alt-image-block', {
                 'base-border-2': selectedImageIndex === index,
@@ -90,14 +102,16 @@ const InfoCard = ({
             />
           )}
         </section>
-        <AddToButton
-          className="info-add-button"
-          orderQty={cartQty}
-          maxQty={maxValue > 0 ? maxValue : 1000}
-          outOfStock={outOfStock}
-          setQty={handleProductQtyChange}
-          text={'+ ADD TO SUBSCRIPTION'}
-        />
+        <div className='info-card-sticky-button'>
+          <AddToButton
+            className="info-add-button"
+            orderQty={cartQty}
+            maxQty={maxValue > 0 ? maxValue : 1000}
+            outOfStock={outOfStock}
+            setQty={handleProductQtyChange}
+            text={'+ ADD TO SUBSCRIPTION'}
+          />
+        </div>
       </div>
     </div>
   );

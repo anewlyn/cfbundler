@@ -1,4 +1,4 @@
-import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
+import { ShopifyProductType } from '@/types/app/api/shopifyTypes'
 
 const getProducts = async (shopifyIdString: string) => {
   const options: RequestInit = {
@@ -16,7 +16,7 @@ const getProducts = async (shopifyIdString: string) => {
   );
 
   const data = await response.json();
-
+  
   const productsObject = data.products.reduce(
     (obj: ShopifyProductType, product: ShopifyProductType) => {
       return {
@@ -29,4 +29,5 @@ const getProducts = async (shopifyIdString: string) => {
 
   return productsObject;
 };
+
 export default getProducts;
