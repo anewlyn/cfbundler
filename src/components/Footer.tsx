@@ -14,7 +14,7 @@ type carouselImageTypes = {
   qty?: number;
 };
 
-const StickyFooter = ({customProduct}) => {
+const StickyFooter = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
 

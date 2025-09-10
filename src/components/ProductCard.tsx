@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import ResponsiveImage from './ResponsiveImage';
-import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 
 interface ProductCardProps {
   customProduct: object;
@@ -23,16 +23,13 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
   const cartQty =
     cart.productVariants.find((item) => item.shopifyId === product.shopifyId)?.quantity || 0;
 
-  const { images, price, outOfStock, limits, productTitle, title, shopifyId, isVariant } = product;
+  const { price, outOfStock, limits, productTitle, title, shopifyId } = product;
   const customVariant = customProduct.variants.find(x => x.id === shopifyId)
   const imageURl = customVariant.images[0].imageURL;
   const { maxValue } = limits[0];
-  const titleInfo = productTitle.split(',');
 
   const handleProductQtyChange = (qty: number) =>
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
-
-  const variantTitle = isVariant ? `${titleInfo[0]} (${title})` : titleInfo[0];
 
   const renderProductPrice = () => {
     if (currentDiscount) {

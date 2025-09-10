@@ -120,7 +120,7 @@ query getBundlerProduct($id: ID!) {
 
 async function getCustomProductData(ids: string) {
   const idArray = ids.split(',')
-  let productData: object[] = []
+  const productData: object[] = []
   for(let i = 0; i < idArray.length; i++) {
     const options = {
       method: 'POST',

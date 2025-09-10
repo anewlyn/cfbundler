@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DeliverCadenceCard from '@/components/DeliverCadenceCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
