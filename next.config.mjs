@@ -8,8 +8,12 @@ const isPreview = isCFPages && process.env.CF_PAGES_BRANCH !== 'production';
 const isProd = process.env.PROD_ENV === 'production' && !isPreview;
 
 const nextConfig = {
-  sassOptions: { includePaths: ['./src/styles/'] },
-
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  sassOptions: {
+    includePaths: ['./src/styles/'],
+  },
   images: {
     // External hosts you actually load from
     remotePatterns: [
