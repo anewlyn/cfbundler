@@ -146,7 +146,7 @@ const Bundler = async () => {
 
   return (
     <LoopProviderWrapper bundleData={bundleData.data} shopifyProducts={shopifyProducts}>
-      <Bundle customProductData={customProductData} />
+      <Bundle />
     </LoopProviderWrapper>
   );
 };
