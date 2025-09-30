@@ -138,6 +138,30 @@ const cartDiscountCodesUpdateMutation = `
   }
 `;
 
+// Handle CORS preflight
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin') || '';
+  
+  const allowedOrigins = [
+    'https://devbundler.cyclingfrog.com',
+    'https://dev-prod-push.cfbundler.pages.dev',
+    'https://cyclingfrog.com',
+  ];
+  
+  const isAllowed = allowedOrigins.includes(origin);
+  
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': isAllowed ? origin : '',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Cookie',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   const body: CartType = await request.json();
   const {
@@ -347,7 +371,21 @@ export async function POST(request: NextRequest) {
       prevCart: cartId,
     };
 
+    const origin = request.headers.get('origin') || '';
+    const allowedOrigins = [
+      'https://devbundler.cyclingfrog.com',
+      'https://dev-prod-push.cfbundler.pages.dev',
+      'https://cyclingfrog.com',
+    ];
+    const isAllowed = allowedOrigins.includes(origin);
+
     const nextResponse = NextResponse.json(responseBody);
+    
+    // Add CORS headers to the response
+    if (isAllowed) {
+      nextResponse.headers.set('Access-Control-Allow-Origin', origin);
+      nextResponse.headers.set('Access-Control-Allow-Credentials', 'true');
+    }
 
     return nextResponse;
   } catch (error) {
