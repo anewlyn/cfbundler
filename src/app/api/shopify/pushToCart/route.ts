@@ -376,6 +376,7 @@ export async function POST(request: NextRequest) {
       'https://devbundler.cyclingfrog.com',
       'https://dev-prod-push.cfbundler.pages.dev',
       'https://cyclingfrog.com',
+      'https://bundler.cyclingfrog.com',
     ];
     const isAllowed = allowedOrigins.includes(origin);
 
