@@ -136,7 +136,7 @@ async function getCustomProductData(ids: string) {
     const res = await fetch('https://cyclingfrog.myshopify.com/admin/api/2025-07/graphql.json', options)
     const json = await res.json()
     const product = { ...json?.data?.product }
-    const variants = product.variants?.nodes?.map(node => ({ 
+    const variants = product.variants?.nodes?.map((node: any) => ({ 
       id: Number(node.id.split('/').pop()), 
       image: node.image?.url ?? product.image1.reference.image.url,
       images: [
