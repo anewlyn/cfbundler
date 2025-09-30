@@ -7,7 +7,7 @@ import { getBundle } from './api/loop/getBundle';
 import getProducts from './api/shopify/getProducts';
 
 export const runtime = 'edge';
-
+ 
 /**
  * ZERO-CHURN ENV USE:
  * - Admin token: prefer NEXT_PUBLIC_SHOPIFY_ADMIN_ACCESS_TOKEN,
