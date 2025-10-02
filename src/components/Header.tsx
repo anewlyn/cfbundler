@@ -95,7 +95,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
         </div>
         {ScheduleButton('header-button header-button-mobile')}
       </header>
-    </>
+    </> 
   );
 };
 
