@@ -95,7 +95,7 @@ const StickyFooter = () => {
 
   // add default images to carousel if there are less than 6 products
   while (carouselImages.length < 6) {
-    carouselImages.push({ imageURL: '/assets/lone-frog.png', altText: 'Cycling Frog Logo' });
+    carouselImages.push({ imageURL: 'https://bundler.cyclingfrog.com/assets/lone-frog.png', altText: 'Cycling Frog Logo' });
   }
 
   const renderImages = (images: carouselImageTypes[]) => {
