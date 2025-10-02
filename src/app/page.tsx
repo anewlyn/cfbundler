@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import { Bundle } from '@/components/Bundle';
 import LoopProvider from '@/contexts/LoopProvider';
+import { ShopifyProductType } from '@/types/app/api/shopifyTypes';
 import { BundleTypes, ProductTypes } from '@/types/bundleTypes';
 import { getBundle } from './api/loop/getBundle';
 import getProducts from './api/shopify/getProducts';
@@ -134,7 +136,7 @@ async function getCustomProductData(ids: string) {
     const res = await fetch('https://cyclingfrog.myshopify.com/admin/api/2025-07/graphql.json', options)
     const json = await res.json()
     const product = { ...json?.data?.product }
-    const variants = product.variants?.nodes?.map(node => ({ 
+    const variants = product.variants?.nodes?.map((node: any) => ({ 
       id: Number(node.id.split('/').pop()), 
       image: node.image?.url ?? product.image1.reference.image.url,
       images: [
@@ -156,6 +158,25 @@ async function getCustomProductData(ids: string) {
   return productData
 }
 
+// Wrap LoopProvider in a client component that has access to useSearchParams
+const LoopProviderWrapper = ({
+  bundleData,
+  shopifyProducts,
+  children,
+}: {
+  bundleData: BundleTypes;
+  shopifyProducts: Record<string, ShopifyProductType>;
+  children: React.ReactNode;
+}) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoopProvider bundleData={bundleData} shopifyProducts={shopifyProducts}>
+        {children}
+      </LoopProvider>
+    </Suspense>
+  );
+};
+
 const Bundler = async () => {
   const bundleData = await getBundle();
   const getShopifyIdsFromBundle = (bundleData: BundleTypes) => {
@@ -168,9 +189,9 @@ const Bundler = async () => {
   const shopifyProducts = await getProducts(shopifyIdString);
 
   return (
-    <LoopProvider bundleData={bundleData.data} shopifyProducts={shopifyProducts}>
+    <LoopProviderWrapper bundleData={bundleData.data} shopifyProducts={shopifyProducts}>
       <Bundle customProductData={customProductData} />
-    </LoopProvider>
+    </LoopProviderWrapper>
   );
 };
 
