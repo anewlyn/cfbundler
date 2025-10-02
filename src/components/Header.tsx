@@ -81,7 +81,7 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
             alt="Logo"
             className="logo"
             height={93}
-            src="/assets/cycling-frog-logo.png"
+            src="https://bundler.cyclingfrog.com/assets/cycling-frog-logo.png"
             width={170}
           />
           </a>
