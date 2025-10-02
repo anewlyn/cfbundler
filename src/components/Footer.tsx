@@ -100,7 +100,7 @@ const StickyFooter = () => {
 
   const renderImages = (images: carouselImageTypes[]) => {
     return images.map((slide: carouselImageTypes, index: number) => {
-      const isDefaultImage = slide?.imageURL === '/assets/lone-frog.png';
+      const isDefaultImage = slide?.imageURL === 'https://bundler.cyclingfrog.com/assets/lone-frog.png';
       const slideShopifyId = slide?.shopifyId || 0;
       const slideQty = slide?.qty || 0;
       return (
@@ -114,7 +114,7 @@ const StickyFooter = () => {
         >
           <Image
             className="carousel-item"
-            src={slide?.imageURL || '/assets/lone-frog.png'}
+            src={slide?.imageURL || 'https://bundler.cyclingfrog.com/assets/lone-frog.png'}
             alt={slide?.altText || 'Cycling Frog Logo'}
             width={85}
             height={85}
