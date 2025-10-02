@@ -129,7 +129,7 @@ async function getCustomProductData(ids: string) {
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
+        'X-Shopify-Access-Token': process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || '',
       },
       body: JSON.stringify({query: queryString, variables: { id: `gid://shopify/Product/${idArray[i]}` }})
     }

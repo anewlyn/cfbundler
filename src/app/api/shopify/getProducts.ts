@@ -6,7 +6,7 @@ const getProducts = async (shopifyIdString: string) => {
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      'x-shopify-access-token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
+      'x-shopify-access-token': process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || '',
     },
   };
 
