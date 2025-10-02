@@ -1,36 +1,32 @@
-/** @type {import('next').NextConfig} */
+// next.config.mjs
 
-// Detect CF Pages previews if you use them
+const ASSET_HOST =
+  process.env.NEXT_PUBLIC_ASSET_HOST || 'https://bundler.cyclingfrog.com';
 const isCFPages = !!process.env.CF_PAGES;
 const isPreview = isCFPages && process.env.CF_PAGES_BRANCH !== 'production';
 
-// Keep your own prod switch if you prefer
-const isProd = process.env.PROD_ENV === 'production' && !isPreview;
-
-const nextConfig = {
+export default {
   typescript: {
     ignoreBuildErrors: true,
   },
   sassOptions: {
     includePaths: ['./src/styles/'],
   },
+
+  // Always emit absolute URLs for _next/* assets
+  assetPrefix: ASSET_HOST,
+
   images: {
-    // External hosts you actually load from
+    // Disable Next's /_next/image optimizer — avoids storefront 404s
+    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.shopify.com' },
-      // Only needed if you ever embed absolute URLs to your own prod assets:
-      ...(isProd ? [{ protocol: 'https', hostname: 'bundler.cyclingfrog.com' }] : []),
     ],
-    // IMPORTANT: keep this relative in ALL envs (works with next-on-pages)
-    path: '/_next/image',
+    // Note: no `path` key when unoptimized
   },
 
-  // Only force chunks/assets to prod origin in production
-  ...(isProd && {
-    assetPrefix: 'https://bundler.cyclingfrog.com',
+  // Optional: swap assetPrefix for CF Pages previews
+  ...(isPreview && {
+    assetPrefix: process.env.NEXT_PUBLIC_ASSET_HOST_PREVIEW || ASSET_HOST,
   }),
-
-  // Avoid publicRuntimeConfig in Next 14—use NEXT_PUBLIC_* envs instead
 };
-
-export default nextConfig;
