@@ -73,9 +73,6 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
       >
         <div className="header-logo">
           {/* @todo route back to website */}
-          <button className="back-anchor uppercase" onClick={() => router.back()}>
-            <i className="material-icons back-arrow">west</i>back
-          </button>
           <a href="https://cyclingfrog.com">
           <Image
             alt="Logo"
