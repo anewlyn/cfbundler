@@ -1,150 +1,158 @@
-import { useState, useEffect } from 'react';
+'use client';
 
-interface CarouselItem {
-  id: string;
+import useEmblaCarousel, { EmblaCarouselType } from 'embla-carousel-react';
+import { useCallback, useEffect, useMemo, useRef, useState, KeyboardEvent } from 'react';
+
+export interface CarouselItem {
+  id: string;          // stable key (product or variant id)
   name: string;
   image: string;
-  quantity?: number;
+  quantity: number;    // 0 for placeholders (non-removable)
+  shopifyId?: number;  // present when removable
 }
 
-const FooterCarousel = ({ items }: { items: CarouselItem[] }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [groupedItems, setGroupedItems] = useState<Map<string, CarouselItem>>(new Map());
-  const [visibleItems, setVisibleItems] = useState(4);
+interface Props {
+  items: CarouselItem[];                // can include placeholders (quantity = 0)
+  ariaLabel?: string;
+  onRemoveOne?: (item: CarouselItem) => void;
+}
 
-  // Group items by ID and sum quantities
-  useEffect(() => {
-    const grouped = new Map<string, CarouselItem>();
-    
-    items.forEach(item => {
-      const existing = grouped.get(item.id);
-      if (existing) {
-        grouped.set(item.id, {
-          ...existing,
-          quantity: (existing.quantity || 1) + (item.quantity || 1)
-        });
-      } else {
-        grouped.set(item.id, { ...item, quantity: item.quantity || 1 });
-      }
-    });
-    
-    setGroupedItems(grouped);
-  }, [items]);
+const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOne }: Props) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const listboxRef = useRef<HTMLDivElement>(null);
 
-  // Responsive visible items
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) setVisibleItems(2);
-      else if (window.innerWidth < 768) setVisibleItems(3);
-      else if (window.innerWidth < 1024) setVisibleItems(4);
-      else setVisibleItems(5);
-    };
+  const slides = useMemo(() => items ?? [], [items]);
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+  const onSelect = useCallback((api: EmblaCarouselType) => {
+    setSelectedIndex(api.selectedScrollSnap());
+    setCanPrev(api.canScrollPrev());
+    setCanNext(api.canScrollNext());
   }, []);
 
-  const itemsArray = Array.from(groupedItems.values());
-  const maxIndex = Math.max(0, itemsArray.length - visibleItems);
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect(emblaApi);
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+  }, [emblaApi, onSelect]);
 
-  const handlePrevious = () => {
-    setCurrentIndex(prev => Math.max(0, prev - 1));
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((idx: number) => emblaApi?.scrollTo(idx), [emblaApi]);
+
+  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    switch (e.key) {
+      case 'ArrowLeft': e.preventDefault(); scrollPrev(); break;
+      case 'ArrowRight': e.preventDefault(); scrollNext(); break;
+      case 'Home': e.preventDefault(); scrollTo(0); break;
+      case 'End': e.preventDefault(); scrollTo(slides.length - 1); break;
+      case 'PageUp': e.preventDefault(); scrollPrev(); break;
+      case 'PageDown': e.preventDefault(); scrollNext(); break;
+    }
   };
 
-  const handleNext = () => {
-    setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
-  };
-
-  if (itemsArray.length === 0) return null;
+  if (!slides.length) return null;
 
   return (
-    <div className="relative bg-gray-50 py-4 px-8 rounded-lg">
-      <div className="flex items-center justify-between">
-        {/* Previous Arrow */}
-        <button
-          onClick={handlePrevious}
-          disabled={currentIndex === 0}
-          className={`absolute left-2 z-10 p-2 rounded-full bg-white shadow-md transition-all
-            ${currentIndex === 0 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-lg'}`}
-          aria-label="Previous items"
-        >
-          <i className="material-icons">chevron_left</i>
-        </button>
+    <section role="region" aria-label={ariaLabel} className="relative bg-gray-50 py-4 px-8 rounded-lg">
+      {/* Prev */}
+      <button
+        type="button"
+        onClick={scrollPrev}
+        disabled={!canPrev}
+        className={`absolute left-2 z-10 p-2 rounded-full bg-white shadow-md transition-all
+          ${!canPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 hover:shadow-lg'}`}
+        aria-label="Scroll selected items left"
+      >
+        <i className="material-icons">chevron_left</i>
+      </button>
 
-        {/* Carousel Items */}
-        <div className="overflow-hidden mx-12 w-full">
-          <div 
-            className="flex transition-transform duration-300 ease-in-out gap-4"
-            style={{ 
-              transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` 
-            }}
-          >
-            {itemsArray.map((item) => (
-              <div 
+      {/* Embla root */}
+      <div
+        className="embla mx-12"
+        role="listbox"
+        aria-label={ariaLabel}
+        tabIndex={0}
+        ref={listboxRef}
+        onKeyDown={onKeyDown}
+      >
+        <div className="embla__viewport" ref={emblaRef}>
+          <div className="embla__container">
+            {slides.map((item, idx) => (
+              <div
                 key={item.id}
-                className="flex-shrink-0 relative"
-                style={{ width: `calc(${100 / visibleItems}% - 1rem)` }}
+                className="embla__slide"
+                role="option"
+                aria-selected={idx === selectedIndex}
+                aria-label={item.name}
+                // width handled by your existing CSS; if needed, constrain with inline style:
+                // style={{ flex: '0 0 20%' }}
               >
                 <div className="relative bg-white rounded-lg p-3 hover:shadow-md transition-shadow">
-                  {/* Quantity Badge */}
-                  {item.quantity && item.quantity > 1 && (
+                  {/* Quantity badge */}
+                  {item.quantity > 1 && (
                     <span className="absolute -top-2 -right-2 z-10 bg-blue-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
                       {item.quantity}
                     </span>
                   )}
-                  
-                  {/* Item Image */}
-                  <img 
-                    src={item.image} 
+
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.image}
                     alt={item.name}
                     className="w-full h-16 object-contain"
+                    loading="lazy"
                   />
-                  
-                  {/* Item Name */}
-                  <p className="text-xs text-center mt-2 text-gray-700 truncate">
-                    {item.name}
-                  </p>
+
+                  <p className="text-xs text-center mt-2 text-gray-700 truncate">{item.name}</p>
+
+                  {/* Remove one (hide for placeholders) */}
+                  {onRemoveOne && item.quantity > 0 && item.shopifyId && (
+                    <button
+                      type="button"
+                      className="absolute -top-2 -left-2 z-10 bg-white/90 hover:bg-white p-1 rounded-full shadow"
+                      aria-label={`Remove one ${item.name}`}
+                      onClick={() => onRemoveOne(item)}
+                    >
+                      <span className="material-icons text-sm">close</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Next Arrow */}
-        <button
-          onClick={handleNext}
-          disabled={currentIndex >= maxIndex}
-          className={`absolute right-2 z-10 p-2 rounded-full bg-white shadow-md transition-all
-            ${currentIndex >= maxIndex 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-lg'}`}
-          aria-label="Next items"
-        >
-          <i className="material-icons">chevron_right</i>
-        </button>
       </div>
 
-      {/* Dots Indicator (optional) */}
-      {itemsArray.length > visibleItems && (
-        <div className="flex justify-center mt-3 gap-1">
-          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+      {/* Next */}
+      <button
+        type="button"
+        onClick={scrollNext}
+        disabled={!canNext}
+        className={`absolute right-2 z-10 p-2 rounded-full bg-white shadow-md transition-all
+          ${!canNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 hover:shadow-lg'}`}
+        aria-label="Scroll selected items right"
+      >
+        <i className="material-icons">chevron_right</i>
+      </button>
+
+      {/* Dots */}
+      {slides.length > 1 && (
+        <div className="flex justify-center mt-3 gap-1" aria-hidden>
+          {slides.map((_, i) => (
             <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-blue-600 w-6' 
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
+              key={i}
+              onClick={() => scrollTo(i)}
+              className={`w-2 h-2 rounded-full transition-all ${i === selectedIndex ? 'bg-blue-600 w-6' : 'bg-gray-300 hover:bg-gray-400'}`}
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
