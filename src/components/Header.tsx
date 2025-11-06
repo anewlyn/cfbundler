@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
+import DeliveryFrequencyDropdown from './DeliveryFrequencyDropdown';
+
 
 type HeaderProps = {
   handleOpenCadenceModal: () => void;
@@ -38,28 +40,10 @@ const Header = ({ handleOpenCadenceModal }: HeaderProps) => {
 
   const deliverySchedule = sellingPlans.find((cadence) => cadence.shopifyId === cart.sellingPlanId);
 
-  const ScheduleButton = (className: string) => {
-    const interval =
-      Number(deliverySchedule?.deliveryIntervalCount) > 1
-        ? `${deliverySchedule?.deliveryInterval}S`
-        : deliverySchedule?.deliveryInterval;
-    if (sellingPlans.length === 1) {
-      return (
-        <button className={className}>
-          <span className="uppercase">Deliver Every &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
-        </button>
-      );
-    } else {
-      return (
-        <button className={className} onClick={handleOpenCadenceModal}>
-          <span className="uppercase">Deliver Every &nbsp;</span>
-          <b>{`${deliverySchedule?.deliveryIntervalCount} ${interval}`}</b>
-          <i className="material-icons">expand_more</i>
-        </button>
-      );
-    }
-  };
+const ScheduleButton = (className: string) => {
+  // Simply return the dropdown component - it handles everything internally
+  return <DeliveryFrequencyDropdown className={className} />;
+};
 
   return (
     <>
