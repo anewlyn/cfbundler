@@ -132,3 +132,43 @@
     grid-column: 1 / span 2;
   }
 }
+
+/* --- Dropdown alignment next to "My Subscription" --- */
+.header-title .delivery-dropdown-trigger {
+  /* space from title */
+  margin-top: .25rem;
+}
+
+/* Unify font and height with header buttons */
+.header-button,
+.header-button-mobile,
+.header-title .delivery-dropdown-trigger {
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 600; 
+  height: 52px;
+}
+
+/* Shover/focus feedback */
+.header-title .delivery-dropdown-trigger,
+.header-button-mobile.delivery-dropdown-trigger {
+  border-radius: 6px;
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+.header-title .delivery-dropdown-trigger:hover,
+.header-button-mobile.delivery-dropdown-trigger:hover,
+.header-title .delivery-dropdown-trigger:focus-visible,
+.header-button-mobile.delivery-dropdown-trigger:focus-visible {
+  background: rgba(0,0,0,0.04);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset;
+  outline: none;
+}
+
+/* Mobile sticky alignment */
+@media (max-width: 640px) {
+  .header-button-mobile.delivery-dropdown-trigger {
+    justify-content: center;
+    padding: 0 1rem;
+  }
+}
+
