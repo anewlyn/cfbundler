@@ -84,7 +84,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     setCart({ ...cart, sellingPlanId: plan.shopifyId });
     closeDropdown();
   };
-
+ 
   // Keyboard handling on the trigger
   const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
