@@ -173,173 +173,175 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                 <i className="material-icons">chevron_right</i>
             </button>
 
-            <style jsx>{`
-        /* ================================
-        * FooterCarousel styles (scoped)
-        * Tweak tokens below as needed
-        * ================================ */
-        :root {
-            --fc-bg: var(--cf-footer-bg, #f7f7f7);
-            --fc-padding-y: 1rem;
-            --fc-padding-x: 2rem;
+ <style jsx>{`
+  /* ================================
+   * FooterCarousel (compact variant)
+   * ================================ */
+  :root {
+    --fc-bg: var(--cf-footer-bg, #f7f7f7);
+    --fc-padding-y: 0.75rem;
+    --fc-padding-x: 1.25rem;
 
-            --fc-arrow-size: 32px;
-            --fc-arrow-size-sm: 28px;
-            --fc-arrow-x: 8px;
-            --fc-arrow-x-sm: 4px;
-            --fc-arrow-shadow: 0 2px 8px rgba(0,0,0,0.12);
-            --fc-arrow-shadow-hover: 0 4px 12px rgba(0,0,0,0.16);
+    --fc-arrow-size: 26px;
+    --fc-arrow-size-sm: 24px;
+    --fc-arrow-x: 4px;
+    --fc-arrow-x-sm: 2px;
+    --fc-arrow-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    --fc-arrow-shadow-hover: 0 3px 8px rgba(0,0,0,0.14);
 
-            --fc-gap: 12px;
-            --fc-slide-w: 96px;
-            --fc-slide-w-md: 88px;
-            --fc-slide-w-sm: 80px;
-            --fc-slide-w-xs: 72px;
+    --fc-gap: 8px;
+    --fc-slide-w: 76px;
+    --fc-slide-w-md: 70px;
+    --fc-slide-w-sm: 66px;
+    --fc-slide-w-xs: 60px;
 
-            --fc-card-bg: #fff;
-            --fc-card-border: #e5e5e5;
-            --fc-card-border-hover: #d9d9d9;
-            --fc-card-radius: 10px;
-            --fc-card-pad: 8px;
-            --fc-card-shadow-hover: 0 2px 10px rgba(0,0,0,0.06);
+    --fc-card-bg: #fff;
+    --fc-card-border: #e5e5e5;
+    --fc-card-border-hover: #d9d9d9;
+    --fc-card-radius: 8px;
+    --fc-card-pad: 6px;
+    --fc-card-shadow-hover: 0 2px 6px rgba(0,0,0,0.05);
 
-            --fc-img-h: 70px;
+    --fc-img-h: 54px;     /* product */
+    --fc-img-h-ph: 40px;  /* placeholder */
 
-            --fc-caption-color: #444;
-            --fc-caption-fs: 11px;
+    --fc-caption-color: #444;
+    --fc-caption-fs: 10px;
 
-            --fc-badge-bg: #111;
-            --fc-badge-fg: #fff;
-            --fc-badge-size: 20px;
+    --fc-badge-bg: #111;
+    --fc-badge-fg: #fff;
+    --fc-badge-size: 16px;
 
-            --fc-close-shadow: 0 1px 4px rgba(0,0,0,0.2);
-        }
+    --fc-close-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  }
 
-        .footer-carousel {
-            padding: var(--fc-padding-y) var(--fc-padding-x);
-            background: var(--fc-bg);
-            border-radius: 8px;
-            position: relative;
-        }
+  .footer-carousel {
+    padding: var(--fc-padding-y) var(--fc-padding-x);
+    background: var(--fc-bg);
+    border-radius: 6px;
+    position: relative;
+  }
 
-        /* Arrows */
-        .fc-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            border: 0;
-            background: #fff;
-            border-radius: 999px;
-            width: var(--fc-arrow-size);
-            height: var(--fc-arrow-size);
-            display: grid;
-            place-items: center;
-            box-shadow: var(--fc-arrow-shadow);
-            z-index: 5;
-            transition: box-shadow .15s ease, transform .15s ease, opacity .15s ease;
-        }
-        .fc-arrow--prev { left: var(--fc-arrow-x); }
-        .fc-arrow--next { right: var(--fc-arrow-x); }
-        .fc-arrow:hover:not(.is-disabled) {
-            box-shadow: var(--fc-arrow-shadow-hover);
-            transform: translateY(-50%) scale(1.04);
-        }
-        .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
+  /* Arrows */
+  .fc-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: #fff;
+    border-radius: 999px;
+    width: var(--fc-arrow-size);
+    height: var(--fc-arrow-size);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--fc-arrow-shadow);
+    z-index: 5;
+    transition: box-shadow .15s ease, transform .15s ease, opacity .15s ease;
+  }
+  .fc-arrow--prev { left: var(--fc-arrow-x); }
+  .fc-arrow--next { right: var(--fc-arrow-x); left: auto; }
+  .fc-arrow:hover:not(.is-disabled) {
+    box-shadow: var(--fc-arrow-shadow-hover);
+    transform: translateY(-50%) scale(1.06);
+  }
+  .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
 
-        /* Embla essentials */
-        .embla { position: relative; }
-        .embla__viewport { overflow: hidden; }
-        .embla__container { display: flex; gap: var(--fc-gap); }
+  /* Embla essentials */
+  .embla { position: relative; }
+  .embla__viewport {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+  }
+  .embla__viewport:active { cursor: grabbing; }
+  .embla__container { display: flex; gap: var(--fc-gap); }
 
-        /* Fixed-basis slides so arrows behave */
-        .embla__slide {
-            flex: 0 0 auto;
-            width: var(--fc-slide-w);
-        }
+  /* Fixed slide widths */
+  .embla__slide { flex: 0 0 auto; width: var(--fc-slide-w); }
 
-        /* Cards / tiles */
-        .carousel-card {
-            position: relative;
-            background: var(--fc-card-bg);
-            border: 1px solid var(--fc-card-border);
-            border-radius: var(--fc-card-radius);
-            padding: var(--fc-card-pad);
-            transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease, opacity .2s ease;
-            will-change: transform, opacity;
-            opacity: 0.99; /* subtle text rendering improvement in Safari */
-        }
-        .carousel-card:hover {
-            border-color: var(--fc-card-border-hover);
-            box-shadow: var(--fc-card-shadow-hover);
-        }
+  /* Cards / tiles */
+  .carousel-card {
+    position: relative;
+    background: var(--fc-card-bg);
+    border: 1px solid var(--fc-card-border);
+    border-radius: var(--fc-card-radius);
+    padding: var(--fc-card-pad);
+    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease, opacity .2s ease;
+    will-change: transform, opacity;
+    opacity: 0.99;
+    cursor: default;
+    user-select: text;
+  }
+  .carousel-card:hover {
+    border-color: var(--fc-card-border-hover);
+    box-shadow: var(--fc-card-shadow-hover);
+  }
 
-        .carousel-item {
-            width: 100%;
-            height: var(--fc-img-h);
-            object-fit: contain;
-        }
+  .carousel-item {
+    width: 100%;
+    height: var(--fc-img-h);
+    object-fit: contain;
+  }
 
-        /* 2-line clamp with reserved height to prevent jump */
-        .carousel-caption {
-            margin-top: 6px;
-            color: var(--fc-caption-color);
-            font-size: var(--fc-caption-fs);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            min-height: 28px;
-            text-align: center;
-        }
+  .is-placeholder .carousel-card {
+    border-color: #eee;
+    pointer-events: none;
+  }
+  .is-placeholder .carousel-item {
+    height: var(--fc-img-h-ph);
+    opacity: 0.8;
+  }
 
-        /* Quantity badge */
-        .fc-badge {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            min-width: var(--fc-badge-size);
-            height: var(--fc-badge-size);
-            border-radius: 999px;
-            background: var(--fc-badge-bg);
-            color: var(--fc-badge-fg);
-            font-size: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 6px;
-        }
+  .carousel-caption {
+    margin-top: 4px;
+    color: var(--fc-caption-color);
+    font-size: var(--fc-caption-fs);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-        /* Remove-one button (top-left) */
-        .close-button {
-            position: absolute;
-            top: -8px; /* nudged for optical alignment */
-            left: -8px;
-            background: #fff;
-            border-radius: 999px;
-            padding: 2px;
-            box-shadow: var(--fc-close-shadow);
-        }
+  .fc-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: var(--fc-badge-size);
+    height: var(--fc-badge-size);
+    border-radius: 999px;
+    background: var(--fc-badge-bg);
+    color: var(--fc-badge-fg);
+    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
 
-        /* Responsive sizing */
-        @media (max-width: 1024px) { .embla__slide { width: var(--fc-slide-w-md); } }
-        @media (max-width: 768px)  { .embla__slide { width: var(--fc-slide-w-sm); } }
-        @media (max-width: 640px)  {
-            .embla__slide { width: var(--fc-slide-w-xs); }
-            .fc-arrow {
-            width: var(--fc-arrow-size-sm);
-            height: var(--fc-arrow-size-sm);
-            }
-            .fc-arrow--prev { left: var(--fc-arrow-x-sm); }
-            .fc-arrow--next { right: var(--fc-arrow-x-sm); }
-            /* Bring arrows a bit closer to content on small screens */
-            .embla.mx-12 { margin-left: 2.25rem; margin-right: 2.25rem; }
-        }
+  .close-button {
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    background: #fff;
+    border-radius: 999px;
+    padding: 2px;
+    box-shadow: var(--fc-close-shadow);
+  }
 
-        /* Respect user’s reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            .fc-arrow,
-            .carousel-card { transition: none; }
-        }
+  /* Responsive */
+  @media (max-width: 1024px) { .embla__slide { width: var(--fc-slide-w-md); } }
+  @media (max-width: 768px)  { .embla__slide { width: var(--fc-slide-w-sm); } }
+  @media (max-width: 640px)  {
+    .embla__slide { width: var(--fc-slide-w-xs); }
+    .fc-arrow { width: var(--fc-arrow-size-sm); height: var(--fc-arrow-size-sm); }
+    .fc-arrow--prev { left: var(--fc-arrow-x-sm); }
+    .fc-arrow--next { right: var(--fc-arrow-x-sm); left: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fc-arrow,
+    .carousel-card { transition: none; }
+  }
 `}</style>
         </section>
     );
