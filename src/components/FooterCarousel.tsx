@@ -26,27 +26,27 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
 
     const slides = useMemo(() => items ?? [], [items]);
 
-const onSelect = useCallback((api: EmblaCarouselType) => {
-  setSelectedIndex(api.selectedScrollSnap());
-  setCanPrev(api.canScrollPrev());
-  setCanNext(api.canScrollNext());
-}, []);
+    const onSelect = useCallback((api: EmblaCarouselType) => {
+        setSelectedIndex(api.selectedScrollSnap());
+        setCanPrev(api.canScrollPrev());
+        setCanNext(api.canScrollNext());
+    }, []);
 
-useEffect(() => {
-  if (!emblaApi) return;
+    useEffect(() => {
+        if (!emblaApi) return;
 
-  onSelect(emblaApi);
+        onSelect(emblaApi);
 
-  emblaApi.on('select', onSelect);
-  emblaApi.on('reInit', onSelect);
+        emblaApi.on('select', onSelect);
+        emblaApi.on('reInit', onSelect);
 
-  emblaApi.reInit();
+        emblaApi.reInit();
 
-  return () => {
-    emblaApi.off?.('select', onSelect);
-    emblaApi.off?.('reInit', onSelect);
-  };
-}, [emblaApi, onSelect, slides.length]);
+        return () => {
+            emblaApi.off?.('select', onSelect);
+            emblaApi.off?.('reInit', onSelect);
+        };
+    }, [emblaApi, onSelect, slides.length]);
 
     const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
     const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -82,6 +82,9 @@ useEffect(() => {
     };
 
     if (!slides.length) return null;
+    const isPlaceholderItem = (it: CarouselItem) =>
+        !it.shopifyId || it.quantity === 0 || /lone-frog\.png/i.test(it.image);
+
 
     return (
         <section role="region" aria-label={ariaLabel} className="footer-carousel relative">
@@ -107,44 +110,54 @@ useEffect(() => {
             >
                 <div className="embla__viewport" ref={emblaRef}>
                     <div className="embla__container">
-                        {slides.map((item, idx) => (
-                            <div
-                                key={item.id}
-                                className="embla__slide carousel-item-container"
-                                role="option"
-                                aria-selected={idx === selectedIndex}
-                                aria-label={item.name}
-                            >
-                                <div className="carousel-card">
-                                    {item.quantity > 1 && (
-                                        <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
-                                            {item.quantity}
-                                        </span>
-                                    )}
+                        {slides.map((item, idx) => {
+                            const isPlaceholder = isPlaceholderItem(item);
+                            const ariaLabel = isPlaceholder ? 'Empty slot' : item.name;
 
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        className="carousel-item"
-                                        loading="lazy"
-                                    />
+                            return (
+                                <div
+                                    key={item.id}
+                                    className={`embla__slide carousel-item-container ${isPlaceholder ? 'is-placeholder' : ''}`}
+                                    role="option"
+                                    aria-selected={!isPlaceholder && idx === selectedIndex}
+                                    aria-disabled={isPlaceholder || undefined}
+                                    aria-label={ariaLabel}
+                                >
+                                    <div className="carousel-card">
+                                        {/* Quantity badge ONLY for real products with qty > 1 */}
+                                        {!isPlaceholder && item.quantity > 1 && (
+                                            <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
+                                                {item.quantity}
+                                            </span>
+                                        )}
 
-                                    <p className="carousel-caption">{item.name}</p>
+                                        {/* Image */}
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={item.image}
+                                            alt={ariaLabel}
+                                            className="carousel-item"
+                                            loading="lazy"
+                                        />
 
-                                    {onRemoveOne && item.quantity > 0 && item.shopifyId && (
-                                        <button
-                                            type="button"
-                                            className="close-button"
-                                            aria-label={`Remove one ${item.name}`}
-                                            onClick={() => onRemoveOne(item)}
-                                        >
-                                            <span className="material-icons">close</span>
-                                        </button>
-                                    )}
+                                        {/* Caption ONLY for real products */}
+                                        {!isPlaceholder && <p className="carousel-caption">{item.name}</p>}
+
+                                        {/* Remove-one ONLY for real products with a shopifyId */}
+                                        {!isPlaceholder && onRemoveOne && item.shopifyId && (
+                                            <button
+                                                type="button"
+                                                className="close-button"
+                                                aria-label={`Remove one ${item.name}`}
+                                                onClick={() => onRemoveOne(item)}
+                                            >
+                                                <span className="material-icons">close</span>
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </div>
