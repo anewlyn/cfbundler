@@ -70,14 +70,13 @@ const StickyFooter = () => {
     handleTransaction();
   };
 
-  // Decrease quantity by 1 for the selected item
+  // decrease quantity by 1 for the selected item
   const handleRemoveOne = (it: CarouselItem) => {
     if (!it.shopifyId || !it.quantity) return;
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
 
-  // Build a de-duplicated list for the carousel, grouped by product.shopifyId.
-  // If you prefer grouping by variant, change the Map key and fields below.
+  // de-duplicated list for the carousel
   const items: CarouselItem[] = useMemo(() => {
     const map = new Map<number, CarouselItem>(); // key: product.shopifyId
 
@@ -143,7 +142,7 @@ const StickyFooter = () => {
   return (
     <div className="sticky-footer">
       <div className="carousel" ref={carouselRef}>
-        {/* New grouped carousel with arrows/keyboard support */}
+        {/* grouped carousel with arrows/keyboard support */}
         <FooterCarousel
           items={items}
           onRemoveOne={handleRemoveOne}
