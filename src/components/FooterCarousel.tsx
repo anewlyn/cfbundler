@@ -88,7 +88,7 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
 
     return (
         <section role="region" aria-label={ariaLabel} className="footer-carousel relative">
-            {/* Prev */}
+            {/* prev */}
             <button
                 type="button"
                 onClick={scrollPrev}
@@ -99,7 +99,7 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                 <i className="material-icons">chevron_left</i>
             </button>
 
-            {/* Embla root */}
+            {/* embla root */}
             <div
                 className="embla mx-12"
                 role="listbox"
@@ -110,61 +110,57 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
             >
                 <div className="embla__viewport" ref={emblaRef}>
                     <div className="embla__container">
-                        {slides.map((item, idx) => {
-                            const isPlaceholder =
-                                !item.shopifyId || item.quantity === 0 || /lone-frog\.png/i.test(item.image);
-                            const ariaLabel = isPlaceholder ? 'Empty slot' : item.name;
+  {slides.map((item, idx) => {
+    const isPlaceholder =
+      !item.shopifyId || item.quantity === 0 || /lone-frog\.png/i.test(item.image);
+    const ariaLabel = isPlaceholder ? 'Empty slot' : item.name;
 
-                            return (
-                                <div
-                                    key={item.id}
-                                    className={`embla__slide carousel-item-container ${isPlaceholder ? 'is-placeholder' : ''}`}
-                                    role="option"
-                                    aria-selected={!isPlaceholder && idx === selectedIndex}
-                                    aria-disabled={isPlaceholder || undefined}
-                                    aria-label={ariaLabel}
-                                >
-                                    {/* FIXED-WIDTH TILE WRAPPER */}
-                                    <div className="fc-tile">
-                                        <div className="carousel-card">
-                                            {!isPlaceholder && item.quantity > 1 && (
-                                                <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
-                                                    {item.quantity}
-                                                </span>
-                                            )}
+    return (
+      <div
+        key={item.id}
+        className={`embla__slide carousel-item-container ${isPlaceholder ? 'is-placeholder' : ''}`}
+        role="option"
+        aria-selected={!isPlaceholder && idx === selectedIndex}
+        aria-disabled={isPlaceholder || undefined}
+        aria-label={ariaLabel}
+      >
+        {/* FIXED-WIDTH TILE WRAPPER */}
+        <div className="fc-tile">
+          <div className="carousel-card">
+            {!isPlaceholder && item.quantity > 1 && (
+              <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
+                {item.quantity}
+              </span>
+            )}
 
-                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img
-                                                src={item.image}
-                                                alt={ariaLabel}
-                                                className="carousel-item"
-                                                loading="lazy"
-                                            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.image}
+              alt={ariaLabel}
+              className="carousel-item"
+              loading="lazy"
+            />
 
-                                            {/* caption only for real products */}
-                                            {!isPlaceholder && <p className="carousel-caption">{item.name}</p>}
+            {/* caption only for real products */}
+            {!isPlaceholder && <p className="carousel-caption">{item.name}</p>}
 
-                                            {!isPlaceholder && onRemoveOne && item.shopifyId && (
-                                                <button
-                                                    type="button"
-                                                    className="close-button"
-                                                    aria-label={`Remove one ${item.name}`}
-                                                    onClick={() => onRemoveOne(item)}
-                                                >
-                                                    <span className="material-icons">close</span>
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                </div>
+            {!isPlaceholder && onRemoveOne && item.shopifyId && (
+              <button
+                type="button"
+                className="close-button"
+                aria-label={`Remove one ${item.name}`}
+                onClick={() => onRemoveOne(item)}
+              >
+                <span className="material-icons">close</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
             </div>
-
-            {/* Next */}
             <button
                 type="button"
                 onClick={scrollNext}

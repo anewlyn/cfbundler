@@ -283,12 +283,7 @@
       visibility: visible;
     }
   }
-  // .close-button {
-  //   display: block;
-  //   width: 24px;
-  //   height: 24px;
-  // }
-}
+
 
 @include for_breakpoint('tablet') {
   .order-info {

@@ -23,11 +23,11 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Always call hooks before any early return
+  // call hooks before early return
   const menuAutoId = useId();
   const menuId = `delivery-frequency-menu-${menuAutoId}`;
 
-  // Resolve current plan (fallback to first if missing)
+  // resolve current plan (fallback to first if missing)
   const currentPlanIndex = useMemo(
     () =>
       Math.max(
@@ -46,7 +46,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return `${plan.deliveryIntervalCount} ${plural}`;
   };
 
-  // Click outside → close
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       if (!dropdownRef.current) return;
@@ -56,7 +55,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
 
-  // When opening: animate + focus selected option
+
   useEffect(() => {
     if (!isOpen) return;
     const t = setTimeout(() => setIsAnimating(false), 10);
@@ -65,7 +64,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return () => clearTimeout(t);
   }, [isOpen]);
 
-  // Keep selection synced if cart.sellingPlanId changes elsewhere
+  // keep selection synced if cart.sellingPlanId changes 
   useEffect(() => {
     if (isOpen) {
       const selected = menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]');
@@ -94,7 +93,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     closeDropdown();
   };
 
-  // Keyboard handling on the trigger
+  // keyboard handling on the trigger
   const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -102,7 +101,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     }
   };
 
-  // Keyboard handling on the menu
+  // keyboard handling on the menu
   const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const items = Array.from(
       menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []
@@ -139,7 +138,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     }
   };
 
-  // Single-plan: render inert button (keeps layout stable)
+  // single-plan, render inert 
   if (sellingPlans.length <= 1) {
     return (
       <button className={className} type="button" aria-disabled="true">
@@ -362,6 +361,68 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
           width: 200px;
           height: 200px;
         }
+          /* ===== clamps & caption height ===== */
+
+/* slid fixed basis, no shrinking */
+.footer-carousel :global(.embla__slide) {
+  flex: 0 0 var(--fc-slide-w) !important;
+  width: var(--fc-slide-w) !important;
+  max-width: var(--fc-slide-w) !important;
+  min-width: var(--fc-slide-w) !important;
+}
+
+/* tile so content can’t expand the slide */
+.fc-tile {
+  width: var(--fc-slide-w);
+  max-width: var(--fc-slide-w);
+  margin: 0 auto;
+}
+
+/* make card a grid, image, caption, no-growth */
+.carousel-card {
+  display: grid;
+  grid-template-rows: auto auto; /* image, caption */
+  align-items: start;
+  width: 100%;
+  max-width: var(--fc-slide-w);
+}
+
+/* Image constrained by your vars no overflow */
+.carousel-item {
+  width: 100% !important;
+  max-width: 70px !important;   /* hard cap to prevent intrinsic upscaling */
+  height: var(--fc-img-h) !important;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* fixed line height so tiles match & badges align */
+.carousel-caption {
+  line-height: 1.2;
+  max-height: calc(1.2em * 2);  /* exactly two lines */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* badge & close button align relative to a fixed-size card */
+.fc-badge {
+  top: -5px;
+  right: -5px;
+}
+.close-button {
+  top: -6px;
+  left: -6px;
+}
+
+/* placeholders smaller */
+.is-placeholder .carousel-item { height: var(--fc-img-h-ph) !important; opacity: .85; }
+.is-placeholder .carousel-caption { display: none; } /* no caption for placeholders */
+.is-placeholder .carousel-card { pointer-events: none; }
+
       `}</style>
     </div>
   );
