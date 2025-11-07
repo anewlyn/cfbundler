@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo, KeyboardEvent } from 'react';
+import { useState, useRef, useEffect, useMemo, useId, KeyboardEvent } from 'react';
 import classNames from 'classnames';
 import { useLoopContext } from '@/contexts/LoopProvider';
+
 
 interface DeliveryFrequencyDropdownProps {
   className?: string;
@@ -22,14 +23,21 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
   const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuAutoId = useId();
+  const menuId = `delivery-frequency-menu-${menuAutoId}`;
 
   // Resolve current plan (fallback to first if missing)
   const currentPlanIndex = useMemo(
-    () => Math.max(0, sellingPlans.findIndex((p: SellingPlan) => p.shopifyId === cart.sellingPlanId)),
-    [sellingPlans, cart.sellingPlanId]
-  );
-  const currentPlan: SellingPlan = sellingPlans[currentPlanIndex] || sellingPlans[0];
-
+        () =>
+      Math.max(
+        0,
+        sellingPlans.findIndex(
+          (p: SellingPlan) => String(p.shopifyId) === String(cart.sellingPlanId)
+        )
+      ),
+     [sellingPlans, cart.sellingPlanId]
+   );
+   const currentPlan: SellingPlan = sellingPlans[currentPlanIndex] || sellingPlans[0];
   const formatInterval = (plan: SellingPlan) => {
     const plural = Number(plan.deliveryIntervalCount) > 1 ? `${plan.deliveryInterval}S` : plan.deliveryInterval;
     return `${plan.deliveryIntervalCount} ${plural}`;
@@ -138,7 +146,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     );
   }
 
-  const menuId = 'delivery-frequency-menu';
+
 
   return (
     <div className="relative inline-block" ref={dropdownRef}>
@@ -208,7 +216,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
       <style jsx>{`
         .delivery-dropdown-trigger {
           position: relative;
-          display: inline-flex;
           align-items: center;
           cursor: pointer;
         }
