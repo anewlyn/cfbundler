@@ -4,15 +4,15 @@ import useEmblaCarousel, { type EmblaCarouselType } from 'embla-carousel-react';
 import { useCallback, useEffect, useMemo, useRef, useState, KeyboardEvent } from 'react';
 
 export interface CarouselItem {
-  id: string;          // stable key (product or variant id)
+  id: string;
   name: string;
   image: string;
-  quantity: number;    // 0 for placeholders (non-removable)
-  shopifyId?: number;  // present when removable
+  quantity: number;   // 0 for placeholders
+  shopifyId?: number;
 }
 
 interface Props {
-  items: CarouselItem[];                // can include placeholders (quantity = 0)
+  items: CarouselItem[];
   ariaLabel?: string;
   onRemoveOne?: (item: CarouselItem) => void;
 }
@@ -57,14 +57,13 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
   if (!slides.length) return null;
 
   return (
-    <section role="region" aria-label={ariaLabel} className="relative bg-gray-50 py-4 px-8 rounded-lg">
+    <section role="region" aria-label={ariaLabel} className="footer-carousel relative">
       {/* Prev */}
       <button
         type="button"
         onClick={scrollPrev}
         disabled={!canPrev}
-        className={`absolute left-2 z-10 p-2 rounded-full bg-white shadow-md transition-all
-          ${!canPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 hover:shadow-lg'}`}
+        className={`fc-arrow fc-arrow--prev ${!canPrev ? 'is-disabled' : ''}`}
         aria-label="Scroll selected items left"
       >
         <i className="material-icons">chevron_left</i>
@@ -84,17 +83,14 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
             {slides.map((item, idx) => (
               <div
                 key={item.id}
-                className="embla__slide"
+                className="embla__slide carousel-item-container"   // ← legacy hook retained
                 role="option"
                 aria-selected={idx === selectedIndex}
                 aria-label={item.name}
-                // width handled by your existing CSS; if needed, constrain with inline style:
-                // style={{ flex: '0 0 20%' }}
               >
-                <div className="relative bg-white rounded-lg p-3 hover:shadow-md transition-shadow">
-                  {/* Quantity badge */}
+                <div className="carousel-card">
                   {item.quantity > 1 && (
-                    <span className="absolute -top-2 -right-2 z-10 bg-blue-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                    <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
                       {item.quantity}
                     </span>
                   )}
@@ -103,21 +99,21 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-16 object-contain"
+                    className="carousel-item"                      {/* ← legacy hook retained */}
                     loading="lazy"
                   />
 
-                  <p className="text-xs text-center mt-2 text-gray-700 truncate">{item.name}</p>
+                  <p className="carousel-caption">{item.name}</p>
 
                   {/* Remove one (hide for placeholders) */}
                   {onRemoveOne && item.quantity > 0 && item.shopifyId && (
                     <button
                       type="button"
-                      className="absolute -top-2 -left-2 z-10 bg-white/90 hover:bg-white p-1 rounded-full shadow"
+                      className="close-button"                     {/* ← legacy hook retained */}
                       aria-label={`Remove one ${item.name}`}
                       onClick={() => onRemoveOne(item)}
                     >
-                      <span className="material-icons text-sm">close</span>
+                      <span className="material-icons">close</span>
                     </button>
                   )}
                 </div>
@@ -132,26 +128,64 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
         type="button"
         onClick={scrollNext}
         disabled={!canNext}
-        className={`absolute right-2 z-10 p-2 rounded-full bg-white shadow-md transition-all
-          ${!canNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 hover:shadow-lg'}`}
+        className={`fc-arrow fc-arrow--next ${!canNext ? 'is-disabled' : ''}`}
         aria-label="Scroll selected items right"
       >
         <i className="material-icons">chevron_right</i>
       </button>
 
-      {/* Dots */}
-      {slides.length > 1 && (
-        <div className="flex justify-center mt-3 gap-1" aria-hidden>
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              className={`w-2 h-2 rounded-full transition-all ${i === selectedIndex ? 'bg-blue-600 w-6' : 'bg-gray-300 hover:bg-gray-400'}`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      {/* Minimal baseline styles (scoped) */}
+      <style jsx>{`
+        .footer-carousel { padding: 1rem 2rem; background: var(--cf-footer-bg, #f7f7f7); border-radius: 8px; }
+        .fc-arrow {
+          position: absolute; top: 50%; transform: translateY(-50%);
+          border: 0; background: #fff; border-radius: 999px; width: 32px; height: 32px;
+          display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12); z-index: 5;
+        }
+        .fc-arrow--prev { left: 8px; }
+        .fc-arrow--next { right: 8px; }
+        .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
+
+        /* Embla essentials */
+        .embla { position: relative; }
+        .embla__viewport { overflow: hidden; }
+        .embla__container { display: flex; gap: 12px; }
+        /* Show ~5 items on desktop, shrink responsively */
+        .embla__slide {
+          flex: 0 0 auto;
+          width: 96px; /* fallback width; your existing SCSS can override */
+        }
+
+        /* Card styling similar to previous */
+        .carousel-card {
+          position: relative;
+          background: #fff;
+          border: 1px solid #e5e5e5;
+          border-radius: 10px;
+          padding: 8px;
+        }
+        .carousel-item { width: 100%; height: 70px; object-fit: contain; }
+        .carousel-caption { font-size: 11px; text-align: center; margin-top: 6px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .fc-badge {
+          position: absolute; top: -6px; right: -6px;
+          min-width: 20px; height: 20px; border-radius: 999px;
+          background: #111; color: #fff; font-size: 12px;
+          display: inline-flex; align-items: center; justify-content: center; padding: 0 6px;
+        }
+
+        /* Legacy close button position retained */
+        .close-button {
+          position: absolute; top: -6px; left: -6px;
+          background: #fff; border-radius: 999px; padding: 2px;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive sizing */
+        @media (max-width: 1024px) { .embla__slide { width: 88px; } }
+        @media (max-width: 768px)  { .embla__slide { width: 80px; } }
+        @media (max-width: 640px)  { .embla__slide { width: 72px; } }
+      `}</style>
     </section>
   );
 };

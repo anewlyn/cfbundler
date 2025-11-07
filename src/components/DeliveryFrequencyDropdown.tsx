@@ -1,193 +1,304 @@
 'use client';
 
-import useEmblaCarousel, { type EmblaCarouselType } from 'embla-carousel-react';
-import { useCallback, useEffect, useMemo, useRef, useState, KeyboardEvent } from 'react';
+import { useState, useRef, useEffect, useMemo, useId, KeyboardEvent } from 'react';
+import classNames from 'classnames';
+import { useLoopContext } from '@/contexts/LoopProvider';
 
-export interface CarouselItem {
-  id: string;
-  name: string;
-  image: string;
-  quantity: number;   // 0 for placeholders
-  shopifyId?: number;
+
+interface DeliveryFrequencyDropdownProps {
+  className?: string;
 }
 
-interface Props {
-  items: CarouselItem[];
-  ariaLabel?: string;
-  onRemoveOne?: (item: CarouselItem) => void;
-}
+type SellingPlan = {
+  shopifyId: number | string;
+  deliveryInterval: string;         // e.g., "WEEK", "MONTH"
+  deliveryIntervalCount: number;    // e.g., 1, 2, 3
+};
 
-const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOne }: Props) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(false);
-  const listboxRef = useRef<HTMLDivElement>(null);
+const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdownProps) => {
+  const { sellingPlans, setCart, cart } = useLoopContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const slides = useMemo(() => items ?? [], [items]);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuAutoId = useId();
+  const menuId = `delivery-frequency-menu-${menuAutoId}`;
 
-  const onSelect = useCallback((api: EmblaCarouselType) => {
-    setSelectedIndex(api.selectedScrollSnap());
-    setCanPrev(api.canScrollPrev());
-    setCanNext(api.canScrollNext());
+  // Resolve current plan (fallback to first if missing)
+  const currentPlanIndex = useMemo(
+        () =>
+      Math.max(
+        0,
+        sellingPlans.findIndex(
+          (p: SellingPlan) => String(p.shopifyId) === String(cart.sellingPlanId)
+        )
+      ),
+     [sellingPlans, cart.sellingPlanId]
+   );
+   const currentPlan: SellingPlan = sellingPlans[currentPlanIndex] || sellingPlans[0];
+  const formatInterval = (plan: SellingPlan) => {
+    const plural = Number(plan.deliveryIntervalCount) > 1 ? `${plan.deliveryInterval}S` : plan.deliveryInterval;
+    return `${plan.deliveryIntervalCount} ${plural}`;
+  };
+
+  // Click outside → close
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!dropdownRef.current) return;
+      if (!dropdownRef.current.contains(e.target as Node)) closeDropdown();
+    };
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
 
+  // When opening: animate + focus selected option
   useEffect(() => {
-    if (!emblaApi) return;
-    onSelect(emblaApi);
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
-  }, [emblaApi, onSelect]);
+    if (!isOpen) return;
+    const t = setTimeout(() => setIsAnimating(false), 10);
+    // Focus selected option
+    const selected = menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]');
+    selected?.focus();
+    return () => clearTimeout(t);
+  }, [isOpen]);
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((idx: number) => emblaApi?.scrollTo(idx), [emblaApi]);
+  // Keep selection synced if cart.sellingPlanId changes elsewhere
+  useEffect(() => {
+    // If menu is open and selection changed, move focus to the new selected button
+    if (isOpen) {
+      const selected = menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]');
+      selected?.focus();
+    }
+  }, [currentPlanIndex, isOpen]);
 
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    switch (e.key) {
-      case 'ArrowLeft': e.preventDefault(); scrollPrev(); break;
-      case 'ArrowRight': e.preventDefault(); scrollNext(); break;
-      case 'Home': e.preventDefault(); scrollTo(0); break;
-      case 'End': e.preventDefault(); scrollTo(slides.length - 1); break;
-      case 'PageUp': e.preventDefault(); scrollPrev(); break;
-      case 'PageDown': e.preventDefault(); scrollNext(); break;
+  const openDropdown = () => {
+    setIsAnimating(true);
+    setIsOpen(true);
+  };
+
+  const closeDropdown = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsAnimating(false);
+      triggerRef.current?.focus(); // return focus to trigger
+    }, 200);
+  };
+
+  const toggleDropdown = () => (isOpen ? closeDropdown() : openDropdown());
+
+  const handlePlanSelect = (plan: SellingPlan) => {
+    setCart({ ...cart, sellingPlanId: plan.shopifyId });
+    closeDropdown();
+  };
+ 
+  // Keyboard handling on the trigger
+  const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openDropdown();
     }
   };
 
-  if (!slides.length) return null;
+  // Keyboard handling on the menu
+  const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const items = Array.from(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []);
+    const idx = items.findIndex((el) => el === document.activeElement);
+    const focusAt = (i: number) => items[Math.max(0, Math.min(items.length - 1, i))]?.focus();
+
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
+        closeDropdown();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        focusAt(idx < 0 ? 0 : idx + 1);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        focusAt(idx <= 0 ? items.length - 1 : idx - 1);
+        break;
+      case 'Home':
+        e.preventDefault();
+        focusAt(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        focusAt(items.length - 1);
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        (document.activeElement as HTMLButtonElement)?.click();
+        break;
+    }
+  };
+
+  // Single-plan: render inert button (keeps layout stable)
+  if (sellingPlans.length <= 1) {
+    return (
+      <button className={className} type="button" aria-disabled="true">
+        <span className="uppercase">Deliver Every&nbsp;</span>
+        <b>{currentPlan ? formatInterval(currentPlan) : ''}</b>
+      </button>
+    );
+  }
+
+
 
   return (
-    <section role="region" aria-label={ariaLabel} className="footer-carousel relative">
-      {/* Prev */}
+    <div className="relative inline-block" ref={dropdownRef}>
       <button
+        ref={triggerRef}
+        onClick={toggleDropdown}
+        onKeyDown={onTriggerKeyDown}
+        className={classNames(className, 'delivery-dropdown-trigger')}
         type="button"
-        onClick={scrollPrev}
-        disabled={!canPrev}
-        className={`fc-arrow fc-arrow--prev ${!canPrev ? 'is-disabled' : ''}`}
-        aria-label="Scroll selected items left"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        aria-controls={menuId}
       >
-        <i className="material-icons">chevron_left</i>
+        <span className="uppercase">Deliver Every&nbsp;</span>
+        <b>{formatInterval(currentPlan)}</b>
+        <i
+          className="material-icons delivery-dropdown-icon"
+          style={{
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
+          aria-hidden
+        >
+          expand_more
+        </i>
       </button>
 
-      {/* Embla root */}
-      <div
-        className="embla mx-12"
-        role="listbox"
-        aria-label={ariaLabel}
-        tabIndex={0}
-        ref={listboxRef}
-        onKeyDown={onKeyDown}
-      >
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="embla__container">
-            {slides.map((item, idx) => (
-              <div
-                key={item.id}
-                className="embla__slide carousel-item-container"   // ← legacy hook retained
-                role="option"
-                aria-selected={idx === selectedIndex}
-                aria-label={item.name}
+      {isOpen && (
+        <div
+          id={menuId}
+          ref={menuRef}
+          role="menu"
+          aria-label="Delivery cadence options"
+          tabIndex={-1}
+          onKeyDown={onMenuKeyDown}
+          className={classNames(
+            'cadance-card dropdown-variant',
+            isAnimating ? 'dropdown-closing' : 'dropdown-open'
+          )}
+        >
+          <p className="uppercase">Deliver Every...</p>
+
+          {sellingPlans.map((plan: SellingPlan, index: number) => {
+            const selected = plan.shopifyId === cart.sellingPlanId;
+            return (
+              <button
+                key={String(plan.shopifyId) || index}
+                type="button"
+                role="menuitemradio"
+                aria-checked={selected}
+                data-selected={selected ? 'true' : undefined}
+                onClick={() => handlePlanSelect(plan)}
+                className={classNames(
+                  'cadance-card-button base-border-1',
+                  selected && 'selected'
+                )}
               >
-                <div className="carousel-card">
-                  {item.quantity > 1 && (
-                    <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
-                      {item.quantity}
-                    </span>
-                  )}
-
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="carousel-item"                      {/* ← legacy hook retained */}
-                    loading="lazy"
-                  />
-
-                  <p className="carousel-caption">{item.name}</p>
-
-                  {/* Remove one (hide for placeholders) */}
-                  {onRemoveOne && item.quantity > 0 && item.shopifyId && (
-                    <button
-                      type="button"
-                      className="close-button"                     {/* ← legacy hook retained */}
-                      aria-label={`Remove one ${item.name}`}
-                      onClick={() => onRemoveOne(item)}
-                    >
-                      <span className="material-icons">close</span>
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+                <span>{formatInterval(plan)}</span>
+                {selected && <i className="material-icons check-icon">check</i>}
+              </button>
+            );
+          })}
         </div>
-      </div>
+      )}
 
-      {/* Next */}
-      <button
-        type="button"
-        onClick={scrollNext}
-        disabled={!canNext}
-        className={`fc-arrow fc-arrow--next ${!canNext ? 'is-disabled' : ''}`}
-        aria-label="Scroll selected items right"
-      >
-        <i className="material-icons">chevron_right</i>
-      </button>
-
-      {/* Minimal baseline styles (scoped) */}
+      {/* Your existing styles unchanged */}
       <style jsx>{`
-        .footer-carousel { padding: 1rem 2rem; background: var(--cf-footer-bg, #f7f7f7); border-radius: 8px; }
-        .fc-arrow {
-          position: absolute; top: 50%; transform: translateY(-50%);
-          border: 0; background: #fff; border-radius: 999px; width: 32px; height: 32px;
-          display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12); z-index: 5;
-        }
-        .fc-arrow--prev { left: 8px; }
-        .fc-arrow--next { right: 8px; }
-        .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
-
-        /* Embla essentials */
-        .embla { position: relative; }
-        .embla__viewport { overflow: hidden; }
-        .embla__container { display: flex; gap: 12px; }
-        /* Show ~5 items on desktop, shrink responsively */
-        .embla__slide {
-          flex: 0 0 auto;
-          width: 96px; /* fallback width; your existing SCSS can override */
-        }
-
-        /* Card styling similar to previous */
-        .carousel-card {
+        .delivery-dropdown-trigger {
           position: relative;
-          background: #fff;
-          border: 1px solid #e5e5e5;
-          border-radius: 10px;
-          padding: 8px;
+          align-items: center;
+          cursor: pointer;
         }
-        .carousel-item { width: 100%; height: 70px; object-fit: contain; }
-        .carousel-caption { font-size: 11px; text-align: center; margin-top: 6px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .delivery-dropdown-icon { margin-left: 4px; font-size: 20px; vertical-align: middle; }
 
-        .fc-badge {
-          position: absolute; top: -6px; right: -6px;
-          min-width: 20px; height: 20px; border-radius: 999px;
-          background: #111; color: #fff; font-size: 12px;
-          display: inline-flex; align-items: center; justify-content: center; padding: 0 6px;
+        .cadance-card.dropdown-variant {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 50%;
+          transform: translateX(-50%);
+          min-width: 200px;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 6px 10px rgba(0,0,0,0.08);
+          padding: 12px;
+          z-index: 1000;
+          transform-origin: top center;
+        }
+        .dropdown-open { animation: dropdownOpen 0.2s cubic-bezier(0.4,0,0.2,1) forwards; }
+        .dropdown-closing { animation: dropdownClose 0.2s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+        @keyframes dropdownOpen {
+          0% { opacity: 0; transform: translateX(-50%) translateY(-10px) scaleY(0.8); }
+          100% { opacity: 1; transform: translateX(-50%) translateY(0) scaleY(1); }
+        }
+        @keyframes dropdownClose {
+          0% { opacity: 1; transform: translateX(-50%) translateY(0) scaleY(1); }
+          100% { opacity: 0; transform: translateX(-50%) translateY(-10px) scaleY(0.8); }
         }
 
-        /* Legacy close button position retained */
-        .close-button {
-          position: absolute; top: -6px; left: -6px;
-          background: #fff; border-radius: 999px; padding: 2px;
-          box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        .cadance-card.dropdown-variant .cadance-card-button {
+          width: 100%;
+          padding: 10px 12px;
+          margin: 4px 0;
+          text-align: left;
+          background: transparent;
+          border: 1px solid #e0e0e0;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 14px;
+        }
+        .cadance-card.dropdown-variant .cadance-card-button:hover {
+          background: #f5f5f5; border-color: #d0d0d0;
+        }
+        .cadance-card.dropdown-variant .cadance-card-button.selected {
+          background: #e3f2fd; border-color: #2196f3; color: #1976d2; font-weight: 500;
+        }
+        .cadance-card.dropdown-variant .cadance-card-button.selected:hover { background: #bbdefb; }
+
+        .check-icon { font-size: 18px; color: #1976d2; opacity: 0; transform: scale(0.8); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+        .cadance-card-button.selected .check-icon { opacity: 1; transform: scale(1); }
+
+        .cadance-card.dropdown-variant > p {
+          margin: 0 0 8px 4px; font-size: 11px; font-weight: 600; color: #666; letter-spacing: 0.5px;
         }
 
-        /* Responsive sizing */
-        @media (max-width: 1024px) { .embla__slide { width: 88px; } }
-        @media (max-width: 768px)  { .embla__slide { width: 80px; } }
-        @media (max-width: 640px)  { .embla__slide { width: 72px; } }
+        @media (max-width: 640px) {
+          .cadance-card.dropdown-variant {
+            left: 0; transform: translateX(0); right: auto; min-width: 250px;
+          }
+          @keyframes dropdownOpen {
+            0% { opacity: 0; transform: translateY(-10px) scaleY(0.8); }
+            100% { opacity: 1; transform: translateY(0) scaleY(1); }
+          }
+          @keyframes dropdownClose {
+            0% { opacity: 1; transform: translateY(0) scaleY(1); }
+            100% { opacity: 0; transform: translateY(-10px) scaleY(0.8); }
+          }
+        }
+
+        .cadance-card-button { position: relative; overflow: hidden; }
+        .cadance-card-button::after {
+          content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%;
+          background: rgba(33,150,243,0.1); transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s;
+        }
+        .cadance-card-button:active::after { width: 200px; height: 200px; }
       `}</style>
-    </section>
+    </div>
   );
 };
 
-export default FooterCarousel;
+export default DeliveryFrequencyDropdown;
