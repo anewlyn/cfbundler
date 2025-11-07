@@ -1,17 +1,19 @@
+'use client';
+
 import classNames from 'classnames';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
-import Carousel from './Carousel';
+import FooterCarousel from './FooterCarousel';
 
-type carouselImageTypes = {
+type CarouselItem = {
+  id: string;        // stable per product/variant
+  name: string;
+  image: string;
+  quantity: number;  // 0 for placeholders (non-removable)
   shopifyId?: number;
-  imageURL: string;
-  altText: string;
-  qty?: number;
 };
 
 const StickyFooter = () => {
@@ -34,33 +36,32 @@ const StickyFooter = () => {
     currentOrderValue <
     (Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE) ?? benefitTiers[0].value);
 
+  // (Optional) overflow check—kept from your original, safe to remove if not needed
   useEffect(() => {
     const checkOverflow = () => {
       const el = carouselRef.current;
-      if (el) {
-        const hasHorizontalOverflow = el.scrollWidth > el.clientWidth;
-        const hasVerticalOverflow = el.scrollHeight > el.clientHeight;
-        setHasOverflow(hasHorizontalOverflow || hasVerticalOverflow);
-      }
+      if (!el) return;
+      const hasHorizontalOverflow = el.scrollWidth > el.clientWidth;
+      const hasVerticalOverflow = el.scrollHeight > el.clientHeight;
+      setHasOverflow(hasHorizontalOverflow || hasVerticalOverflow);
     };
 
     checkOverflow();
-
-    window.addEventListener('resize', checkOverflow);
-    return () => window.removeEventListener('resize', checkOverflow);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', checkOverflow);
+      return () => window.removeEventListener('resize', checkOverflow);
+    }
   }, []);
 
   const getFooterMessage = () => {
     if (
       currentOrderValue <=
       (Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE) ?? benefitTiers[0].value)
-    )
+    ) {
       return process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE_FOOTER_TEXT;
+    }
 
-    const notice = benefitTiers.findLastIndex((tier) => {
-      return currentOrderValue >= tier.value;
-    });
-
+    const notice = benefitTiers.findLastIndex((tier) => currentOrderValue >= tier.value);
     return notice > 0 ? benefitTiers[notice].footerMessage : benefitTiers[0].footerMessage;
   };
 
@@ -69,80 +70,58 @@ const StickyFooter = () => {
     handleTransaction();
   };
 
-  const handleRemoveFromCart = (shopifyId: number, qty: number) => {
-    addProductVariant({ shopifyId: shopifyId, quantity: qty - 1 });
+  // Decrease quantity by 1 for the selected item
+  const handleRemoveOne = (it: CarouselItem) => {
+    if (!it.shopifyId || !it.quantity) return;
+    addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
 
-  const carouselImages = [];
-  cart.productVariants?.forEach((cartProduct) => {
-    const product = products.find((product) => {
-      return product.shopifyId === cartProduct.shopifyId;
-    });
+  // Build a de-duplicated list for the carousel, grouped by product.shopifyId.
+  // If you prefer grouping by variant, change the Map key and fields below.
+  const items: CarouselItem[] = useMemo(() => {
+    const map = new Map<number, CarouselItem>(); // key: product.shopifyId
 
-    if (product) {
-      // add product to carouselImages array a number of times equal to the quantity
-      for (let i = 0; i < cartProduct.quantity; i++) {
-        carouselImages.push({
-          qty: cartProduct.quantity,
+    cart.productVariants?.forEach((cartProduct) => {
+      const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
+      if (!product) return;
+
+      const qty = cartProduct.quantity || 0;
+      const existing = map.get(product.shopifyId);
+
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        map.set(product.shopifyId, {
+          id: String(product.shopifyId),
+          name: product.title,
+          image:
+            product.images?.[0]?.imageURL ||
+            'https://bundler.cyclingfrog.com/assets/lone-frog.png',
+          quantity: qty,
           shopifyId: product.shopifyId,
-          imageURL: product.images[0].imageURL,
-          altText: product.title,
         });
       }
-    }
-    return product;
-  });
-
-  // add default images to carousel if there are less than 6 products
-  while (carouselImages.length < 6) {
-    carouselImages.push({ imageURL: 'https://bundler.cyclingfrog.com/assets/lone-frog.png', altText: 'Cycling Frog Logo' });
-  }
-
-  const renderImages = (images: carouselImageTypes[]) => {
-    return images.map((slide: carouselImageTypes, index: number) => {
-      const isDefaultImage = slide?.imageURL === 'https://bundler.cyclingfrog.com/assets/lone-frog.png';
-      const slideShopifyId = slide?.shopifyId || 0;
-      const slideQty = slide?.qty || 0;
-      return (
-        <div
-          className={classNames(
-            'carousel-item-container',
-            'embla__slide',
-            isDefaultImage && 'default-image',
-          )}
-          key={index}
-        >
-          <Image
-            className="carousel-item"
-            src={slide?.imageURL || 'https://bundler.cyclingfrog.com/assets/lone-frog.png'}
-            alt={slide?.altText || 'Cycling Frog Logo'}
-            width={85}
-            height={85}
-          />
-          {!!slide.qty && (
-            <button
-              className="close-button"
-              onClick={() => handleRemoveFromCart(slideShopifyId, slideQty)}
-              aria-label="Remove from cart"
-            >
-              <span className="material-icons">close</span>
-            </button>
-          )}
-          {!isDefaultImage && (
-            <div className="carousel-item-overlay">
-              <p className="overlay-text">{slide?.altText}</p>
-            </div>
-          )}
-        </div>
-      );
     });
-  };
+
+    const arr = Array.from(map.values());
+
+    // Pad to 6 slots with placeholders (non-removable)
+    while (arr.length < 6) {
+      arr.push({
+        id: `placeholder-${arr.length}`,
+        name: 'Cycling Frog Logo',
+        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png',
+        quantity: 0,
+      });
+    }
+
+    return arr;
+  }, [cart.productVariants, products]);
 
   const renderProductPrice = () => {
     let discountedPrice = currentOrderValue;
     if (currentDiscount) {
       discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
-
       return (
         <div className="product-price">
           <p className={classNames('discount-price', kiro_extra_bold_700.className)}>
@@ -163,25 +142,30 @@ const StickyFooter = () => {
 
   return (
     <div className="sticky-footer">
-      <div className="carousel">
-        <Carousel ref={carouselRef}>{renderImages(carouselImages)}</Carousel>
+      <div className="carousel" ref={carouselRef}>
+        {/* New grouped carousel with arrows/keyboard support */}
+        <FooterCarousel
+          items={items}
+          onRemoveOne={handleRemoveOne}
+          ariaLabel="Selected bundle items"
+        />
         <div className={classNames({ 'has-overflow': hasOverflow })} />
       </div>
+
       <div className="order-info">
         <p>{getFooterMessage()}</p>
         <div className="current-info">
           {renderProductPrice()}
           <button
             onClick={handlePostTransaction}
-            className={classNames('add-button', {
-              disabled: isDisabled,
-            })}
+            className={classNames('add-button', { disabled: isDisabled })}
             disabled={isDisabled || submittingCart}
           >
             {submittingCart ? 'Adding to cart...' : 'Add to cart'}
           </button>
         </div>
       </div>
+
       <Link href="https://cyclingfrog.com/pages/contact-us" className="sticky-button round-button">
         <span>?</span>
       </Link>
