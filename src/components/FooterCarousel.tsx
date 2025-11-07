@@ -111,7 +111,8 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                 <div className="embla__viewport" ref={emblaRef}>
                     <div className="embla__container">
                         {slides.map((item, idx) => {
-                            const isPlaceholder = isPlaceholderItem(item);
+                            const isPlaceholder =
+                                !item.shopifyId || item.quantity === 0 || /lone-frog\.png/i.test(item.image);
                             const ariaLabel = isPlaceholder ? 'Empty slot' : item.name;
 
                             return (
@@ -123,42 +124,43 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                                     aria-disabled={isPlaceholder || undefined}
                                     aria-label={ariaLabel}
                                 >
-                                    <div className="carousel-card">
-                                        {/* Quantity badge ONLY for real products with qty > 1 */}
-                                        {!isPlaceholder && item.quantity > 1 && (
-                                            <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
-                                                {item.quantity}
-                                            </span>
-                                        )}
+                                    {/* FIXED-WIDTH TILE WRAPPER */}
+                                    <div className="fc-tile">
+                                        <div className="carousel-card">
+                                            {!isPlaceholder && item.quantity > 1 && (
+                                                <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
+                                                    {item.quantity}
+                                                </span>
+                                            )}
 
-                                        {/* Image */}
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={item.image}
-                                            alt={ariaLabel}
-                                            className="carousel-item"
-                                            loading="lazy"
-                                        />
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={item.image}
+                                                alt={ariaLabel}
+                                                className="carousel-item"
+                                                loading="lazy"
+                                            />
 
-                                        {/* Caption ONLY for real products */}
-                                        {!isPlaceholder && <p className="carousel-caption">{item.name}</p>}
+                                            {/* caption only for real products */}
+                                            {!isPlaceholder && <p className="carousel-caption">{item.name}</p>}
 
-                                        {/* Remove-one ONLY for real products with a shopifyId */}
-                                        {!isPlaceholder && onRemoveOne && item.shopifyId && (
-                                            <button
-                                                type="button"
-                                                className="close-button"
-                                                aria-label={`Remove one ${item.name}`}
-                                                onClick={() => onRemoveOne(item)}
-                                            >
-                                                <span className="material-icons">close</span>
-                                            </button>
-                                        )}
+                                            {!isPlaceholder && onRemoveOne && item.shopifyId && (
+                                                <button
+                                                    type="button"
+                                                    className="close-button"
+                                                    aria-label={`Remove one ${item.name}`}
+                                                    onClick={() => onRemoveOne(item)}
+                                                >
+                                                    <span className="material-icons">close</span>
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             );
                         })}
                     </div>
+
                 </div>
             </div>
 
@@ -173,7 +175,7 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                 <i className="material-icons">chevron_right</i>
             </button>
 
-<style jsx>{`
+            <style jsx>{`
   :root {
     --fc-bg: var(--cf-footer-bg, #f7f7f7);
     --fc-padding-y: 0.5rem;
@@ -334,6 +336,68 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
     .fc-arrow--prev { left: var(--fc-arrow-x-sm); }
     .fc-arrow--next { right: var(--fc-arrow-x-sm); left: auto; }
   }
+    /* ===== Container clamps & caption height ===== */
+
+/* Slide itself: fixed basis + no shrinking */
+.footer-carousel :global(.embla__slide) {
+  flex: 0 0 var(--fc-slide-w) !important;
+  width: var(--fc-slide-w) !important;
+  max-width: var(--fc-slide-w) !important;
+  min-width: var(--fc-slide-w) !important;
+}
+
+/* Inner tile ensures content can’t expand the slide */
+.fc-tile {
+  width: var(--fc-slide-w);
+  max-width: var(--fc-slide-w);
+  margin: 0 auto;
+}
+
+/* Make card a simple grid: image then caption; no growth */
+.carousel-card {
+  display: grid;
+  grid-template-rows: auto auto; /* image, caption */
+  align-items: start;
+  width: 100%;
+  max-width: var(--fc-slide-w);
+}
+
+/* Image already constrained by your vars; ensure no overflow */
+.carousel-item {
+  width: 100% !important;
+  max-width: 70px !important;   /* hard cap to prevent intrinsic upscaling */
+  height: var(--fc-img-h) !important;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Caption: fixed 2-line height so all tiles match and badges align */
+.carousel-caption {
+  line-height: 1.2;
+  max-height: calc(1.2em * 2);  /* exactly two lines */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* Badge & close button align relative to a fixed-size card */
+.fc-badge {
+  top: -5px;
+  right: -5px;
+}
+.close-button {
+  top: -6px;
+  left: -6px;
+}
+
+/* Placeholders smaller & inert (keeps exact tile metrics) */
+.is-placeholder .carousel-item { height: var(--fc-img-h-ph) !important; opacity: .85; }
+.is-placeholder .carousel-caption { display: none; } /* no caption for placeholders */
+.is-placeholder .carousel-card { pointer-events: none; }
+
 `}</style>
         </section>
     );
