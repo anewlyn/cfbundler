@@ -2,17 +2,14 @@
 
 import { useState, useRef, useEffect, useMemo, useId, KeyboardEvent } from 'react';
 import classNames from 'classnames';
-import { useLoopContext } from '@/contexts/LoopProvider';
+import { useLoopContext, LoopContextType } from '@/contexts/LoopProvider';
 
 interface DeliveryFrequencyDropdownProps {
   className?: string;
 }
 
-type SellingPlan = {
-  shopifyId: number | string;
-  deliveryInterval: string;       // e.g., "WEEK", "MONTH"
-  deliveryIntervalCount: number;  // e.g., 1, 2, 3
-};
+// 🧠 Derive the plan type directly from the provider
+type PlanType = LoopContextType['sellingPlans'][number];
 
 const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdownProps) => {
   const { sellingPlans, setCart, cart } = useLoopContext();
@@ -23,29 +20,31 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // call hooks before early return
-  const menuAutoId = useId();
-  const menuId = `delivery-frequency-menu-${menuAutoId}`;
+  // Optional guard if a string ever sneaks in (e.g., GID)
+  const toNum = (v: unknown) => {
+    if (typeof v === 'number') return v;
+    if (typeof v === 'string') {
+      const digits = v.replace(/[^\d]/g, '');
+      const n = Number(digits.length ? digits : v);
+      return Number.isNaN(n) ? -1 : n;
+    }
+    return -1;
+  };
 
-  // resolve current plan (fallback to first if missing)
   const currentPlanIndex = useMemo(
-    () =>
-      Math.max(
-        0,
-        sellingPlans.findIndex(
-          (p: SellingPlan) => String(p.shopifyId) === String(cart.sellingPlanId)
-        )
-      ),
+    () => Math.max(0, sellingPlans.findIndex((p: PlanType) => toNum(p.shopifyId) === cart.sellingPlanId)),
     [sellingPlans, cart.sellingPlanId]
   );
-  const currentPlan: SellingPlan = sellingPlans[currentPlanIndex] || sellingPlans[0];
+  const currentPlan: PlanType = sellingPlans[currentPlanIndex] || sellingPlans[0];
 
-  const formatInterval = (plan: SellingPlan) => {
-    const plural =
-      Number(plan.deliveryIntervalCount) > 1 ? `${plan.deliveryInterval}S` : plan.deliveryInterval;
+  const formatInterval = (plan: PlanType) => {
+    const plural = Number(plan.deliveryIntervalCount) > 1
+      ? `${plan.deliveryInterval}S`
+      : plan.deliveryInterval;
     return `${plan.deliveryIntervalCount} ${plural}`;
   };
 
+  // Click outside → close
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       if (!dropdownRef.current) return;
@@ -55,45 +54,41 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
 
-
+  // Opening animation & focus
   useEffect(() => {
     if (!isOpen) return;
     const t = setTimeout(() => setIsAnimating(false), 10);
-    const selected = menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]');
-    selected?.focus();
+    menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]')?.focus();
     return () => clearTimeout(t);
   }, [isOpen]);
 
-  // keep selection synced if cart.sellingPlanId changes 
+  // Keep focus aligned with selection while open
   useEffect(() => {
-    if (isOpen) {
-      const selected = menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]');
-      selected?.focus();
-    }
+    if (!isOpen) return;
+    menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]')?.focus();
   }, [currentPlanIndex, isOpen]);
 
   const openDropdown = () => {
     setIsAnimating(true);
     setIsOpen(true);
   };
-
   const closeDropdown = () => {
     setIsAnimating(true);
     setTimeout(() => {
       setIsOpen(false);
       setIsAnimating(false);
-      triggerRef.current?.focus(); // return focus to trigger
+      triggerRef.current?.focus();
     }, 200);
   };
-
   const toggleDropdown = () => (isOpen ? closeDropdown() : openDropdown());
 
-  const handlePlanSelect = (plan: SellingPlan) => {
-    setCart({ ...cart, sellingPlanId: plan.shopifyId });
+  const handlePlanSelect = (plan: PlanType) => {
+    const id = toNum(plan.shopifyId); // will be number today; guard for future
+    if (id < 0) return console.warn('[DeliveryFrequencyDropdown] Invalid sellingPlanId:', plan.shopifyId);
+    setCart({ ...cart, sellingPlanId: id }); // ✅ stays a number, matches CartType
     closeDropdown();
   };
 
-  // keyboard handling on the trigger
   const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -101,44 +96,23 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     }
   };
 
-  // keyboard handling on the menu
   const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const items = Array.from(
-      menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []
-    );
+    const items = Array.from(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []);
     const idx = items.findIndex((el) => el === document.activeElement);
     const focusAt = (i: number) => items[Math.max(0, Math.min(items.length - 1, i))]?.focus();
 
     switch (e.key) {
-      case 'Escape':
-        e.preventDefault();
-        closeDropdown();
-        break;
-      case 'ArrowDown':
-        e.preventDefault();
-        focusAt(idx < 0 ? 0 : idx + 1);
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        focusAt(idx <= 0 ? items.length - 1 : idx - 1);
-        break;
-      case 'Home':
-        e.preventDefault();
-        focusAt(0);
-        break;
-      case 'End':
-        e.preventDefault();
-        focusAt(items.length - 1);
-        break;
+      case 'Escape': e.preventDefault(); closeDropdown(); break;
+      case 'ArrowDown': e.preventDefault(); focusAt(idx < 0 ? 0 : idx + 1); break;
+      case 'ArrowUp': e.preventDefault(); focusAt(idx <= 0 ? items.length - 1 : idx - 1); break;
+      case 'Home': e.preventDefault(); focusAt(0); break;
+      case 'End': e.preventDefault(); focusAt(items.length - 1); break;
       case 'Enter':
-      case ' ':
-        e.preventDefault();
-        (document.activeElement as HTMLButtonElement)?.click();
-        break;
+      case ' ': e.preventDefault(); (document.activeElement as HTMLButtonElement)?.click(); break;
     }
   };
 
-  // single-plan, render inert 
+  // Single-plan: inert button (keeps layout)
   if (sellingPlans.length <= 1) {
     return (
       <button className={className} type="button" aria-disabled="true">
@@ -147,6 +121,9 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
       </button>
     );
   }
+
+  const menuAutoId = useId();
+  const menuId = `delivery-frequency-menu-${menuAutoId}`;
 
   return (
     <div className="relative inline-block" ref={dropdownRef}>
@@ -164,14 +141,9 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
         <b>{formatInterval(currentPlan)}</b>
         <i
           className="material-icons delivery-dropdown-icon"
-          style={{
-            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
+          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
           aria-hidden
-        >
-          expand_more
-        </i>
+        >expand_more</i>
       </button>
 
       {isOpen && (
@@ -182,15 +154,12 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
           aria-label="Delivery cadence options"
           tabIndex={-1}
           onKeyDown={onMenuKeyDown}
-          className={classNames(
-            'cadance-card dropdown-variant',
-            isAnimating ? 'dropdown-closing' : 'dropdown-open'
-          )}
+          className={classNames('cadance-card dropdown-variant', isAnimating ? 'dropdown-closing' : 'dropdown-open')}
         >
           <p className="uppercase">Deliver Every...</p>
 
-          {sellingPlans.map((plan: SellingPlan, index: number) => {
-            const selected = String(plan.shopifyId) === String(cart.sellingPlanId);
+          {sellingPlans.map((plan: PlanType, index: number) => {
+            const selected = toNum(plan.shopifyId) === cart.sellingPlanId;
             return (
               <button
                 key={String(plan.shopifyId) || index}
@@ -208,222 +177,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
           })}
         </div>
       )}
-
-      <style jsx>{`
-        .delivery-dropdown-trigger {
-          position: relative;
-          /* no display here: let .header-button / .header-button-mobile control visibility */
-          align-items: center;
-          cursor: pointer;
-        }
-        .delivery-dropdown-icon {
-          margin-left: 4px;
-          font-size: 20px;
-          vertical-align: middle;
-        }
-
-        .cadance-card.dropdown-variant {
-          position: absolute;
-          top: calc(100% + 8px);
-          left: 50%;
-          transform: translateX(-50%);
-          min-width: 200px;
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 6px 10px rgba(0, 0, 0, 0.08);
-          padding: 12px;
-          z-index: 1000;
-          transform-origin: top center;
-        }
-        .dropdown-open {
-          animation: dropdownOpen 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        .dropdown-closing {
-          animation: dropdownClose 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes dropdownOpen {
-          0% {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-10px) scaleY(0.8);
-          }
-          100% {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0) scaleY(1);
-          }
-        }
-        @keyframes dropdownClose {
-          0% {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0) scaleY(1);
-          }
-          100% {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-10px) scaleY(0.8);
-          }
-        }
-
-        .cadance-card.dropdown-variant .cadance-card-button {
-          width: 100%;
-          padding: 10px 12px;
-          margin: 4px 0;
-          text-align: left;
-          background: transparent;
-          border: 1px solid #e0e0e0;
-          border-radius: 6px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          font-size: 14px;
-        }
-        .cadance-card.dropdown-variant .cadance-card-button:hover {
-          background: #f5f5f5;
-          border-color: #d0d0d0;
-        }
-        .cadance-card.dropdown-variant .cadance-card-button.selected {
-          background: #e3f2fd;
-          border-color: #2196f3;
-          color: #1976d2;
-          font-weight: 500;
-        }
-        .cadance-card.dropdown-variant .cadance-card-button.selected:hover {
-          background: #bbdefb;
-        }
-
-        .check-icon {
-          font-size: 18px;
-          color: #1976d2;
-          opacity: 0;
-          transform: scale(0.8);
-          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .cadance-card-button.selected .check-icon {
-          opacity: 1;
-          transform: scale(1);
-        }
-
-        .cadance-card.dropdown-variant > p {
-          margin: 0 0 8px 4px;
-          font-size: 11px;
-          font-weight: 600;
-          color: #666;
-          letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 640px) {
-          .cadance-card.dropdown-variant {
-            left: 0;
-            transform: translateX(0);
-            right: auto;
-            min-width: 250px;
-          }
-          @keyframes dropdownOpen {
-            0% {
-              opacity: 0;
-              transform: translateY(-10px) scaleY(0.8);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0) scaleY(1);
-            }
-          }
-          @keyframes dropdownClose {
-            0% {
-              opacity: 1;
-              transform: translateY(0) scaleY(1);
-            }
-            100% {
-              opacity: 0;
-              transform: translateY(-10px) scaleY(0.8);
-            }
-          }
-        }
-
-        .cadance-card-button {
-          position: relative;
-          overflow: hidden;
-        }
-        .cadance-card-button::after {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 0;
-          height: 0;
-          border-radius: 50%;
-          background: rgba(33, 150, 243, 0.1);
-          transform: translate(-50%, -50%);
-          transition: width 0.3s, height 0.3s;
-        }
-        .cadance-card-button:active::after {
-          width: 200px;
-          height: 200px;
-        }
-          /* ===== clamps & caption height ===== */
-
-/* slid fixed basis, no shrinking */
-.footer-carousel :global(.embla__slide) {
-  flex: 0 0 var(--fc-slide-w) !important;
-  width: var(--fc-slide-w) !important;
-  max-width: var(--fc-slide-w) !important;
-  min-width: var(--fc-slide-w) !important;
-}
-
-/* tile so content can’t expand the slide */
-.fc-tile {
-  width: var(--fc-slide-w);
-  max-width: var(--fc-slide-w);
-  margin: 0 auto;
-}
-
-/* make card a grid, image, caption, no-growth */
-.carousel-card {
-  display: grid;
-  grid-template-rows: auto auto; /* image, caption */
-  align-items: start;
-  width: 100%;
-  max-width: var(--fc-slide-w);
-}
-
-/* Image constrained by your vars no overflow */
-.carousel-item {
-  width: 100% !important;
-  max-width: 70px !important;   /* hard cap to prevent intrinsic upscaling */
-  height: var(--fc-img-h) !important;
-  margin: 0 auto;
-  object-fit: contain;
-}
-
-/* fixed line height so tiles match & badges align */
-.carousel-caption {
-  line-height: 1.2;
-  max-height: calc(1.2em * 2);  /* exactly two lines */
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  margin-top: 4px;
-  text-align: center;
-}
-
-/* badge & close button align relative to a fixed-size card */
-.fc-badge {
-  top: -5px;
-  right: -5px;
-}
-.close-button {
-  top: -6px;
-  left: -6px;
-}
-
-/* placeholders smaller */
-.is-placeholder .carousel-item { height: var(--fc-img-h-ph) !important; opacity: .85; }
-.is-placeholder .carousel-caption { display: none; } /* no caption for placeholders */
-.is-placeholder .carousel-card { pointer-events: none; }
-
-      `}</style>
     </div>
   );
 };
