@@ -173,37 +173,34 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                 <i className="material-icons">chevron_right</i>
             </button>
 
- <style jsx>{`
-  /* ================================
-   * FooterCarousel (compact variant)
-   * ================================ */
+<style jsx>{`
   :root {
     --fc-bg: var(--cf-footer-bg, #f7f7f7);
-    --fc-padding-y: 0.75rem;
-    --fc-padding-x: 1.25rem;
+    --fc-padding-y: 0.5rem;
+    --fc-padding-x: 1rem;
 
-    --fc-arrow-size: 26px;
-    --fc-arrow-size-sm: 24px;
-    --fc-arrow-x: 4px;
-    --fc-arrow-x-sm: 2px;
-    --fc-arrow-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    --fc-arrow-shadow-hover: 0 3px 8px rgba(0,0,0,0.14);
+    --fc-arrow-size: 24px;
+    --fc-arrow-size-sm: 22px;
+    --fc-arrow-x: 6px;
+    --fc-arrow-x-sm: 4px;
+    --fc-arrow-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    --fc-arrow-shadow-hover: 0 2px 8px rgba(0,0,0,0.15);
 
     --fc-gap: 8px;
-    --fc-slide-w: 76px;
-    --fc-slide-w-md: 70px;
-    --fc-slide-w-sm: 66px;
-    --fc-slide-w-xs: 60px;
+    --fc-slide-w: 85px;
+    --fc-slide-w-md: 80px;
+    --fc-slide-w-sm: 76px;
+    --fc-slide-w-xs: 72px;
 
     --fc-card-bg: #fff;
     --fc-card-border: #e5e5e5;
     --fc-card-border-hover: #d9d9d9;
-    --fc-card-radius: 8px;
-    --fc-card-pad: 6px;
-    --fc-card-shadow-hover: 0 2px 6px rgba(0,0,0,0.05);
+    --fc-card-radius: 4px;
+    --fc-card-pad: 4px;
+    --fc-card-shadow-hover: 0 1px 6px rgba(0,0,0,0.05);
 
-    --fc-img-h: 54px;     /* product */
-    --fc-img-h-ph: 40px;  /* placeholder */
+    --fc-img-h: 70px;
+    --fc-img-h-ph: 50px;
 
     --fc-caption-color: #444;
     --fc-caption-fs: 10px;
@@ -222,7 +219,6 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
     position: relative;
   }
 
-  /* Arrows */
   .fc-arrow {
     position: absolute;
     top: 50%;
@@ -246,7 +242,6 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
   }
   .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
 
-  /* Embla essentials */
   .embla { position: relative; }
   .embla__viewport {
     overflow: hidden;
@@ -255,23 +250,22 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
   }
   .embla__viewport:active { cursor: grabbing; }
   .embla__container { display: flex; gap: var(--fc-gap); }
-
-  /* Fixed slide widths */
   .embla__slide { flex: 0 0 auto; width: var(--fc-slide-w); }
 
-  /* Cards / tiles */
   .carousel-card {
     position: relative;
     background: var(--fc-card-bg);
     border: 1px solid var(--fc-card-border);
     border-radius: var(--fc-card-radius);
     padding: var(--fc-card-pad);
-    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease, opacity .2s ease;
-    will-change: transform, opacity;
+    transition: box-shadow .15s ease, border-color .15s ease, opacity .2s ease;
     opacity: 0.99;
     cursor: default;
     user-select: text;
+    width: 100%;
+    height: auto;
   }
+
   .carousel-card:hover {
     border-color: var(--fc-card-border-hover);
     box-shadow: var(--fc-card-shadow-hover);
@@ -279,17 +273,21 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
 
   .carousel-item {
     width: 100%;
+    max-width: 70px;      /* hard cap to stop 720×720 scaling */
     height: var(--fc-img-h);
     object-fit: contain;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .is-placeholder .carousel-item {
+    height: var(--fc-img-h-ph);
+    opacity: 0.8;
   }
 
   .is-placeholder .carousel-card {
     border-color: #eee;
     pointer-events: none;
-  }
-  .is-placeholder .carousel-item {
-    height: var(--fc-img-h-ph);
-    opacity: 0.8;
   }
 
   .carousel-caption {
@@ -320,15 +318,14 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
 
   .close-button {
     position: absolute;
-    top: -7px;
-    left: -7px;
+    top: -6px;
+    left: -6px;
     background: #fff;
     border-radius: 999px;
     padding: 2px;
     box-shadow: var(--fc-close-shadow);
   }
 
-  /* Responsive */
   @media (max-width: 1024px) { .embla__slide { width: var(--fc-slide-w-md); } }
   @media (max-width: 768px)  { .embla__slide { width: var(--fc-slide-w-sm); } }
   @media (max-width: 640px)  {
@@ -336,11 +333,6 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
     .fc-arrow { width: var(--fc-arrow-size-sm); height: var(--fc-arrow-size-sm); }
     .fc-arrow--prev { left: var(--fc-arrow-x-sm); }
     .fc-arrow--next { right: var(--fc-arrow-x-sm); left: auto; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .fc-arrow,
-    .carousel-card { transition: none; }
   }
 `}</style>
         </section>
