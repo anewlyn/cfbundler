@@ -26,18 +26,27 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
 
     const slides = useMemo(() => items ?? [], [items]);
 
-    const onSelect = useCallback((api: EmblaCarouselType) => {
-        setSelectedIndex(api.selectedScrollSnap());
-        setCanPrev(api.canScrollPrev());
-        setCanNext(api.canScrollNext());
-    }, []);
+const onSelect = useCallback((api: EmblaCarouselType) => {
+  setSelectedIndex(api.selectedScrollSnap());
+  setCanPrev(api.canScrollPrev());
+  setCanNext(api.canScrollNext());
+}, []);
 
-    useEffect(() => {
-        if (!emblaApi) return;
-        onSelect(emblaApi);
-        emblaApi.on('select', onSelect);
-        emblaApi.on('reInit', onSelect);
-    }, [emblaApi, onSelect]);
+useEffect(() => {
+  if (!emblaApi) return;
+
+  onSelect(emblaApi);
+
+  emblaApi.on('select', onSelect);
+  emblaApi.on('reInit', onSelect);
+
+  emblaApi.reInit();
+
+  return () => {
+    emblaApi.off?.('select', onSelect);
+    emblaApi.off?.('reInit', onSelect);
+  };
+}, [emblaApi, onSelect, slides.length]);
 
     const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
     const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
