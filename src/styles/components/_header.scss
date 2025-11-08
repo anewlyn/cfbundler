@@ -1,8 +1,5 @@
 @import 'breakpoints';
 
-/* ================================
- * Header layout
- * ================================ */
 .header {
   align-items: center;
   background-color: var(--cf-header-background-color);
@@ -27,9 +24,6 @@
   }
 }
 
-/* ================================
- * Logo area
- * ================================ */
 .header-logo {
   align-items: center;
   display: flex;
@@ -57,15 +51,12 @@
   }
 }
 
-/* ================================
- * Title + schedule dropdown column
- * ================================ */
 .header-title {
   align-items: center;
   display: flex;
   flex-direction: column;
   padding-bottom: 2rem;
-  position: relative; /* anchor for dropdown */
+  position: relative; 
 
   @include for_breakpoint('mobile') {
     padding-bottom: 1rem;
@@ -82,13 +73,9 @@
   }
 }
 
-/* Allow dropdown to render over header without changing layout height */
 .header,
 .header-title { overflow: visible; }
 
-/* ================================
- * Header buttons (desktop + mobile)
- * ================================ */
 .header-button {
   align-items: center;
   background-color: var(--cf-background-color);
@@ -122,7 +109,6 @@
   }
 }
 
-/* Progress bar column */
 .header-progress-bar {
   position: relative;
   height: 100%;
@@ -135,14 +121,8 @@
   }
 }
 
-/* ================================
- * Delivery dropdown: trigger styling
- * ================================ */
-
-/* Spacing under the title on desktop */
 .header-title .delivery-dropdown-trigger { margin-top: .25rem; }
 
-/* Unify font + height with header buttons */
 .header-button,
 .header-button-mobile,
 .header-title .delivery-dropdown-trigger {
@@ -152,10 +132,8 @@
   height: 52px;
 }
 
-/* Keep the trigger from stretching due to text */
 .header-title .delivery-dropdown-trigger { white-space: nowrap; }
 
-/* Hover/focus affordances */
 .header-title .delivery-dropdown-trigger,
 .header-button-mobile .delivery-dropdown-trigger {
   border-radius: 6px;
@@ -170,19 +148,13 @@
   outline: none;
 }
 
-/* ================================
- * Delivery dropdown: positioning
- * ================================ */
-
-/* Wrapper that contains trigger + menu */
 .header-title .delivery-dd {
-  position: relative;     /* anchor for absolute menu */
-  display: inline-block;  /* shrink-wrap to trigger */
+  position: relative;     
+  display: inline-block; 
   vertical-align: middle;
   max-width: 100%;
 }
 
-/* Center menu to trigger; keep it out of the document flow */
 .header-title .delivery-dd .cadance-card.dropdown-variant {
   position: absolute;
   top: calc(100% + 8px);
@@ -193,17 +165,12 @@
   max-width: 90vw;
 }
 
-/* ================================
- * Mobile layout tweaks
- * ================================ */
 @media (max-width: 640px) {
-  /* Center the mobile row and trigger */
   .header-button-mobile {
     justify-content: center;
     text-align: center;
   }
 
-  /* The trigger button (has both header-button & header-button-mobile classes) */
   .header-button-mobile.delivery-dropdown-trigger {
     justify-content: center;
     padding: 0 1rem;
@@ -211,13 +178,12 @@
     margin-right: auto;
   }
 
-  /* The wrapper around trigger + menu */
   .delivery-dd {
-    display: block;        /* take full row */
-    text-align: center;    /* center the trigger */
+    display: block;       
+    text-align: center;   
   }
 
-  /* Menu remains centered under the trigger */
+
   .delivery-dd .cadance-card.dropdown-variant {
     left: 50%;
     transform: translateX(-50%);
@@ -225,12 +191,7 @@
     max-width: 94vw;
   }
 }
-/* ================================
- * DELIVERY DROPDOWN — MOBILE FIXES
- * Force absolute positioning & centering so header never grows
- * ================================ */
 
-/* Trigger row: center the button on mobile */
 @media (max-width: 640px) {
   .header-button-mobile.delivery-dropdown-trigger {
     display: flex;
@@ -240,27 +201,24 @@
     margin-right: auto;
   }
 
-  /* The wrapper around trigger + menu */
   .delivery-dd {
-    display: block;        /* takes full row */
-    text-align: center;    /* centers the trigger */
-    position: relative;    /* anchor for absolute menu */
+    display: block;       
+    text-align: center;    
+    position: relative;  
   }
 }
 
-/* Base: keep header from expanding by making menu absolute */
 .header-title .delivery-dd > .cadance-card.dropdown-variant {
   position: absolute !important;
   top: calc(100% + 8px) !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 1000 !important;
-  display: block !important;   /* undo any display:flex coming from other rules */
+  display: block !important;  
   min-width: 200px;
   max-width: 90vw;
 }
 
-/* Mobile-specific sizing & centering — use higher specificity and !important */
 @media (max-width: 640px) {
   .header-title .delivery-dd > .cadance-card.dropdown-variant {
     left: 50% !important;
@@ -270,21 +228,15 @@
   }
 }
 
-/* Safety: ensure the header allows the menu to overflow visually */
 .header,
 .header-title {
   overflow: visible !important;
 }
 
-/* Keep the trigger from stretching due to text wrapping */
 .header-title .delivery-dropdown-trigger {
   white-space: nowrap;
 }
-/* ================================
- * MOBILE LAYOUT CORRECTIONS
- * ================================ */
 
-/* Make the title row span both columns and center its contents on mobile */
 @media (max-width: 640px) {
   .header-title {
     grid-column: 1 / span 2;
@@ -293,21 +245,18 @@
     text-align: center;
   }
 
-  /* Center the mobile trigger row */
   .header-button-mobile {
     justify-content: center;
     text-align: center;
     overflow: visible;
   }
 
-  /* The wrapper around trigger+menu becomes a full-width centering context */
   .delivery-dd {
-    position: relative;   /* anchor for absolute menu */
-    display: block;       /* full row */
-    text-align: center;   /* center the trigger */
+    position: relative;   
+    display: block;    
+    text-align: center;   
   }
 
-  /* The trigger itself: center it */
   .header-button-mobile.delivery-dropdown-trigger {
     margin-left: auto;
     margin-right: auto;
@@ -316,17 +265,11 @@
   }
 }
 
-/* ================================
- * DROPDOWN MENU ABSOLUTE & CENTERED
- * (prevents header growth)
- * ================================ */
-
 .header,
 .header-title {
-  overflow: visible !important; /* allow menu to overflow visually */
+  overflow: visible !important; 
 }
 
-/* Absolute, centered to trigger, never participates in layout */
 .header-title .delivery-dd > .delivery-dd-menu {
   position: absolute !important;
   top: calc(100% + 8px) !important;
@@ -334,7 +277,6 @@
   transform: translateX(-50%) !important;
   z-index: 1000 !important;
 
-  /* Neutralize any inherited flex styles from cadance-card */
   display: block !important;
   flex: none !important;
   align-items: initial !important;
@@ -344,7 +286,6 @@
   max-width: 90vw;
 }
 
-/* Mobile sizing/centering of the menu */
 @media (max-width: 640px) {
   .header-title .delivery-dd > .delivery-dd-menu {
     min-width: 240px !important;
@@ -352,7 +293,51 @@
   }
 }
 
-/* Keep the trigger from stretching due to wrapping */
+.header-title .delivery-dropdown-trigger {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .header-button-mobile.delivery-dropdown-trigger {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .delivery-dd {
+    display: block;      
+    text-align: center;   
+    position: relative;    
+  }
+}
+
+.header-title .delivery-dd > .cadance-card.dropdown-variant {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+  display: block !important;   
+  min-width: 200px;
+  max-width: 90vw;
+}
+
+@media (max-width: 640px) {
+  .header-title .delivery-dd > .cadance-card.dropdown-variant {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    min-width: 240px !important;
+    max-width: 94vw !important;
+  }
+}
+
+.header,
+.header-title {
+  overflow: visible !important;
+}
+
 .header-title .delivery-dropdown-trigger {
   white-space: nowrap;
 }

@@ -152,7 +152,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
       onKeyDown={onMenuKeyDown}
       className={classNames(
         'cadance-card dropdown-variant',
-        'delivery-dd-menu',                // ← add this
+        'delivery-dd-menu',             
         isAnimating ? 'dropdown-closing' : 'dropdown-open'
       )}
     >
