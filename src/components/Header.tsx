@@ -56,8 +56,7 @@ const Header = () => {
       <div className="header-progress-bar">
         <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
       </div>
-
-      {ScheduleButton('header-button header-button-mobile')}
+      
     </header>
   );
 };

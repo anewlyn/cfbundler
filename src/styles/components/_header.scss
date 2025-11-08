@@ -16,7 +16,7 @@
   }
 }
 
-.header-sticky {
+.header-sticky { 
   @include for_breakpoint('mobile') {
     position: sticky;
     z-index: 1000;
@@ -76,39 +76,6 @@
 .header,
 .header-title { overflow: visible; }
 
-.header-button {
-  align-items: center;
-  background-color: var(--cf-background-color);
-  border: none;
-  display: flex;
-  font-size: 1rem;
-  height: 52px;
-  justify-content: center;
-  padding: 0 1rem;
-  width: max-content;
-
-  @include for_breakpoint('mobile') {
-    display: none;
-  }
-
-  i { vertical-align: middle; }
-}
-
-.header-button-mobile {
-  display: none;
-
-  @include for_breakpoint('mobile') {
-    border-bottom: 1px solid lightgrey;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    display: flex;
-    width: calc(100% + 3rem);
-    grid-column: 1 / span 2;
-    margin-left: -1.5rem;
-  }
-}
-
 .header-progress-bar {
   position: relative;
   height: 100%;
@@ -121,36 +88,39 @@
   }
 }
 
-.header-title .delivery-dropdown-trigger { margin-top: .25rem; }
-
-.header-button,
-.header-button-mobile,
-.header-title .delivery-dropdown-trigger {
+.header-button {
+  align-items: center;
+  background-color: var(--cf-background-color);
+  border: none;
+  display: flex;        
   font-size: 1rem;
-  line-height: 1.2;
-  font-weight: 600;
   height: 52px;
+  justify-content: center;
+  padding: 0 1rem;
+  width: max-content;
+
+  i { vertical-align: middle; }
 }
 
-.header-title .delivery-dropdown-trigger { white-space: nowrap; }
+.header-button-mobile { display: none; }
 
-.header-title .delivery-dropdown-trigger,
-.header-button-mobile .delivery-dropdown-trigger {
+.header-title .delivery-dropdown-trigger { margin-top: .25rem; }
+
+.header-title .delivery-dropdown-trigger {
+  white-space: nowrap;
   border-radius: 6px;
   transition: background-color .15s ease, box-shadow .15s ease;
 }
 .header-title .delivery-dropdown-trigger:hover,
-.header-title .delivery-dropdown-trigger:focus-visible,
-.header-button-mobile .delivery-dropdown-trigger:hover,
-.header-button-mobile .delivery-dropdown-trigger:focus-visible {
+.header-title .delivery-dropdown-trigger:focus-visible {
   background: rgba(0,0,0,0.04);
   box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset;
   outline: none;
 }
 
 .header-title .delivery-dd {
-  position: relative;     
-  display: inline-block; 
+  position: relative;    
+  display: inline-block;  
   vertical-align: middle;
   max-width: 100%;
 }
@@ -161,238 +131,23 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  min-width: 200px;
-  max-width: 90vw;
+  min-width: 220px;   
+  max-width: 94vw;       
 }
 
 @media (max-width: 640px) {
-  .header-button-mobile {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .header-button-mobile.delivery-dropdown-trigger {
-    justify-content: center;
-    padding: 0 1rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .delivery-dd {
-    display: block;       
-    text-align: center;   
-  }
-
-
-  .delivery-dd .cadance-card.dropdown-variant {
-    left: 50%;
-    transform: translateX(-50%);
-    min-width: 240px;
-    max-width: 94vw;
-  }
-}
-
-@media (max-width: 640px) {
-  .header-button-mobile.delivery-dropdown-trigger {
-    display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .delivery-dd {
-    display: block;       
-    text-align: center;    
-    position: relative;  
-  }
-}
-
-.header-title .delivery-dd > .cadance-card.dropdown-variant {
-  position: absolute !important;
-  top: calc(100% + 8px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 1000 !important;
-  display: block !important;  
-  min-width: 200px;
-  max-width: 90vw;
-}
-
-@media (max-width: 640px) {
-  .header-title .delivery-dd > .cadance-card.dropdown-variant {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    min-width: 240px !important;
-    max-width: 94vw !important;
-  }
-}
-
-.header,
-.header-title {
-  overflow: visible !important;
-}
-
-.header-title .delivery-dropdown-trigger {
-  white-space: nowrap;
-}
-
-@media (max-width: 640px) {
-  .header-title {
-    grid-column: 1 / span 2;
-    justify-self: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .header-button-mobile {
-    justify-content: center;
-    text-align: center;
-    overflow: visible;
-  }
-
-  .delivery-dd {
-    position: relative;   
-    display: block;    
-    text-align: center;   
-  }
-
-  .header-button-mobile.delivery-dropdown-trigger {
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    padding: 0 1rem;
-  }
-}
-
-.header,
-.header-title {
-  overflow: visible !important; 
-}
-
-.header-title .delivery-dd > .delivery-dd-menu {
-  position: absolute !important;
-  top: calc(100% + 8px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 1000 !important;
-
-  display: block !important;
-  flex: none !important;
-  align-items: initial !important;
-  width: auto !important;
-
-  min-width: 200px;
-  max-width: 90vw;
-}
-
-@media (max-width: 640px) {
-  .header-title .delivery-dd > .delivery-dd-menu {
-    min-width: 240px !important;
-    max-width: 94vw !important;
-  }
-}
-
-.header-title .delivery-dropdown-trigger {
-  white-space: nowrap;
-}
-
-@media (max-width: 640px) {
-  .header-button-mobile.delivery-dropdown-trigger {
-    display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .delivery-dd {
-    display: block;      
-    text-align: center;   
-    position: relative;    
-  }
-}
-
-.header-title .delivery-dd > .cadance-card.dropdown-variant {
-  position: absolute !important;
-  top: calc(100% + 8px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 1000 !important;
-  display: block !important;   
-  min-width: 200px;
-  max-width: 90vw;
-}
-
-@media (max-width: 640px) {
-  .header-title .delivery-dd > .cadance-card.dropdown-variant {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    min-width: 240px !important;
-    max-width: 94vw !important;
-  }
-}
-
-.header,
-.header-title {
-  overflow: visible !important;
-}
-
-.header-title .delivery-dropdown-trigger {
-  white-space: nowrap;
-}
-
-/* ================================
- * Delivery dropdown — Mobile: full-width like original
- * ================================ */
-@media (max-width: 640px) {
-  /* The wrapper around the trigger + menu should occupy the full mobile row,
-     matching your original negative margins and width calc */
-  .delivery-dd {
-    position: relative;                 /* anchor for absolute menu */
+  .header-title .delivery-dd {
     display: block;
-    width: calc(100% + 3rem);           /* full bleed across the grid */
-    margin-left: -1.5rem;
-    text-align: center;                 /* centers content if needed */
+    text-align: center;          
   }
 
-  /* Trigger fills the entire row (same look as the old .header-button-mobile) */
-  .delivery-dd .delivery-dropdown-trigger {
-    display: flex;
-    width: 100%;
-    height: 52px;
-    align-items: center;
-    justify-content: center;
-    padding: 0 1rem;
-    background-color: var(--cf-background-color);
-    border: none;
-    border-bottom: 1px solid #d3d3d3;
-    margin: 0;                          /* reset any inherited margins */
-    white-space: nowrap;                /* prevent text wrap causing reflow */
+  .header-title .delivery-dropdown-trigger {
+    margin-left: auto;
+    margin-right: auto;    
   }
 
-  /* MENU: full-width sheet under the trigger, absolutely positioned so header
-     height never changes */
-  .delivery-dd .cadance-card.dropdown-variant {
-    position: absolute !important;
-    top: 100% !important;               /* sits directly under trigger */
-    left: 0 !important;
-    right: 0 !important;
-    transform: none !important;
-
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-
-    z-index: 1000 !important;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 6px 10px rgba(0,0,0,0.08);
-    display: block !important;          /* stomp any display:flex leakage */
-  }
-
-  /* Ensure the header lets the menu overflow visually without growing */
-  .header,
-  .header-title {
-    overflow: visible !important;
+  .header-title .delivery-dd .cadance-card.dropdown-variant {
+    min-width: 240px;           
+    max-width: 94vw;              
   }
 }
