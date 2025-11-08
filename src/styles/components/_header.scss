@@ -225,3 +225,58 @@
     max-width: 94vw;
   }
 }
+/* ================================
+ * DELIVERY DROPDOWN — MOBILE FIXES
+ * Force absolute positioning & centering so header never grows
+ * ================================ */
+
+/* Trigger row: center the button on mobile */
+@media (max-width: 640px) {
+  .header-button-mobile.delivery-dropdown-trigger {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* The wrapper around trigger + menu */
+  .delivery-dd {
+    display: block;        /* takes full row */
+    text-align: center;    /* centers the trigger */
+    position: relative;    /* anchor for absolute menu */
+  }
+}
+
+/* Base: keep header from expanding by making menu absolute */
+.header-title .delivery-dd > .cadance-card.dropdown-variant {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+  display: block !important;   /* undo any display:flex coming from other rules */
+  min-width: 200px;
+  max-width: 90vw;
+}
+
+/* Mobile-specific sizing & centering — use higher specificity and !important */
+@media (max-width: 640px) {
+  .header-title .delivery-dd > .cadance-card.dropdown-variant {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    min-width: 240px !important;
+    max-width: 94vw !important;
+  }
+}
+
+/* Safety: ensure the header allows the menu to overflow visually */
+.header,
+.header-title {
+  overflow: visible !important;
+}
+
+/* Keep the trigger from stretching due to text wrapping */
+.header-title .delivery-dropdown-trigger {
+  white-space: nowrap;
+}
