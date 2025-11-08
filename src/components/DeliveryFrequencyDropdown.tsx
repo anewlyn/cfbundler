@@ -126,7 +126,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
   const menuId = `delivery-frequency-menu-${menuAutoId}`;
 
   return (
-    <div className="relative inline-block" ref={dropdownRef}>
+    <div className="delivery-dd" ref={dropdownRef}>
       <button
         ref={triggerRef}
         onClick={toggleDropdown}

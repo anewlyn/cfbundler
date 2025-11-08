@@ -1,5 +1,8 @@
 @import 'breakpoints';
 
+/* ================================
+ * Header layout
+ * ================================ */
 .header {
   align-items: center;
   background-color: var(--cf-header-background-color);
@@ -19,23 +22,21 @@
 .header-sticky {
   @include for_breakpoint('mobile') {
     position: sticky;
-    /* Move the header up by half of its height */
     z-index: 1000;
-    /* Ensure the header is above other content */
     transition: transform 0.3s ease-in-out;
-    /* Smooth transition for the transform */
   }
 }
 
+/* ================================
+ * Logo area
+ * ================================ */
 .header-logo {
   align-items: center;
   display: flex;
   gap: 1rem;
   justify-content: space-between;
 
-  .back-arrow {
-    margin-right: 10px;
-  }
+  .back-arrow { margin-right: 10px; }
 
   .back-anchor {
     align-items: center;
@@ -48,32 +49,27 @@
     text-decoration: none;
   }
 
-  .logo {
-    flex: none;
-  }
+  .logo { flex: none; }
 
   @include for_breakpoint('mobile') {
     justify-content: left;
-
-    .logo {
-      display: none;
-    }
+    .logo { display: none; }
   }
 }
 
+/* ================================
+ * Title + schedule dropdown column
+ * ================================ */
 .header-title {
   align-items: center;
   display: flex;
   flex-direction: column;
   padding-bottom: 2rem;
-  position: relative;
+  position: relative; /* anchor for dropdown */
 
   @include for_breakpoint('mobile') {
     padding-bottom: 1rem;
-
-    h1 {
-      font-size: 1.5rem;
-    }
+    h1 { font-size: 1.5rem; }
   }
 
   @include for_breakpoint('mini') {
@@ -86,6 +82,13 @@
   }
 }
 
+/* Allow dropdown to render over header without changing layout height */
+.header,
+.header-title { overflow: visible; }
+
+/* ================================
+ * Header buttons (desktop + mobile)
+ * ================================ */
 .header-button {
   align-items: center;
   background-color: var(--cf-background-color);
@@ -101,9 +104,7 @@
     display: none;
   }
 
-  i {
-    vertical-align: middle;
-  }
+  i { vertical-align: middle; }
 }
 
 .header-button-mobile {
@@ -121,6 +122,7 @@
   }
 }
 
+/* Progress bar column */
 .header-progress-bar {
   position: relative;
   height: 100%;
@@ -133,42 +135,93 @@
   }
 }
 
-/* --- Dropdown alignment next to "My Subscription" --- */
-.header-title .delivery-dropdown-trigger {
-  /* space from title */
-  margin-top: .25rem;
-}
+/* ================================
+ * Delivery dropdown: trigger styling
+ * ================================ */
 
-/* Unify font and height with header buttons */
+/* Spacing under the title on desktop */
+.header-title .delivery-dropdown-trigger { margin-top: .25rem; }
+
+/* Unify font + height with header buttons */
 .header-button,
 .header-button-mobile,
 .header-title .delivery-dropdown-trigger {
   font-size: 1rem;
   line-height: 1.2;
-  font-weight: 600; 
+  font-weight: 600;
   height: 52px;
 }
 
-/* Shover/focus feedback */
+/* Keep the trigger from stretching due to text */
+.header-title .delivery-dropdown-trigger { white-space: nowrap; }
+
+/* Hover/focus affordances */
 .header-title .delivery-dropdown-trigger,
-.header-button-mobile.delivery-dropdown-trigger {
+.header-button-mobile .delivery-dropdown-trigger {
   border-radius: 6px;
   transition: background-color .15s ease, box-shadow .15s ease;
 }
 .header-title .delivery-dropdown-trigger:hover,
-.header-button-mobile.delivery-dropdown-trigger:hover,
 .header-title .delivery-dropdown-trigger:focus-visible,
-.header-button-mobile.delivery-dropdown-trigger:focus-visible {
+.header-button-mobile .delivery-dropdown-trigger:hover,
+.header-button-mobile .delivery-dropdown-trigger:focus-visible {
   background: rgba(0,0,0,0.04);
   box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset;
   outline: none;
 }
 
-/* Mobile sticky alignment */
+/* ================================
+ * Delivery dropdown: positioning
+ * ================================ */
+
+/* Wrapper that contains trigger + menu */
+.header-title .delivery-dd {
+  position: relative;     /* anchor for absolute menu */
+  display: inline-block;  /* shrink-wrap to trigger */
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+/* Center menu to trigger; keep it out of the document flow */
+.header-title .delivery-dd .cadance-card.dropdown-variant {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  min-width: 200px;
+  max-width: 90vw;
+}
+
+/* ================================
+ * Mobile layout tweaks
+ * ================================ */
 @media (max-width: 640px) {
+  /* Center the mobile row and trigger */
+  .header-button-mobile {
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* The trigger button (has both header-button & header-button-mobile classes) */
   .header-button-mobile.delivery-dropdown-trigger {
     justify-content: center;
     padding: 0 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* The wrapper around trigger + menu */
+  .delivery-dd {
+    display: block;        /* take full row */
+    text-align: center;    /* center the trigger */
+  }
+
+  /* Menu remains centered under the trigger */
+  .delivery-dd .cadance-card.dropdown-variant {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 240px;
+    max-width: 94vw;
   }
 }
-
