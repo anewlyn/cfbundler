@@ -1,13 +1,13 @@
 'use client';
 
-import useEmblaCarousel, { type EmblaCarouselType } from 'embla-carousel-react';
-import { useCallback, useEffect, useMemo, useRef, useState, KeyboardEvent } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import { useCallback, useEffect, useState } from 'react';
 
 export interface CarouselItem {
   id: string;
   name: string;
   image: string;
-  quantity: number;   // 0 for placeholders
+  quantity: number;
   shopifyId?: number;
 }
 
@@ -19,185 +19,149 @@ interface Props {
 
 const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOne }: Props) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
-  const listboxRef = useRef<HTMLDivElement>(null);
 
-  const slides = useMemo(() => items ?? [], [items]);
-
-  const onSelect = useCallback((api: EmblaCarouselType) => {
-    setSelectedIndex(api.selectedScrollSnap());
-    setCanPrev(api.canScrollPrev());
-    setCanNext(api.canScrollNext());
-  }, []);
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setCanPrev(emblaApi.canScrollPrev());
+    setCanNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
-
-    onSelect(emblaApi);
+    onSelect();
     emblaApi.on('select', onSelect);
     emblaApi.on('reInit', onSelect);
-    emblaApi.reInit();
-
-    return () => {
-      emblaApi.off?.('select', onSelect);
-      emblaApi.off?.('reInit', onSelect);
-    };
-  }, [emblaApi, onSelect, slides.length]);
+  }, [emblaApi, onSelect]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo   = useCallback((idx: number) => emblaApi?.scrollTo(idx), [emblaApi]);
 
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    switch (e.key) {
-      case 'ArrowLeft': e.preventDefault(); scrollPrev(); break;
-      case 'ArrowRight': e.preventDefault(); scrollNext(); break;
-      case 'Home': e.preventDefault(); scrollTo(0); break;
-      case 'End': e.preventDefault(); scrollTo(slides.length - 1); break;
-      case 'PageUp': e.preventDefault(); scrollPrev(); break;
-      case 'PageDown': e.preventDefault(); scrollNext(); break;
-    }
-  };
-
-  if (!slides.length) return null;
-
-  const isPlaceholderItem = (it: CarouselItem) =>
-    !it.shopifyId || it.quantity === 0 || /lone-frog\.png/i.test(it.image);
+  if (!items?.length) return null;
 
   return (
-    <section role="region" aria-label={ariaLabel} className="footer-carousel relative">
-      {/* Prev */}
+    <section role="region" aria-label={ariaLabel} className="footer-carousel">
+      <div className="embla">
+        <div className="embla__viewport" ref={emblaRef}>
+          <div className="embla__container">
+            {items.map((item) => (
+              <div className="embla__slide" key={item.id}>
+                <div className="carousel-card">
+                  {item.quantity > 1 && (
+                    <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
+                      {item.quantity}
+                    </span>
+                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={item.image} alt={item.name} className="carousel-item" loading="lazy" />
+                  <p className="carousel-caption">{item.name}</p>
+                  {onRemoveOne && item.quantity > 0 && item.shopifyId && (
+                    <button
+                      type="button"
+                      className="close-button"
+                      aria-label={`Remove one ${item.name}`}
+                      onClick={() => onRemoveOne(item)}
+                    >
+                      <span className="material-icons">close</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Arrows */}
       <button
         type="button"
         onClick={scrollPrev}
         disabled={!canPrev}
         className={`fc-arrow fc-arrow--prev ${!canPrev ? 'is-disabled' : ''}`}
-        aria-label="Scroll selected items left"
+        aria-label="Scroll left"
       >
         <i className="material-icons">chevron_left</i>
       </button>
-
-      {/* Embla root */}
-      <div
-        className="embla mx-12"
-        role="listbox"
-        aria-label={ariaLabel}
-        tabIndex={0}
-        ref={listboxRef}
-        onKeyDown={onKeyDown}
-      >
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="embla__container">
-            {slides.map((item, idx) => {
-              const isPlaceholder = isPlaceholderItem(item);
-              const itemLabel = isPlaceholder ? 'Empty slot' : item.name; // avoid shadowing prop
-
-              return (
-                <div
-                  key={item.id}
-                  className={`embla__slide carousel-item-container ${isPlaceholder ? 'is-placeholder' : ''}`}
-                  role="option"
-                  aria-selected={(!isPlaceholder && idx === selectedIndex) || undefined}
-                  aria-disabled={isPlaceholder || undefined}
-                  aria-label={itemLabel}
-                >
-                  {/* Fixed-width tile wrapper prevents caption from expanding the slide */}
-                  <div className="fc-tile">
-                    <div className="carousel-card">
-                      {!isPlaceholder && item.quantity > 1 && (
-                        <span className="fc-badge" aria-label={`${item.quantity} in bundle`}>
-                          {item.quantity}
-                        </span>
-                      )}
-
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={item.image}
-                        alt={itemLabel}
-                        className="carousel-item"
-                        loading="lazy"
-                      />
-
-                      {/* caption only for real products */}
-                      {!isPlaceholder && <p className="carousel-caption">{item.name}</p>}
-
-                      {!isPlaceholder && onRemoveOne && item.shopifyId && (
-                        <button
-                          type="button"
-                          className="close-button"
-                          aria-label={`Remove one ${item.name}`}
-                          onClick={() => onRemoveOne(item)}
-                        >
-                          <span className="material-icons">close</span>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Next */}
       <button
         type="button"
         onClick={scrollNext}
         disabled={!canNext}
         className={`fc-arrow fc-arrow--next ${!canNext ? 'is-disabled' : ''}`}
-        aria-label="Scroll selected items right"
+        aria-label="Scroll right"
       >
         <i className="material-icons">chevron_right</i>
       </button>
 
-      {/* Styles (consolidated; no duplicates) */}
       <style jsx>{`
-        :root {
-          --fc-bg: var(--cf-footer-bg, #f7f7f7);
-          --fc-padding-y: 0.5rem;
-          --fc-padding-x: 1rem;
-
-          --fc-arrow-size: 24px;
-          --fc-arrow-size-sm: 22px;
-          --fc-arrow-x: 6px;
-          --fc-arrow-x-sm: 4px;
-          --fc-arrow-shadow: 0 1px 5px rgba(0,0,0,0.1);
-          --fc-arrow-shadow-hover: 0 2px 8px rgba(0,0,0,0.15);
-
-          --fc-gap: 8px;
-          --fc-slide-w: 85px;
-          --fc-slide-w-md: 80px;
-          --fc-slide-w-sm: 76px;
-          --fc-slide-w-xs: 72px;
-
-          --fc-card-bg: #fff;
-          --fc-card-border: #e5e5e5;
-          --fc-card-border-hover: #d9d9d9;
-          --fc-card-radius: 4px;
-          --fc-card-pad: 4px;
-          --fc-card-shadow-hover: 0 1px 6px rgba(0,0,0,0.05);
-
-          --fc-img-h: 70px;     /* product */
-          --fc-img-h-ph: 50px;  /* placeholder */
-
-          --fc-caption-color: #444;
-          --fc-caption-fs: 10px;
-
-          --fc-badge-bg: #111;
-          --fc-badge-fg: #fff;
-          --fc-badge-size: 16px;
-
-          --fc-close-shadow: 0 1px 3px rgba(0,0,0,0.18);
+        .footer-carousel {
+          position: relative;
+          padding: 1rem 2rem;
+          background: var(--cf-footer-bg, #f7f7f7);
+          border-radius: 8px;
         }
 
-        .footer-carousel {
-          padding: var(--fc-padding-y) var(--fc-padding-x);
-          background: var(--fc-bg);
-          border-radius: 6px;
+        .embla {
+          overflow: hidden;
+        }
+
+        .embla__container {
+          display: flex;
+          gap: 12px;
+        }
+
+        .embla__slide {
+          flex: 0 0 auto;
+          width: 90px;
+        }
+
+        .carousel-card {
           position: relative;
+          background: #fff;
+          border: 1px solid #e5e5e5;
+          border-radius: 6px;
+          padding: 6px;
+        }
+
+        .carousel-item {
+          width: 100%;
+          height: 70px;
+          object-fit: contain;
+        }
+
+        .carousel-caption {
+          font-size: 11px;
+          text-align: center;
+          margin-top: 6px;
+          color: #444;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .fc-badge {
+          position: absolute;
+          top: -6px;
+          right: -6px;
+          min-width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #111;
+          color: #fff;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .close-button {
+          position: absolute;
+          top: -6px;
+          left: -6px;
+          background: #fff;
+          border-radius: 50%;
+          padding: 2px;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
         }
 
         /* Arrows */
@@ -207,134 +171,34 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
           transform: translateY(-50%);
           border: 0;
           background: #fff;
-          border-radius: 999px;
-          width: var(--fc-arrow-size);
-          height: var(--fc-arrow-size);
+          border-radius: 50%;
+          width: 28px;
+          height: 28px;
           display: grid;
           place-items: center;
-          box-shadow: var(--fc-arrow-shadow);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
           z-index: 5;
-          transition: box-shadow .15s ease, transform .15s ease, opacity .15s ease;
         }
-        .fc-arrow--prev { left: var(--fc-arrow-x); }
-        .fc-arrow--next { right: var(--fc-arrow-x); left: auto; } /* force right */
-        .fc-arrow:hover:not(.is-disabled) {
-          box-shadow: var(--fc-arrow-shadow-hover);
-          transform: translateY(-50%) scale(1.06);
+        .fc-arrow--prev {
+          left: 4px;
         }
-        .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
-
-        /* Embla essentials */
-        .embla { position: relative; }
-        .embla__viewport {
-          overflow: hidden;
-          cursor: grab;
-          user-select: none;
+        .fc-arrow--next {
+          right: 4px;
         }
-        .embla__viewport:active { cursor: grabbing; }
-        .embla__container { display: flex; gap: var(--fc-gap); }
-
-        /* Slide basis (compact) */
-        .embla__slide { flex: 0 0 auto; width: var(--fc-slide-w); }
-
-        /* Hard clamps so captions can't expand width */
-        .footer-carousel :global(.embla__slide) {
-          flex: 0 0 var(--fc-slide-w) !important;
-          width: var(--fc-slide-w) !important;
-          max-width: var(--fc-slide-w) !important;
-          min-width: var(--fc-slide-w) !important;
-        }
-        .fc-tile {
-          width: var(--fc-slide-w);
-          max-width: var(--fc-slide-w);
-          margin: 0 auto;
+        .fc-arrow.is-disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
         }
 
-        /* Card / tile */
-        .carousel-card {
-          position: relative;
-          background: var(--fc-card-bg);
-          border: 1px solid var(--fc-card-border);
-          border-radius: var(--fc-card-radius);
-          padding: var(--fc-card-pad);
-          transition: box-shadow .15s ease, border-color .15s ease, opacity .2s ease;
-          opacity: 0.99;
-          cursor: default;
-          user-select: text;
-          display: grid;
-          grid-template-rows: auto auto; /* image, caption */
-          align-items: start;
-          width: 100%;
-          max-width: var(--fc-slide-w);
+        @media (max-width: 768px) {
+          .embla__slide {
+            width: 80px;
+          }
         }
-        .carousel-card:hover {
-          border-color: var(--fc-card-border-hover);
-          box-shadow: var(--fc-card-shadow-hover);
-        }
-
-        /* Image clamp */
-        .carousel-item {
-          width: 100%;
-          max-width: 70px;      /* stops intrinsic 720x upscaling */
-          height: var(--fc-img-h);
-          object-fit: contain;
-          margin: 0 auto;
-          display: block;
-        }
-
-        /* Placeholder look */
-        .is-placeholder .carousel-card { border-color: #eee; pointer-events: none; }
-        .is-placeholder .carousel-item { height: var(--fc-img-h-ph); opacity: 0.8; }
-        .is-placeholder .carousel-caption { display: none; }
-
-        /* Caption with fixed height (2 lines) */
-        .carousel-caption {
-          margin-top: 4px;
-          color: var(--fc-caption-color);
-          font-size: var(--fc-caption-fs);
-          text-align: center;
-          line-height: 1.2;
-          max-height: calc(1.2em * 2);
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-        }
-
-        /* Badges & close button align consistently */
-        .fc-badge {
-          position: absolute;
-          top: -5px;
-          right: -5px;
-          min-width: var(--fc-badge-size);
-          height: var(--fc-badge-size);
-          border-radius: 999px;
-          background: var(--fc-badge-bg);
-          color: var(--fc-badge-fg);
-          font-size: 10px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0 4px;
-        }
-        .close-button {
-          position: absolute;
-          top: -6px;
-          left: -6px;
-          background: #fff;
-          border-radius: 999px;
-          padding: 2px;
-          box-shadow: var(--fc-close-shadow);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) { .embla__slide { width: var(--fc-slide-w-md); } }
-        @media (max-width: 768px)  { .embla__slide { width: var(--fc-slide-w-sm); } }
-        @media (max-width: 640px)  {
-          .embla__slide { width: var(--fc-slide-w-xs); }
-          .fc-arrow { width: var(--fc-arrow-size-sm); height: var(--fc-arrow-size-sm); }
-          .fc-arrow--prev { left: var(--fc-arrow-x-sm); }
-          .fc-arrow--next { right: var(--fc-arrow-x-sm); left: auto; }
+        @media (max-width: 640px) {
+          .embla__slide {
+            width: 72px;
+          }
         }
       `}</style>
     </section>
