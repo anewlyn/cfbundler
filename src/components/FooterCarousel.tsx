@@ -28,12 +28,16 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
     setCanNext(emblaApi.canScrollNext());
   }, [emblaApi]);
 
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
-  }, [emblaApi, onSelect]);
+useEffect(() => {
+  if (!emblaApi) return;
+  onSelect(emblaApi);
+  emblaApi.on('select', onSelect);
+  emblaApi.on('reInit', onSelect);
+  return () => {
+    emblaApi.off?.('select', onSelect);
+    emblaApi.off?.('reInit', onSelect);
+  };
+}, [emblaApi, onSelect]);    
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -53,7 +57,7 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
                       {item.quantity}
                     </span>
                   )}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+
                   <img src={item.image} alt={item.name} className="carousel-item" loading="lazy" />
                   <p className="carousel-caption">{item.name}</p>
                   {onRemoveOne && item.quantity > 0 && item.shopifyId && (

@@ -64,6 +64,7 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
           isPriority={isPriority}
         />
         <button
+        type="button"   
           className="mobile-info-button"
           onClick={() => {
             handleOpenInfoModal(product);
@@ -72,6 +73,7 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
 
         <div ref={infoScreenRef} className="info-screen">
           <button
+          type="button"   
             onClick={() => {
               handleOpenInfoModal(product);
             }}
