@@ -9,7 +9,7 @@ import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
 import FooterCarousel from './FooterCarousel';
 
 type CarouselItem = {
-  id: string;        // stable per product/variant
+  id: string;        
   name: string;
   image: string;
   quantity: number;  // 0 for placeholders (non-removable)
@@ -36,7 +36,6 @@ const StickyFooter = () => {
     currentOrderValue <
     (Number(process.env.NEXT_PUBLIC_MINIMUM_ORDER_VALUE) ?? benefitTiers[0].value);
 
-  // (Optional) overflow check—kept from your original, safe to remove if not needed
   useEffect(() => {
     const checkOverflow = () => {
       const el = carouselRef.current;
@@ -76,7 +75,7 @@ const StickyFooter = () => {
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
 
-  // de-duplicated list for the carousel
+  // de-duplicated list
   const items: CarouselItem[] = useMemo(() => {
     const map = new Map<number, CarouselItem>(); // key: product.shopifyId
 
@@ -104,11 +103,10 @@ const StickyFooter = () => {
 
     const arr = Array.from(map.values());
 
-    // Pad to 6 slots with placeholders (non-removable)
     while (arr.length < 6) {
       arr.push({
         id: `placeholder-${arr.length}`,
-        name: 'Cycling Frog Logo',
+        name: '',
         image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png',
         quantity: 0,
       });

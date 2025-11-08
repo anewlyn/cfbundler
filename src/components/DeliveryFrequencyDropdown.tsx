@@ -8,7 +8,6 @@ interface DeliveryFrequencyDropdownProps {
   className?: string;
 }
 
-// 🧠 Derive the plan type directly from the provider
 type PlanType = LoopContextType['sellingPlans'][number];
 
 const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdownProps) => {
@@ -20,7 +19,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Optional guard if a string ever sneaks in (e.g., GID)
   const toNum = (v: unknown) => {
     if (typeof v === 'number') return v;
     if (typeof v === 'string') {
@@ -44,7 +42,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return `${plan.deliveryIntervalCount} ${plural}`;
   };
 
-  // Click outside → close
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       if (!dropdownRef.current) return;
@@ -54,7 +51,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return () => document.removeEventListener('mousedown', onDocClick);
   }, []);
 
-  // Opening animation & focus
   useEffect(() => {
     if (!isOpen) return;
     const t = setTimeout(() => setIsAnimating(false), 10);
@@ -62,7 +58,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     return () => clearTimeout(t);
   }, [isOpen]);
 
-  // Keep focus aligned with selection while open
   useEffect(() => {
     if (!isOpen) return;
     menuRef.current?.querySelector<HTMLButtonElement>('[data-selected="true"]')?.focus();
@@ -83,9 +78,9 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
   const toggleDropdown = () => (isOpen ? closeDropdown() : openDropdown());
 
   const handlePlanSelect = (plan: PlanType) => {
-    const id = toNum(plan.shopifyId); // will be number today; guard for future
+    const id = toNum(plan.shopifyId); 
     if (id < 0) return console.warn('[DeliveryFrequencyDropdown] Invalid sellingPlanId:', plan.shopifyId);
-    setCart({ ...cart, sellingPlanId: id }); // ✅ stays a number, matches CartType
+    setCart({ ...cart, sellingPlanId: id }); 
     closeDropdown();
   };
 
@@ -112,7 +107,6 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     }
   };
 
-  // Single-plan: inert button (keeps layout)
   if (sellingPlans.length <= 1) {
     return (
       <button className={className} type="button" aria-disabled="true">

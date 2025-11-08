@@ -55,6 +55,7 @@ const AddToButton = ({
       )}
       {!subscribed && !outOfStock && (
         <button
+          type="button"
           className={classNames(className, 'subscription-button', {
             'not-subscribed': !subscribed,
           })}

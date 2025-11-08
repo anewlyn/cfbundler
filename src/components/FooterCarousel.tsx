@@ -158,7 +158,7 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
           position: absolute;
           top: -6px;
           left: -6px;
-          background: #fff;
+          background: black;
           border-radius: 50%;
           padding: 2px;
           box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
