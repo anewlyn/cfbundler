@@ -127,35 +127,35 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
 
   return (
     <div className="delivery-dd" ref={dropdownRef}>
-      <button
-        ref={triggerRef}
-        onClick={toggleDropdown}
-        onKeyDown={onTriggerKeyDown}
-        className={classNames(className, 'delivery-dropdown-trigger')}
-        type="button"
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        aria-controls={menuId}
-      >
-        <span className="uppercase">Deliver Every&nbsp;</span>
-        <b>{formatInterval(currentPlan)}</b>
-        <i
-          className="material-icons delivery-dropdown-icon"
-          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
-          aria-hidden
-        >expand_more</i>
-      </button>
+  <button
+    ref={triggerRef}
+    onClick={toggleDropdown}
+    onKeyDown={onTriggerKeyDown}
+    className={classNames(className, 'delivery-dropdown-trigger')}
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded={isOpen}
+    aria-controls={menuId}
+  >
+    <span className="uppercase">Deliver Every&nbsp;</span>
+    <b>{formatInterval(currentPlan)}</b>
+    <i className="material-icons delivery-dropdown-icon" aria-hidden>expand_more</i>
+  </button>
 
-      {isOpen && (
-        <div
-          id={menuId}
-          ref={menuRef}
-          role="menu"
-          aria-label="Delivery cadence options"
-          tabIndex={-1}
-          onKeyDown={onMenuKeyDown}
-          className={classNames('cadance-card dropdown-variant', isAnimating ? 'dropdown-closing' : 'dropdown-open')}
-        >
+  {isOpen && (
+    <div
+      id={menuId}
+      ref={menuRef}
+      role="menu"
+      aria-label="Delivery cadence options"
+      tabIndex={-1}
+      onKeyDown={onMenuKeyDown}
+      className={classNames(
+        'cadance-card dropdown-variant',
+        'delivery-dd-menu',                // ← add this
+        isAnimating ? 'dropdown-closing' : 'dropdown-open'
+      )}
+    >
           <p className="uppercase">Deliver Every...</p>
 
           {sellingPlans.map((plan: PlanType, index: number) => {

@@ -280,3 +280,79 @@
 .header-title .delivery-dropdown-trigger {
   white-space: nowrap;
 }
+/* ================================
+ * MOBILE LAYOUT CORRECTIONS
+ * ================================ */
+
+/* Make the title row span both columns and center its contents on mobile */
+@media (max-width: 640px) {
+  .header-title {
+    grid-column: 1 / span 2;
+    justify-self: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Center the mobile trigger row */
+  .header-button-mobile {
+    justify-content: center;
+    text-align: center;
+    overflow: visible;
+  }
+
+  /* The wrapper around trigger+menu becomes a full-width centering context */
+  .delivery-dd {
+    position: relative;   /* anchor for absolute menu */
+    display: block;       /* full row */
+    text-align: center;   /* center the trigger */
+  }
+
+  /* The trigger itself: center it */
+  .header-button-mobile.delivery-dropdown-trigger {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    padding: 0 1rem;
+  }
+}
+
+/* ================================
+ * DROPDOWN MENU ABSOLUTE & CENTERED
+ * (prevents header growth)
+ * ================================ */
+
+.header,
+.header-title {
+  overflow: visible !important; /* allow menu to overflow visually */
+}
+
+/* Absolute, centered to trigger, never participates in layout */
+.header-title .delivery-dd > .delivery-dd-menu {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+
+  /* Neutralize any inherited flex styles from cadance-card */
+  display: block !important;
+  flex: none !important;
+  align-items: initial !important;
+  width: auto !important;
+
+  min-width: 200px;
+  max-width: 90vw;
+}
+
+/* Mobile sizing/centering of the menu */
+@media (max-width: 640px) {
+  .header-title .delivery-dd > .delivery-dd-menu {
+    min-width: 240px !important;
+    max-width: 94vw !important;
+  }
+}
+
+/* Keep the trigger from stretching due to wrapping */
+.header-title .delivery-dropdown-trigger {
+  white-space: nowrap;
+}
