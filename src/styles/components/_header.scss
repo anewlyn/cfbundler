@@ -341,3 +341,58 @@
 .header-title .delivery-dropdown-trigger {
   white-space: nowrap;
 }
+
+/* ================================
+ * Delivery dropdown — Mobile: full-width like original
+ * ================================ */
+@media (max-width: 640px) {
+  /* The wrapper around the trigger + menu should occupy the full mobile row,
+     matching your original negative margins and width calc */
+  .delivery-dd {
+    position: relative;                 /* anchor for absolute menu */
+    display: block;
+    width: calc(100% + 3rem);           /* full bleed across the grid */
+    margin-left: -1.5rem;
+    text-align: center;                 /* centers content if needed */
+  }
+
+  /* Trigger fills the entire row (same look as the old .header-button-mobile) */
+  .delivery-dd .delivery-dropdown-trigger {
+    display: flex;
+    width: 100%;
+    height: 52px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    background-color: var(--cf-background-color);
+    border: none;
+    border-bottom: 1px solid #d3d3d3;
+    margin: 0;                          /* reset any inherited margins */
+    white-space: nowrap;                /* prevent text wrap causing reflow */
+  }
+
+  /* MENU: full-width sheet under the trigger, absolutely positioned so header
+     height never changes */
+  .delivery-dd .cadance-card.dropdown-variant {
+    position: absolute !important;
+    top: 100% !important;               /* sits directly under trigger */
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+
+    z-index: 1000 !important;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 6px 10px rgba(0,0,0,0.08);
+    display: block !important;          /* stomp any display:flex leakage */
+  }
+
+  /* Ensure the header lets the menu overflow visually without growing */
+  .header,
+  .header-title {
+    overflow: visible !important;
+  }
+}
