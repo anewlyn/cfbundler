@@ -1,110 +1,64 @@
 'use client';
 
-import useEmblaCarousel from 'embla-carousel-react';
-import { useCallback, useEffect, useState } from 'react';
+import classNames from 'classnames';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { kiro_bold_400 } from '@/app/ui/fonts';
+import { useLoopContext } from '@/contexts/LoopProvider';
+import BenefitTierProgressBar from './BenefitTierProgressBar';
+import DeliveryFrequencyDropdown from './DeliveryFrequencyDropdown';
 
-export interface CarouselItem {
-  id: string;
-  name: string;
-  image: string;
-  quantity: number;
-  shopifyId?: number;
-}
-
-interface Props {
-  items: CarouselItem[];
-  ariaLabel?: string;
-  onRemoveOne?: (item: CarouselItem) => void;
-}
-
-const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOne }: Props) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(false);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCanPrev(emblaApi.canScrollPrev());
-    setCanNext(emblaApi.canScrollNext());
-  }, [emblaApi]);
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerTitleHeight, setHeaderTitleHeight] = useState(0);
+  const { benefitTiers, currentOrderValue } = useLoopContext();
+  const headerTitleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!emblaApi) return;
-
-    onSelect();
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
-
-    return () => {
-      emblaApi.off?.('select', onSelect);
-      emblaApi.off?.('reInit', onSelect);
+    const stickyThreshold = 100;
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > stickyThreshold);
+      setHeaderTitleHeight(headerTitleRef.current?.offsetHeight || 0);
     };
-  }, [emblaApi, onSelect]);
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-
-  if (!items?.length) return null;
+  const ScheduleButton = (className: string) => (
+    <DeliveryFrequencyDropdown className={className} />
+  );
 
   return (
-    <section role="region" aria-label={ariaLabel} className="footer-carousel">
-      <div className="embla">
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="embla__container">
-            {items.map((item) => (
-              <div className="embla__slide" key={item.id}>
-                <div className="carousel-card">
-                  {item.quantity > 1 && (
-                    <span className="fc-badge">{item.quantity}</span>
-                  )}
-
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="carousel-item"
-                    loading="lazy"
-                  />
-
-                  <p className="carousel-caption">{item.name}</p>
-
-                  {onRemoveOne && item.quantity > 0 && item.shopifyId && (
-                    <button
-                      type="button"
-                      className="close-button"
-                      onClick={() => onRemoveOne(item)}
-                    >
-                      <span className="material-icons">close</span>
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <header
+      className="header"
+      style={
+        { '--header-mobile-top': isScrolled ? `-${headerTitleHeight}px` : '0' } as React.CSSProperties
+      }
+    >
+      <div className="header-logo">
+        <a href="https://cyclingfrog.com">
+          <Image
+            alt="Logo"
+            className="logo"
+            height={93}
+            src="https://bundler.cyclingfrog.com/assets/cycling-frog-logo.png"
+            width={170}
+          />
+        </a>
       </div>
 
-      {/* Arrows */}
-      <button
-        type="button"
-        onClick={scrollPrev}
-        disabled={!canPrev}
-        className={`fc-arrow fc-arrow--prev ${!canPrev ? 'is-disabled' : ''}`}
-        aria-label="Scroll left"
-      >
-        <i className="material-icons">chevron_left</i>
-      </button>
+      <div ref={headerTitleRef} className={classNames('header-title', kiro_bold_400.className)}>
+        <h1 className="uppercase">My Subscription</h1>
+        {ScheduleButton('header-button')}
+      </div>
 
-      <button
-        type="button"
-        onClick={scrollNext}
-        disabled={!canNext}
-        className={`fc-arrow fc-arrow--next ${!canNext ? 'is-disabled' : ''}`}
-        aria-label="Scroll right"
-      >
-        <i className="material-icons">chevron_right</i>
-      </button>
-    </section>
+      <div className="header-progress-bar">
+        <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
+      </div>
+      
+    </header>
   );
 };
 
-export default FooterCarousel;
+export default Header;
