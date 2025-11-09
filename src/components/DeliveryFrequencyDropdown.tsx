@@ -72,7 +72,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     setTimeout(() => {
       setIsOpen(false);
       setIsAnimating(false);
-      triggerRef.current?.focus();
+  //    triggerRef.current?.focus();
     }, 200);
   };
   const toggleDropdown = () => (isOpen ? closeDropdown() : openDropdown());
@@ -84,28 +84,30 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     closeDropdown();
   };
 
-  const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      openDropdown();
-    }
-  };
-
-  const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const items = Array.from(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []);
-    const idx = items.findIndex((el) => el === document.activeElement);
-    const focusAt = (i: number) => items[Math.max(0, Math.min(items.length - 1, i))]?.focus();
-
-    switch (e.key) {
-      case 'Escape': e.preventDefault(); closeDropdown(); break;
-      case 'ArrowDown': e.preventDefault(); focusAt(idx < 0 ? 0 : idx + 1); break;
-      case 'ArrowUp': e.preventDefault(); focusAt(idx <= 0 ? items.length - 1 : idx - 1); break;
-      case 'Home': e.preventDefault(); focusAt(0); break;
-      case 'End': e.preventDefault(); focusAt(items.length - 1); break;
-      case 'Enter':
-      case ' ': e.preventDefault(); (document.activeElement as HTMLButtonElement)?.click(); break;
-    }
-  };
+  /**
+    const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openDropdown();
+      }
+    };
+  
+    const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+      const items = Array.from(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []);
+      const idx = items.findIndex((el) => el === document.activeElement);
+      const focusAt = (i: number) => items[Math.max(0, Math.min(items.length - 1, i))]?.focus();
+  
+      switch (e.key) {
+        case 'Escape': e.preventDefault(); closeDropdown(); break;
+        case 'ArrowDown': e.preventDefault(); focusAt(idx < 0 ? 0 : idx + 1); break;
+        case 'ArrowUp': e.preventDefault(); focusAt(idx <= 0 ? items.length - 1 : idx - 1); break;
+        case 'Home': e.preventDefault(); focusAt(0); break;
+        case 'End': e.preventDefault(); focusAt(items.length - 1); break;
+        case 'Enter':
+        case ' ': e.preventDefault(); (document.activeElement as HTMLButtonElement)?.click(); break;
+      }
+    };
+  */
 
   if (sellingPlans.length <= 1) {
     return (
