@@ -204,6 +204,54 @@ useEffect(() => {
             width: 72px;
           }
         }
+          .fc-badge {
+  position: absolute !important;
+  bottom: -4px !important;
+  right: -4px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 4px !important;
+
+  background: #ffb3ab !important;
+  color: #000 !important;
+
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  border-radius: 999px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+
+.close-button {
+  position: absolute !important;
+  top: -4px !important;
+  left: -4px !important;
+
+  width: 18px !important;
+  height: 18px !important;
+
+  background: #ffb3ab !important;
+  color: #000 !important;
+
+  padding: 0 !important;
+  border-radius: 999px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+
+.close-button .material-icons {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  color: #000 !important;
+}
       `}</style>
     </section>
   );
