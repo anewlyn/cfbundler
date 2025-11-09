@@ -84,8 +84,9 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     closeDropdown();
   };
 
-  /**
+
     const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+        return //debug
       if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         openDropdown();
@@ -93,6 +94,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
     };
   
     const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        return //debug
       const items = Array.from(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') || []);
       const idx = items.findIndex((el) => el === document.activeElement);
       const focusAt = (i: number) => items[Math.max(0, Math.min(items.length - 1, i))]?.focus();
@@ -107,7 +109,7 @@ const DeliveryFrequencyDropdown = ({ className = '' }: DeliveryFrequencyDropdown
         case ' ': e.preventDefault(); (document.activeElement as HTMLButtonElement)?.click(); break;
       }
     };
-  */
+  
 
   if (sellingPlans.length <= 1) {
     return (
