@@ -210,44 +210,62 @@
   text-overflow: ellipsis;
 }
 
-/* Quantity badge (bottom-right) */
+/* Quantity badge (top-right) */
 .footer-carousel .fc-badge {
   position: absolute;
-  bottom: -4px;
-  right: -4px;
+  top: 2px;               /* moved to top */
+  right: 2px;             /* inside the corner so it's fully visible */
+
   min-width: 18px;
   height: 18px;
   padding: 0 4px;
-  background: #ffb3ab;
+
+  background: #fff;       /* white background */
   color: #000;
   font-size: 11px;
   font-weight: 600;
+
   border-radius: 999px;
+  border: 1px dotted var(--cf-grey-border, #cecece); /* dotted 1px border */
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+
+  box-shadow: none;       /* optional: remove if you don't want a shadow */
+  z-index: 2;
 }
+
+
+
 
 /* Close badge (top-left) */
 .footer-carousel .close-button {
   position: absolute;
-  top: -4px;
-  left: -4px;
+  top: 2px;               /* keep slightly inside */
+  left: 2px;
+
   width: 18px;
   height: 18px;
-  background: #ffb3ab;
+
+  background: #fff;       /* white background */
   color: #000;
   padding: 0;
+
   border-radius: 999px;
+  border: 1px dotted var(--cf-grey-border, #cecece);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+
+  box-shadow: none;    
+  z-index: 2;
 }
+
 .footer-carousel .close-button .material-icons {
   font-size: 14px;
-    line-height: 1;
+  line-height: 1;
   color: #000;
 }
 
@@ -294,61 +312,6 @@
 /* Make sure badges can spill outside the card/slide */
 .footer-carousel .embla__slide,
 .footer-carousel .carousel-card {
-  overflow: visible;
+  overflow: visible !important
 }
 
-/* Quantity badge (top-right) */
-.footer-carousel .fc-badge {
-  position: absolute;
-  top: 2px;               /* moved to top */
-  right: 2px;             /* inside the corner so it's fully visible */
-
-  min-width: 18px;
-  height: 18px;
-  padding: 0 4px;
-
-  background: #fff;       /* white background */
-  color: #000;
-  font-size: 11px;
-  font-weight: 600;
-
-  border-radius: 999px;
-  border: 1px dotted var(--cf-grey-border, #cecece); /* dotted 1px border */
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: none;       /* optional: remove if you don't want a shadow */
-  z-index: 2;
-}
-
-/* Close badge (top-left) */
-.footer-carousel .close-button {
-  position: absolute;
-  top: 2px;               /* keep slightly inside */
-  left: 2px;
-
-  width: 18px;
-  height: 18px;
-
-  background: #fff;       /* white background */
-  color: #000;
-  padding: 0;
-
-  border-radius: 999px;
-  border: 1px dotted var(--cf-grey-border, #cecece);
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: none;       /* optional */
-  z-index: 2;
-}
-
-.footer-carousel .close-button .material-icons {
-  font-size: 14px;
-  line-height: 1;
-  color: #000;
-}
