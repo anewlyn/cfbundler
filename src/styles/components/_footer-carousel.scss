@@ -1,146 +1,4 @@
-.footer-carousel {
-  position: relative;
-  padding: 1rem 2rem;
-  background: var(--cf-footer-bg, #f7f7f7);
-  border-radius: 8px;
-}
-
-/* Embla core */
-.embla {
-  overflow: hidden;
-}
-
-.embla__viewport {
-  overflow: hidden;
-}
-
-.embla__container {
-  display: flex;
-  gap: 12px;
-}
-
-.embla__slide {
-  flex: 0 0 auto;
-  width: 90px;
-}
-
-@media (max-width: 768px) {
-  .embla__slide {
-    width: 80px;
-  }
-}
-
-@media (max-width: 640px) {
-  .embla__slide {
-    width: 72px;
-  }
-}
-
-/* Cards */
-.carousel-card {
-  position: relative;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  padding: 6px;
-}
-
-.carousel-item {
-  width: 100%;
-  height: 70px;
-  object-fit: contain;
-}
-
-.carousel-caption {
-  font-size: 11px;
-  text-align: center;
-  margin-top: 6px;
-  color: #444;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Quantity badge */
-.fc-badge {
-  position: absolute !important;
-  bottom: -4px !important;
-  right: -4px !important;
-  min-width: 18px !important;
-  height: 18px !important;
-  padding: 0 4px !important;
-
-  background: #ffb3ab !important;
-  color: #000 !important;
-
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  border-radius: 999px !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-}
-
-/* Close (X) button */
-.close-button {
-  position: absolute !important;
-  top: -4px !important;
-  left: -4px !important;
-
-  width: 18px !important;
-  height: 18px !important;
-
-  background: #ffb3ab !important;
-  color: #000 !important;
-
-  padding: 0 !important;
-  border-radius: 999px !important;
-
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-}
-
-.close-button .material-icons {
-  font-size: 14px !important;
-  line-height: 1 !important;
-  color: #000 !important;
-}
-
-/* Arrows */
-.fc-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 0;
-  background: #fff;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  z-index: 5;
-}
-
-.fc-arrow--prev {
-  left: 4px;
-}
-
-.fc-arrow--next {
-  right: 4px;
-}
-
-.fc-arrow.is-disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-/* Scope everything to this component */
+/* scope */
 .footer-carousel {
   position: relative;
   padding: 1rem 2rem;
@@ -149,28 +7,35 @@
 }
 
 /* Embla container */
-.footer-carousel .embla { position: relative; }
+.footer-carousel .embla {
+  position: relative;
+}
+
 .footer-carousel .embla__viewport {
   overflow: hidden;
-  cursor: grab;           /* drag cursor belongs here */
+  cursor: grab;
   user-select: none;
 }
-.footer-carousel .embla__viewport:active { cursor: grabbing; }
+
+.footer-carousel .embla__viewport:active {
+  cursor: grabbing;
+}
+
 .footer-carousel .embla__container {
   display: flex;
   gap: 12px;
   align-items: flex-start; /* keeps badges aligned */
 }
 
-/* FIXED slide width so tiles can’t stretch */
+
 .footer-carousel .embla__slide {
   flex: 0 0 90px !important;
   width: 90px !important;
   max-width: 90px !important;
   min-width: 90px !important;
+  overflow: visible !important;
 }
 
-/* COMPACT tile — hard clamp width & layout */
 .footer-carousel .carousel-card {
   position: relative;
   box-sizing: border-box;
@@ -178,19 +43,20 @@
   border: 1px solid #e5e5e5;
   border-radius: 6px;
   padding: 6px;
-  width: 90px !important;      /* match slide */
+  width: 90px !important;
   max-width: 90px !important;
 
   display: grid;
   grid-template-rows: 70px 18px; /* image row, caption row */
   align-items: start;
 
-  /* undo drag behavior inherited from viewport */
   cursor: default !important;
   user-select: text !important;
+
+  /* let badges sit partially outside */
+  overflow: visible !important;
 }
 
-/* Image clamp */
 .footer-carousel .carousel-item {
   width: 100%;
   height: 70px;
@@ -198,7 +64,7 @@
   display: block;
 }
 
-/* Single-line caption */
+/* caption */
 .footer-carousel .carousel-caption {
   margin-top: 4px;
   font-size: 11px;
@@ -210,63 +76,53 @@
   text-overflow: ellipsis;
 }
 
-/* Quantity badge (top-right) */
-.footer-carousel .fc-badge {
-  position: absolute;
-  top: 2px;               /* moved to top */
-  right: 2px;             /* inside the corner so it's fully visible */
-
-  min-width: 18px;
-  height: 18px;
-  padding: 0 4px;
-
-  background: #fff;       /* white background */
-  color: #000;
-  font-size: 11px;
-  font-weight: 600;
-
-  border-radius: 999px;
-  border: 1px dotted var(--cf-grey-border, #cecece); /* dotted 1px border */
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: none;       /* optional: remove if you don't want a shadow */
-  z-index: 2;
-}
-
-
-
-
-/* Close badge (top-left) */
+.footer-carousel .fc-badge,
 .footer-carousel .close-button {
-  position: absolute;
-  top: 2px;               /* keep slightly inside */
-  left: 2px;
+  position: absolute !important;
 
-  width: 18px;
-  height: 18px;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  padding: 0 4px !important;
 
-  background: #fff;       /* white background */
-  color: #000;
-  padding: 0;
+  background: #fff !important;
+  color: #000 !important;
 
-  border-radius: 999px;
-  border: 1px dotted var(--cf-grey-border, #cecece);
+  font-size: 11px !important;
+  font-weight: 600 !important;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 999px !important;
+  border: 1px dotted var(--cf-grey-border, #cecece) !important;
 
-  box-shadow: none;    
-  z-index: 2;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-shadow: none !important;
+  z-index: 5 !important;
+
+  bottom: auto !important;
+  right: auto !important;
 }
 
+/* Quantity badge — top-right */
+.footer-carousel .fc-badge {
+  top: 2px !important;
+  right: 2px !important;
+}
+
+/* Close badge — top-left */
+.footer-carousel .close-button {
+  top: 2px !important;
+  left: 2px !important;
+  padding: 0 !important;
+}
+
+/* Close icon */
 .footer-carousel .close-button .material-icons {
-  font-size: 14px;
-  line-height: 1;
-  color: #000;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  color: #000 !important;
 }
 
 /* Arrows */
@@ -281,13 +137,26 @@
   height: 28px;
   display: grid;
   place-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   z-index: 5;
 }
-.footer-carousel .fc-arrow--prev { left: 4px; }
-.footer-carousel .fc-arrow--next { right: 4px; }
-.footer-carousel .fc-arrow.is-disabled { opacity: .4; cursor: not-allowed; }
 
+.footer-carousel .fc-arrow--prev {
+  left: 4px;
+}
+
+.footer-carousel .fc-arrow--next {
+  right: 4px;
+}
+
+.footer-carousel .fc-arrow.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* -------------------- */
+/* Responsive tweaks    */
+/* -------------------- */
 
 @media (max-width: 768px) {
   .footer-carousel .embla__slide,
@@ -296,9 +165,16 @@
     width: 80px !important;
     max-width: 80px !important;
   }
-  .footer-carousel .carousel-card { grid-template-rows: 66px 18px; }
-  .footer-carousel .carousel-item { height: 66px; }
+
+  .footer-carousel .carousel-card {
+    grid-template-rows: 66px 18px;
+  }
+
+  .footer-carousel .carousel-item {
+    height: 66px;
+  }
 }
+
 @media (max-width: 640px) {
   .footer-carousel .embla__slide,
   .footer-carousel .carousel-card {
@@ -306,12 +182,12 @@
     width: 72px !important;
     max-width: 72px !important;
   }
-  .footer-carousel .carousel-card { grid-template-rows: 60px 18px; }
-  .footer-carousel .carousel-item { height: 60px; }
-}
-/* Make sure badges can spill outside the card/slide */
-.footer-carousel .embla__slide,
-.footer-carousel .carousel-card {
-  overflow: visible !important
-}
 
+  .footer-carousel .carousel-card {
+    grid-template-rows: 60px 18px;
+  }
+
+  .footer-carousel .carousel-item {
+    height: 60px;
+  }
+}
