@@ -83,7 +83,7 @@ const FooterCarousel = ({ items, ariaLabel = 'Selected bundle items', onRemoveOn
         </div>
       </div>
 
-      {/* Arrows */}
+      {/* arrows */}
       <button
         type="button"
         onClick={scrollPrev}
