@@ -1,14 +1,15 @@
-const isCFPages = !!process.env.CF_PAGES;
-const isPreview = isCFPages && process.env.CF_PAGES_BRANCH !== 'production';
+// next.config.mjs (or .js with ESM)
 
-// Respect empty strings - don't coerce them to the default
-const ASSET_HOST = process.env.NEXT_PUBLIC_ASSET_HOST ?? 'https://bundler.cyclingfrog.com';
+const DEFAULT_ASSET_HOST = 'https://bundler.cyclingfrog.com';
 
-// In previews, force same-origin assets (prevents ORB).
-// In production, keep current absolute host.
-const assetPrefix = isPreview
-  ? (process.env.NEXT_PUBLIC_ASSET_HOST_PREVIEW ?? '') // allow empty string
-  : ASSET_HOST;
+function resolveAssetPrefix() {
+  const raw = process.env.NEXT_PUBLIC_ASSET_HOST;
+  if (!raw) return DEFAULT_ASSET_HOST;
+  if (raw === '/') return '';
+  return raw;
+}
+
+const assetPrefix = resolveAssetPrefix();
 
 /** @type {import('next').NextConfig} */
 export default {
@@ -16,13 +17,10 @@ export default {
   sassOptions: { includePaths: ['./src/styles/'] },
 
   assetPrefix,
-
   images: {
     unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.shopify.com' },
-      // keep hardcoded image URLs; 
-      // { protocol: 'https', hostname: 'bundler.cyclingfrog.com' },
     ],
   },
 };
