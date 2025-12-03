@@ -110,15 +110,6 @@ const StickyFooter = () => {
 
     const arr = Array.from(map.values());
 
-    while (arr.length < 6) {
-      arr.push({
-        id: `placeholder-${arr.length}`,
-        name: '',
-        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png',
-        quantity: 0,
-      });
-    }
-
     return arr;
   }, [cart.productVariants, products]);
 
