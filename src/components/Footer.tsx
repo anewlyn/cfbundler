@@ -92,7 +92,8 @@ const StickyFooter = ({ customProduct }) => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
-      const customData = customProduct.find(prod => prod.productId === product.shopifyId)
+      const customData = customProduct.find(prod => prod.productId == cartProduct.shopifyId) ?? []
+      console.log('customData', customData)
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
 
