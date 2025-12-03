@@ -134,7 +134,7 @@ p {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  max-width: 320px;
+  min-width: 240px;
   padding: 4px;
   background-color: var(--color1);
   border-radius: 4px;
