@@ -174,10 +174,10 @@ const StickyFooter = ({ customProducts }) => {
                 />
               </div>
               <div className="cf-carousel-product-details">
-                <div className="cf-carousel-product-title">{ item.customTitle }</div>
-                <div className="cf-carousel-product-variant">{ item.name }</div>
+                <span className={`cf-carousel-product-title ${kiro_extra_bold_700.className}`}>{ item.customTitle }</span>
+                <span className="cf-carousel-product-variant">{ item.name }</span>
                 {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
-                  <div className="cf-carousel-controls">
+                  <div className="cf-carousel-controls1">
                     <div 
                       className="cf-carousel-remove"
                       onClick={() => handleRemoveOne(item)}
