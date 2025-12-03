@@ -94,8 +94,7 @@ const StickyFooter = ({ customProducts }) => {
 
       console.log('product', product)
       console.log('customProducts', customProducts)
-      
-      if(customData.length === 0) return
+
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
 
@@ -104,9 +103,9 @@ const StickyFooter = ({ customProducts }) => {
       } else {
         map.set(product.shopifyId, {
           id: String(product.shopifyId),
-          customTitle: customData.title,
+          customTitle: 'title',
           name: product.title,
-          colors: customData.colors,
+          colors: ['#FFF2F0', '#FFB3AB', '#FFB3AB', '#FFB3AB'],
           image:
             product.images?.[0]?.imageURL ||
             'https://bundler.cyclingfrog.com/assets/lone-frog.png',
