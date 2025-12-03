@@ -10,6 +10,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 type CarouselItem = {
   id: string;        
+  customTitle: string;
   name: string;
   image: string;
   colors: string[],
@@ -102,6 +103,7 @@ const StickyFooter = ({ customProducts }) => {
       } else {
         map.set(product.shopifyId, {
           id: String(product.shopifyId),
+          customTitle: customData.title,
           name: product.title,
           colors: customData.colors,
           image:
@@ -173,8 +175,8 @@ const StickyFooter = ({ customProducts }) => {
                 />
               </div>
               <div className="cf-carousel-product-details">
-                <div className="cf-carousel-product-title">{ item.name }</div>
-                <div className="cf-carousel-product-qty">Qty: { item.quantity }</div>
+                <div className="cf-carousel-product-title">{ item.customTitle }</div>
+                <div className="cf-carousel-product-variant">{ item.name }</div>
               </div>
             </div>
           ))}
