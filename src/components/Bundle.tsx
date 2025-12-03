@@ -84,7 +84,7 @@ export const Bundle = (customProductData) => {
           />
         )}
       </Modal>
-      <Footer customProduct={customProductData.customProductData} />
+      <Footer customProducts={customProductData.customProductData} />
     </div>
   );
 };

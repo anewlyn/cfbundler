@@ -17,13 +17,13 @@ type CarouselItem = {
   shopifyId?: number;
 };
 
-const StickyFooter = ({ customProduct }) => {
+const StickyFooter = ({ customProducts }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: true })
 
   useEffect(() => {
-    console.log('customProduct', customProduct)
+    console.log('customProducts', customProducts)
     if (emblaApi) {
       console.log(emblaApi.slideNodes()) // Access API
     }
@@ -92,7 +92,7 @@ const StickyFooter = ({ customProduct }) => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
-      const customData = customProduct.find(prod => prod.productId == cartProduct.shopifyId) ?? []
+      const customData = customProducts.find(prod => prod.productId == cartProduct.shopifyId) ?? []
       console.log('customData', customData)
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
@@ -103,7 +103,7 @@ const StickyFooter = ({ customProduct }) => {
         map.set(product.shopifyId, {
           id: String(product.shopifyId),
           name: product.title,
-          colors: [...customData.colors],
+          colors: customData.colors,
           image:
             product.images?.[0]?.imageURL ||
             'https://bundler.cyclingfrog.com/assets/lone-frog.png',
