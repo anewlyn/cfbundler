@@ -110,9 +110,9 @@ const StickyFooter = ({ customProducts }) => {
       } else {
         map.set(product.shopifyId, {
           id: String(product.shopifyId),
-          customTitle: 'title',
+          customTitle: customData.title,
           name: product.title,
-          colors: ['#FFF2F0', '#FFB3AB', '#FFB3AB', '#FFB3AB'],
+          colors: customData.colors,
           image:
             product.images?.[0]?.imageURL ||
             'https://bundler.cyclingfrog.com/assets/lone-frog.png',
@@ -179,7 +179,7 @@ const StickyFooter = ({ customProducts }) => {
                     className="cf-carousel-add"
                     onClick={() => handleAddOne(item)}
                   >
-                    +
+                    +handleAddOne
                   </div>
                 </div>
               )}
