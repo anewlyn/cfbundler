@@ -195,5 +195,26 @@ p {
   cursor: pointer;
 }
 
+.cf-btn-atc {
+  width: 100%;
+  font-size: 16px;
+  line-height: 1;
+  padding: 16px;
+  color: #fff;
+  background-color: #000;
+  border-radius: 4px;
+}
+.cf-btn-atc:hover {
+  color: #FFB3AB;
+}
+
+.cf-product-price {}
+.cf-product-price-discounted {
+  text-decoration: line-through;
+  font-style: italic;
+  opacity: 0.5;
+}
+.cf-product-price-original {}
+
 
 
