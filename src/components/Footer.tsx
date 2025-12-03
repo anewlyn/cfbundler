@@ -161,7 +161,8 @@ const StickyFooter = () => {
               <div className="cf-carousel-product-image">
                 <img 
                   width="100%"
-                  src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
+                  src={item.image}
+                  alt={item.name}
                 />
               </div>
               <div className="cf-carousel-product-details">
