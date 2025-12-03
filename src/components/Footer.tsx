@@ -143,7 +143,16 @@ const StickyFooter = ({ customProduct }) => {
       <div className="cf-carousel" ref={emblaRef}>
         <div className="cf-carousel-container">
           {items.map((item) => (
-            <div className="cf-carousel-product" key={item.id}>
+            <div 
+              key={item.id}
+              className="cf-carousel-product" 
+              style={{
+                '--color1': customProduct.colors[0],
+                '--color2': customProduct.colors[1],
+                '--color3': customProduct.colors[2],
+                '--color4': customProduct.colors[3]
+              } as React.CSSProperties}
+            >
               {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
               <div 
                 className="cf-carousel-remove"
