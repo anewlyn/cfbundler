@@ -121,17 +121,17 @@ const StickyFooter = () => {
       discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
       return (
         <div className="product-price">
-          <p className={classNames('discount-price', kiro_extra_bold_700.className)}>
+          <p className={classNames('discount-price')}>
             {currencyFormater(currentOrderValue, bundle.currencyCode)}
           </p>
-          <p className={classNames('discounted-price', kiro_extra_bold_700.className)}>
+          <p className={classNames('discounted-price')}>
             {currencyFormater(discountedPrice, bundle.currencyCode)}
           </p>
         </div>
       );
     }
     return (
-      <p className={classNames('current-value', kiro_extra_bold_700.className)}>
+      <p className={classNames('current-value')}>
         {currencyFormater(discountedPrice, bundle.currencyCode)}
       </p>
     );
@@ -139,26 +139,33 @@ const StickyFooter = () => {
 
   return (
     <div className="sticky-footer">
-      <div className="carousel" ref={carouselRef}>
-        {/* grouped carousel with arrows/keyboard support */}
-        <FooterCarousel
-          items={items}
-          onRemoveOne={handleRemoveOne}
-          ariaLabel="Selected bundle items"
-        />
-        <div className={classNames({ 'has-overflow': hasOverflow })} />
+      <div className="cf-carousel">
+        <div className="cf-carousel-viewport">
+          <div className="cf-carousel-product">
+            <div className="cf-carousel-remove">x</div>
+            <div className="cf-carousel-product-image">
+              <img 
+                width="100%"
+                src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
+              />
+            </div>
+            <div className="cf-carousel-product-details">
+              <div className="cf-carousel-product-title">Test</div>
+              <div className="cf-carousel-product-qty">Qty: 0</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="order-info">
         <p>{getFooterMessage()}</p>
         <div className="current-info">
-          {renderProductPrice()}
           <button
             onClick={handlePostTransaction}
             className={classNames('add-button', { disabled: isDisabled })}
             disabled={isDisabled || submittingCart}
           >
-            {submittingCart ? 'Adding to cart...' : 'Add to cart'}
+            {submittingCart ? `Adding to cart...` : `Add to cart • ${renderProductPrice()}`}
           </button>
         </div>
       </div>
