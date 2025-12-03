@@ -16,12 +16,13 @@ type CarouselItem = {
   shopifyId?: number;
 };
 
-const StickyFooter = () => {
+const StickyFooter = ({ customProduct }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: true })
 
   useEffect(() => {
+    console.log('customProduct', customProduct)
     if (emblaApi) {
       console.log(emblaApi.slideNodes()) // Access API
     }
