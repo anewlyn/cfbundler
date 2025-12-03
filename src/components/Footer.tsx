@@ -92,11 +92,9 @@ const StickyFooter = ({ customProducts }) => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
+      console.log('product', product)
       console.log('customProducts', customProducts)
-      const customData = customProducts.forEach(prod => {
-        if(prod.variants.find(variant => variant.id === product.shopifyId)) return prod
-      }) || []
-      console.log('customData', customData)
+      
       if(customData.length === 0) return
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
