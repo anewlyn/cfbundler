@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 import Link from 'next/link';
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, CSSProperties } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
@@ -12,6 +12,7 @@ type CarouselItem = {
   id: string;        
   name: string;
   image: string;
+  colors: string[],
   quantity: number;  // 0 for placeholders (non-removable)
   shopifyId?: number;
 };
@@ -91,6 +92,7 @@ const StickyFooter = ({ customProduct }) => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
+      const customData = customProduct.find(prod => prod.productId === product.shopifyId)
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
 
@@ -100,6 +102,7 @@ const StickyFooter = ({ customProduct }) => {
         map.set(product.shopifyId, {
           id: String(product.shopifyId),
           name: product.title,
+          colors: [...customData.colors],
           image:
             product.images?.[0]?.imageURL ||
             'https://bundler.cyclingfrog.com/assets/lone-frog.png',
@@ -147,11 +150,11 @@ const StickyFooter = ({ customProduct }) => {
               key={item.id}
               className="cf-carousel-product" 
               style={{
-                '--color1': customProduct.colors[0],
-                '--color2': customProduct.colors[1],
-                '--color3': customProduct.colors[2],
-                '--color4': customProduct.colors[3]
-              } as React.CSSProperties}
+                '--color1': item.colors[0],
+                '--color2': item.colors[1],
+                '--color3': item.colors[2],
+                '--color4': item.colors[3]
+              } as CSSProperties}
             >
               {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
               <div 
