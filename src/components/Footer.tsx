@@ -24,7 +24,6 @@ const StickyFooter = ({ customProducts }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: true })
 
   useEffect(() => {
-    console.log('customProducts', customProducts)
     if (emblaApi) {
       console.log(emblaApi.slideNodes()) // Access API
     }
@@ -93,8 +92,10 @@ const StickyFooter = ({ customProducts }) => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
-      const customData = customProducts.find(prod => prod.productId == cartProduct.shopifyId) ?? []
+      console.log('customProducts', customProducts)
+      const customData = customProducts.find(prod => prod.productId == product.shopifyId) ?? []
       console.log('customData', customData)
+      if(customData.length === 0) return
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
 
