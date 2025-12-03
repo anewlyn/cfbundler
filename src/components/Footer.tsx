@@ -83,6 +83,10 @@ const StickyFooter = ({ customProducts }) => {
     if (!it.shopifyId || !it.quantity) return;
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
+  const handleAddOne = (it: CarouselItem) => {
+    if (!it.shopifyId || !it.quantity) return;
+    addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity + 1 });
+  };
 
   // de-duplicated list
   const items: CarouselItem[] = useMemo(() => {
@@ -163,12 +167,21 @@ const StickyFooter = ({ customProducts }) => {
               } as CSSProperties}
             >
               {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
-              <div 
-                className="cf-carousel-remove"
-                onClick={() => handleRemoveOne(item)}
-              >
-                x 
-              </div>
+                <div className="cf-carousel-controls">
+                  <div 
+                    className="cf-carousel-remove"
+                    onClick={() => handleRemoveOne(item)}
+                  >
+                    { item.quantity === 1 ? '[]' : '-' }
+                  </div>
+                  <div className="cf-carousel-qty">{ item.quantity }</div>
+                  <div 
+                    className="cf-carousel-add"
+                    onClick={() => handleAddOne(item)}
+                  >
+                    +
+                  </div>
+                </div>
               )}
               <div className="cf-carousel-product-image">
                 <img 
