@@ -138,9 +138,10 @@ const StickyFooter = () => {
   };
 
   return (
-    <div className="sticky-footer">
+    <div className="cf-footer">
       <div className="cf-carousel">
         <div className="cf-carousel-viewport">
+          
           {/* item: */}
           <div className="cf-carousel-product">
             <div className="cf-carousel-remove">x</div>
@@ -232,7 +233,7 @@ const StickyFooter = () => {
         </div>
       </div>
 
-      <Link href="https://cyclingfrog.com/pages/contact-us" className="sticky-button round-button">
+      <Link href="https://cyclingfrog.com/pages/contact-us" className="cf-footer-atc">
         <span>?</span>
       </Link>
     </div>
