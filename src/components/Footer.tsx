@@ -19,7 +19,7 @@ type CarouselItem = {
 const StickyFooter = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: true })
 
   useEffect(() => {
     if (emblaApi) {
@@ -148,81 +148,28 @@ const StickyFooter = () => {
     <div className="cf-footer">
       <div className="cf-carousel" ref={emblaRef}>
         <div className="cf-carousel-container">
-
-          {/* item: */}
-          <div className="cf-carousel-product">
-            <div className="cf-carousel-remove">x</div>
-            <div className="cf-carousel-product-image">
-              <img 
-                width="100%"
-                src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
-              />
+          {items.map((item) => (
+            <div className="cf-carousel-product" key={item.id}>
+              {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
+              <div 
+                className="cf-carousel-remove"
+                onClick={() => handleRemoveOne(item)}
+              >
+                x 
+              </div>
+              )}
+              <div className="cf-carousel-product-image">
+                <img 
+                  width="100%"
+                  src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
+                />
+              </div>
+              <div className="cf-carousel-product-details">
+                <div className="cf-carousel-product-title">{ item.name }</div>
+                <div className="cf-carousel-product-qty">Qty: { item.quantity }</div>
+              </div>
             </div>
-            <div className="cf-carousel-product-details">
-              <div className="cf-carousel-product-title">Test</div>
-              <div className="cf-carousel-product-qty">Qty: 0</div>
-            </div>
-          </div>
-          
-          {/* item: */}
-          <div className="cf-carousel-product">
-            <div className="cf-carousel-remove">x</div>
-            <div className="cf-carousel-product-image">
-              <img 
-                width="100%"
-                src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
-              />
-            </div>
-            <div className="cf-carousel-product-details">
-              <div className="cf-carousel-product-title">Test</div>
-              <div className="cf-carousel-product-qty">Qty: 0</div>
-            </div>
-          </div>
-
-          {/* item: */}
-          <div className="cf-carousel-product">
-            <div className="cf-carousel-remove">x</div>
-            <div className="cf-carousel-product-image">
-              <img 
-                width="100%"
-                src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
-              />
-            </div>
-            <div className="cf-carousel-product-details">
-              <div className="cf-carousel-product-title">Test</div>
-              <div className="cf-carousel-product-qty">Qty: 0</div>
-            </div>
-          </div>
-
-          {/* item: */}
-          <div className="cf-carousel-product">
-            <div className="cf-carousel-remove">x</div>
-            <div className="cf-carousel-product-image">
-              <img 
-                width="100%"
-                src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
-              />
-            </div>
-            <div className="cf-carousel-product-details">
-              <div className="cf-carousel-product-title">Test</div>
-              <div className="cf-carousel-product-qty">Qty: 0</div>
-            </div>
-          </div>
-
-          {/* item: */}
-          <div className="cf-carousel-product">
-            <div className="cf-carousel-remove">x</div>
-            <div className="cf-carousel-product-image">
-              <img 
-                width="100%"
-                src="https://cdn.shopify.com/s/files/1/0596/2966/6513/files/cycling-frog-black-currant-can_ff88064d-3a78-490a-a068-3764a99b367f.png?v=1760049323"
-              />
-            </div>
-            <div className="cf-carousel-product-details">
-              <div className="cf-carousel-product-title">Test</div>
-              <div className="cf-carousel-product-qty">Qty: 0</div>
-            </div>
-          </div>
+          ))}
 
         </div>
       </div>
