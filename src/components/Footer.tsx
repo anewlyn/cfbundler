@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRef, useState, useEffect, useMemo, CSSProperties } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
+import { currencyFormatter, getDiscountValue } from '@/helpers/cartHelpers';
 import useEmblaCarousel from 'embla-carousel-react';
 
 type CarouselItem = {
@@ -136,17 +136,17 @@ const StickyFooter = ({ customProducts }) => {
       return (
         <div className="product-price">
           <p className={classNames('discount-price')}>
-            {currencyFormater(currentOrderValue, bundle.currencyCode)}
+            {currencyFormatter(currentOrderValue, bundle.currencyCode)}
           </p>
           <p className={classNames('discounted-price')}>
-            {currencyFormater(discountedPrice, bundle.currencyCode)}
+            {currencyFormatter(discountedPrice, bundle.currencyCode)}
           </p>
         </div>
       );
     }
     return (
       <p className={classNames('current-value')}>
-        {currencyFormater(discountedPrice, bundle.currencyCode)}
+        {currencyFormatter(discountedPrice, bundle.currencyCode)}
       </p>
     );
   };
@@ -213,7 +213,8 @@ const StickyFooter = ({ customProducts }) => {
             className={classNames('add-button', { disabled: isDisabled })}
             disabled={isDisabled || submittingCart}
           >
-            {submittingCart ? `Adding to cart...` : `Add to cart • ${renderProductPrice()}`}
+            {submittingCart ? `Adding to cart...` : `Add to Cart • `}
+            {renderProductPrice()}
           </button>
         </div>
       </div>

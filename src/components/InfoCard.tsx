@@ -4,7 +4,7 @@ import { useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater } from '@/helpers/cartHelpers';
+import { currencyFormatter } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
@@ -90,7 +90,7 @@ const InfoCard = ({
       <div className="info-content">
         <section className="description">
           <p className={`${kiro_bold_400.className} product-title`}>{productTitle}</p>
-          <p>{currencyFormater(price, bundle.currencyCode)}</p>
+          <p>{currencyFormatter(price, bundle.currencyCode)}</p>
           <hr />
           <div className="loox-rating" data-fetch data-id={looxReviewId} />
 

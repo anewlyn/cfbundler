@@ -136,12 +136,14 @@ p {
   align-items: center;
   padding: 4px;
   background-color: var(--color1);
+  border-radius: 4px;
 }
 
 .cf-carousel-product-image {
   position: relative;
   height: 100%;
   aspect-ratio: 3/4;
+  background-color: var(--color2);
   border-radius: 4px;
   overflow: hidden;
   img {

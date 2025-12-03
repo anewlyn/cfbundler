@@ -3,7 +3,7 @@
 import React, { useRef } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
+import { currencyFormatter, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import ResponsiveImage from './ResponsiveImage';
@@ -36,14 +36,14 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
       const discountedPrice = getDiscountValue(currentDiscount.value, price);
       return (
         <div className="product-price">
-          <span className="discount-price">{currencyFormater(price, bundle.currencyCode)}</span>
+          <span className="discount-price">{currencyFormatter(price, bundle.currencyCode)}</span>
           <span className="discounted-price">
-            {currencyFormater(discountedPrice, bundle.currencyCode)}
+            {currencyFormatter(discountedPrice, bundle.currencyCode)}
           </span>
         </div>
       );
     }
-    return <span className="product-price">{currencyFormater(price, bundle.currencyCode)}</span>;
+    return <span className="product-price">{currencyFormatter(price, bundle.currencyCode)}</span>;
   };
 
   return (
