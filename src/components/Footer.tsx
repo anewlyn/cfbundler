@@ -6,7 +6,7 @@ import { useRef, useState, useEffect, useMemo } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
-import FooterCarousel from './FooterCarousel';
+import useEmblaCarousel from 'embla-carousel-react';
 
 type CarouselItem = {
   id: string;        
@@ -19,6 +19,13 @@ type CarouselItem = {
 const StickyFooter = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
+
+  useEffect(() => {
+    if (emblaApi) {
+      console.log(emblaApi.slideNodes()) // Access API
+    }
+  }, [emblaApi])
 
   const {
     products,
@@ -139,9 +146,9 @@ const StickyFooter = () => {
 
   return (
     <div className="cf-footer">
-      <div className="cf-carousel">
-        <div className="cf-carousel-viewport">
-          
+      <div className="cf-carousel" ref={emblaRef}>
+        <div className="cf-carousel-container">
+
           {/* item: */}
           <div className="cf-carousel-product">
             <div className="cf-carousel-remove">x</div>
