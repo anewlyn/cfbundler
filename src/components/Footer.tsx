@@ -110,6 +110,8 @@ const StickyFooter = () => {
 
     const arr = Array.from(map.values());
 
+    console.log('arr', arr)
+
     return arr;
   }, [cart.productVariants, products]);
 
