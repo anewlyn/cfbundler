@@ -152,7 +152,9 @@ p {
 }
 
 .cf-carousel-product-details {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 12px;
 }
 .cf-carousel-product-title {
   font-size: 14px;
@@ -161,12 +163,19 @@ p {
   font-size: 12px;
 }
 
-.cf-carousel-remove {
-  position: absolute;
-  top: -5px; right: -5px;
-  width: 20px; height: 20px;
-  background: #000;
+.cf-carousel-controls {
+  display: flex;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
   color: #fff;
+  background-color: #000;
+}
+
+.cf-carousel-remove,
+.cf-carousel-qty,
+.cf-carousel-add {
+  flex: 0 0 20px;
 }
 
 

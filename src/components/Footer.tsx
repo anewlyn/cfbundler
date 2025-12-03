@@ -166,23 +166,6 @@ const StickyFooter = ({ customProducts }) => {
                 '--color4': item.colors[3]
               } as CSSProperties}
             >
-              {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
-                <div className="cf-carousel-controls">
-                  <div 
-                    className="cf-carousel-remove"
-                    onClick={() => handleRemoveOne(item)}
-                  >
-                    { item.quantity === 1 ? '[]' : '-' }
-                  </div>
-                  <div className="cf-carousel-qty">{ item.quantity }</div>
-                  <div 
-                    className="cf-carousel-add"
-                    onClick={() => handleAddOne(item)}
-                  >
-                    +handleAddOne
-                  </div>
-                </div>
-              )}
               <div className="cf-carousel-product-image">
                 <img 
                   width="100%"
@@ -193,6 +176,23 @@ const StickyFooter = ({ customProducts }) => {
               <div className="cf-carousel-product-details">
                 <div className="cf-carousel-product-title">{ item.customTitle }</div>
                 <div className="cf-carousel-product-variant">{ item.name }</div>
+                {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
+                  <div className="cf-carousel-controls">
+                    <div 
+                      className="cf-carousel-remove"
+                      onClick={() => handleRemoveOne(item)}
+                    >
+                      { item.quantity === 1 ? '[]' : '-' }
+                    </div>
+                    <div className="cf-carousel-qty">{ item.quantity }</div>
+                    <div 
+                      className="cf-carousel-add"
+                      onClick={() => handleAddOne(item)}
+                    >
+                      +
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}
