@@ -95,6 +95,9 @@ const StickyFooter = ({ customProducts }) => {
       console.log('product', product)
       console.log('customProducts', customProducts)
 
+      const customData = customProducts.find(prod => prod.productId === product.looxReviewId)
+      console.log('customData', customData)
+
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
 
