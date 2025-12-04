@@ -82,7 +82,6 @@ const StickyFooter = ({ customProducts }) => {
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
   const handleAddOne = (it: CarouselItem) => {
-    if(emblaApi) emblaApi.scrollTo(carouselRef.current?.children.length) 
     if (!it.shopifyId || !it.quantity) return;
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity + 1 });
   };
@@ -120,6 +119,9 @@ const StickyFooter = ({ customProducts }) => {
     const arr = Array.from(map.values());
 
     console.log('arr', arr)
+
+    console.log('carouselRef?.current?.children.length', carouselRef?.current?.children.length)
+    if(emblaApi) emblaApi?.scrollTo(carouselRef?.current?.children.length)
 
     return arr;
   }, [cart.productVariants, products])
