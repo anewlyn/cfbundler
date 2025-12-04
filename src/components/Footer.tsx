@@ -124,7 +124,7 @@ const StickyFooter = ({ customProducts }) => {
 
     console.log('arr', arr)
 
-    if(emblaApi) emblaApi?.slidesInView()
+    if(emblaApi) console.log('emblaApi?.slidesInView()', emblaApi?.slidesInView())
 
     return arr;
   }, [cart.productVariants, products])
