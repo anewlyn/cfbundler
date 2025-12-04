@@ -204,25 +204,19 @@ const StickyFooter = ({ customProducts }) => {
         </div>
       </div>
 
-      {items.length && 
-        <div className="order-info">
-          <p>{getFooterMessage()}</p>
-          <div className="current-info">
-            <button
-              onClick={handlePostTransaction}
-              className={classNames('cf-btn-atc', { disabled: isDisabled })}
-              disabled={isDisabled || submittingCart}
-            >
-              {submittingCart ? `Adding to cart...` : `Add to Cart • `}
-              {renderProductPrice()}
-            </button>
-          </div>
-        </div>
-      }
-
-      <Link href="https://cyclingfrog.com/pages/contact-us" className="cf-footer-atc">
-        <span>?</span>
-      </Link>
+      <div className="cf-footer-actions">
+        <p className="cf-footer-message">{ getFooterMessage() }</p>
+        {items.length && 
+          <button
+            onClick={handlePostTransaction}
+            className={classNames('cf-btn-atc', { disabled: isDisabled })}
+            disabled={isDisabled || submittingCart}
+          >
+            { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
+            { renderProductPrice() }
+          </button>
+        }
+      </div>
     </div>
   );
 };
