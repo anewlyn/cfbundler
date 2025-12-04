@@ -206,8 +206,8 @@ const StickyFooter = ({ customProducts }) => {
 
       <div className="cf-footer-actions">
         <p className="cf-footer-message">{ getFooterMessage() }</p>
-        {items.length && 
-          <button
+        {items.length 
+          ? <button
             onClick={handlePostTransaction}
             className={classNames('cf-btn-atc')}
             disabled={isDisabled || submittingCart}
@@ -215,6 +215,7 @@ const StickyFooter = ({ customProducts }) => {
             { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
             { renderProductPrice() }
           </button>
+          : ''
         }
       </div>
     </div>
