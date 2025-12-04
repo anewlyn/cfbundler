@@ -19,8 +19,9 @@ type CarouselItem = {
 };
 
 const StickyFooter = ({ customProducts }) => {
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [hasOverflow, setHasOverflow] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const emblaContainer = useRef(null)
+  const [hasOverflow, setHasOverflow] = useState(false)
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
     dragFree: true, 
@@ -120,18 +121,13 @@ const StickyFooter = ({ customProducts }) => {
 
     console.log('arr', arr)
 
-    if(emblaApi && arr.length > emblaApi?.slidesInView().length) {
-      console.log('emblaApi', emblaApi.slidesInView().length)
-      console.log('emblaRef', emblaRef)
-      emblaApi.reInit({
-        loop: false, 
-        dragFree: true, 
-        align: 'start', 
-      })
-    }
-
     return arr;
   }, [cart.productVariants, products])
+
+  useEffect(() => {
+    if(emblaContainer) console.log('emblaContainer', emblaContainer)
+    if(emblaApi) console.log('emblaApi', emblaApi.slidesInView().length)
+  }, [emblaContainer])
 
   const renderProductPrice = () => {
     if (currentDiscount) {
@@ -157,7 +153,7 @@ const StickyFooter = ({ customProducts }) => {
   return (
     <div className="cf-footer">
       <div className={`cf-carousel ${items.length ? 'shown' : ''}`} ref={emblaRef}>
-        <div className="cf-carousel-container">
+        <div className="cf-carousel-container" ref={emblaContainer}>
           {items.map((item) => (
             <div 
               key={item.id}
