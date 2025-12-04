@@ -57,7 +57,12 @@ const StickyFooter = ({ customProducts }) => {
       window.addEventListener('resize', checkOverflow);
       return () => window.removeEventListener('resize', checkOverflow);
     }
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    if(carouselRef?.current?.children === 3 && emblaApi) emblaApi.scrollTo(1)
+    if(hasOverflow && emblaApi) emblaApi.reInit({align: 'start'})
+  }, [hasOverflow])
 
   const getFooterMessage = () => {
     if (
@@ -147,7 +152,7 @@ const StickyFooter = ({ customProducts }) => {
   return (
     <div className="cf-footer">
       <div className={`cf-carousel ${items.length ? 'shown' : ''}`} ref={emblaRef}>
-        <div className="cf-carousel-container">
+        <div className="cf-carousel-container" ref={carouselRef}>
           {items.map((item) => (
             <div 
               key={item.id}
