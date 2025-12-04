@@ -123,11 +123,14 @@ p {
 .cf-carousel {
   width: 100%;
   padding: 0px 16px 0px 16px;
-  overflow: hidden;
   transition: padding 250ms ease-in-out;
   &.shown {
     padding: 16px 16px 8px 16px;
   }
+}
+.cf-carousel-viewport {
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
 }
 .cf-carousel-container {
   display: flex;
