@@ -25,7 +25,6 @@ const StickyFooter = ({ customProducts }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
     dragFree: true, 
-    align: 'center', 
   })
 
   const {
