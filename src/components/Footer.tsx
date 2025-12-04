@@ -121,6 +121,7 @@ const StickyFooter = ({ customProducts }) => {
     console.log('arr', arr)
 
     console.log('carouselRef?.current?.children.length', carouselRef?.current?.children.length)
+    if(emblaApi) emblaApi?.reInit()
     if(emblaApi) emblaApi?.scrollTo(carouselRef?.current?.children.length + 1)
 
     return arr;
