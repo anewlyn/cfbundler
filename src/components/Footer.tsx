@@ -25,7 +25,22 @@ const StickyFooter = ({ customProducts }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
     dragFree: true, 
-    align: 'center', 
+    align: (viewSize, snapSize, index) => {
+      console.log(viewSize, snapSize, index)
+      let slideElement = document.querySelector('.cf-carousel-product')
+      let slideCount = document.querySelectorAll('.cf-carousel-product').length
+      let slideWidth = slideElement.offsetWidth
+      let slideNumber = viewSize / slideWidth
+
+      if (slideCount < slideNumber) {
+        console.log(slideCount, slideNumber, slideWidth)
+        let offsetSlider = ((slideNumber - slideCount) * slideWidth) / 2
+        console.log(offsetSlider)
+        return offsetSlider
+      } else {
+        return 0
+      }
+    },
   })
 
   const {

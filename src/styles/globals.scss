@@ -121,6 +121,7 @@ p {
 }
 
 .cf-carousel {
+  padding: 0px 16px 0px 16px;
   overflow: hidden;
   transition: padding 250ms ease-in-out;
   &.shown {
