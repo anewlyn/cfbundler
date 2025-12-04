@@ -21,7 +21,11 @@ type CarouselItem = {
 const StickyFooter = ({ customProducts }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: true })
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: false, 
+    dragFree: true,
+    containScroll: 'trimSnaps', 
+  })
 
   useEffect(() => {
     if (emblaApi) {
