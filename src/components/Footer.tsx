@@ -28,9 +28,9 @@ const StickyFooter = ({ customProducts }) => {
     align: (viewSize, snapSize, index) => {
       console.log('\n viewSize', viewSize)
       let container: any = document.querySelector('.cf-carousel')
-      let slide: any = document.querySelectorAll('.cf-carousel-product').length
-      let slideWidth = slide.offsetWidth
-      let test = viewSize / slideWidth
+      let slides: any = document.querySelectorAll('.cf-carousel-product').length
+      let slideWidth = slides.offsetWidth
+      let test = viewSize / slides
       console.log('\n test', test)
     },
   })
