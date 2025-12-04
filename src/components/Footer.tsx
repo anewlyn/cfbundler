@@ -127,7 +127,7 @@ const StickyFooter = ({ customProducts }) => {
   useEffect(() => {
     if(emblaContainer && products.length > emblaContainer.current.children.length) {
       console.log('\n\n\n emblaContainer', emblaContainer.current.children.length, 'products', products.length)
-      emblaApi.reInit({
+      if(emblaApi) emblaApi.reInit({
         loop: false, 
         dragFree: true, 
         align: 'start', 
