@@ -123,12 +123,6 @@ const StickyFooter = ({ customProducts }) => {
     return arr;
   }, [cart.productVariants, products])
 
-  useEffect(() => {
-    if(emblaContainer && items.length > emblaContainer.current.children.length) {
-      console.log('\n\n\n emblaContainer', emblaContainer.current.children.length, 'items', items.length)
-    }
-  }, [emblaContainer])
-
   const renderProductPrice = () => {
     if (currentDiscount) {
       const discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
