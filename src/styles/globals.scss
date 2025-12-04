@@ -198,12 +198,16 @@ p {
 
 .cf-footer-actions {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   padding: 16px;
   text-align: center;
 }
 
 .cf-footer-message {
   font-size: 14px;
+  line-height: 1.25;
   text-align: center;
 }
 
