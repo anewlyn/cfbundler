@@ -209,7 +209,7 @@ const StickyFooter = ({ customProducts }) => {
         {items.length && 
           <button
             onClick={handlePostTransaction}
-            className={classNames('cf-btn-atc', { disabled: isDisabled })}
+            className={classNames('cf-btn-atc')}
             disabled={isDisabled || submittingCart}
           >
             { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
