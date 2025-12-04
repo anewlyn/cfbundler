@@ -120,18 +120,14 @@ const StickyFooter = ({ customProducts }) => {
       }
     });
 
-    const arr = Array.from(map.values());
+    const arr = Array.from(map.values())
 
     console.log('arr', arr)
 
+    if(emblaApi) emblaApi?.slidesInView()
+
     return arr;
   }, [cart.productVariants, products])
-
-  useEffect(() => {
-    if (emblaApi) {
-      console.log(emblaApi.slideNodes())
-    }
-  }, [products])
 
   const renderProductPrice = () => {
     if (currentDiscount) {
