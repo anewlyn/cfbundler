@@ -121,8 +121,11 @@ p {
 }
 
 .cf-carousel {
-  padding: 16px;
   overflow: hidden;
+  &.shown {
+    padding: 16px;
+    transition: padding 250ms ease-in-out;
+  }
 }
 .cf-carousel-container {
   display: flex;
@@ -130,7 +133,7 @@ p {
 }
 .cf-carousel-product {
   position: relative;
-  flex: 0 0 40%;
+  flex: 0 0 320px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -138,6 +141,12 @@ p {
   padding: 4px;
   background-color: var(--color1);
   border-radius: 4px;
+}
+
+@media (max-width: 767.9px) {
+  .cf-carousel-product {
+    flex: 0 0 40%;
+  }
 }
 
 .cf-carousel-product-image {
@@ -224,6 +233,9 @@ p {
     color: #FFB3AB;
   }
   &:disabled {
+    &:hover {
+      color: #fff;
+    }
     opacity: 0.5;
   }
 }

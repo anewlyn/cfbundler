@@ -152,7 +152,7 @@ const StickyFooter = ({ customProducts }) => {
 
   return (
     <div className="cf-footer">
-      <div className="cf-carousel" ref={emblaRef}>
+      <div className={`cf-carousel ${items.length ? 'shown' : ''}`} ref={emblaRef}>
         <div className="cf-carousel-container">
           {items.map((item) => (
             <div 
