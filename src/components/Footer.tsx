@@ -27,10 +27,6 @@ const StickyFooter = ({ customProducts }) => {
     align: 'center', 
   })
 
-  useEffect(() => {
-    console.log(emblaApi.slideNodes())
-  }, [emblaApi])
-
   const {
     products,
     cart,
@@ -41,7 +37,7 @@ const StickyFooter = ({ customProducts }) => {
     addProductVariant,
     currentDiscount,
     submittingCart,
-  } = useLoopContext();
+  } = useLoopContext()
 
   const isDisabled =
     currentOrderValue <
@@ -129,7 +125,13 @@ const StickyFooter = ({ customProducts }) => {
     console.log('arr', arr)
 
     return arr;
-  }, [cart.productVariants, products]);
+  }, [cart.productVariants, products])
+
+  useEffect(() => {
+    if (emblaApi) {
+      console.log(emblaApi.slideNodes())
+    }
+  }, [items])
 
   const renderProductPrice = () => {
     if (currentDiscount) {
