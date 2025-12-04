@@ -120,10 +120,6 @@ const StickyFooter = ({ customProducts }) => {
 
     console.log('arr', arr)
 
-    console.log('carouselRef?.current?.children.length', carouselRef?.current?.children.length)
-    if(emblaApi) emblaApi?.reInit()
-    if(emblaApi) emblaApi?.scrollTo(carouselRef?.current?.children.length + 1)
-
     return arr;
   }, [cart.productVariants, products])
 
@@ -152,7 +148,7 @@ const StickyFooter = ({ customProducts }) => {
     <div className="cf-footer">
       <div className={`cf-carousel ${items.length ? 'shown' : ''}`} ref={emblaRef}>
         <div className="cf-carousel-container" ref={carouselRef}>
-          {items.map((item) => (
+          {[...items].reverse().map((item) => (
             <div 
               key={item.id}
               className="cf-carousel-product" 
