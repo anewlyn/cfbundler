@@ -120,11 +120,18 @@ const StickyFooter = ({ customProducts }) => {
       }
     });
 
-    const arr = Array.from(map.values())
+    const arr = Array.from(map.values());
 
     console.log('arr', arr)
 
-    if(emblaApi) console.log('emblaApi?.slidesInView()', emblaApi?.slidesInView())
+    if(emblaApi && arr.length > emblaApi?.slidesInView().length) {
+      console.log('emblaApi', emblaApi.slidesInView().length)
+      emblaApi.reInit({
+        loop: false, 
+        dragFree: true, 
+        align: 'start', 
+      })
+    }
 
     return arr;
   }, [cart.productVariants, products])
