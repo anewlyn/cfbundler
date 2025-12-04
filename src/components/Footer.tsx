@@ -59,11 +59,6 @@ const StickyFooter = ({ customProducts }) => {
     }
   }, [])
 
-  useEffect(() => {
-    if(carouselRef?.current?.children === 3 && emblaApi) emblaApi.scrollTo(1)
-    if(hasOverflow && emblaApi) emblaApi.reInit({align: 'start'})
-  }, [hasOverflow])
-
   const getFooterMessage = () => {
     if (
       currentOrderValue <=
@@ -87,6 +82,7 @@ const StickyFooter = ({ customProducts }) => {
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
   const handleAddOne = (it: CarouselItem) => {
+    if(emblaApi) emblaApi.scrollTo(carouselRef.current?.children.length) 
     if (!it.shopifyId || !it.quantity) return;
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity + 1 });
   };
