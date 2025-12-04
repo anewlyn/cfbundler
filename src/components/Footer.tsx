@@ -23,8 +23,8 @@ const StickyFooter = ({ customProducts }) => {
   const [hasOverflow, setHasOverflow] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
-    dragFree: true,
-    containScroll: 'trimSnaps', 
+    dragFree: true, 
+    align: 'center', 
   })
 
   useEffect(() => {
