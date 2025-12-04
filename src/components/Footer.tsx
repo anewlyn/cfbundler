@@ -26,7 +26,9 @@ const StickyFooter = ({ customProducts }) => {
     loop: false, 
     dragFree: true, 
     align: (viewSize, snapSize, index) => {
-      console.log('snapSize', snapSize)
+      console.log('\n\n view', viewSize > (emblaApi?.slideNodes().length * 320))
+      if(viewSize > (emblaApi?.slideNodes().length * 320)) return 'start'
+      else return 'center'
     },
   })
 
