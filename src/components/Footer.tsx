@@ -94,11 +94,7 @@ const StickyFooter = ({ customProducts }) => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
-      console.log('product', product)
-      console.log('customProducts', customProducts)
-
       const customData = customProducts.find(prod => prod.productId === product.looxReviewId)
-      console.log('customData', customData)
 
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
@@ -126,6 +122,7 @@ const StickyFooter = ({ customProducts }) => {
 
     if(emblaApi && arr.length > emblaApi?.slidesInView().length) {
       console.log('emblaApi', emblaApi.slidesInView().length)
+      console.log('emblaRef', emblaRef)
       emblaApi.reInit({
         loop: false, 
         dragFree: true, 
