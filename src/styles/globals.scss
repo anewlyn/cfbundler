@@ -204,9 +204,12 @@ p {
   color: #fff;
   background-color: #000;
   border-radius: 4px;
-}
-.cf-btn-atc:hover {
-  color: #FFB3AB;
+  :hover {
+    color: #FFB3AB;
+  }
+  :disabled {
+    opacity: 0.5;
+  }
 }
 
 .cf-product-price {}

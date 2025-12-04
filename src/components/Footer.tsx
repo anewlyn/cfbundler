@@ -130,9 +130,8 @@ const StickyFooter = ({ customProducts }) => {
   }, [cart.productVariants, products]);
 
   const renderProductPrice = () => {
-    let discountedPrice = currentOrderValue;
     if (currentDiscount) {
-      discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
+      const discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
       return (
         <span className="cf-product-price">
           <span className="cf-product-price-discounted">
@@ -145,9 +144,9 @@ const StickyFooter = ({ customProducts }) => {
       );
     }
     return (
-      <p className={classNames('current-value')}>
-        {currencyFormatter(discountedPrice, bundle.currencyCode)}
-      </p>
+      <span className={classNames('cf-product-price')}>
+        <span className='cf-product-price-original'>{currencyFormatter(currentOrderValue, bundle.currencyCode)}</span>
+      </span>
     );
   };
 
@@ -205,19 +204,21 @@ const StickyFooter = ({ customProducts }) => {
         </div>
       </div>
 
-      <div className="order-info">
-        <p>{getFooterMessage()}</p>
-        <div className="current-info">
-          <button
-            onClick={handlePostTransaction}
-            className={classNames('cf-btn-atc', { disabled: isDisabled })}
-            disabled={isDisabled || submittingCart}
-          >
-            {submittingCart ? `Adding to cart...` : `Add to Cart • `}
-            {renderProductPrice()}
-          </button>
+      {items.length && 
+        <div className="order-info">
+          <p>{getFooterMessage()}</p>
+          <div className="current-info">
+            <button
+              onClick={handlePostTransaction}
+              className={classNames('cf-btn-atc', { disabled: isDisabled })}
+              disabled={isDisabled || submittingCart}
+            >
+              {submittingCart ? `Adding to cart...` : `Add to Cart • `}
+              {renderProductPrice()}
+            </button>
+          </div>
         </div>
-      </div>
+      }
 
       <Link href="https://cyclingfrog.com/pages/contact-us" className="cf-footer-atc">
         <span>?</span>
