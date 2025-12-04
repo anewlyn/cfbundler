@@ -131,7 +131,7 @@ const StickyFooter = ({ customProducts }) => {
     if (emblaApi) {
       console.log(emblaApi.slideNodes())
     }
-  }, [items])
+  }, [products])
 
   const renderProductPrice = () => {
     if (currentDiscount) {
