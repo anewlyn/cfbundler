@@ -125,8 +125,14 @@ const StickyFooter = ({ customProducts }) => {
   }, [cart.productVariants, products])
 
   useEffect(() => {
-    if(emblaContainer) console.log('emblaContainer', emblaContainer)
-    if(emblaApi) console.log('emblaApi', emblaApi.slidesInView().length)
+    if(emblaContainer && products.length > emblaContainer.current.children.length) {
+      console.log('\n\n\n emblaContainer', emblaContainer.current.children.length, 'products', products.length)
+      emblaApi.reInit({
+        loop: false, 
+        dragFree: true, 
+        align: 'start', 
+      })
+    }
   }, [emblaContainer])
 
   const renderProductPrice = () => {
