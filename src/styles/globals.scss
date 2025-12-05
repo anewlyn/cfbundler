@@ -150,14 +150,12 @@ p {
   transform: translateY(-50%);
 }
 
-.cf-carousel-viewport {
-  overflow: hidden;
-  touch-action: pan-y pinch-zoom;
-}
 .cf-carousel-container {
   display: flex;
   width: 100%;
   gap: 16px;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
 }
 .cf-carousel-product {
   position: relative;
