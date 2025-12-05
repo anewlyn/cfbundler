@@ -134,7 +134,7 @@ const StickyFooter = ({ customProducts }) => {
         id: `placeholder-${arr.length}`, 
         customTitle: '', 
         name: '', 
-        colors: ['#FFF2F0', '#fff', '#fff', '#fff'], 
+        colors: ['#FFF2F0', '#ffffff00', '#ffffff00', '#ffffff00'], 
         image: 'https://cdn.shopify.com/s/files/1/0596/2966/6513/files/logo-cycling-frog-mark-black_4x_befef8cb-da45-44e2-a6c7-fbad9566250d.png?v=1695670600', 
         quantity: 0, 
       })
