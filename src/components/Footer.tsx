@@ -127,19 +127,16 @@ const StickyFooter = ({ customProducts }) => {
       }
     });
 
-    const arr = Array.from(map.values());
-
-    console.log('arr', arr)
-    if(emblaApi) emblaApi.scrollTo(0)
+    const arr = Array.from(map.values())
 
     while (arr.length < 6) {
       arr.push({
-        id: `placeholder-${arr.length}`,
-        customTitle: '',
-        name: '',
-        colors: ['#fff', '#000'],
-        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png',
-        quantity: 0,
+        id: `placeholder-${arr.length}`, 
+        customTitle: '', 
+        name: '', 
+        colors: ['#fff', '#000'], 
+        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png', 
+        quantity: 0, 
       })
     }
 
