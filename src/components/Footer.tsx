@@ -132,6 +132,17 @@ const StickyFooter = ({ customProducts }) => {
     console.log('arr', arr)
     if(emblaApi) emblaApi.scrollTo(0)
 
+    while (arr.length < 6) {
+      arr.push({
+        id: `placeholder-${arr.length}`,
+        customTitle: '',
+        name: '',
+        colors: ['#fff', '#000'],
+        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png',
+        quantity: 0,
+      })
+    }
+
     return arr;
   }, [cart.productVariants, products])
 
@@ -161,7 +172,7 @@ const StickyFooter = ({ customProducts }) => {
       <div className={`cf-carousel ${items.length ? 'shown' : ''}`} ref={emblaRef}>
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        <div className="cf-carousel-container" ref={carouselRef}>
+        <div className="cf-carousel-container">
           {[...items].reverse().map((item) => (
             <div 
               key={item.id}
