@@ -130,6 +130,7 @@ const StickyFooter = ({ customProducts }) => {
     const arr = Array.from(map.values());
 
     console.log('arr', arr)
+    if(emblaApi) emblaApi.scrollTo(0)
 
     return arr;
   }, [cart.productVariants, products])
