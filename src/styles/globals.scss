@@ -162,6 +162,12 @@ p {
   gap: 16px;
   overflow: hidden;
 }
+
+.cf-carousel-placeholder {
+  justify-content: center;
+  align-items: center;
+}
+
 .cf-carousel-product {
   position: relative;
   flex: 0 0 320px;

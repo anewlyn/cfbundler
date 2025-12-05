@@ -174,7 +174,7 @@ const StickyFooter = ({ customProducts }) => {
             {items.map((item) => (
               <div 
                 key={item.id}
-                className="cf-carousel-product" 
+                className={`cf-carousel-product ${item.name === '' ? 'cf-carousel-placeholder' : ''}`} 
                 style={{
                   '--color1': item.colors[0],
                   '--color2': item.colors[1],
