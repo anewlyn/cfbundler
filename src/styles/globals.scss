@@ -121,6 +121,7 @@ p {
 }
 
 .cf-carousel {
+  position: relative;
   width: 100%;
   padding: 0px 16px 0px 16px;
   transition: padding 250ms ease-in-out;
@@ -153,10 +154,12 @@ p {
 }
 
 .cf-carousel-viewport {
+  position: relative;
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
 }
 .cf-carousel-container {
+  position: relative;
   display: flex;
   width: 100%;
   gap: 16px;
