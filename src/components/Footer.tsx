@@ -134,7 +134,7 @@ const StickyFooter = ({ customProducts }) => {
         id: `placeholder-${arr.length}`, 
         customTitle: '', 
         name: '', 
-        colors: ['#fff', '#000'], 
+        colors: ['#FFF2F0', '#fff'], 
         image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png', 
         quantity: 0, 
       })
