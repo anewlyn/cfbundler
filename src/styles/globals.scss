@@ -152,6 +152,10 @@ p {
   transform: translateY(-50%);
 }
 
+.cf-carousel-viewport {
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+}
 .cf-carousel-container {
   display: flex;
   width: 100%;
