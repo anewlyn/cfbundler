@@ -136,21 +136,17 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px; height: 40px;
+  width: 40px; height: 32px;
   color: #000;
   background-color: #fff;
   border: none;
   border-radius: 4px;
   box-shadow: 0 0 16px #00000011;
-  top: calc(100% + 20px);
-  transform: translateY(0%);
+  top: 50%;
+  transform: translateY(-50%);
   &:hover {
     color: var(--color2)
   }
-  
-    top: 50%;
-    transform: translateY(-50%);
-  
 }
 .cf-carousel-btn-prev {
   left: 0; 
@@ -264,6 +260,7 @@ p {
   position: relative;
   width: 100%;
   font-size: 14px;
+  min-height: 32px;
   line-height: 1.25;
   margin: 0;
   text-align: center;
