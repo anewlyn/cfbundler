@@ -120,7 +120,7 @@ const StickyFooter = ({ customProducts }) => {
           colors: customData.colors,
           image:
             product.images?.[0]?.imageURL ||
-            'https://bundler.cyclingfrog.com/assets/lone-frog.png',
+            'https://cdn.shopify.com/s/files/1/0596/2966/6513/files/logo-cycling-frog-mark-black_4x_befef8cb-da45-44e2-a6c7-fbad9566250d.png?v=1695670600',
           quantity: qty,
           shopifyId: product.shopifyId,
         });
@@ -135,7 +135,7 @@ const StickyFooter = ({ customProducts }) => {
         customTitle: '', 
         name: '', 
         colors: ['#FFF2F0', '#fff', '#fff', '#fff'], 
-        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png', 
+        image: 'https://cdn.shopify.com/s/files/1/0596/2966/6513/files/logo-cycling-frog-mark-black_4x_befef8cb-da45-44e2-a6c7-fbad9566250d.png?v=1695670600', 
         quantity: 0, 
       })
     }
