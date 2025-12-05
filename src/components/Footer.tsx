@@ -28,7 +28,7 @@ const StickyFooter = ({ customProducts }) => {
   const [hasOverflow, setHasOverflow] = useState(false)
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
-    dragFree: true, 
+    dragFree: false, 
   })
 
   const {
@@ -134,7 +134,7 @@ const StickyFooter = ({ customProducts }) => {
         id: `placeholder-${arr.length}`, 
         customTitle: '', 
         name: '', 
-        colors: ['#FFF2F0', '#fff'], 
+        colors: ['#FFF2F0', '#fff', '#fff', '#fff'], 
         image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png', 
         quantity: 0, 
       })
