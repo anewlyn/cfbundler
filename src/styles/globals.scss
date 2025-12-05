@@ -147,10 +147,10 @@ p {
   &:hover {
     color: var(--color2)
   }
-  @media (max-width: 767.9px) {
+  
     top: 50%;
     transform: translateY(-50%);
-  }
+  
 }
 .cf-carousel-btn-prev {
   left: 16px; 
@@ -267,6 +267,7 @@ p {
 }
 
 .cf-footer-message {
+  position: relative;
   font-size: 14px;
   line-height: 1.25;
   margin: 0;
