@@ -153,16 +153,10 @@ p {
   
 }
 .cf-carousel-btn-prev {
-  left: 16px; 
-  @media (max-width: 767.9px) {
-    left: 8px; 
-  }
+  left: 0; 
 }
 .cf-carousel-btn-next {
-  right: 16px; 
-  @media (max-width: 767.9px) {
-    right: 8px; 
-  }
+  right: 0; 
 }
 
 .cf-carousel-viewport {
@@ -273,6 +267,7 @@ p {
   line-height: 1.25;
   margin: 0;
   text-align: center;
+  padding: 80px;
 }
 
 .cf-btn-atc {
