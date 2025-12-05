@@ -165,11 +165,6 @@ p {
   gap: 16px;
 }
 
-.cf-carousel-placeholder {
-  justify-content: center;
-  align-items: center;
-}
-
 .cf-carousel-product {
   position: relative;
   flex: 0 0 320px;
@@ -180,6 +175,10 @@ p {
   padding: 4px;
   background-color: var(--color1);
   border-radius: 4px;
+  &.cf-carousel-placeholder {
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @media (max-width: 767.9px) {
