@@ -123,11 +123,6 @@ p {
 .cf-carousel {
   position: relative;
   width: 100%;
-  padding: 0px 16px 0px 16px;
-  transition: padding 250ms ease-in-out;
-  &.shown {
-    padding: 16px 16px 8px 16px;
-  }
 }
 
 .cf-carousel-btn {
@@ -157,6 +152,7 @@ p {
 
 .cf-carousel-viewport {
   position: relative;
+  padding: 16px 16px 8px 16px;
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
 }
