@@ -170,7 +170,7 @@ const StickyFooter = ({ customProducts }) => {
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         <div className="cf-carousel-container">
-          {[...items].reverse().map((item) => (
+          {items.map((item) => (
             <div 
               key={item.id}
               className="cf-carousel-product" 
