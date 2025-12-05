@@ -7,6 +7,11 @@ import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormatter, getDiscountValue } from '@/helpers/cartHelpers';
 import useEmblaCarousel from 'embla-carousel-react';
+import {
+  PrevButton,
+  NextButton,
+  usePrevNextButtons
+} from '@/components/CarouselButtons'
 
 type CarouselItem = {
   id: string;        
@@ -24,8 +29,14 @@ const StickyFooter = ({ customProducts }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: false, 
     dragFree: false, 
-    containScroll: false, 
   })
+
+  const {
+    prevBtnDisabled,
+    nextBtnDisabled,
+    onPrevButtonClick,
+    onNextButtonClick
+  } = usePrevNextButtons(emblaApi)
 
   const {
     products,
@@ -147,6 +158,8 @@ const StickyFooter = ({ customProducts }) => {
   return (
     <div className="cf-footer">
       <div className={`cf-carousel ${items.length ? 'shown' : ''}`} ref={emblaRef}>
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         <div className="cf-carousel-container" ref={carouselRef}>
           {[...items].reverse().map((item) => (
             <div 
