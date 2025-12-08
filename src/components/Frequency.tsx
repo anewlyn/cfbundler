@@ -121,7 +121,7 @@ const Frequency = () => {
                         className={ selected ? 'active' : ''}
                         onClick={() => handlePlanSelect(plan)}
                     >
-                        {formatInterval(plan)}
+                        {formatInterval(plan).toLowerCase()}
                     </Dropdown.Item>
                 )
             })}
