@@ -23,8 +23,8 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [])
 
-  const topTier = benefitTiers[-1].value
   useEffect(() => {
+    const topTier = benefitTiers[-1].value
     if(currentOrderValue > topTier) setProgress(minProgress)
     else setProgress(Math.round(maxProgress - (currentOrderValue / topTier)))
   }, [currentOrderValue])
