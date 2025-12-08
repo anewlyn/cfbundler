@@ -29,7 +29,7 @@ const Header = () => {
     console.log('maxProgress - (currentOrderValue / topTier)', maxProgress - (currentOrderValue / topTier))
     console.log('progress', progress)
     if(currentOrderValue > topTier) setProgress(minProgress)
-    if(currentOrderValue <= topTier) setProgress(maxProgress - (maxProgress * currentOrderValue / topTier))
+    if(currentOrderValue <= topTier) setProgress(maxProgress - (currentOrderValue / topTier * maxProgress))
   }, [currentOrderValue])
 
   return (<>
