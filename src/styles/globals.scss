@@ -291,9 +291,11 @@ p {
   margin: 0 4px;
   padding: 4px 8px;
   width: auto;
+  text-transform: capitalize;
 }
 
 .dropdown-item.active, .dropdown-item:active {
+  color: #000;
   background-color: #FFB3AB;
   &::before {
     content: '• ';

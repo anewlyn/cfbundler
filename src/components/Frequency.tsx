@@ -111,7 +111,7 @@ const Frequency = () => {
     return (
         <DropdownButton
           drop={'up'}
-          title={`Every ${formatInterval(currentPlan)}`}
+          title={`Every ${formatInterval(currentPlan).toLowerCase()}`}
         >
             {sellingPlans.map((plan: PlanType, index: number) => {
                 const selected = toNum(plan.shopifyId) === cart.sellingPlanId;
