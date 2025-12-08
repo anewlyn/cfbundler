@@ -11,7 +11,7 @@ const minProgress = 0
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const { benefitTiers, currentOrderValue } = useLoopContext()
-  const [progress, setProgress] = useState(minProgress)
+  const [progress, setProgress] = useState(maxProgress)
 
   useEffect(() => {
     const stickyThreshold = 100;
@@ -24,9 +24,11 @@ const Header = () => {
   }, [])
 
   useEffect(() => {
-    const topTier = benefitTiers[-1].value
-    if(currentOrderValue > topTier) setProgress(minProgress)
-    else setProgress(Math.round(maxProgress - (currentOrderValue / topTier)))
+    let topTier = 0
+    if(benefitTiers.length > 0) topTier = benefitTiers[benefitTiers.length - 1].value
+    if(topTier && currentOrderValue > topTier) setProgress(minProgress)
+    else if(topTier) setProgress(Math.round(maxProgress - (currentOrderValue / topTier)))
+    else setProgress(maxProgress)
   }, [currentOrderValue])
 
   return (<>
