@@ -287,6 +287,19 @@ p {
   text-align: center;
 }
 
+.dropdown-item {
+  margin: 0 4px;
+  padding: 4px 8px;
+  width: auto;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #FFB3AB;
+  &::before {
+    content: '• ';
+  }
+}
+
 .cf-footer-message {
   position: relative;
   width: 100%;
