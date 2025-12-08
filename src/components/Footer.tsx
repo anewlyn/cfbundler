@@ -12,8 +12,8 @@ import {
   NextButton,
   usePrevNextButtons
 } from '@/components/CarouselButtons'
-import DeliveryFrequencyDropdown from './DeliveryFrequencyDropdown';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 type CarouselItem = {
   id: string;        
