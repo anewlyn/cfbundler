@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false)
+  const { benefitTiers, currentOrderValue } = useLoopContext()
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     const stickyThreshold = 100;
@@ -16,6 +18,10 @@ const Header = () => {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, [])
+
+  useEffect(() => {
+    console.log('\n\n currentOrderValue', currentOrderValue, '\n benefitTiers', benefitTiers, )
+  }, [currentOrderValue])
 
   return (<>
     <Navbar style={{ backgroundColor: '#FFB3AB' }}>
@@ -42,7 +48,7 @@ const Header = () => {
           </div>
           <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
             <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
-            <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset="132px" stroke-dasharray="200.96px"></circle>
+            <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset={progress} stroke-dasharray="200.96px"></circle>
           </svg>
         </div>
       </Container>
