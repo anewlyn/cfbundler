@@ -1,5 +1,6 @@
 'use client';
 
+import { useLoopContext } from '@/contexts/LoopProvider';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
