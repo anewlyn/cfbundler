@@ -12,6 +12,8 @@ import {
   NextButton,
   usePrevNextButtons
 } from '@/components/CarouselButtons'
+import DeliveryFrequencyDropdown from './DeliveryFrequencyDropdown';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 type CarouselItem = {
   id: string;        
@@ -227,6 +229,13 @@ const StickyFooter = ({ customProducts }) => {
           </> }
           { getFooterMessage() }
         </p>
+        <DropdownButton
+          drop={'up'}
+          title={`Every 2 Weeks`}
+        >
+          <Dropdown.Item>Test 1</Dropdown.Item>
+          <Dropdown.Item>Second Test</Dropdown.Item>
+        </DropdownButton>
         {items.length 
           ? <button
             onClick={handlePostTransaction}

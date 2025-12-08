@@ -57,7 +57,7 @@ const Header = () => {
         <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
       </div>
 
-      <div className="cf-bundle-progress" style={{ position: isScrolled ? 'fixed' : 'absolute' }}>
+      <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
         <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase">
           <span className="cf-bundle-progress-discount-percentage">10%</span>
           <span>Off</span>
