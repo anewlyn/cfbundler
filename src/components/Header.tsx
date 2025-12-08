@@ -24,10 +24,12 @@ const Header = () => {
   }, [])
 
   useEffect(() => {
-    console.log('benefitTiers[benefitTiers.length - 1].value', benefitTiers[benefitTiers.length - 1].value)
     const topTier = benefitTiers[benefitTiers.length - 1].value
+    console.log('currentOrderValue', currentOrderValue)
+    console.log('maxProgress - (currentOrderValue / topTier)', maxProgress - (currentOrderValue / topTier))
+    console.log('progress', progress)
     if(currentOrderValue > topTier) setProgress(minProgress)
-    if(currentOrderValue <= topTier) setProgress(maxProgress - (currentOrderValue / topTier))
+    if(currentOrderValue <= topTier) setProgress(maxProgress * (currentOrderValue / topTier))
   }, [currentOrderValue])
 
   return (<>
