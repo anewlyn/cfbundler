@@ -1,14 +1,17 @@
-'use client';
+'use client'
+import { useLoopContext } from '@/contexts/LoopProvider'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+import { Container, Nav, Navbar } from 'react-bootstrap'
 
-import { useLoopContext } from '@/contexts/LoopProvider';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+// progress uses svg dash-array/offset in px, not traditional 0-100% progress calculation.
+const maxProgress = 200.96
+const minProgress = 0
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const { benefitTiers, currentOrderValue } = useLoopContext()
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(minProgress)
 
   useEffect(() => {
     const stickyThreshold = 100;
@@ -20,8 +23,10 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [])
 
+  const topTier = benefitTiers[-1].value
   useEffect(() => {
-    console.log('\n\n currentOrderValue', currentOrderValue, '\n benefitTiers', benefitTiers, )
+    if(currentOrderValue > topTier) setProgress(minProgress)
+    else setProgress(Math.round(maxProgress - (currentOrderValue / topTier)))
   }, [currentOrderValue])
 
   return (<>
@@ -49,7 +54,7 @@ const Header = () => {
           </div>
           <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
             <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
-            <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset={progress} stroke-dasharray="200.96px"></circle>
+            <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset={progress} stroke-dasharray={maxProgress}></circle>
           </svg>
         </div>
       </Container>
