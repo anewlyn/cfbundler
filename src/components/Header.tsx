@@ -1,8 +1,10 @@
 'use client'
-import { useLoopContext } from '@/contexts/LoopProvider'
+import { useLoopContext, LoopContextType } from '@/contexts/LoopProvider'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
+
+type PlanType = LoopContextType['sellingPlans'][number];
 
 // progress uses svg dash-array/offset in px, not traditional 0-100% progress calculation.
 const maxProgress = 200.96
@@ -10,8 +12,24 @@ const minProgress = 0
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const { benefitTiers, currentOrderValue, currentDiscount } = useLoopContext()
+  const { benefitTiers, currentOrderValue, currentDiscount, sellingPlans, cart } = useLoopContext()
   const [progress, setProgress] = useState(maxProgress)
+
+  const toNum = (v: unknown) => {
+      if (typeof v === 'number') return v;
+      if (typeof v === 'string') {
+          const digits = v.replace(/[^\d]/g, '');
+          const n = Number(digits.length ? digits : v);
+          return Number.isNaN(n) ? -1 : n;
+      }
+      return -1;
+  }
+
+  const currentPlanIndex = useMemo(
+      () => Math.max(0, sellingPlans.findIndex((p: PlanType) => toNum(p.shopifyId) === cart.sellingPlanId)),
+      [sellingPlans, cart.sellingPlanId]
+  );
+  const currentPlan: PlanType = sellingPlans[currentPlanIndex] || sellingPlans[0];
 
   useEffect(() => {
     const stickyThreshold = 100;
@@ -28,6 +46,7 @@ const Header = () => {
     console.log('currentOrderValue', currentOrderValue)
     console.log('maxProgress - (currentOrderValue / topTier)', maxProgress - (currentOrderValue / topTier))
     console.log('progress', progress)
+    console.log('currentPlan', currentPlan)
     if(currentOrderValue > topTier) setProgress(minProgress)
     if(currentOrderValue <= topTier) setProgress(maxProgress - (currentOrderValue / topTier * maxProgress))
   }, [currentOrderValue])
@@ -53,9 +72,14 @@ const Header = () => {
         <span></span>
         {benefitTiers &&
           <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
-            <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase">
+            <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase" style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
               {currentDiscount && <>
-                <span className="cf-bundle-progress-discount-percentage">{currentDiscount.value}</span>
+                <span className="cf-bundle-progress-discount-percentage">
+                  {currentOrderValue < currentDiscount.minCartValue
+                    ? currentPlan.discounts[0].value + '%'
+                    : currentDiscount.value + '%'
+                  }
+                </span>
                 <span>Off</span>
               </>}
             </div>
