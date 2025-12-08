@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useId, KeyboardEvent } from 'react';
 import { useLoopContext, LoopContextType } from '@/contexts/LoopProvider';
-import { Dropdown, DropdownButton } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 
 type PlanType = LoopContextType['sellingPlans'][number];
 
@@ -109,24 +109,29 @@ const Frequency = () => {
     const menuId = `delivery-frequency-menu-${menuAutoId}`;
 
     return (
-        <DropdownButton
-          drop={'up'}
-          className='cf-frequency-button'
-          title={`Every ${formatInterval(currentPlan).toLowerCase()}`}
+        <Dropdown
+            drop='up'
         >
-            {sellingPlans.map((plan: PlanType, index: number) => {
-                const selected = toNum(plan.shopifyId) === cart.sellingPlanId;
-                return (
-                    <Dropdown.Item 
-                        key={index} 
-                        className={ selected ? 'active' : ''}
-                        onClick={() => handlePlanSelect(plan)}
-                    >
-                        {formatInterval(plan).toLowerCase()}
-                    </Dropdown.Item>
-                )
-            })}
-        </DropdownButton>
+            <Dropdown.Toggle
+                className='cf-frequency-button'
+            >
+                Every ${formatInterval(currentPlan).toLowerCase()}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                {sellingPlans.map((plan: PlanType, index: number) => {
+                    const selected = toNum(plan.shopifyId) === cart.sellingPlanId;
+                    return (
+                        <Dropdown.Item 
+                            key={index} 
+                            className={ selected ? 'active' : ''}
+                            onClick={() => handlePlanSelect(plan)}
+                        >
+                            {formatInterval(plan).toLowerCase()}
+                        </Dropdown.Item>
+                    )
+                })}
+            </Dropdown.Menu>
+        </Dropdown>
     );
 };
 
