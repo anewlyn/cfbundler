@@ -279,12 +279,25 @@ p {
 
 .cf-footer-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   gap: 12px;
   padding: 8px 16px 16px 16px;
   text-align: center;
+}
+
+.cf-frequency-button {
+  color: #000;
+  text-transform: capitalize;
+  padding: 16px;
+  border: 2px solid #000;
+  background-color: #fff;
+  border-radius: 4px;
+  &:hover {
+    background-color: #FFF2F0;
+  }
 }
 
 .dropdown-item {
@@ -332,7 +345,7 @@ p {
 }
 @media (max-width: 767.9px) {
   .cf-btn-atc {
-    width: 100%;
+    
     padding: 16px;
   }
 }

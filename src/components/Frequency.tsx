@@ -111,6 +111,7 @@ const Frequency = () => {
     return (
         <DropdownButton
           drop={'up'}
+          className='cf-frequency-button'
           title={`Every ${formatInterval(currentPlan).toLowerCase()}`}
         >
             {sellingPlans.map((plan: PlanType, index: number) => {
