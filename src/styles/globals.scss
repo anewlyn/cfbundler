@@ -288,14 +288,23 @@ p {
   text-align: center;
 }
 
-.cf-frequency-button {
+.cf-frequency-button,
+.cf-frequency-button.show {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 16px;
   color: #000;
   text-transform: capitalize;
-  padding: 16px;
   border: 2px solid #000;
+  border-color: #000;
   background-color: #fff;
   border-radius: 4px;
   &:hover {
+    color: #000;
+    border-color: #000;
     background-color: #FFF2F0;
   }
 }
@@ -327,6 +336,7 @@ p {
 }
 
 .cf-btn-atc {
+  flex: 0 0 auto;
   font-size: 16px;
   line-height: 1;
   padding: 16px 24px;
@@ -344,8 +354,12 @@ p {
   }
 }
 @media (max-width: 767.9px) {
+  .cf-frequency-button,
+  .cf-frequency-button.show {
+    flex: 1 1 auto;
+  }
   .cf-btn-atc {
-    
+    flex: 1 1 auto;
     padding: 16px;
   }
 }
