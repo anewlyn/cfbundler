@@ -22,7 +22,8 @@ const Header = () => {
       <Container>
         <Nav>
           <Nav.Link href="https://cyclingfrog.com">
-            <- Back
+            <i className='material-icons'>arrow_back</i> 
+            Back
           </Nav.Link>
         </Nav>
         <Navbar.Brand>
