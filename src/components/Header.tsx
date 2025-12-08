@@ -56,6 +56,17 @@ const Header = () => {
       <div className="header-progress-bar">
         <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
       </div>
+
+      <div className="cf-bundle-progress">
+        <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase">
+          <span className="cf-bundle-progress-discount-percentage">10%</span>
+          <span>Off</span>
+        </div>
+        <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
+          <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
+          <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset="132px" stroke-dasharray="200.96px"></circle>
+        </svg>
+      </div>
       
     </header>
   );

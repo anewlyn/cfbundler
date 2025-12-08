@@ -104,6 +104,41 @@ p {
 }
 
 
+// HEADER
+
+.cf-bundle-progress {
+  z-index: 90;
+  position: fixed;
+  top: 123px; right: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px; height: 72px;
+  padding: 4px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 24px #00000011;
+}
+.cf-bundle-progress-discount {
+  z-index: 10;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 14px;
+  line-height: 14px;
+  margin-top: 0.16em;
+}
+.cf-bundle-progress-discount-percentage {
+  font-size: 1.33em;
+}
+.cf-bundle-progress-bar {
+  z-index: 5;
+  position: absolute;
+  top: 4px; right: 4px;
+}
+
 // FOOTER
 
 .cf-footer {
