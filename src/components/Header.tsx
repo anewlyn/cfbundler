@@ -76,7 +76,7 @@ const Header = () => {
               {currentDiscount && <>
                 <span className="cf-bundle-progress-discount-percentage">
                   {currentOrderValue < currentDiscount.minCartValue
-                    ? currentPlan.discounts[0].value + '%'
+                    ? '10%'
                     : currentDiscount.value + '%'
                   }
                 </span>
