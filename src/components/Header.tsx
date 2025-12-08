@@ -17,7 +17,7 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [])
 
-  return (
+  return (<>
     <Navbar>
       <Container>
         <Nav>
@@ -36,7 +36,7 @@ const Header = () => {
         </Navbar.Brand>
       </Container>
     </Navbar>
-  );
-};
+  </>)
+}
 
 export default Header;
