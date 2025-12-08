@@ -24,11 +24,10 @@ const Header = () => {
   }, [])
 
   useEffect(() => {
-    let topTier = 0
-    if(benefitTiers.length > 0) topTier = benefitTiers[benefitTiers.length - 1].value
-    if(topTier && currentOrderValue > topTier) setProgress(minProgress)
-    else if(topTier) setProgress(Math.round(maxProgress - (currentOrderValue / topTier)))
-    else setProgress(maxProgress)
+    console.log('benefitTiers[benefitTiers.length - 1].value', benefitTiers[benefitTiers.length - 1].value)
+    const topTier = benefitTiers[benefitTiers.length - 1].value
+    if(currentOrderValue > topTier) setProgress(minProgress)
+    if(currentOrderValue <= topTier) setProgress(maxProgress - (currentOrderValue / topTier))
   }, [currentOrderValue])
 
   return (<>
@@ -49,16 +48,19 @@ const Header = () => {
             height={150}
           />
         </Navbar.Brand>
-        <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
-          <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase">
-            <span className="cf-bundle-progress-discount-percentage">10%</span>
-            <span>Off</span>
+        <span></span>
+        {benefitTiers &&
+          <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
+            <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase">
+              <span className="cf-bundle-progress-discount-percentage">10%</span>
+              <span>Off</span>
+            </div>
+            <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
+              <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
+              <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset={progress} stroke-dasharray={maxProgress}></circle>
+            </svg>
           </div>
-          <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
-            <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
-            <circle r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset={progress} stroke-dasharray={maxProgress}></circle>
-          </svg>
-        </div>
+        }
       </Container>
     </Navbar>
   </>)
