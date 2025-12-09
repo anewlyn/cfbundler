@@ -171,7 +171,7 @@ const StickyFooter = ({ customProducts }) => {
         <div className={`cf-carousel ${items.length ? 'shown' : ''}`}>
           <div className="cf-carousel-viewport" ref={emblaRef}>
             <div className="cf-carousel-container">
-              {items.length && items.map((item) => (
+              {!!items.length && items.map((item) => (
                 <div 
                   key={item.id}
                   className={`cf-carousel-product ${item.name === '' ? 'cf-carousel-placeholder' : ''}`} 
