@@ -228,9 +228,7 @@ const StickyFooter = ({ customProducts }) => {
         </p>}
         
         <div className="cf-footer-actions">
-          { items.length && <>
-            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          </>}
+          { items.length && <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} /> }
           <Frequency />
           <button
             onClick={handlePostTransaction}
@@ -240,9 +238,7 @@ const StickyFooter = ({ customProducts }) => {
             { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
             { renderProductPrice() }
           </button>
-          { items.length && <>
-            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-          </>}
+          { items.length && <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} /> }
         </div>
       </div>
     </div>
