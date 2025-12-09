@@ -16,6 +16,12 @@
   }
 }
 
+.subscription-button button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .icon-button {
   background-color: transparent;
   border: none;
