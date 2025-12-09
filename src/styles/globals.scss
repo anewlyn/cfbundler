@@ -143,9 +143,16 @@ p {
 
 .cf-footer {
   position: fixed;
-  left: 0; bottom: 0;
-  width: 100%;
+  left: 0; bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cf-footer-container {
+  width: fit-content;
+  max-width: calc(100% - 8px);
   background-color: #fff;
+  box-shadow: 0 0 16px #00000011;
 }
 
 .cf-footer-atc {
@@ -201,18 +208,19 @@ p {
   position: relative;
   display: flex;
   width: 100%;
-  gap: 16px;
-  margin-right: 16px;
+  // margin-right: 16px;
   margin-left: calc(var(--slide-spacing) * -1);
 }
 
 .cf-carousel-product {
   z-index: 10;
   position: relative;
+  flex: 1 1 auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-width: 240px;
+  min-width: max-content;
+  padding: 8px;
   margin-left: var(--slide-spacing);
   background-color: var(--color1);
   border-radius: 4px;
