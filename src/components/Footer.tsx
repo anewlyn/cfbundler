@@ -130,6 +130,7 @@ const StickyFooter = ({ customProducts }) => {
 
     const arr = Array.from(map.values())
 
+    /*
     while (arr.length < 6) {
       arr.push({
         id: `placeholder-${arr.length}`, 
@@ -140,6 +141,7 @@ const StickyFooter = ({ customProducts }) => {
         quantity: 0, 
       })
     }
+    */
 
     return arr;
   }, [cart.productVariants, products])
