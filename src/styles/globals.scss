@@ -392,6 +392,9 @@ p {
   .cf-frequency-button.show {
     flex: 1 1 auto;
   }
+  .cf-footer-actions {
+    flex-wrap: nowrap;
+  }
   .cf-btn-atc {
     flex: 1 1 auto;
     padding: 16px;

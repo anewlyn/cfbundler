@@ -149,16 +149,14 @@ const StickyFooter = ({ customProducts }) => {
   const renderProductPrice = () => {
     if (currentDiscount) {
       const discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
-      return (
-        <span className="cf-product-price">
-          <span className="cf-product-price-discounted">
-            {currencyFormatter(discountedPrice, bundle.currencyCode)}
-          </span>
-          <span className="cf-product-price-original">
-            {currencyFormatter(currentOrderValue, bundle.currencyCode)}
-          </span>
+      return (<>
+        <span className="cf-product-price-discounted">
+          {currencyFormatter(discountedPrice, bundle.currencyCode)}
         </span>
-      );
+        <span className="cf-product-price-original">
+          {currencyFormatter(currentOrderValue, bundle.currencyCode)}
+        </span>
+      </>)
     }
     return (
       <span className={classNames('cf-product-price')}>
@@ -235,7 +233,7 @@ const StickyFooter = ({ customProducts }) => {
             className={classNames('cf-btn-atc')}
             disabled={isDisabled || submittingCart}
           >
-            { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
+            { submittingCart ? `Adding to cart...` : `Add to Cart ` }
             { renderProductPrice() }
           </button>
           { items.length && <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} /> }
