@@ -52,7 +52,7 @@ const Header = () => {
       <Container>
         <Nav>
           <Nav.Link href="https://cyclingfrog.com" className='d-flex p-2 justify-content-center align-items-center'>
-            <i className='material-icons'>arrow_back</i> 
+            <i className='material-icons fs-6'>arrow_back</i> 
             Back
           </Nav.Link>
         </Nav>
@@ -65,7 +65,7 @@ const Header = () => {
             height={150}
           />
         </Navbar.Brand>
-        <span></span>
+        <span style={{ width: '5ch'}}></span>
         {benefitTiers &&
           <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
             <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase" style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
