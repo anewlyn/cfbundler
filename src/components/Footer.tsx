@@ -223,13 +223,13 @@ const StickyFooter = ({ customProducts }) => {
       </div>
 
       <div className="cf-footer-actions">
-        <p className="cf-footer-message">
+        {!items.length && <p className="cf-footer-message">
           { items.length && <>
             <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
             <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
           </> }
           { getFooterMessage() }
-        </p>
+        </p>}
         <Frequency />
         {items.length 
           ? <button
