@@ -147,11 +147,13 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 .cf-footer-container {
   width: fit-content;
   max-width: calc(100% - 8px);
   background-color: #fff;
+  border-radius: 8px;
   box-shadow: 0 0 16px #00000011;
 }
 
