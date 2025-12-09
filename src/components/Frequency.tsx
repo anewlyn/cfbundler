@@ -115,7 +115,7 @@ const Frequency = () => {
             <Dropdown.Toggle
                 className='cf-frequency-button'
             >
-                Every ${formatInterval(currentPlan).toLowerCase()}
+                Every {formatInterval(currentPlan).toLowerCase()}
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {sellingPlans.map((plan: PlanType, index: number) => {

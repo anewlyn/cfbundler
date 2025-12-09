@@ -43,10 +43,6 @@ const Header = () => {
 
   useEffect(() => {
     const topTier = benefitTiers[benefitTiers.length - 1].value
-    console.log('currentOrderValue', currentOrderValue)
-    console.log('maxProgress - (currentOrderValue / topTier)', maxProgress - (currentOrderValue / topTier))
-    console.log('progress', progress)
-    console.log('currentPlan', currentPlan)
     if(currentOrderValue > topTier) setProgress(minProgress)
     if(currentOrderValue <= topTier) setProgress(maxProgress - (currentOrderValue / topTier * maxProgress))
   }, [currentOrderValue])
@@ -75,7 +71,7 @@ const Header = () => {
             <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase" style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
               {currentDiscount && <>
                 <span className="cf-bundle-progress-discount-percentage">
-                  {currentOrderValue < currentDiscount.minCartValue
+                  {currentOrderValue < benefitTiers[0].value
                     ? '10%'
                     : currentDiscount.value + '%'
                   }
