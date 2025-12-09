@@ -231,17 +231,14 @@ const StickyFooter = ({ customProducts }) => {
           { getFooterMessage() }
         </p>}
         <Frequency />
-        {items.length 
-          ? <button
-            onClick={handlePostTransaction}
-            className={classNames('cf-btn-atc')}
-            disabled={isDisabled || submittingCart}
-          >
-            { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
-            { renderProductPrice() }
-          </button>
-          : ''
-        }
+        <button
+          onClick={handlePostTransaction}
+          className={classNames('cf-btn-atc')}
+          disabled={isDisabled || submittingCart}
+        >
+          { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
+          { renderProductPrice() }
+        </button>
       </div>
     </div>
   );
