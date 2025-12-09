@@ -387,6 +387,11 @@ p {
   }
 }
 @media (max-width: 767.9px) {
+  .cf-footer-container {
+    width: calc(100% - 8px);
+  }
+}
+@media (max-width: 767.9px) {
   .cf-carousel-btn { display: none; }
   .cf-frequency-button,
   .cf-frequency-button.show {
@@ -397,7 +402,11 @@ p {
   }
   .cf-btn-atc {
     flex: 1 1 auto;
-    padding: 16px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+  .cf-btn-atc span {
+    font-size: 14px;
   }
 }
 
