@@ -173,7 +173,7 @@ const StickyFooter = ({ customProducts }) => {
         <div className={`cf-carousel ${items.length ? 'shown' : ''}`}>
           <div className="cf-carousel-viewport" ref={emblaRef}>
             <div className="cf-carousel-container">
-              {items.length > 0 && items.map((item) => (
+              {items.length && items.map((item) => (
                 <div 
                   key={item.id}
                   className={`cf-carousel-product ${item.name === '' ? 'cf-carousel-placeholder' : ''}`} 
@@ -230,7 +230,6 @@ const StickyFooter = ({ customProducts }) => {
         <div className="cf-footer-actions">
           { items.length && <>
             <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
           </>}
           <Frequency />
           <button
@@ -241,6 +240,9 @@ const StickyFooter = ({ customProducts }) => {
             { submittingCart ? `Adding to cart...` : `Add to Cart • ` }
             { renderProductPrice() }
           </button>
+          { items.length && <>
+            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+          </>}
         </div>
       </div>
     </div>
