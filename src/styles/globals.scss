@@ -145,6 +145,9 @@ p {
     }
   }
 }
+.cf-bundle-progress-discount-but-not-the-percentage-part-though {
+  font-size: 0.9em;
+}
 .cf-bundle-progress-bar {
   z-index: 5;
   position: absolute;
@@ -434,11 +437,6 @@ p {
       color: #fff;
     }
     opacity: 0.5;
-  }
-}
-@media (max-width: 767.9px) {
-  .cf-footer-container {
-    width: calc(100% - 8px);
   }
 }
 @media (max-width: 767.9px) {

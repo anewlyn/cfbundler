@@ -76,7 +76,7 @@ const Header = () => {
                   : currentDiscount?.value + '%'
                 }
               </span>
-              <span>Off</span>
+              <span className='cf-bundle-progress-discount-but-not-the-percentage-part-though'>Off</span>
             </div>
             <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
               <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
