@@ -180,7 +180,7 @@ p {
   overflow: hidden;
   --slide-spacing: 16px;
 }
-.cf-carousel {
+.cf-carousel.shown {
   height: auto;
   overflow: initial;
 }
