@@ -37,7 +37,7 @@ export const usePrevNextButtons = (emblaApi) => {
 export const PrevButton = (props) => {
   const { children, ...restProps } = props
 
-  if(!prevBtnDisabled) return (
+  return (
     <button
       className="cf-carousel-btn cf-carousel-btn-prev"
       type="button"
@@ -57,7 +57,7 @@ export const PrevButton = (props) => {
 export const NextButton = (props) => {
   const { children, ...restProps } = props
 
-  if(!nextBtnDisabled) return (
+  return (
     <button
       className="cf-carousel-btn cf-carousel-btn-next"
       type="button"
