@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
+import { kiro_bold_400 } from '@/app/ui/fonts';
 
 export const Bundle = (customProductData) => {
   const [infoModalOpen, setInfoModalOpen] = useState(false);
@@ -45,6 +46,14 @@ export const Bundle = (customProductData) => {
       >
         <DeliverCadenceCard onClose={handleCloseCadenceModal} />
       </Modal>
+      <div className='cf-intro'>
+        <div className="cf-intro-content">
+          <h1 className={kiro_bold_400.className}>Build Your Subscription Bundle</h1>
+          <p>
+            Lorem ipsum.
+          </p>
+        </div>
+      </div>
       <ProductGrid>
         {products.map((product: AllProductVariants, index: number) => {
           // This sets the images above the fold as priority

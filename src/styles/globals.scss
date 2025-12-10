@@ -139,6 +139,31 @@ p {
   top: 4px; right: 4px;
 }
 
+
+
+// INTRO
+
+.cf-intro {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  .cf-intro-content {
+    text-align: left;
+    h1 {
+      font-size: 4em;
+      line-height: 1.1;
+    }
+    p {
+      font-size: 1em;
+      margin: 0.5em 0;
+    }
+  }
+}
+
+
+
 // FOOTER
 
 .cf-footer {
