@@ -129,12 +129,21 @@ p {
   display: flex;
   flex-direction: column;
   text-align: center;
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 20px;
+  line-height: 1;
   margin-top: 0.16em;
-}
-.cf-bundle-progress-discount-percentage {
-  font-size: 1.33em;
+  text-transform: uppercase;
+  @media (max-width: 767.9px) {
+    font-size: 14px;  
+  }
+  .cf-bundle-progress-discount-percentage {
+    font-size: 1em;
+  }
+  &.active {
+    .cf-bundle-progress-discount-percentage {
+      font-size: 1.5em;
+    }
+  }
 }
 .cf-bundle-progress-bar {
   z-index: 5;
@@ -357,7 +366,7 @@ p {
   align-items: center;
   flex-direction: row;
   gap: 12px;
-  padding: 8px 8px 16px 8px;
+  padding: 8px;
   text-align: center;
 }
 
