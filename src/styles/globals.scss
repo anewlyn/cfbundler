@@ -367,7 +367,6 @@ p {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  min-width: max-content;
   gap: 12px;
   padding: 8px;
   text-align: center;
@@ -422,7 +421,7 @@ p {
 }
 
 .cf-btn-atc {
-  flex: 0 0 auto;
+  flex: 1 1 0%;
   font-size: 16px;
   line-height: 1;
   padding: 0 24px;
