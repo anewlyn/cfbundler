@@ -151,16 +151,19 @@ p {
 // INTRO
 
 .cf-intro {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 16px;
+  max-width: 1400px;
+  padding: 1.5em;
+  margin: 0 auto;
   .cf-intro-content {
     text-align: left;
     h1 {
-      font-size: 4em;
+      font-size: 56px;
       line-height: 1.1;
+      text-transform: uppercase;
+      @media (max-width: 767.9px) {
+        font-size: 32px;
+      }
     }
     p {
       font-size: 1em;

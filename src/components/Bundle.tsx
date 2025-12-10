@@ -10,7 +10,7 @@ import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
-import { kiro_bold_400 } from '@/app/ui/fonts';
+import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 
 export const Bundle = (customProductData) => {
   const [infoModalOpen, setInfoModalOpen] = useState(false);
@@ -48,9 +48,11 @@ export const Bundle = (customProductData) => {
       </Modal>
       <div className='cf-intro'>
         <div className="cf-intro-content">
-          <h1 className={kiro_bold_400.className}>Build Your Subscription Bundle</h1>
+          <h1 className={kiro_extra_bold_700.className}>
+            Build Your <span style={{ display: 'inline-block' }}>Subscription</span>
+            </h1>
           <p>
-            Lorem ipsum.
+            Bundle more, save more.
           </p>
         </div>
       </div>
