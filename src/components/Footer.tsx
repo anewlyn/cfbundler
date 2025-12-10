@@ -168,6 +168,8 @@ const StickyFooter = ({ customProducts }) => {
   return (
     <div className="cf-footer">
       <div className="cf-footer-container">
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         <div className={`cf-carousel ${items.length ? 'shown' : ''}`}>
           <div className="cf-carousel-viewport" ref={emblaRef}>
             <div className="cf-carousel-container">
