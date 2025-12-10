@@ -69,15 +69,13 @@ const Header = () => {
         {benefitTiers &&
           <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
             <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase" style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
-              {currentDiscount && <>
-                <span className="cf-bundle-progress-discount-percentage">
-                  {currentOrderValue < benefitTiers[0].value
-                    ? '10%'
-                    : currentDiscount.value + '%'
-                  }
-                </span>
-                <span>Off</span>
-              </>}
+              <span className="cf-bundle-progress-discount-percentage">
+                {currentOrderValue < benefitTiers[0].value
+                  ? '10%'
+                  : currentDiscount?.value + '%'
+                }
+              </span>
+              <span>Off</span>
             </div>
             <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
               <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>

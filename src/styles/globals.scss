@@ -119,6 +119,9 @@ p {
   background-color: #fff;
   border-radius: 50%;
   box-shadow: 0 0 24px #00000011;
+  @media (min-width: 768px) {
+    width: 128px; height: 128px;
+  }
 }
 .cf-bundle-progress-discount {
   z-index: 10;
@@ -137,6 +140,10 @@ p {
   z-index: 5;
   position: absolute;
   top: 4px; right: 4px;
+  @media (min-width: 768px) {
+    top: 8px; right: 8px;
+    width: 112px; height: 112px;
+  }
 }
 
 
