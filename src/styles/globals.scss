@@ -187,11 +187,13 @@ p {
 
 .cf-footer {
   position: fixed;
-  left: 0; bottom: 8px;
+  left: 50%; bottom: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: max-content;
+  max-width: 100%;
+  transform: translateX(-50%);
   @media (max-width: 767.9px) {
       bottom: 4px;
   }
@@ -365,6 +367,7 @@ p {
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  min-width: max-content;
   gap: 12px;
   padding: 8px;
   text-align: center;
