@@ -49,8 +49,8 @@ export const Bundle = (customProductData) => {
       <div className='cf-intro'>
         <div className="cf-intro-content">
           <h1 className={kiro_extra_bold_700.className}>
-            Build Your <span style={{ display: 'inline-block' }}>Subscription</span>
-            </h1>
+            Build Your Subscription
+          </h1>
           <p>
             Bundle more, save more.
           </p>
