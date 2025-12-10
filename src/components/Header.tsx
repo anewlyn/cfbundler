@@ -72,7 +72,7 @@ const Header = () => {
             <div className={`${kiro_bold_400.className} cf-bundle-progress-discount cf-text-heading cf-uppercase`} style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
               <span className="cf-bundle-progress-discount-percentage">
                 {currentOrderValue < benefitTiers[0].value
-                  ? 'Get' + <br /> + '10-20%'
+                  ? '10-20%'
                   : currentDiscount?.value + '%'
                 }
               </span>
