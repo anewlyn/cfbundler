@@ -176,7 +176,13 @@ p {
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 0px;
+  overflow: hidden;
   --slide-spacing: 16px;
+}
+.cf-carousel {
+  height: auto;
+  overflow: initial;
 }
 
 .cf-carousel-btn {
@@ -364,8 +370,8 @@ p {
   min-height: 32px;
   line-height: 1.25;
   margin: 0;
+  padding: 16px 8px 12px;
   text-align: center;
-  padding: 0px 80px;
 }
 
 .cf-btn-atc {
