@@ -1,4 +1,5 @@
 'use client'
+import { kiro_bold_400 } from '@/app/ui/fonts'
 import { useLoopContext, LoopContextType } from '@/contexts/LoopProvider'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -68,7 +69,7 @@ const Header = () => {
         <span style={{ width: '5ch'}}></span>
         {benefitTiers &&
           <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
-            <div className="cf-bundle-progress-discount cf-text-heading cf-uppercase" style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
+            <div className={`${kiro_bold_400.className} cf-bundle-progress-discount cf-text-heading cf-uppercase`} style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
               <span className="cf-bundle-progress-discount-percentage">
                 {currentOrderValue < benefitTiers[0].value
                   ? 'Get' + <br /> + '10-20%'
