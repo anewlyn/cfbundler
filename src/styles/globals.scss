@@ -287,11 +287,14 @@ p {
 .cf-carousel-product {
   z-index: 10;
   position: relative;
-  flex: 1 1 0%;
+  flex: 1 1 auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   min-width: max-content;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
   padding: 8px;
   margin-left: var(--slide-spacing);
   background-color: var(--color1);
