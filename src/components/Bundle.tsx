@@ -37,15 +37,7 @@ export const Bundle = (customProductData) => {
 
   return (
     <div className="bundler-page">
-      <Header handleOpenCadenceModal={handleOpenCadenceModal} />
-      <Modal
-        open={cadenceModalOpen}
-        onClose={handleCloseCadenceModal}
-        ariaModalLabel="Delivery Cadence Modal"
-        hasCloseButton
-      >
-        <DeliverCadenceCard onClose={handleCloseCadenceModal} />
-      </Modal>
+      <Header />
       <div className='cf-intro'>
         <div className="cf-intro-content">
           <h1 className={kiro_extra_bold_700.className}>
