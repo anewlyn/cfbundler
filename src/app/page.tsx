@@ -160,8 +160,8 @@ async function getCustomProductData(ids: string) {
       productId: Number(idArray[i]),
       title: product.title.value,
       colors: product.colors.hex,
-      tagline: product.tagline.value,
-      preferTagline: product.preferTagline.jsonValue,
+      tagline: product.tagline?.value ?? null,
+      preferTagline: product.preferTagline?.jsonValue ?? false,
       category: product.category.name,
       variants: [...variants],
     })
