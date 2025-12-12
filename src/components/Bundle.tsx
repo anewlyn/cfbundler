@@ -38,7 +38,7 @@ export const Bundle = (customProductData) => {
             Bundle more, save more.
           </p>
           <ul>
-            {customProductData.customProductData.map(x => <li>{x.category}</li>)}
+            {customProductData.customProductData.map(x => <li>{x.productType}</li>)}
           </ul>
         </div>
       </div>
