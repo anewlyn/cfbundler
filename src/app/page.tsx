@@ -158,11 +158,11 @@ async function getCustomProductData(ids: string) {
       title: product.title.value,
       colors: product.colors.hex,
       customCategory: product.customCategory.value,
-      cateogry: product.category.name,
+      category: product.category.name,
       variants: [...variants],
     })
   }
-  // console.log('productData', productData)
+  console.log('productData', productData)
   return productData
 }
 
