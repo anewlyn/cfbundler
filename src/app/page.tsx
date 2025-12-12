@@ -14,11 +14,14 @@ query getBundlerProduct($id: ID!) {
     title: metafield(namespace:"dev", key:"product_title") {
       value
     }
-    customCategory: metafield(namespace:"custom", key:"category") {
-      value
-    }
     category {
       name
+    }
+    tagline: metafield(namespace:"custom", key: "tagline") {
+      value
+    }
+    preferTagline: metafield(namespace:"custom", key: "prefer_tagline") {
+      jsonValue
     }
     colors: metafield(namespace:"custom", key:"scheme") {
       hex: jsonValue
@@ -157,7 +160,8 @@ async function getCustomProductData(ids: string) {
       productId: Number(idArray[i]),
       title: product.title.value,
       colors: product.colors.hex,
-      customCategory: product.customCategory.value,
+      tagline: product.tagline.value,
+      preferTagline: product.preferTagline.jsonValue,
       category: product.category.name,
       variants: [...variants],
     })

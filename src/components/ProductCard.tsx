@@ -86,7 +86,7 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
 
       <span className={`product-title ${kiro_extra_bold_700.className}`}>{customProduct.title}</span>
       <span className="product-info">
-        {customProduct.customCategory?.value ? customProduct.customCategory?.value : title}
+        {customProduct.preferTagline ? customProduct.tagline : title}
       </span>
       {renderProductPrice()}
 
