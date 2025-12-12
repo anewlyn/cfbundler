@@ -14,6 +14,12 @@ query getBundlerProduct($id: ID!) {
     title: metafield(namespace:"dev", key:"product_title") {
       value
     }
+    customCategory: metafield(namespace:"custom", key:"category") {
+      value
+    }
+    category {
+      name
+    }
     colors: metafield(namespace:"custom", key:"scheme") {
       hex: jsonValue
     }
