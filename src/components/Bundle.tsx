@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import DeliverCadenceCard from '@/components/DeliverCadenceCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import InfoCard from '@/components/InfoCard';
@@ -13,27 +12,18 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 
 export const Bundle = (customProductData) => {
-  const [infoModalOpen, setInfoModalOpen] = useState(false);
-  const [cadenceModalOpen, setCadenceModalOpen] = useState(false);
-  const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null);
-  const { products } = useLoopContext();
+  const [infoModalOpen, setInfoModalOpen] = useState(false)
+  const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null)
+  const { products } = useLoopContext()
 
   const handleOpenInfoModal = (product: AllProductVariants) => {
-    setModalProduct(product);
-    setInfoModalOpen(true);
-  };
+    setModalProduct(product)
+    setInfoModalOpen(true)
+  }
 
   const handleCloseInfoModal = () => {
-    setInfoModalOpen(false);
-  };
-
-  const handleCloseCadenceModal = () => {
-    setCadenceModalOpen(false);
-  };
-
-  const handleOpenCadenceModal = () => {
-    setCadenceModalOpen(true);
-  };
+    setInfoModalOpen(false)
+  }
 
   return (
     <div className="bundler-page">
@@ -47,6 +37,9 @@ export const Bundle = (customProductData) => {
           <p>
             Bundle more, save more.
           </p>
+          <ul>
+            {customProductData.customProductData.map(x => <li>{x.category}</li>)}
+          </ul>
         </div>
       </div>
       <ProductGrid>
@@ -60,7 +53,7 @@ export const Bundle = (customProductData) => {
               customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
-              handleOpenInfoModal={handleOpenInfoModal}
+              handleOpenInfoModal={() => handleOpenInfoModal(product)}
             />
           );
         })}
