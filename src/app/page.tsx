@@ -157,6 +157,8 @@ async function getCustomProductData(ids: string) {
       productId: Number(idArray[i]),
       title: product.title.value,
       colors: product.colors.hex,
+      customCategory: product.customCategory.value,
+      cateogry: product.category.name,
       variants: [...variants],
     })
   }
