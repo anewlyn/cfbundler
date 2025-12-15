@@ -53,6 +53,7 @@ export const Bundle = (customProductData) => {
                 onClick={() => handleFilter('All')}
               >
                 All
+                <span className='text-sm'> ({ customProductData.customProductData.length })</span>
               </button>
             </li>
             {productTypes.map(type => (
@@ -62,7 +63,7 @@ export const Bundle = (customProductData) => {
                   onClick={() => handleFilter(type)}
                 >
                   { type } 
-                  ({ customProductData.customProductData.filter(product => product.productType === type ).length })
+                  <span className='text-sm'> ({ customProductData.customProductData.filter(product => product.productType === type ).length })</span>
                 </button>
               </li>
             ))}
