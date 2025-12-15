@@ -417,7 +417,8 @@ p {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-width: max-content;
+  min-width: 180px;
+  width: max-content;
   white-space: nowrap;
   word-break: keep-all;
   overflow-wrap: normal;
