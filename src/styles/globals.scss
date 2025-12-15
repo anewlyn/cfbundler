@@ -413,24 +413,16 @@ p {
 .cf-carousel-product {
   z-index: 10;
   position: relative;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-width: 180px;
   width: max-content;
-  white-space: nowrap;
-  word-break: keep-all;
-  overflow-wrap: normal;
   padding: 8px;
   margin-left: var(--slide-spacing);
   background-color: var(--color1);
   border-radius: 4px;
   transform: translate3d(0, 0, 0);
-  &.cf-carousel-placeholder {
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 @media (max-width: 767.9px) {
