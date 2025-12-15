@@ -49,7 +49,7 @@ export const Bundle = (customProductData) => {
           <ul className='product-filters'>
             <li>
               <button
-                className={`btn ${filter === 'All' ? 'btn-white' : 'btn-fizz'}`}
+                className={`btn ${filter === 'All' ? 'btn-white active' : 'btn-fizz'}`}
                 onClick={() => handleFilter('All')}
               >
                 All
@@ -58,7 +58,7 @@ export const Bundle = (customProductData) => {
             {productTypes.map(type => (
               <li>
                 <button
-                  className={`btn ${filter === type ? 'btn-white' : 'btn-fizz'}`}
+                  className={`btn ${filter === type ? 'btn-white active' : 'btn-fizz'}`}
                   onClick={() => handleFilter(type)}
                 >
                   { type }

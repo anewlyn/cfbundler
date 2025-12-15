@@ -212,12 +212,16 @@ p {
   align-items: center;
   gap: 8px;
   list-style: none;
-  li {
-    padding-left: 0;
-  }
+  padding-left: 0;
   .btn {
     min-width: 72px;
     padding: 8px 16px;
+  }
+  .active {
+    background-color: #fff;
+    &:hover {
+      background-color: #fff;
+    }
   }
 }
 
