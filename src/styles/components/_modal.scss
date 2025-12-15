@@ -47,18 +47,18 @@
   }
 }
 
-.modal-close-mobile-button {
+.product-modal-close-mobile-button {
   display: none;
 }
 
 @include for_breakpoint('mobile') {
-  .modal {
+  .product-modal {
     margin: 0;
     width: 100%;
     max-width: 700px;
   }
 
-  .modal-close-mobile-button {
+  .product-modal-close-mobile-button {
     background-color: var(--cf-white);
     border: none;
     cursor: pointer;
