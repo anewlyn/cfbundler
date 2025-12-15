@@ -413,9 +413,7 @@ p {
 .cf-carousel-product {
   z-index: 10;
   position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex: 0 0 auto;
   width: max-content;
   padding: 8px;
   margin-left: var(--slide-spacing);
@@ -432,7 +430,8 @@ p {
 
 .cf-carousel-product-image {
   position: relative;
-  flex: 0 0 48px;
+  float: left;
+  width: 48px;
   aspect-ratio: 3/4;
   background-color: var(--color2);
   border-radius: 4px;
@@ -446,6 +445,7 @@ p {
 }
 
 .cf-carousel-product-details {
+  float: left;
   line-height: 1.1;
   padding: 4px 12px;
 }
