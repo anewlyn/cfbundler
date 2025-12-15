@@ -25,6 +25,12 @@ export const Bundle = (customProductData) => {
     setInfoModalOpen(false)
   }
 
+  function handleFilter(e, productType) {
+    console.log('\n\n e', e, 'productType', productType)
+  }
+
+  const productTypes: any = new Set(customProductData.customProductData.map(product => product.productType))
+
   return (
     <div className="bundler-page">
       <Header />
@@ -38,7 +44,15 @@ export const Bundle = (customProductData) => {
             Bundle more, save more.
           </p>
           <ul>
-            {customProductData.customProductData.map(x => <li>{x.productType}</li>)}
+            {productTypes.map(product => (
+              <li>
+                <button
+                  onClick={e => handleFilter(e, product.productType)}
+                >
+                  { product.productType }
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

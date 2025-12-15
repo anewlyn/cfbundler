@@ -47,7 +47,9 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
   };
 
   return (
-    <div className="product-card"
+    <div 
+      data-product-type={customProduct.productType}
+      className="product-card"
       style={{
         '--color1': customProduct.colors[0],
         '--color2': customProduct.colors[1],
