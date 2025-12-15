@@ -80,19 +80,27 @@ export const Bundle = (customProductData) => {
           );
         })}
       </ProductGrid>
-      {modalProduct && <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalProduct.productTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {modalProduct.body_html}
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='btn btn-black' onClick={handleClose}>
-            Close
-          </button>
-        </Modal.Footer>
-      </Modal>}
+      {modalProduct && 
+        <Modal 
+          show={show} 
+          onHide={handleClose}
+          scrollable={true}
+          centered={true}
+          fullscreen='md-down'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>{modalProduct.productTitle}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {modalProduct.body_html}
+          </Modal.Body>
+          <Modal.Footer>
+            <button className='btn btn-black' onClick={handleClose}>
+              Close
+            </button>
+          </Modal.Footer>
+        </Modal>
+      }
       <Footer customProducts={customProductData.customProductData} />
     </div>
   );
