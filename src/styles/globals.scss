@@ -413,20 +413,15 @@ p {
 .cf-carousel-product {
   z-index: 10;
   position: relative;
-  flex: 1 1 0%;
-  width: max-content;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: max-content;
   padding: 8px;
   margin-left: var(--slide-spacing);
   background-color: var(--color1);
   border-radius: 4px;
   transform: translate3d(0, 0, 0);
-  &.cf-carousel-placeholder {
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 @media (max-width: 767.9px) {
@@ -451,23 +446,19 @@ p {
 }
 
 .cf-carousel-product-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
   line-height: 1.1;
   padding: 4px 12px;
 }
 .cf-carousel-product-title {
+  display: block;
   font-size: 14px;
   text-transform: uppercase;
-  white-space: nowrap;
   width: max-content;
 }
 .cf-carousel-product-variant {
-  font-size: 12px;
-  white-space: nowrap;
+  display: block;
   width: max-content;
+  font-size: 12px;
 }
 
 .cf-carousel-controls {
@@ -476,6 +467,7 @@ p {
   font-weight: 500;
   text-align: center;
   color: #fff;
+  width: max-content;
   padding: 4px;
   gap: 4px;
   margin-top: 4px;
