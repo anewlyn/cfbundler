@@ -27,7 +27,6 @@ export const Bundle = (customProductData) => {
   }
 
   function handleFilter(type) {
-    console.log('\n\n type', type)
     setFilter(type)
   }
 
@@ -53,7 +52,6 @@ export const Bundle = (customProductData) => {
                 onClick={() => handleFilter('All')}
               >
                 All
-                <span className='text-sm'> ({ customProductData.customProductData.length })</span>
               </button>
             </li>
             {productTypes.map(type => (
@@ -63,7 +61,6 @@ export const Bundle = (customProductData) => {
                   onClick={() => handleFilter(type)}
                 >
                   { type } 
-                  <span className='text-sm'> ({ customProductData.customProductData.filter(product => product.productType === type ).length })</span>
                 </button>
               </li>
             ))}
