@@ -75,7 +75,7 @@ export const Bundle = (customProductData) => {
               customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
-              handleOpenInfoModal={() => handleShow(product)}
+              handleOpenInfoModal={() => handleShow(customProductData.customProductData.find(x => x.productId === product.looxReviewId))}
             />
           );
         })}
@@ -90,10 +90,10 @@ export const Bundle = (customProductData) => {
           size='xl'
         >
           <Modal.Header closeButton>
-            <Modal.Title>{modalProduct.productTitle}</Modal.Title>
+            <Modal.Title>{modalProduct.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {modalProduct.body_html}
+            { modalProduct.tagline }
           </Modal.Body>
           <Modal.Footer>
             <button className='btn btn-black' onClick={handleClose}>
