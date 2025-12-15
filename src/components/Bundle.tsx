@@ -87,7 +87,7 @@ export const Bundle = (customProductData) => {
           scrollable={true}
           centered={true}
           fullscreen='md-down'
-          size='lg'
+          size='xl'
         >
           <Modal.Header closeButton>
             <Modal.Title>{modalProduct.productTitle}</Modal.Title>
