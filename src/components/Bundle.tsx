@@ -29,7 +29,9 @@ export const Bundle = (customProductData) => {
     console.log('\n\n e', e, 'productType', productType)
   }
 
-  const productTypes: any = new Set(customProductData.customProductData.map(product => product.productType))
+  const allProductTypes = customProductData.customProductData.map(product => product.productType)
+  const productTypes: Set<any> = new Set(allProductTypes)
+  console.log('\n\n allProductTypes', allProductTypes, 'productTypes', productTypes)
 
   return (
     <div className="bundler-page">
@@ -44,15 +46,7 @@ export const Bundle = (customProductData) => {
             Bundle more, save more.
           </p>
           <ul>
-            {productTypes.map(product => (
-              <li>
-                <button
-                  onClick={e => handleFilter(e, product.productType)}
-                >
-                  { product.productType }
-                </button>
-              </li>
-            )}
+            
           </ul>
         </div>
       </div>
