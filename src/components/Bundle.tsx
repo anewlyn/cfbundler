@@ -19,6 +19,7 @@ export const Bundle = (customProductData) => {
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
     setModalProduct(product)
+    console.log('product', product)
     setShow(true)
   }
 
@@ -94,9 +95,6 @@ export const Bundle = (customProductData) => {
           </Modal.Header>
           <Modal.Body>
             { modalProduct.tagline }
-            {modalProduct.images.forEach(image => (
-              <img src={image.imageURL} />
-            ))}
           </Modal.Body>
           <Modal.Footer>
             <button className='btn btn-black' onClick={handleClose}>
