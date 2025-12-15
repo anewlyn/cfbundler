@@ -9,13 +9,14 @@ import AddToButton from './AddToButton';
 import ResponsiveImage from './ResponsiveImage';
 
 interface ProductCardProps {
-  customProduct: object;
-  product: AllProductVariants;
-  handleOpenInfoModal: (product: AllProductVariants) => void;
-  isPriority: boolean;
+  filter: string
+  customProduct: object
+  product: AllProductVariants
+  handleOpenInfoModal: (product: AllProductVariants) => void
+  isPriority: boolean
 }
 
-const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
+const ProductCard = ({ filter, customProduct, product, handleOpenInfoModal, isPriority }: ProductCardProps) => {
   const infoScreenRef = useRef<HTMLDivElement>(null);
 
   const { addProductVariant, cart, bundle, currentDiscount } = useLoopContext();
@@ -46,7 +47,7 @@ const ProductCard = ({ customProduct, product, handleOpenInfoModal, isPriority }
     return <span className="product-price">{currencyFormatter(price, bundle.currencyCode)}</span>;
   };
 
-  return (
+  if(customProduct.productType !== filter) return (
     <div 
       data-product-type={customProduct.productType}
       className="product-card"

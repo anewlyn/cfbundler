@@ -15,6 +15,7 @@ export const Bundle = (customProductData) => {
   const [infoModalOpen, setInfoModalOpen] = useState(false)
   const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null)
   const { products } = useLoopContext()
+  const [filter, setFilter] = useState('')
 
   const handleOpenInfoModal = (product: AllProductVariants) => {
     setModalProduct(product)
@@ -25,12 +26,13 @@ export const Bundle = (customProductData) => {
     setInfoModalOpen(false)
   }
 
-  function handleFilter(e, productType) {
-    console.log('\n\n e', e, 'productType', productType)
+  function handleFilter(type) {
+    console.log('\n\n type', type)
+    setFilter(type)
   }
 
-  const allProductTypes = customProductData.customProductData.map(product => product.productType)
-  const productTypes: Set<any> = new Set(allProductTypes)
+  const allProductTypes: Set<any> = new Set(customProductData.customProductData.map(product => product.productType))
+  const productTypes: Array<string> = Array.from(allProductTypes)
   console.log('\n\n allProductTypes', allProductTypes, 'productTypes', productTypes)
 
   return (
@@ -46,7 +48,22 @@ export const Bundle = (customProductData) => {
             Bundle more, save more.
           </p>
           <ul>
-            
+            <li>
+              <button
+                onClick={() => handleFilter('All')}
+              >
+                All
+              </button>
+            </li>
+            {productTypes.map(type => (
+              <li>
+                <button
+                  onClick={() => handleFilter(type)}
+                >
+                  { type }
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -58,6 +75,7 @@ export const Bundle = (customProductData) => {
           return (
             <ProductCard
               key={`${product.shopifyId}${index}`}
+              filter={filter}
               customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
