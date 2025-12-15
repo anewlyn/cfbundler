@@ -11,7 +11,7 @@ import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { Modal } from 'react-bootstrap';
 
 export const Bundle = (customProductData) => {
-  const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null)
+  const [modalProduct, setModalProduct] = useState<null | any>(null)
   const { products } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false);
