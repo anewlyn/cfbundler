@@ -204,7 +204,22 @@ p {
   padding: 1em;
 }
 
+// FILTERS
 
+.product-filters {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  li {
+    padding-left: 0;
+  }
+  .btn {
+    min-width: 72px;
+    padding: 8px 16px;
+  }
+}
 
 // HEADER
 

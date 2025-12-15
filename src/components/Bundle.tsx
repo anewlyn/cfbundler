@@ -46,7 +46,7 @@ export const Bundle = (customProductData) => {
           <p>
             Bundle more, save more.
           </p>
-          <ul>
+          <ul className='product-filters'>
             <li>
               <button
                 className={`btn ${filter === 'All' ? 'btn-white' : 'btn-fizz'}`}
