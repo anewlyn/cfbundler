@@ -3,27 +3,23 @@
 import { useState } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import InfoCard from '@/components/InfoCard';
-import { Modal } from '@/components/Modal';
 import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
+import { Modal } from 'react-bootstrap';
 
 export const Bundle = (customProductData) => {
-  const [infoModalOpen, setInfoModalOpen] = useState(false)
   const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null)
   const { products } = useLoopContext()
   const [filter, setFilter] = useState('All')
+  const [show, setShow] = useState(false);
 
-  const handleOpenInfoModal = (product: AllProductVariants) => {
+  const handleClose = () => setShow(false);
+  const handleShow = (product: AllProductVariants) => {
     setModalProduct(product)
-    setInfoModalOpen(true)
-  }
-
-  const handleCloseInfoModal = () => {
-    setInfoModalOpen(false)
+    setShow(true)
   }
 
   function handleFilter(type) {
@@ -79,34 +75,24 @@ export const Bundle = (customProductData) => {
               customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
-              handleOpenInfoModal={() => handleOpenInfoModal(product)}
+              handleOpenInfoModal={() => handleShow(product)}
             />
           );
         })}
       </ProductGrid>
-      <Modal
-        open={infoModalOpen}
-        onClose={handleCloseInfoModal}
-        ariaModalLabel="Product Info Modal"
-        hasCloseButton
-      >
-        {modalProduct && (
-          <InfoCard
-            customProduct={customProductData.customProductData.find(x => x.productId === modalProduct.looxReviewId)}
-            body_html={modalProduct.body_html}
-            images={modalProduct.images}
-            isVariant={modalProduct.isVariant}
-            limits={modalProduct.limits}
-            outOfStock={modalProduct.outOfStock}
-            price={modalProduct.price}
-            productTitle={modalProduct.productTitle}
-            shopifyId={modalProduct.shopifyId}
-            looxReviewId={modalProduct.looxReviewId}
-            title={modalProduct.title}
-            variants={modalProduct.variants}
-          />
-        )}
-      </Modal>
+      {modalProduct && <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalProduct.productTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {modalProduct.body_html}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className='btn btn-black' onClick={handleClose}>
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>}
       <Footer customProducts={customProductData.customProductData} />
     </div>
   );
