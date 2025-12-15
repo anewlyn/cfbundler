@@ -1,13 +1,12 @@
 @import 'breakpoints';
 
 .bundler-page {
-  background-color: var(--cf-background-color);
+  background-color: #FFF2F0;
   min-width: fit-content;
   padding-bottom: 15rem;
 }
 
 .bp-flex {
-  background-color: var(--cf-background-color);
   column-gap: 1.5rem;
   display: grid;
   justify-content: space-evenly;
