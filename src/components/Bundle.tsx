@@ -33,7 +33,6 @@ export const Bundle = (customProductData) => {
 
   const allProductTypes: Set<any> = new Set(customProductData.customProductData.map(product => product.productType))
   const productTypes: Array<string> = Array.from(allProductTypes)
-  console.log('\n\n allProductTypes', allProductTypes, 'productTypes', productTypes)
 
   return (
     <div className="bundler-page">

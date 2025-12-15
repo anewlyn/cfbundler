@@ -47,7 +47,7 @@ const ProductCard = ({ filter, customProduct, product, handleOpenInfoModal, isPr
     return <span className="product-price">{currencyFormatter(price, bundle.currencyCode)}</span>;
   };
 
-  if(customProduct.productType !== filter) return (
+  if(filter == 'All' || customProduct.productType == filter) return (
     <div 
       data-product-type={customProduct.productType}
       className="product-card"
