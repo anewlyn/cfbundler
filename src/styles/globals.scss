@@ -103,6 +103,108 @@ p {
   }
 }
 
+/*
+
+    BUTTONS
+    BTN
+
+*/
+
+.btn, .btn:active, .btn:visited {
+  position: relative;
+  display: inline-block;
+  font-family: 'Inter', 'Helvetica', sans-serif;
+  font-weight: 600;
+  letter-spacing: initial;
+  text-transform: initial;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 2px solid transparent;
+  padding: 1em 1.5em;
+  font-size: 1em;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, fill 150ms ease-in-out;
+}
+.btn:hover, .btn:focus {
+  text-decoration: none;
+}
+.btn:focus, .btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2em rgba(0, 123, 255, 0.25);
+}
+.btn.disabled, .btn:disabled {
+  opacity: 0.65;
+}
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+.btn.btn-flex,
+.btn.btn-flex:active, .btn.btn-flex:visited {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.btn.btn-black {
+  color: #fff;
+  background-color: #000;
+}
+.btn.btn-black:hover {
+    color: #ffb3ab;
+    background-color: #111;
+  }
+.btn.btn-black:hover svg path {
+    fill: #ffb3ab;
+    transition: fill 150ms ease-in-out;
+}
+.btn.btn-white {
+  color: #000;
+  background-color: #fff;
+}
+.btn.btn-white:hover {
+  background-color: #ffb3ab;
+}
+.btn.btn-white-hollow {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+.btn.btn-white-hollow:hover {
+  color: #ffb3ab;
+  background-color: transparent;
+  border-color: #ffb3ab;
+}
+.btn.btn-fizz {
+  color: #000;
+  background-color: #ffb3ab;
+}
+.btn.btn-fizz:hover {
+  color: #000;
+  background-color: #FFBBB3;
+}
+
+.btn.btn-off_white {
+  color: #000;
+  background-color: #f3f3f3;
+}
+.btn.btn-off_white:hover {
+  color: #000;
+  cursor: default;
+  background-color: #f3f3f3;
+}
+
+.btn.btn-icon {
+  padding: 1em;
+}
+
+
 
 // HEADER
 

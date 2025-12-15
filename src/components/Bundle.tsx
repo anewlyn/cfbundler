@@ -15,7 +15,7 @@ export const Bundle = (customProductData) => {
   const [infoModalOpen, setInfoModalOpen] = useState(false)
   const [modalProduct, setModalProduct] = useState<null | AllProductVariants>(null)
   const { products } = useLoopContext()
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('All')
 
   const handleOpenInfoModal = (product: AllProductVariants) => {
     setModalProduct(product)
@@ -49,6 +49,7 @@ export const Bundle = (customProductData) => {
           <ul>
             <li>
               <button
+                className={`btn ${filter === 'All' ? 'btn-white' : 'btn-fizz'}`}
                 onClick={() => handleFilter('All')}
               >
                 All
@@ -57,6 +58,7 @@ export const Bundle = (customProductData) => {
             {productTypes.map(type => (
               <li>
                 <button
+                  className={`btn ${filter === type ? 'btn-white' : 'btn-fizz'}`}
                   onClick={() => handleFilter(type)}
                 >
                   { type }
