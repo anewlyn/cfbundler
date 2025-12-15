@@ -61,7 +61,8 @@ export const Bundle = (customProductData) => {
                   className={`btn ${filter === type ? 'btn-white active' : 'btn-fizz'}`}
                   onClick={() => handleFilter(type)}
                 >
-                  { type }
+                  { type } 
+                  ({ customProductData.customProductData.filter(product => product.productType === type ).length })
                 </button>
               </li>
             ))}
