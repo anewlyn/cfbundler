@@ -413,7 +413,8 @@ p {
 .cf-carousel-product {
   z-index: 10;
   position: relative;
-  flex: 0 0 auto;
+  flex: 1 1 0%;
+  width: max-content;
   display: flex;
   justify-content: flex-start;
   align-items: center;
