@@ -111,13 +111,13 @@ const ModalContent = ({
           <Accordion.Item eventKey='0'>
             <Accordion.Header>How You'll Feel</Accordion.Header>
             <Accordion.Body>
-              {customProduct.feels.children.map(child => {
+              {customProduct.feels?.children?.map(child => {
                 if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
                   <p key={i}>{ grandchild.value }</p>
                 ))
-                if(child.type === 'list') return child.children.map((grandchild, i) => (
+                if(child.type === 'list') return child.children?.map((grandchild, i) => (
                   <ul>
-                    {grandchild.children.map(item => (
+                    {grandchild.children?.map(item => (
                       <li>{item.bold 
                         ? <b>{item.value}</b>
                         : item.italic
@@ -134,7 +134,7 @@ const ModalContent = ({
           <Accordion.Item eventKey='1'>
             <Accordion.Header>Ingredients</Accordion.Header>
             <Accordion.Body>
-              {customProduct.ingredients.children.map(child => {
+              {customProduct?.ingredients?.children.map(child => {
                 if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
                   <p key={i}>{ grandchild.value }</p>
                 ))
