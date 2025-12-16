@@ -657,7 +657,21 @@ p {
 
 .cf-modal-content {}
 
-.accordion-button:not(.collapsed) {
+.modal .accordion {
+  border-top: 2px solid var(--color3);
+  border-bottom: 2px solid var(--color3);
+}
+.modal .accordion-item {
+  border: 2px solid var(--color3);
+}
+
+.modal .accordion-header {}
+.modal .accordion-button {
+  color: #000;
+  background-color: var(--color1);
+}
+.modal .accordion-button:not(.collapsed) {
+  color: #000;
   background-color: var(--color2);
 }
 
