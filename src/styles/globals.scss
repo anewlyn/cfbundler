@@ -663,6 +663,7 @@ p {
 }
 .modal .accordion-item {
   border-bottom: 1px solid #000;
+  background-color: transparent;
 }
 
 .modal .accordion-header {}
@@ -676,6 +677,10 @@ p {
 .modal .accordion-button:not(.collapsed) {
   color: #000;
   background-color: var(--color2);
+}
+
+.modal .accordion-body {
+  padding: 8px;
 }
 
 // UTILITIES
