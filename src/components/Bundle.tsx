@@ -8,7 +8,7 @@ import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
-import { Modal } from 'react-bootstrap';
+import { CloseButton, Modal } from 'react-bootstrap';
 
 export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
@@ -90,10 +90,9 @@ export const Bundle = (customProductData) => {
           fullscreen='md-down'
           size='xl'
         >
-          <Modal.Header closeButton>
-            <Modal.Title>{modalProduct.title}</Modal.Title>
-          </Modal.Header>
           <Modal.Body>
+            <CloseButton />
+            { modalProduct.title }
             { modalProduct.tagline }
           </Modal.Body>
           <Modal.Footer>
