@@ -57,7 +57,8 @@ const ModalContent = ({
             '--color1': customProduct.colors[0],
             '--color2': customProduct.colors[1],
             '--color3': customProduct.colors[2],
-            '--color4': customProduct.colors[3]
+            '--color4': customProduct.colors[3],
+            backgroundColor: customProduct.colors[0],
         } as React.CSSProperties}
     >
       <div className='cf-carousel'>
@@ -89,7 +90,7 @@ const ModalContent = ({
       )}
     </Modal.Body>
     <Modal.Footer style={{ backgroundColor: customProduct.colors[0] }}>
-        <button className='btn btn-icon btn-black-hollow py-0' onClick={handleClose}>
+        <button className='btn btn-icon btn-white py-0' onClick={handleClose}>
             <i className="material-icons">close</i>
         </button>
         <AddToButton
