@@ -61,7 +61,7 @@ const ModalContent = ({
             backgroundColor: customProduct.colors[0],
         } as React.CSSProperties}
     >
-      <div className='cf-carousel'>
+      <div className='cf-carousel shown'>
         <div className="cf-carousel-viewport w-100" ref={emblaRef}>
           <div className="cf-carousel-container">
             {customVariant.images.map((slide: { imageURL: string; altText: string }, index: number) => slide.imageURL && (
@@ -69,9 +69,7 @@ const ModalContent = ({
                 key={index}
                 className={`cf-carousel-item`} 
               >
-                <div className="cf-carousel-item-image">
-                  <img src={slide.imageURL} alt={slide.altText} />  
-                </div>
+                <img src={slide.imageURL} alt={slide.altText} />  
               </div>
             ))}
           </div>
