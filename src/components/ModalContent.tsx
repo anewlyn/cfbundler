@@ -115,9 +115,9 @@ const ModalContent = ({
                 if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
                   <p key={i}>{ grandchild.value }</p>
                 ))
-                if(child.type === 'list') return child.children?.map((grandchild, i) => (
+                if(child.type === 'list') return 
                   <ul>
-                    {grandchild.children?.map(item => (
+                    {child.children?.map((grandchild, i) => grandchild.children?.map(item => (
                       <li>{item.bold 
                         ? <b>{item.value}</b>
                         : item.italic
@@ -125,9 +125,8 @@ const ModalContent = ({
                           : <span>{item.value}</span>
                       }
                       </li>
-                    ))}
+                    )))}
                   </ul>
-                ))
               })}
             </Accordion.Body>
           </Accordion.Item>
