@@ -53,6 +53,7 @@ const ModalContent = ({
 
   return (<>
     <Modal.Body 
+        className='p-0'
         style={{
             '--color1': customProduct.colors[0],
             '--color2': customProduct.colors[1],
@@ -75,7 +76,7 @@ const ModalContent = ({
           </div>
         </div>
       </div>
-      <div className="cf-modal-content p-4">
+      <div className="cf-modal-content p-3 p-md-4">
         <p className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</p>
         <p>{currencyFormatter(price, bundle.currencyCode)}</p>
         <hr />
