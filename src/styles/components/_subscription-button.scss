@@ -1,5 +1,4 @@
 .subscription-button {
-  flex: 1 1 0%;
   align-items: center;
   background-color: var(--cf-black);
   border: none;
@@ -10,7 +9,6 @@
   border-radius: 4px;
 
   &.not-subscribed {
-    flex: 1 1 0%;
     background-color: white;
     font-size: 14px;
     font-weight: 700;
