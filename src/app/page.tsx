@@ -24,6 +24,9 @@ query getBundlerProduct($id: ID!) {
     colors: metafield(namespace:"custom", key:"scheme") {
       hex: jsonValue
     }
+    ingredients: metafield(namespace:"custom", key:"ingredients") {
+      jsonValue
+    }
     variants(first: 10) {
       nodes {
         id
@@ -158,6 +161,7 @@ async function getCustomProductData(ids: string) {
       productId: Number(idArray[i]),
       title: product.title.value,
       colors: product.colors.hex,
+      ingredients: product.ingredients.jsonValue,
       tagline: product.tagline?.value ?? null,
       preferTagline: product.preferTagline?.jsonValue ?? false,
       productType: product.productType,

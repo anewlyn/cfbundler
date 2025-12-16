@@ -10,7 +10,7 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import ResponsiveImage from './ResponsiveImage';
-import { Modal } from 'react-bootstrap';
+import { Accordion, Modal } from 'react-bootstrap';
 import useEmblaCarousel from 'embla-carousel-react';
 
 const ModalContent = ({
@@ -61,7 +61,7 @@ const ModalContent = ({
     body_html &&
     sanitizeHtml(body_html, {
       disallowedTagsMode: 'completelyDiscard',
-      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'span'],
+      allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'span', 'ul', 'li'],
   });
 
   const customVariant = customProduct.variants.find(x => x.id === shopifyId)
@@ -98,10 +98,22 @@ const ModalContent = ({
 
         {body_html_sanitized && (
           <div
-            className="product-description"
+            className="mt-3"
             dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
           />
         )}
+
+        <Accordion flush>
+          <Accordion.Item eventKey='0'>
+            <Accordion.Header>Ingredients</Accordion.Header>
+            <Accordion.Body>
+              {customProduct.ingredients.children.map(child => {
+                if(child.type === 'paragraph') return <p>{ child.children.value }</p>
+              })}
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
       </div>
     </Modal.Body>
     <Modal.Footer style={{ backgroundColor: customProduct.colors[0], borderTop: `1px solid ${customProduct.colors[2]}` }}>
