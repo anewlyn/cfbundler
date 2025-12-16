@@ -27,6 +27,9 @@ query getBundlerProduct($id: ID!) {
     ingredients: metafield(namespace:"custom", key:"ingredients") {
       jsonValue
     }
+    feels: metafield(namespace:"custom", key:"feels") {
+      jsonValue
+    }
     variants(first: 10) {
       nodes {
         id
