@@ -56,9 +56,7 @@ const AddToButton = ({
       {!subscribed && !outOfStock && (
         <button
           type="button"
-          className={classNames(className, 'btn btn-white btn-add', {
-            'active': !subscribed,
-          })}
+          className='btn btn-white btn-add'
           onClick={handleClick}
         >
           + Add <span className='d-none d-md-block'>to Subscription</span>
