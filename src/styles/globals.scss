@@ -658,16 +658,19 @@ p {
 .cf-modal-content {}
 
 .modal .accordion {
-  border-top: 2px solid var(--color3);
-  border-bottom: 2px solid var(--color3);
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }
 .modal .accordion-item {
-  border: 2px solid var(--color3);
+  border-bottom: 1px solid #000;
 }
 
 .modal .accordion-header {}
 .modal .accordion-button {
+  font-size: 16px;
+  font-weight: 500;
   color: #000;
+  padding: 8px;
   background-color: var(--color1);
 }
 .modal .accordion-button:not(.collapsed) {
