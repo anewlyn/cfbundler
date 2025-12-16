@@ -104,6 +104,7 @@ export const Bundle = (customProductData) => {
             looxReviewId={modalProduct.looxReviewId}
             title={modalProduct.title}
             variants={modalProduct.variants}
+            handleClose={handleClose}
           />
         </Modal>
       }

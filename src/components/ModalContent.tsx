@@ -13,6 +13,7 @@ import ResponsiveImage from './ResponsiveImage';
 import { Modal } from 'react-bootstrap';
 
 const ModalContent = ({
+  handleClose,
   customProduct,
   price,
   outOfStock,
