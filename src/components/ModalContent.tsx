@@ -28,7 +28,7 @@ const ModalContent = ({
   const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
       loop: false, 
-      dragFree: false, 
+      dragFree: true, 
     })
 
   const { maxValue } = limits[0];

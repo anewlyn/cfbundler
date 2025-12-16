@@ -428,7 +428,9 @@ p {
 .cf-carousel-item {
   z-index: 10;
   position: relative;
-  flex: 1 1 0%;
+  flex: 0 0 66%;
+  max-width: 256px;
+  aspect-ratio: 3/4;
   padding: 8px;
   margin-left: var(--slide-spacing);
   background-color: var(--color1);
