@@ -49,19 +49,19 @@ const AddToButton = ({
 
   return (
     <>
-      {outOfStock && <span className="subscription-button out-of-stock">OUT OF STOCK</span>}
+      {outOfStock && <span className="btn btn-white disabled">Out of Stock</span>}
       {subscribed && !outOfStock && (
         <CounterBlock orderQty={orderQty} maxQty={maxQty} setQty={setQty} />
       )}
       {!subscribed && !outOfStock && (
         <button
           type="button"
-          className={classNames(className, 'subscription-button', {
-            'not-subscribed': !subscribed,
+          className={classNames(className, 'btn btn-white btn-add', {
+            'active': !subscribed,
           })}
           onClick={handleClick}
         >
-          {buttonText}
+          + Add <span className='d-none d-md-block'>to Subscription</span>
         </button>
       )}
     </>

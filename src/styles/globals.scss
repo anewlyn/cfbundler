@@ -626,6 +626,20 @@ p {
   }
 }
 
+.btn-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  font-size: 16px;
+}
+.btn-qty {
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .cf-product-price {}
 .cf-product-price-discounted {
   text-decoration: line-through;
