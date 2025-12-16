@@ -1,7 +1,7 @@
 
 import classNames from 'classnames';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
@@ -27,9 +27,13 @@ const ModalContent = ({
   const { cart, addProductVariant, bundle, currentDiscount } = useLoopContext();
   const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
-      loop: false, 
-      dragFree: true, 
-    })
+    loop: false, 
+    dragFree: true, 
+  })
+
+  useEffect(() => {
+    console.log('customProduct', customProduct)
+  }, [])
 
   const { maxValue } = limits[0];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
