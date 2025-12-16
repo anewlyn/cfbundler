@@ -657,6 +657,10 @@ p {
 
 .cf-modal-content {}
 
+.accordion-button:not(.collapsed) {
+  background-color: var(--color2);
+}
+
 // UTILITIES
 
 .text-sm {
