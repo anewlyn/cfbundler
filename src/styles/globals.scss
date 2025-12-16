@@ -423,6 +423,10 @@ p {
   display: flex;
   // margin-right: 16px;
   margin-left: calc(var(--slide-spacing) * -1);
+  cursor: grab;
+}
+.cf-carousel-container:active {
+  cursor: grabbing;
 }
 
 .cf-carousel-item {
