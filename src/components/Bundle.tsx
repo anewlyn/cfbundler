@@ -90,6 +90,7 @@ export const Bundle = (customProductData) => {
           centered={true}
           fullscreen='md-down'
           size='xl'
+          className='p-0'
         >
           <ModalContent 
             customProduct={customProductData.customProductData.find(x => x.productId === modalProduct.looxReviewId)}

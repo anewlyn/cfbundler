@@ -435,6 +435,7 @@ p {
   margin-left: var(--slide-spacing);
   background-color: var(--color1);
   border-radius: 4px;
+  overflow: hidden;
   transform: translate3d(0, 0, 0);
 }
 .cf-carousel-item-image {
@@ -647,6 +648,10 @@ p {
 
 }
 
+
+// MODAL
+
+.cf-modal-content {}
 
 // UTILITIES
 

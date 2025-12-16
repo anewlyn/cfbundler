@@ -75,17 +75,19 @@ const ModalContent = ({
           </div>
         </div>
       </div>
-      <p className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</p>
-      <p>{currencyFormatter(price, bundle.currencyCode)}</p>
-      <hr />
-      <div className="loox-rating" data-fetch data-id={looxReviewId} />
+      <div className="cf-modal-content p-4">
+        <p className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</p>
+        <p>{currencyFormatter(price, bundle.currencyCode)}</p>
+        <hr />
+        <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
-      {body_html_sanitized && (
-        <div
-          className="product-description"
-          dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
-        />
-      )}
+        {body_html_sanitized && (
+          <div
+            className="product-description"
+            dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
+          />
+        )}
+      </div>
     </Modal.Body>
     <Modal.Footer style={{ backgroundColor: customProduct.colors[0], borderTop: `1px solid ${customProduct.colors[2]}` }}>
         <button className='btn btn-icon btn-white py-0' onClick={handleClose}>
