@@ -9,6 +9,7 @@ import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { CloseButton, Modal } from 'react-bootstrap';
+import AddToButton from './AddToButton';
 
 export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
@@ -91,12 +92,19 @@ export const Bundle = (customProductData) => {
           size='xl'
         >
           <Modal.Body>
-            <CloseButton />
             { modalProduct.title }
             { modalProduct.tagline }
           </Modal.Body>
           <Modal.Footer>
-            <button className='btn btn-black' onClick={handleClose}>
+            <AddToButton
+              className="btn btn-black"
+              orderQty={cartQty}
+              maxQty={maxValue > 0 ? maxValue : 1000}
+              outOfStock={outOfStock}
+              setQty={handleProductQtyChange}
+              text={'+ ADD TO SUBSCRIPTION'}
+            />
+            <button className='btn btn-black-hollow' onClick={handleClose}>
               Close
             </button>
           </Modal.Footer>

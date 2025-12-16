@@ -164,6 +164,21 @@ p {
     fill: #ffb3ab;
     transition: fill 150ms ease-in-out;
 }
+.btn.btn-black-hollow {
+  color: #000;
+  background-color: #fff;
+  border-color: #000;
+}
+.btn.btn-black-hollow:hover {
+    color: #000;
+    background-color: #ffb3ab;
+    border-color: #000;
+  }
+.btn.btn-black-hollow:hover svg path {
+    fill: #000;
+    transition: fill 150ms ease-in-out;
+}
+
 .btn.btn-white {
   color: #000;
   background-color: #fff;
