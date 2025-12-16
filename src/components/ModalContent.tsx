@@ -11,6 +11,7 @@ import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import ResponsiveImage from './ResponsiveImage';
 import { Modal } from 'react-bootstrap';
+import useEmblaCarousel from 'embla-carousel-react';
 
 const ModalContent = ({
   handleClose,
@@ -25,6 +26,10 @@ const ModalContent = ({
 }: AllProductVariants) => {
   const { cart, addProductVariant, bundle } = useLoopContext();
   const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+      loop: false, 
+      dragFree: false, 
+    })
 
   const { maxValue } = limits[0];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -55,28 +60,23 @@ const ModalContent = ({
             '--color4': customProduct.colors[3]
         } as React.CSSProperties}
     >
-      <Carousel>
-        {customVariant.images.map((slide: { imageURL: string; altText: string }, index: number) => slide.imageURL && (
-          <div
-            className={classNames('embla__slide alt-image-block', {
-              'base-border-2': selectedImageIndex === index,
-            })}
-            key={index}
-          >
-            <button onClick={() => handleOpenChangeImage(index)} className="alt-image-button">
-              switch images
-            </button>
-            <Image
-              className="carousel-item"
-              src={slide.imageURL}
-              alt={slide.altText}
-              width={271}
-              height={271}
-            />
+      <div className='cf-carousel'>
+        <div className="cf-carousel-viewport" ref={emblaRef}>
+          <div className="cf-carousel-container">
+            {customVariant.images.map((slide: { imageURL: string; altText: string }, index: number) => slide.imageURL && (
+              <div 
+                key={index}
+                className={`cf-carousel-item`} 
+              >
+                <div className="cf-carousel-item-image">
+                  <img src={slide.imageURL} alt={slide.altText} />  
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </Carousel>
-      <p className={`${kiro_bold_400.className} product-title`}>{productTitle}</p>
+        </div>
+      </div>
+      <p className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</p>
       <p>{currencyFormatter(price, bundle.currencyCode)}</p>
       <hr />
       <div className="loox-rating" data-fetch data-id={looxReviewId} />
@@ -88,7 +88,7 @@ const ModalContent = ({
         />
       )}
     </Modal.Body>
-    <Modal.Footer>
+    <Modal.Footer style={{ backgroundColor: customProduct.colors[0] }}>
         <button className='btn btn-icon btn-black-hollow py-0' onClick={handleClose}>
             <i className="material-icons">close</i>
         </button>
