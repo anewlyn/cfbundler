@@ -69,7 +69,7 @@ const ModalContent = ({
                 key={index}
                 className={`cf-carousel-item`} 
               >
-                <img src={slide.imageURL} alt={slide.altText} />  
+                <img className='cf-carousel-item-image' src={slide.imageURL} alt={slide.altText} />  
               </div>
             ))}
           </div>
