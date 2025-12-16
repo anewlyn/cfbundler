@@ -5,7 +5,7 @@ import { useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormatter } from '@/helpers/cartHelpers';
+import { currencyFormatter, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
@@ -24,7 +24,7 @@ const ModalContent = ({
   productTitle,
   looxReviewId,
 }: AllProductVariants) => {
-  const { cart, addProductVariant, bundle } = useLoopContext();
+  const { cart, addProductVariant, bundle, currentDiscount } = useLoopContext();
   const cartQty = cart.productVariants.find((item) => item.shopifyId === shopifyId)?.quantity || 0;
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
       loop: false, 
@@ -33,6 +33,21 @@ const ModalContent = ({
 
   const { maxValue } = limits[0];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const renderProductPrice = () => {
+    if (currentDiscount) {
+      const discountedPrice = getDiscountValue(currentDiscount.value, price);
+      return (
+        <div className="product-price">
+          <span className="discount-price">{currencyFormatter(price, bundle.currencyCode)}</span>
+          <span className="discounted-price">
+            {currencyFormatter(discountedPrice, bundle.currencyCode)}
+          </span>
+        </div>
+      );
+    }
+    return <span className="product-price">{currencyFormatter(price, bundle.currencyCode)}</span>;
+  };
 
   const handleProductQtyChange = (qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
@@ -78,8 +93,7 @@ const ModalContent = ({
       </div>
       <div className="cf-modal-content p-3 p-md-4">
         <p className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</p>
-        <p>{currencyFormatter(price, bundle.currencyCode)}</p>
-        <hr />
+        <p>{ renderProductPrice() }</p>
         <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
         {body_html_sanitized && (
