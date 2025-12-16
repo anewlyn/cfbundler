@@ -115,6 +115,19 @@ const ModalContent = ({
                 if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
                   <p key={i}>{ grandchild.value }</p>
                 ))
+                if(child.type === 'list') return child.children.map((grandchild, i) => (
+                  <ul>
+                    {grandchild.children.map(item => (
+                      <li>{item.bold 
+                        ? <b>{item.value}</b>
+                        : item.italic
+                          ? <i>{item.value}</i>
+                          : <span>{item.value}</span>
+                      }
+                      </li>
+                    ))}
+                  </ul>
+                ))
               })}
             </Accordion.Body>
           </Accordion.Item>
