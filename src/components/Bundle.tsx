@@ -77,7 +77,7 @@ export const Bundle = (customProductData) => {
               customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
-              handleOpenInfoModal={() => handleShow(product))}
+              handleOpenInfoModal={() => handleShow(product)}
             />
           );
         })}
