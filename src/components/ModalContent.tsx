@@ -62,7 +62,7 @@ const ModalContent = ({
         } as React.CSSProperties}
     >
       <div className='cf-carousel'>
-        <div className="cf-carousel-viewport" ref={emblaRef}>
+        <div className="cf-carousel-viewport w-100" ref={emblaRef}>
           <div className="cf-carousel-container">
             {customVariant.images.map((slide: { imageURL: string; altText: string }, index: number) => slide.imageURL && (
               <div 
@@ -89,12 +89,12 @@ const ModalContent = ({
         />
       )}
     </Modal.Body>
-    <Modal.Footer style={{ backgroundColor: customProduct.colors[0] }}>
+    <Modal.Footer style={{ backgroundColor: customProduct.colors[0], borderTop: `1px solid ${customProduct.colors[2]}` }}>
         <button className='btn btn-icon btn-white py-0' onClick={handleClose}>
             <i className="material-icons">close</i>
         </button>
         <AddToButton
-            className="btn btn-black"
+            className="btn btn-black w-auto flex-grow-1"
             orderQty={cartQty}
             maxQty={maxValue > 0 ? maxValue : 1000}
             outOfStock={outOfStock}
