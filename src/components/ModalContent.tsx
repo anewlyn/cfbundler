@@ -89,7 +89,7 @@ const ModalContent = ({
       )}
     </Modal.Body>
     <Modal.Footer>
-        <button className='btn btn-black-hollow' onClick={handleClose}>
+        <button className='btn btn-icon btn-black-hollow py-0' onClick={handleClose}>
             <i className="material-icons">close</i>
         </button>
         <AddToButton
