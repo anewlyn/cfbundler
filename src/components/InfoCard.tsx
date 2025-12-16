@@ -26,10 +26,6 @@ const InfoCard = ({
   const { maxValue } = limits[0];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  // loox.io/widget/VJZ5Kxo3Xi/loox.1632874857413.js?shop=cyclingfrog.myshopify.com
-  // https://loox.io/widget/VJZ5Kxo3Xi/ratings?products_ids=no&h=1718658000000
-  // https://cyclingfrog.com/products/bluerazz-gummies?variant=40847671722193#looxReviews
-
   const handleProductQtyChange = (qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
   };

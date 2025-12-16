@@ -8,8 +8,8 @@ import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
-import { CloseButton, Modal } from 'react-bootstrap';
-import AddToButton from './AddToButton';
+import { Modal } from 'react-bootstrap';
+import ModalContent from './ModalContent';
 
 export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
@@ -77,7 +77,7 @@ export const Bundle = (customProductData) => {
               customProduct={customProductData.customProductData.find(x => x.productId === product.looxReviewId)}
               product={product}
               isPriority={isPriority}
-              handleOpenInfoModal={() => handleShow(customProductData.customProductData.find(x => x.productId === product.looxReviewId))}
+              handleOpenInfoModal={() => handleShow(product))}
             />
           );
         })}
@@ -91,23 +91,20 @@ export const Bundle = (customProductData) => {
           fullscreen='md-down'
           size='xl'
         >
-          <Modal.Body>
-            { modalProduct.title }
-            { modalProduct.tagline }
-          </Modal.Body>
-          <Modal.Footer>
-            <AddToButton
-              className="btn btn-black"
-              orderQty={cartQty}
-              maxQty={maxValue > 0 ? maxValue : 1000}
-              outOfStock={outOfStock}
-              setQty={handleProductQtyChange}
-              text={'+ ADD TO SUBSCRIPTION'}
-            />
-            <button className='btn btn-black-hollow' onClick={handleClose}>
-              Close
-            </button>
-          </Modal.Footer>
+          <ModalContent 
+            customProduct={customProductData.customProductData.find(x => x.productId === modalProduct.looxReviewId)}
+            body_html={modalProduct.body_html}
+            images={modalProduct.images}
+            isVariant={modalProduct.isVariant}
+            limits={modalProduct.limits}
+            outOfStock={modalProduct.outOfStock}
+            price={modalProduct.price}
+            productTitle={modalProduct.productTitle}
+            shopifyId={modalProduct.shopifyId}
+            looxReviewId={modalProduct.looxReviewId}
+            title={modalProduct.title}
+            variants={modalProduct.variants}
+          />
         </Modal>
       }
       <Footer customProducts={customProductData.customProductData} />
