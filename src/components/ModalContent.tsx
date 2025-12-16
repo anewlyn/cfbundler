@@ -112,7 +112,7 @@ const ModalContent = ({
             <Accordion.Header>Ingredients</Accordion.Header>
             <Accordion.Body>
               {customProduct.ingredients.children.map(child => {
-                if(child.type === 'paragraph') child.children.map((grandchild, i) => (
+                if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
                   <p key={i}>{ grandchild.value }</p>
                 ))
               })}
