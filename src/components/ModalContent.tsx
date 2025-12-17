@@ -10,7 +10,7 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import ResponsiveImage from './ResponsiveImage';
-import RichText from './RichText';
+import { RichText } from './RichText';
 import { Accordion, Modal } from 'react-bootstrap';
 import useEmblaCarousel from 'embla-carousel-react';
 
@@ -22,7 +22,6 @@ const ModalContent = ({
   shopifyId,
   limits,
   body_html,
-  productTitle,
   looxReviewId,
 }: AllProductVariants) => {
   const { cart, addProductVariant, bundle, currentDiscount } = useLoopContext();
@@ -114,7 +113,7 @@ const ModalContent = ({
               <Accordion.Item eventKey={i}>
                 <Accordion.Header>{ deet.title }</Accordion.Header>
                 <Accordion.Body>
-                  <RichText text={ deet.value } />
+                  <RichText data={ deet.value } />
                 </Accordion.Body>
               </Accordion.Item>
           ))}
