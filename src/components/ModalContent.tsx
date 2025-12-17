@@ -110,7 +110,6 @@ const ModalContent = ({
             <Accordion.Body>
               {body_html_sanitized && (
                 <div
-                  className="mt-3"
                   dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
                 />
               )}
