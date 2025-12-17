@@ -26,15 +26,18 @@ query getBundlerProduct($id: ID!) {
     }
     feels: metafield(namespace:"custom", key:"feels") {
       jsonValue
+      value
     }
     ingredients: metafield(namespace:"custom", key:"ingredients") {
       jsonValue
+      value
     }
     fun_fact_title: metafield(namespace:"custom", key:"fun_fact_title") {
       value
     }
     fun_fact: metafield(namespace:"custom", key:"fun_fact") {
       jsonValue
+      value
     }
     nutritional_facts: metafield(namespace:"custom", key:"nutritional_facts") {
     	reference {
@@ -48,6 +51,7 @@ query getBundlerProduct($id: ID!) {
     }
     legal: metafield(namespace:"custom", key:"legal") {
       jsonValue
+      value
     }
     variants(first: 10) {
       nodes {
@@ -187,17 +191,17 @@ async function getCustomProductData(ids: string) {
         {
           type: 'feels', 
           title: 'How You\'ll Feel', 
-          value: product.feels?.jsonValue ?? null,
+          value: product.feels?.value ?? null,
         },
         {
           type: 'fun_fact', 
           title: product.fun_fact_title?.value ?? null,
-          value: product.fun_fact?.jsonValue ?? null,
+          value: product.fun_fact?.value ?? null,
         },
         {
           type: 'ingredients', 
           title: 'Ingredients', 
-          value: product.ingredients?.jsonValue ?? null,
+          value: product.ingredients?.value ?? null,
         },
         {
           type: 'nutritional_facts', 
@@ -207,7 +211,7 @@ async function getCustomProductData(ids: string) {
         {
           type: 'legal', 
           title: 'FDA Disclaimer & Legal', 
-          value: product.legal.jsonValue ?? null,
+          value: product.legal.value ?? null,
         }
       ],
       tagline: product.tagline?.value ?? null,
