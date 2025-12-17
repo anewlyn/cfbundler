@@ -21,6 +21,7 @@ const ModalContent = ({
   outOfStock,
   shopifyId,
   limits,
+  title,
   body_html,
   looxReviewId,
 }: AllProductVariants) => {
@@ -96,7 +97,10 @@ const ModalContent = ({
         </div>
       </div>
       <div className="cf-modal-content p-3 p-md-4">
-        <p className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</p>
+        <h2 className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</h2>
+        <p className="product-info">
+          {customProduct.preferTagline ? customProduct.tagline : title}
+        </p>
         <p>{ renderProductPrice() }</p>
         <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
