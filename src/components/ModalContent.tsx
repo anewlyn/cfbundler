@@ -114,7 +114,7 @@ const ModalContent = ({
               <Accordion.Item eventKey={i}>
                 <Accordion.Header>{ deet.title }</Accordion.Header>
                 <Accordion.Body>
-                  <RichText value={deet.value} />
+                  <RichText text={deet.value} />
                 </Accordion.Body>
               </Accordion.Item>
           ))}
