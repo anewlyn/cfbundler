@@ -37,6 +37,9 @@ function List({child}) {
 }
 
 export default function RichText({text}) {
+    useEffect(() => {
+        text.children.map(item => console.log('text item', item))
+    }, [])
     return (<>
         {text.children.map(item => (<>
             {item.type === 'paragraph' && <Paragraph child={item.children} />}
