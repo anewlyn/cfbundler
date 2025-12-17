@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 function Paragraph({child}) {
     useEffect(() => {
-        console.log('\n\n paragraph child', child.children?.map((grandchild, i) => grandchild.value))
+        console.log('text paragraph child', child)
     }, [])
     return (<p>
         {child.children?.map(grandchild => (
@@ -19,7 +19,7 @@ function Paragraph({child}) {
 
 function List({child}) {
     useEffect(() => {
-        console.log('\n\n list child', child.children?.map((grandchild, i) => grandchild.value))
+        console.log('text list child', child)
     }, [])
     return (<ul>
         {child.children?.map((grandchild, i) => (
@@ -38,12 +38,13 @@ function List({child}) {
 
 export default function RichText({text}) {
     useEffect(() => {
+        console.log('\n\n text', text)
         text.children.map(item => console.log('text item', item))
     }, [])
     return (<>
         {text.children.map(item => (<>
-            {item.type === 'paragraph' && <Paragraph child={item.children} />}
-            {item.type === 'list' && <List child={item.children} />}
+            {item.type === 'paragraph' && <Paragraph child={item} />}
+            {item.type === 'list' && <List child={item} />}
         </>))}
     </>)
 }
