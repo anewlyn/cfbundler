@@ -125,7 +125,7 @@ const ModalContent = ({
 
       </div>
     </Modal.Body>
-    <Modal.Footer style={{ backgroundColor: customProduct.colors[0], borderTop: `1px solid ${customProduct.colors[2]}` }}>
+    <Modal.Footer style={{ backgroundColor: customProduct.colors[1], borderTop: `1px solid ${customProduct.colors[2]}` }}>
         <button className='btn btn-icon btn-white py-0' onClick={handleClose}>
             <i className="material-icons">close</i>
         </button>

@@ -667,7 +667,7 @@ p {
 }
 
 .modal .accordion-header {
-  font-size: 1em;
+  font-size: 1.125em;
 }
 .modal .accordion-button {
   font-size: 1em;
@@ -678,7 +678,8 @@ p {
 }
 .modal .accordion-button:not(.collapsed) {
   color: #000;
-  background-color: var(--color2);
+  background-color: var(--color1);
+  box-shadow: none;
 }
 
 .modal .accordion-body {
