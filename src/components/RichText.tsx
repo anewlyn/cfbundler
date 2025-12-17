@@ -31,9 +31,9 @@ function List(child) {
 }
 
 export default function RichText(text: any) {
-    console.log('\n\n text', text)
+    console.log('\n\n text', text.text)
     useEffect(() => {
-        text.children.map(child => console.log('child', child))
+        text.text.children.map(child => console.log('child', child))
     }, [])
 
     return(<p>asodk</p>)
