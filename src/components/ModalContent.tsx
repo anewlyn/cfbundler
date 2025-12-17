@@ -10,6 +10,7 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
 import ResponsiveImage from './ResponsiveImage';
+import RichText from './RichText';
 import { Accordion, Modal } from 'react-bootstrap';
 import useEmblaCarousel from 'embla-carousel-react';
 
@@ -108,52 +109,15 @@ const ModalContent = ({
         )}
 
         <Accordion flush>
-          <Accordion.Item eventKey='0'>
-            <Accordion.Header>How You'll Feel</Accordion.Header>
-            <Accordion.Body>
-              {customProduct.feels?.children?.map(child => {
-                if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
-                  <p key={i}>{ grandchild.value }</p>
-                ))
-                if(child.type === 'list') return (<ul>
-                  {child.children?.map((grandchild, i) => (
-                    <li>
-                      {grandchild.children?.map(item => 
-                          item.bold 
-                            ? <b>{item.value}</b>
-                            : item.italic
-                              ? <i>{item.value}</i>
-                              : <span>{item.value}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>)
-              })}
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey='1'>
-            <Accordion.Header>Ingredients</Accordion.Header>
-            <Accordion.Body>
-              {customProduct?.ingredients?.children.map(child => {
-                if(child.type === 'paragraph') return child.children.map((grandchild, i) => (
-                  <p key={i}>{ grandchild.value }</p>
-                ))
-                if(child.type === 'list') return child.children.map((grandchild, i) => (
-                  <ul>
-                    {grandchild.children.map(item => (
-                      <li>{item.bold 
-                        ? <b>{item.value}</b>
-                        : item.italic
-                          ? <i>{item.value}</i>
-                          : <span>{item.value}</span>
-                      }
-                      </li>
-                    ))}
-                  </ul>
-                ))
-              })}
-            </Accordion.Body>
-          </Accordion.Item>
+          {customProduct.details.map((deet, i) => (
+            deet.value.length && 
+              <Accordion.Item eventKey={i}>
+                <Accordion.Header>{ deet.title }</Accordion.Header>
+                <Accordion.Body>
+                  <RichText value={deet.value} />
+                </Accordion.Body>
+              </Accordion.Item>
+          ))}
         </Accordion>
 
       </div>

@@ -24,10 +24,23 @@ query getBundlerProduct($id: ID!) {
     colors: metafield(namespace:"custom", key:"scheme") {
       hex: jsonValue
     }
+    feels: metafield(namespace:"custom", key:"feels") {
+      jsonValue
+    }
     ingredients: metafield(namespace:"custom", key:"ingredients") {
       jsonValue
     }
-    feels: metafield(namespace:"custom", key:"feels") {
+    nutritional_facts: metafield(namespace:"custom", key:"nutritional_facts") {
+    	reference {
+        __typename
+        ... on MediaImage {
+          image {
+            url
+          }
+        }
+      }
+    }
+    legal: metafield(namespace:"custom", key:"legal") {
       jsonValue
     }
     variants(first: 10) {
@@ -164,8 +177,33 @@ async function getCustomProductData(ids: string) {
       productId: Number(idArray[i]),
       title: product.title.value,
       colors: product.colors.hex,
-      feels: product.feels?.jsonValue ?? null,
-      ingredients: product.ingredients?.jsonValue ?? null,
+      details: [
+        {
+          type: 'feels', 
+          title: 'How You\'ll Feel', 
+          value: product.feels?.jsonValue ?? null,
+        },
+        {
+          type: 'fun_fact', 
+          title: product.fun_fact_title?.jsonValue ?? null,
+          value: product.fun_fact?.jsonValue ?? null,
+        },
+        {
+          type: 'ingredients', 
+          title: 'Ingredients', 
+          value: product.ingredients?.jsonValue ?? null,
+        },
+        {
+          type: 'nutritional_facts', 
+          title: 'Nutritional Facts', 
+          value: product.nutritional_facts?.file?.image?.url ?? null,
+        },
+        {
+          type: 'legal', 
+          title: 'FDA Disclaimer & Legal', 
+          value: product.legal.jsonValue ?? null,
+        }
+      ],
       tagline: product.tagline?.value ?? null,
       preferTagline: product.preferTagline?.jsonValue ?? false,
       productType: product.productType,
