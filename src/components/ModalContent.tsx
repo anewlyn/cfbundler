@@ -100,17 +100,21 @@ const ModalContent = ({
         <p>{ renderProductPrice() }</p>
         <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
-        {body_html_sanitized && (
-          <div
-            className="mt-3"
-            dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
-          />
-        )}
-
-        <Accordion flush>
+        <Accordion flush defaultActiveKey='0'>
+          <Accordion.Item eventKey='0'>
+            <Accordion.Header>Description</Accordion.Header>
+            <Accordion.Body>
+              {body_html_sanitized && (
+                <div
+                  className="mt-3"
+                  dangerouslySetInnerHTML={{ __html: body_html_sanitized }}
+                />
+              )}
+            </Accordion.Body>
+          </Accordion.Item>
           {customProduct.details.map((deet, i) => (
             deet.value && 
-              <Accordion.Item eventKey={i}>
+              <Accordion.Item eventKey={i+1}>
                 <Accordion.Header>{ deet.title }</Accordion.Header>
                 <Accordion.Body>
                   <RichText data={ deet.value } />
