@@ -1,4 +1,9 @@
+import { useEffect } from "react"
+
 function Paragraph({child}) {
+    useEffect(() => {
+        console.log('\n\n paragraph child', child.children?.map((grandchild, i) => grandchild.value))
+    }, [])
     return (<p>
         {child.children?.map(grandchild => (
             grandchild.children?.map(item => 
@@ -13,6 +18,9 @@ function Paragraph({child}) {
 }
 
 function List({child}) {
+    useEffect(() => {
+        console.log('\n\n list child', child.children?.map((grandchild, i) => grandchild.value))
+    }, [])
     return (<ul>
         {child.children?.map((grandchild, i) => (
             <li key={i}>
