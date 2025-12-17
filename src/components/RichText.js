@@ -18,11 +18,7 @@ function List({child}) {
         {child.children?.map((grandchild, i) => (
             <li key={i}>
                 {grandchild.children?.map(item => 
-                    item.bold 
-                    ? <b>{item.value}</b>
-                    : item.italic
-                        ? <i>{item.value}</i>
-                        : <span>{item.value}</span>
+                    {item.type === 'text' && <Inline item={item} />}
                 )}
             </li>
         ))}
