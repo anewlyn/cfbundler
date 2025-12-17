@@ -666,9 +666,11 @@ p {
   background-color: transparent;
 }
 
-.modal .accordion-header {}
+.modal .accordion-header {
+  font-size: 1em;
+}
 .modal .accordion-button {
-  font-size: 16px;
+  font-size: 1em;
   font-weight: 500;
   color: #000;
   padding: 8px;
@@ -680,7 +682,8 @@ p {
 }
 
 .modal .accordion-body {
-  padding: 8px;
+  font-size: 1em;
+  padding: 16px 8px;
 }
 
 // UTILITIES
