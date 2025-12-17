@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 function Paragraph(child) {
     return (<p>
         {child.children?.map(grandchild => (
@@ -29,10 +31,10 @@ function List(child) {
 }
 
 export default function RichText(text: any) {
-    return(
-        text.children.map(child => {
-            child.type === 'paragraph' && <Paragraph child />
-            child.type === 'list' && <List child />
-        })
-    )
+    console.log('\n\n text', text)
+    useEffect(() => {
+        text.children.map(child => console.log('child', child))
+    }, [])
+
+    return(<p>asodk</p>)
 }
