@@ -110,7 +110,7 @@ const ModalContent = ({
 
         <Accordion flush>
           {customProduct.details.map((deet, i) => (
-            deet.value.length && 
+            deet.value && 
               <Accordion.Item eventKey={i}>
                 <Accordion.Header>{ deet.title }</Accordion.Header>
                 <Accordion.Body>
