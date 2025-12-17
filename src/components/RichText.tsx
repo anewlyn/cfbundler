@@ -37,6 +37,8 @@ function List({child}) {
 }
 
 export default function RichText({text}) {
-    if (text.type === 'paragraph') return <Paragraph child={text.children} />
-    if (text.type === 'list') return <List child={text.children} />
+    text.children.map(item => {
+        if(item.type === 'paragraph') return <Paragraph child={text.children} />
+        if(item.type === 'list') return <List child={text.children} />
+    })
 }
