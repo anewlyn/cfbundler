@@ -101,7 +101,7 @@ const ModalContent = ({
         <p className="product-info">
           {customProduct.preferTagline ? customProduct.tagline : title}
         </p>
-        <p>{ renderProductPrice() }</p>
+        <p className='mb-0'>{ renderProductPrice() }</p>
         <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
         <Accordion flush defaultActiveKey='0'>
