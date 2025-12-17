@@ -39,8 +39,8 @@ function List({child}) {
 export default function RichText({text}) {
     return (<>
         {text.children.map(item => (<>
-            {item.type === 'paragraph' && <Paragraph child={text.children} />}
-            {item.type === 'list' && <List child={text.children} />}
+            {item.type === 'paragraph' && <Paragraph child={item.children} />}
+            {item.type === 'list' && <List child={item.children} />}
         </>))}
     </>)
 }
