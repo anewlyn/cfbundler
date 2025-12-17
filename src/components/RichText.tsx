@@ -1,6 +1,4 @@
-import { useEffect } from "react"
-
-function Paragraph(child) {
+function Paragraph({child}) {
     return (<p>
         {child.children?.map(grandchild => (
             grandchild.children?.map(item => 
@@ -14,7 +12,7 @@ function Paragraph(child) {
     </p>)
 }
 
-function List(child) {
+function List({child}) {
     return (<ul>
         {child.children?.map((grandchild, i) => (
             <li key={i}>
