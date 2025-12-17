@@ -1,5 +1,5 @@
 function Inline({item}) {
-    return item.bold ? <b>{item.value}</b> : item.italic ? <i>{item.value}</i> : <>{item.value}</>
+    return item.bold ? <b>{item.value}</b> : item.italic ? <i>{item.value}</i> : {item.value}
 }
 
 function Paragraph({child}) {
@@ -18,7 +18,11 @@ function List({child}) {
         {child.children?.map((grandchild, i) => (
             <li key={i}>
                 {grandchild.children?.map(item => 
-                    {item.type === 'text' && <Inline item={item} />}
+                    item.bold 
+                    ? <b>{item.value}</b>
+                    : item.italic
+                        ? <i>{item.value}</i>
+                        : <span>{item.value}</span>
                 )}
             </li>
         ))}
@@ -28,8 +32,12 @@ function List({child}) {
 export default function RichText({text}) {
     return (<>
         {text.children.map((item, i) => (<>
-            {item.type === 'paragraph' && <Paragraph key={i} child={item} />}
-            {item.type === 'list' && <List key={i} child={item} />}
+            {item.type === 'paragraph' 
+                ? <Paragraph key={i} child={item} />
+                : item.type === 'list'
+                    ? <List key={i} child={item} />
+                    : <Inline item={item} />
+            }
         </>))}
     </>)
 }
