@@ -437,7 +437,7 @@ p {
   aspect-ratio: 3/4;
   padding: 8px;
   margin-left: var(--slide-spacing);
-  background-color: var(--color1);
+  background-color: var(--color2);
   border-radius: 4px;
   overflow: hidden;
   transform: translate3d(0, 0, 0);
@@ -685,7 +685,7 @@ p {
 
 .modal .accordion-body {
   font-size: 1em;
-  padding: 16px 8px;
+  padding: 8px;
 }
 
 // UTILITIES
