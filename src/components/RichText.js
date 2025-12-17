@@ -1,5 +1,5 @@
 function Inline({item}) {
-    return item.bold ? <b>{item.value}</b> : item.italic ? <i>{item.value}</i> : {item.value}
+    return item.bold ? <b>{item.value}</b> : item.italic ? <i>{item.value}</i> : <>{item.value}</>
 }
 
 function Paragraph({child}) {
