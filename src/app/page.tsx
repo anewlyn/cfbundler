@@ -30,6 +30,12 @@ query getBundlerProduct($id: ID!) {
     ingredients: metafield(namespace:"custom", key:"ingredients") {
       jsonValue
     }
+    fun_fact_title: metafield(namespace:"custom", key:"fun_fact_title") {
+      value
+    }
+    fun_fact: metafield(namespace:"custom", key:"fun_fact") {
+      jsonValue
+    }
     nutritional_facts: metafield(namespace:"custom", key:"nutritional_facts") {
     	reference {
         __typename
@@ -185,7 +191,7 @@ async function getCustomProductData(ids: string) {
         },
         {
           type: 'fun_fact', 
-          title: product.fun_fact_title?.jsonValue ?? null,
+          title: product.fun_fact_title?.value ?? null,
           value: product.fun_fact?.jsonValue ?? null,
         },
         {
