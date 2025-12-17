@@ -30,7 +30,6 @@
   },
   "prettier": "@assemble-inc/prettier-config-asm",
   "dependencies": {
-    "@shopify/hydrogen-react": "^2025.7.0",
     "bootstrap": "^5.3.8",
     "classnames": "^2.5.1",
     "embla-carousel-react": "^8.1.3",
