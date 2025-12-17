@@ -1,9 +1,9 @@
 import {createElement, Fragment, type ReactNode, useMemo} from 'react';
-import type {RichTextASTNode} from './RichText.types.js';
+import type {RichTextASTNode} from './RichText.types';
 import {
   type CustomComponents,
   RichTextComponents,
-} from './RichText.components.js';
+} from './RichText.components';
 
 export interface RichTextPropsBase<ComponentGeneric extends React.ElementType> {
   /** An HTML tag or React Component to be rendered as the base element wrapper. The default is `div`. */
