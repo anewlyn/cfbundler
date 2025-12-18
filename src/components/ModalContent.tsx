@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
-import { kiro_bold_400 } from '@/app/ui/fonts';
+import { kiro_bold_400, kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { currencyFormatter, getDiscountValue } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
@@ -97,7 +97,7 @@ const ModalContent = ({
         </div>
       </div>
       <div className="cf-modal-content p-3 p-md-4">
-        <h2 className={`${kiro_bold_400.className} product-title`}>{customProduct.title}</h2>
+        <h2 className={`${kiro_extra_bold_700.className} product-title`}>{customProduct.title}</h2>
         <p className="product-info">
           {customProduct.preferTagline ? customProduct.tagline : title}
         </p>

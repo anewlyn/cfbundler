@@ -688,6 +688,10 @@ p {
   padding: 8px;
 }
 
+.modal .modal-footer .btn-icon:hover {
+  background-color: var(--color1);
+}
+
 // UTILITIES
 
 .text-sm {

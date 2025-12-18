@@ -58,7 +58,7 @@ export const Bundle = (customProductData) => {
                   className={`btn ${filter === type ? 'btn-white active' : 'btn-fizz'}`}
                   onClick={() => handleFilter(type)}
                 >
-                  { type } 
+                  { type.match(/\b\w+s\b/g)?.length ? type : type + 's' } 
                 </button>
               </li>
             ))}
