@@ -176,11 +176,11 @@ async function getCustomProductData(ids: string) {
       id: Number(node.id.split('/').pop()), 
       image: node.image?.url ?? product.image1.reference.image.url,
       images: [
-        { imageURL: node.image1?.reference.image.url || null, altText: '' },
-        { imageURL: node.image2?.reference.image.url || null, altText: '' },
-        { imageURL: node.image3?.reference.image.url || null, altText: '' },
-        { imageURL: node.image4?.reference.image.url || null, altText: '' },
-        { imageURL: node.image5?.reference.image.url || null, altText: '' },
+        { imageURL: node.image1?.reference.image.url || product.image1?.reference.image.url || null, altText: '' },
+        { imageURL: node.image2?.reference.image.url || product.image2?.reference.image.url || null, altText: '' },
+        { imageURL: node.image3?.reference.image.url || product.image3?.reference.image.url || null, altText: '' },
+        { imageURL: node.image4?.reference.image.url || product.image4?.reference.image.url || null, altText: '' },
+        { imageURL: node.image5?.reference.image.url || product.image5?.reference.image.url || null, altText: '' },
       ],
     }))
     productData.push({

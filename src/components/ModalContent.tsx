@@ -70,6 +70,7 @@ const ModalContent = ({
   });
 
   const customVariant = customProduct.variants.find(x => x.id === shopifyId)
+  console.log('customVariant', customVariant)
 
   return (<>
     <Modal.Body 
