@@ -128,18 +128,27 @@ const ModalContent = ({
 
       </div>
     </Modal.Body>
-    <Modal.Footer style={{ backgroundColor: customProduct.colors[1], borderTop: `1px solid ${customProduct.colors[2]}` }}>
-        <button className='btn btn-icon btn-white py-0' onClick={handleClose}>
-            <i className="material-icons">close</i>
-        </button>
-        <AddToButton
-            className="btn btn-black w-auto flex-grow-1"
-            orderQty={cartQty}
-            maxQty={maxValue > 0 ? maxValue : 1000}
-            outOfStock={outOfStock}
-            setQty={handleProductQtyChange}
-            text={'+ ADD TO SUBSCRIPTION'}
-        />
+    <Modal.Footer 
+      style={{
+        '--color1': customProduct.colors[0],
+        '--color2': customProduct.colors[1],
+        '--color3': customProduct.colors[2],
+        '--color4': customProduct.colors[3],
+        backgroundColor: customProduct.colors[1], 
+        borderTop: `1px solid ${customProduct.colors[2]}` 
+      } as React.CSSProperties}
+    >
+      <button className='btn btn-icon btn-white py-0' onClick={handleClose}>
+          <i className="material-icons">close</i>
+      </button>
+      <AddToButton
+          className="btn btn-black w-auto flex-grow-1"
+          orderQty={cartQty}
+          maxQty={maxValue > 0 ? maxValue : 1000}
+          outOfStock={outOfStock}
+          setQty={handleProductQtyChange}
+          text={'+ ADD TO SUBSCRIPTION'}
+      />
     </Modal.Footer>
   </>)
 }
