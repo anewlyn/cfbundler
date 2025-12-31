@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Script from 'next/script';
 import '../styles/globals.scss';
 import { inter } from '@/app/ui/fonts';
 
@@ -47,25 +48,25 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.className} antialiased`}>
       <head>
         <link rel="icon" href="https://bundler.cyclingfrog.com/favicon.png" sizes="any" />
+        <meta name="viewport" content="width=device-width" initial-scale="1" />
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+          // @ts-ignore - NextJS requires this unsupported attribute
+          precedence="default"
+        />
       </head>
-      <meta name="viewport" content="width=device-width" initial-scale="1" />
-      <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet"
-        // @ts-ignore - NextJS requires this unsupported attribute
-        precedence="default"
-      />
       <body>
         <section>{children}</section>
-        <script
+        <Script
           id="usntA42start"
           src="https://a42cdn.usablenet.com/a42/cyclingfrog/default/prod/cs-start?color=dark&size=default&position=bottom-left&breakpoint=600&mobile-color=dark&mobile-position=bottom-left&mobile-size=small"
-          async
           data-rapid="true"
-        ></script>
-        <script
-          async
+          strategy="afterInteractive"
+        />
+        <Script
           src={`//loox.io/widget/loox.js?shop=${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`}
+          strategy="afterInteractive"
         />
       </body>
     </html>
