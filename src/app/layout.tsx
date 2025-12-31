@@ -47,12 +47,6 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.className} antialiased`}>
       <head>
         <link rel="icon" href="https://bundler.cyclingfrog.com/favicon.png" sizes="any" />
-        <script
-      id="usntA42start"
-      src="https://a42cdn.usablenet.com/a42/cyclingfrog/default/prod/cs-start?color=dark&size=default&position=bottom-left&breakpoint=600&mobile-color=dark&mobile-position=bottom-left&mobile-size=small"
-      async
-      data-rapid="true"
-    ></script>
       </head>
       <meta name="viewport" content="width=device-width" initial-scale="1" />
       <link
@@ -63,6 +57,12 @@ export default async function RootLayout({
       />
       <body>
         <section>{children}</section>
+        <script
+          id="usntA42start"
+          src="https://a42cdn.usablenet.com/a42/cyclingfrog/default/prod/cs-start?color=dark&size=default&position=bottom-left&breakpoint=600&mobile-color=dark&mobile-position=bottom-left&mobile-size=small"
+          async
+          data-rapid="true"
+        ></script>
         <script
           async
           src={`//loox.io/widget/loox.js?shop=${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`}
