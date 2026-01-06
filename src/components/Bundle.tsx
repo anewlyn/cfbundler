@@ -10,10 +10,11 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { Modal } from 'react-bootstrap';
 import ModalContent from './ModalContent';
+import BenefitTierProgressBar from './BenefitTierProgressBar';
 
 export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
-  const { products } = useLoopContext()
+  const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false);
 
@@ -43,6 +44,7 @@ export const Bundle = (customProductData) => {
           <p>
             Bundle more, save more.
           </p>
+          <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
           <ul className='product-filters'>
             <li>
               <button
