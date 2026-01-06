@@ -11,10 +11,11 @@ import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { Modal } from 'react-bootstrap';
 import ModalContent from './ModalContent';
 import BenefitTierProgressBar from './BenefitTierProgressBar';
+import { currencyFormatter } from '@/helpers/cartHelpers';
 
 export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
-  const { products, benefitTiers, currentOrderValue } = useLoopContext()
+  const { products, bundle, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false);
 
@@ -49,7 +50,7 @@ export const Bundle = (customProductData) => {
             Bundle more, save more.
           </p>
           <div className="hero-progress-par">
-            {benefitTiers.map(tier => <p>{tier.subtitle}, {tier.value} - {currentOrderValue}</p>)}
+            {benefitTiers.map(tier => <p>{tier.subtitle}, {bundle.currencyCode} {currencyFormatter(tier.value, bundle.currencyCode, 0)} - {currencyFormatter(currentOrderValue, bundle.currencyCode, 0)}</p>)}
           </div>
           <ul className='product-filters'>
             <li>
