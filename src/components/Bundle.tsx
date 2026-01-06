@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
@@ -32,6 +32,10 @@ export const Bundle = (customProductData) => {
   const allProductTypes: Set<any> = new Set(customProductData.customProductData.map(product => product.productType))
   const productTypes: Array<string> = Array.from(allProductTypes)
 
+  useEffect(() => {
+    console.log('\n\n\n benefitTiers', benefitTiers)
+  }, [])
+
   return (
     <div className="bundler-page">
       <Header />
@@ -45,9 +49,7 @@ export const Bundle = (customProductData) => {
             Bundle more, save more.
           </p>
           <div className="hero-progress-par">
-            {benefitTiers.map(tier => {
-              {tier.subtitle}
-            })}
+            {benefitTiers.map(tier => <p>{tier.subtitle}, {tier.value} - {currentOrderValue}</p>)}
           </div>
           <ul className='product-filters'>
             <li>
