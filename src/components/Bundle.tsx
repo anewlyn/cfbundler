@@ -44,8 +44,10 @@ export const Bundle = (customProductData) => {
           <p>
             Bundle more, save more.
           </p>
-          <div className="header-progress-bar">
-            <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
+          <div className="hero-progress-par">
+            {benefitTiers.map(tier => {
+              {tier.subtitle}
+            })}
           </div>
           <ul className='product-filters'>
             <li>
