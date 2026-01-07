@@ -247,6 +247,10 @@ p {
 
 // HEADER
 
+.hero-progress-bar {
+  background: 
+}
+
 .cf-bundle-progress {
   z-index: 1200;
   position: fixed;
@@ -329,6 +333,60 @@ p {
       }
     }
   }
+}
+
+.cf-tiers-wrapper {
+  z-index: 900;
+  top: 0;
+  position: sticky;
+  width: 100%;
+}
+.cf-tiers-container {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  width: calc(100% - 8px);
+
+}
+.cf-tiers-tier {
+  position: relative;
+  flex: 0 0 calc(33% - 4px);
+}
+.cf-tiers-tier-progress {
+  z-index: 910;
+  position: absolute;
+  width: 50%; height: 100%;
+  overflow: hidden;
+}
+.cf-tiers-tier-progress-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color1);
+}
+.cf-tiers-tier-progress-fill {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: #000;
+}
+
+.cf-tiers-tier-default {
+  z-index: 900;
+  position: relative;
+}
+.cf-tiers-tier-default-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #000;
+}
+.cf-tiers-tier-default-fill {
+  background-color: var(--color1);
 }
 
 
