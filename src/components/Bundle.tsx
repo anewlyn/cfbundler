@@ -52,47 +52,12 @@ export const Bundle = (customProductData) => {
           <div className="cf-tiers-wrapper">
             <div className="cf-tiers-container">
               <div className="cf-tiers-tier">
-                <div className="cf-tiers-tier-progress">
-                  <div className="cf-tiers-tier-progress-text">
-                    10% off at $59
-                  </div>
-                  <div className="cf-tiers-tier-progress-fill"></div>
+                <div className="cf-tiers-tier-progress-text">
+                  10% off at $59
                 </div>
-                <div className="cf-tiers-tier-default">
-                  <div className="cf-tiers-tier-default-text">
-                    10% off at $59
-                  </div>
-                  <div className="cf-tiers-tier-default-fill"></div>
-                </div>
-              </div>
-              {/**********/}
-              <div className="cf-tiers-tier">
-                <div className="cf-tiers-tier-progress">
-                  <div className="cf-tiers-tier-progress-text">
-                    15% off at $99
-                  </div>
-                  <div className="cf-tiers-tier-progress-fill"></div>
-                </div>
-                <div className="cf-tiers-tier-default">
-                  <div className="cf-tiers-tier-default-text">
-                    15% off at $99
-                  </div>
-                  <div className="cf-tiers-tier-default-fill"></div>
-                </div>
-              </div>
-              {/**********/}
-              <div className="cf-tiers-tier">
-                <div className="cf-tiers-tier-progress">
-                  <div className="cf-tiers-tier-progress-text">
-                    20% off at $119
-                  </div>
-                  <div className="cf-tiers-tier-progress-fill"></div>
-                </div>
-                <div className="cf-tiers-tier-default">
-                  <div className="cf-tiers-tier-default-text">
-                    20% off at $119
-                  </div>
-                  <div className="cf-tiers-tier-default-fill"></div>
+                <div className="cf-tiers-tier-progress-fill"></div>
+                <div className="cf-tiers-tier-default-text">
+                  10% off at $59
                 </div>
               </div>
               {/**********/}
