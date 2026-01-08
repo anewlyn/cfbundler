@@ -341,6 +341,9 @@ p {
   margin: 0 auto;
 }
 .cf-tiers-container {
+  left: 0%;
+  transform: translateX(0%);
+
   position: relative;
   display: flex;
   gap: 4px;
@@ -350,12 +353,16 @@ p {
   padding: 8px;
   border-radius: 5px;
   box-shadow: 0 0 16px #00000011;
+  transition: all 500ms ease-in-out;
 }
 .cf-tiers-wrapper.stuck {
   max-width: 100%;
   padding: 4px 0;
 }
 .cf-tiers-wrapper.stuck .cf-tiers-container {
+  left: 50%;
+  transform: translateX(-50%);
+
   width: 100%;
   padding: 4px;
   border-radius: 0;
