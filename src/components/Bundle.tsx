@@ -21,8 +21,13 @@ export const Bundle = (customProductData) => {
   const tierProgress = useRef(null)
 
   useEffect(() => {
-    console.log('tierProgress el', tierProgress)
-  }, [tierProgress])
+    function updateScroll() {
+      setScrollY(window.pageYOffset)
+      console.log('tierProgress el', tierProgress)
+    }
+    window.addEventListener('scroll', updateScroll)
+    return window.removeEventListener('scroll', updateScroll)
+  }, [])
 
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
