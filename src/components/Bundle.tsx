@@ -37,6 +37,10 @@ export const Bundle = (customProductData) => {
     console.log('\n\n\n benefitTiers', benefitTiers)
   }, [])
 
+  function calcTier(value) {
+    
+  }
+
   return (
     <div className="bundler-page">
       <Header />
@@ -51,16 +55,22 @@ export const Bundle = (customProductData) => {
           </p>
           <div className="cf-tiers-wrapper">
             <div className="cf-tiers-container">
-              <div className="cf-tiers-tier">
-                <div className="cf-tiers-tier-progress-text">
-                  10% off at $59
+              {benefitTiers.map(tier => 
+                <div 
+                  className="cf-tiers-tier"
+                  style={{
+                    '--cf-tier-progress': Math.ceil(currentOrderValue / tier.value) * 100 + '%',
+                  } as CSSProperties}
+                >
+                  <div className="cf-tiers-tier-progress-text">
+                    {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
+                  </div>
+                  <div className="cf-tiers-tier-progress-fill"></div>
+                  <div className="cf-tiers-tier-default-text">
+                    {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
+                  </div>
                 </div>
-                <div className="cf-tiers-tier-progress-fill"></div>
-                <div className="cf-tiers-tier-default-text">
-                  10% off at $59
-                </div>
-              </div>
-              {/**********/}
+              )}
             </div>
           </div>
           {benefitTiers.map(tier => <p>{tier.subtitle}, {currencyFormatter(tier.value, 'USD', 0)} - {currentOrderValue}</p>)}
