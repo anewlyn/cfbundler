@@ -17,16 +17,15 @@ export const Bundle = (customProductData) => {
   const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [stuck, setStuck] = useState(false)
   const tierProgress = useRef(null)
 
   useEffect(() => {
     function updateScroll() {
-      setScrollY(window.pageYOffset)
-      console.log('tierProgress el', tierProgress, tierProgress.current)
+      console.log('tierProgress el', tierProgress.current)
     }
     window.addEventListener('scroll', updateScroll)
-    return window.removeEventListener('scroll', updateScroll)
+    return () => window.removeEventListener('scroll', updateScroll)
   }, [])
 
   const handleClose = () => setShow(false);
