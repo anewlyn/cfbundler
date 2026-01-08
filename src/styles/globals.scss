@@ -370,7 +370,8 @@ p {
 .cf-tiers-tier-default-text,
 .cf-tiers-tier-progress-text {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -380,9 +381,7 @@ p {
   text-align: center;
 }
 @media (max-width: 575.9px) {
-  .cf-tiers-tier-default-text,
   .cf-tiers-tier-default-text span,
-  .cf-tiers-tier-progress-text,
   .cf-tiers-tier-progress-text span {
     font-size: 12px;
   }
