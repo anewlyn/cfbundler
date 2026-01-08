@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, CSSProperties } from 'react';
+import { useState, useEffect, CSSProperties, useRef } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
@@ -16,7 +16,12 @@ export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
   const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
+  const tiers = useRef()
+
+  useEffect(() => {
+    console.log('tiers el', tiers)
+  }, [tiers])
 
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
@@ -36,9 +41,7 @@ export const Bundle = (customProductData) => {
     console.log('\n\n\n benefitTiers', benefitTiers)
   }, [])
 
-  function calcTier(value) {
-    
-  }
+  
 
   return (
     <div className="bundler-page">
@@ -54,7 +57,7 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div className="cf-tiers-wrapper">
+      <div className="cf-tiers-wrapper" ref="tiers">
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
             <div 

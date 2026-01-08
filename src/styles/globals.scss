@@ -344,9 +344,22 @@ p {
   position: relative;
   display: flex;
   gap: 4px;
-  width: calc(100% - 8px);
-
+  width: max-content;
+  background: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 0 0 16px #00000011;
 }
+.cf-tiers-wrapper.stuck {
+  max-width: 100%;
+}
+.cf-tiers-wrapper.stuck .cf-tiers-container {
+  width: 100%;
+  padding: 4px;
+  border-radius: 0;
+  transition: all 500ms ease-in-out;
+}
+
 .cf-tiers-tier {
   --cf-tier-progress: 0%;
   position: relative;
