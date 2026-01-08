@@ -21,10 +21,7 @@ export const Bundle = (customProductData) => {
   const tierProgress = useRef(null)
 
   useEffect(() => {
-    function updateScroll() {
-      console.log('tierProgress el', tierProgress.current)
-      setStuck(tierProgress.current.offsetTop <= window.pageYOffset)
-    }
+    const updateScroll = () => tierProgress.current.offsetTop <= window.pageYOffset ? setStuck(true) : setStuck(false)
     window.addEventListener('scroll', updateScroll)
     return () => window.removeEventListener('scroll', updateScroll)
   }, [])
