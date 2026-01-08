@@ -379,6 +379,12 @@ p {
   line-height: 1.25;
   text-align: center;
 }
+@media (max-width: 575.9px) {
+  .cf-tiers-tier-default-text,
+  .cf-tiers-tier-progress-text {
+    font-size: 12px;
+  }
+}
 .cf-tiers-tier-progress-text {
   z-index: 920;
   position: absolute;
