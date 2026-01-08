@@ -42,7 +42,7 @@ export const Bundle = (customProductData) => {
             Subscription
           </h1>
           <p>
-            Bundle more, save more.
+            Bundle more, save more. Subscriptions require a $59 minimum order.
           </p>
         </div>
       </div>
@@ -57,14 +57,14 @@ export const Bundle = (customProductData) => {
             >
               <div className="cf-tiers-tier-progress-text">
                 {currentOrderValue >= tier.value
-                  ? <><i className="material-icons check-icon">check</i> <span>{tier.subtitle}</span></>
+                  ? <><i className="material-icons check-icon">check</i> <span>{tier.subtitle.split('Get')[1]}</span></>
                   : <><span>{tier.subtitle.split('Get')[1]}</span> <span>at {currencyFormatter(tier.value, 'USD', 0)}</span></>
                 }
               </div>
               <div className="cf-tiers-tier-progress-fill"></div>
               <div className="cf-tiers-tier-default-text">
                 {currentOrderValue >= tier.value
-                  ? <><i className="material-icons check-icon">check</i> <span>{tier.subtitle}</span></>
+                  ? <><i className="material-icons check-icon">check</i> <span>{tier.subtitle.split('Get')[1]}</span></>
                   : <><span>{tier.subtitle.split('Get')[1]}</span> <span>at {currencyFormatter(tier.value, 'USD', 0)}</span></>
                 }
               </div>

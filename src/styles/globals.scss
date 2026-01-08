@@ -338,20 +338,17 @@ p {
   display: flex;
   justify-content: center;
   max-width: 1400px;
-  padding: 0 1.5em;
+  padding: 4px 1.5em;
   margin: 0 auto;
 }
 .cf-tiers-container {
-  left: 0%;
-  transform: translateX(0%);
-
   position: relative;
   display: flex;
   gap: 4px;
   width: 100%;
   max-width: 640px;
   background: #fff;
-  padding: 8px;
+  padding: 4px;
   border-radius: 5px;
   box-shadow: 0 0 16px #00000011;
 }
@@ -360,8 +357,7 @@ p {
 .cf-tiers-tier {
   --cf-tier-progress: 0%;
   position: relative;
-  flex: 0 0 calc(33% - 2px);
-  padding: 8px;
+  flex: 1 1 33%;
   border-radius: 4px;
   background: #FEE0DB;
   overflow: hidden;
@@ -370,12 +366,13 @@ p {
 .cf-tiers-tier-default-text,
 .cf-tiers-tier-progress-text {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 8px;
   text-align: center;
 }
 .cf-tiers-tier-default-text i,
@@ -383,9 +380,13 @@ p {
 .cf-tiers-tier-progress-text i,
 .cf-tiers-tier-progress-text span {
   font-size: 16px;
+  font-weight: 600;
   line-height: 1.25;
 }
 @media (max-width: 575.9px) {
+  .cf-tiers-wrapper {
+    padding: 0 1.5em;
+  }
   .cf-tiers-tier-default-text i,
   .cf-tiers-tier-default-text span,
   .cf-tiers-tier-progress-text i,
