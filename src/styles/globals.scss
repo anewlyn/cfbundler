@@ -358,6 +358,7 @@ p {
 .cf-tiers-wrapper.stuck {
   max-width: 100%;
   padding: 4px 0;
+  transition: all 500ms ease-in-out;
 }
 .cf-tiers-wrapper.stuck .cf-tiers-container {
   left: 50%;
