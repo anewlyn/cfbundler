@@ -23,7 +23,7 @@ export const Bundle = (customProductData) => {
   useEffect(() => {
     function updateScroll() {
       setScrollY(window.pageYOffset)
-      console.log('tierProgress el', tierProgress)
+      console.log('tierProgress el', tierProgress, tierProgress.current)
     }
     window.addEventListener('scroll', updateScroll)
     return window.removeEventListener('scroll', updateScroll)
@@ -63,7 +63,7 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div className="cf-tiers-wrapper" ref="tierProgress">
+      <div className="cf-tiers-wrapper" ref={tierProgress}>
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
             <div 
