@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
@@ -59,7 +59,7 @@ export const Bundle = (customProductData) => {
                 <div 
                   className="cf-tiers-tier"
                   style={{
-                    '--cf-tier-progress': Math.ceil(currentOrderValue / tier.value) * 100 + '%',
+                    '--cf-tier-progress': (currentOrderValue / tier.value) * 100 + '%',
                   } as CSSProperties}
                 >
                   <div className="cf-tiers-tier-progress-text">
