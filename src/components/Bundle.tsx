@@ -23,6 +23,7 @@ export const Bundle = (customProductData) => {
   useEffect(() => {
     function updateScroll() {
       console.log('tierProgress el', tierProgress.current)
+      setStuck(tierProgress.current.offsetTop <= window.pageYOffset)
     }
     window.addEventListener('scroll', updateScroll)
     return () => window.removeEventListener('scroll', updateScroll)
@@ -62,7 +63,7 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div className="cf-tiers-wrapper" ref={tierProgress}>
+      <div className={`cf-tiers-wrapper ${stuck ? 'stuck' : ''}`} ref={tierProgress}>
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
             <div 
