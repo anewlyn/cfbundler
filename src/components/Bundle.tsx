@@ -17,24 +17,17 @@ export const Bundle = (customProductData) => {
   const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false)
-  const [scroll, setScroll] = useState(0)
   const [stuck, setStuck] = useState(false)
-  const tierProgress = useRef(null)
+  const anchor = useRef(null)
 
   useEffect(() => {
-    console.log('\n\n\n benefitTiers', benefitTiers)
     const updateScroll = () => {
-      setScroll(window.pageYOffset)
-      console.log('\n\n tier', tierProgress.current.offsetTop, 'window', window.pageYOffset )
+      console.log('\n\n tier', anchor.current.offsetTop, 'window', window.pageYOffset )
+      setStuck(anchor.current.offsetTop <= window.pageYOffset)
     }
-    window.addEventListener('scroll', () => updateScroll())
-    return () => window.removeEventListener('scroll', () => updateScroll())
+    window.addEventListener('scroll', updateScroll)
+    return () => window.removeEventListener('scroll', updateScroll)
   }, [])
-
-  useEffect(() => {
-    console.log('\n\n scroll', scroll)
-    setStuck(tierProgress.current.offsetTop <= scroll)
-  }, [scroll])
 
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
@@ -64,7 +57,8 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div className={`cf-tiers-wrapper ${stuck ? 'stuck' : ''}`} ref={tierProgress}>
+      <div ref={anchor}></div>
+      <div className={`cf-tiers-wrapper ${stuck ? 'stuck' : ''}`}>
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
             <div 
