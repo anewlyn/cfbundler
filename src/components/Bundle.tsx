@@ -58,7 +58,7 @@ export const Bundle = (customProductData) => {
               <div className="cf-tiers-tier-progress-text">
                 {currentOrderValue >= tier.value
                   ? <><i className="material-icons check-icon">check</i> {tier.subtitle}</>
-                  : <>{tier.subtitle}at {currencyFormatter(tier.value, 'USD', 0)}</>
+                  : <>{tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}</>
                 }
               </div>
               <div className="cf-tiers-tier-progress-fill"></div>
