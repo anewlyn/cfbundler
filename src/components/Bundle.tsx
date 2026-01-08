@@ -57,7 +57,7 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div ref={anchor}></div>
+      <div style={{ display: 'block', width: '100%', height: '4px', background: '#000' }} ref={anchor}></div>
       <div className={`cf-tiers-wrapper ${stuck ? 'stuck' : ''}`}>
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
