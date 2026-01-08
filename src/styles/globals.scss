@@ -356,9 +356,7 @@ p {
   transition: all 500ms ease-in-out;
 }
 .cf-tiers-wrapper.stuck {
-  max-width: 100%;
-  padding: 4px 0;
-  transition: all 500ms ease-in-out;
+  
 }
 .cf-tiers-wrapper.stuck .cf-tiers-container {
   left: 50%;
@@ -388,6 +386,7 @@ p {
   align-items: center;
   width: 100%;
   height: 100%;
+  font-size: 16px;
   text-align: center;
 }
 .cf-tiers-tier-progress-text {
@@ -415,6 +414,17 @@ p {
   width: var(--cf-tier-progress); height: 100%;
   background-color: #000;
   transition: width 250ms ease-in-out;
+}
+
+@media (max-width: 575.9px) {
+  .cf-tiers-wrapper.stuck .cf-tiers-container {
+    left: 0%;
+    transform: translateX(0%);
+  }
+  .cf-tiers-tier-default-text,
+  .cf-tiers-tier-progress-text {
+    font-size: 12px;
+  }
 }
 
 // FOOTER
