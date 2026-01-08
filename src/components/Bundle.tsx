@@ -59,7 +59,7 @@ export const Bundle = (customProductData) => {
                 <div 
                   className="cf-tiers-tier"
                   style={{
-                    '--cf-tier-progress':  (currentOrderValue - benefitTiers[index - 1 >= 0 ? index - 1 : 0]) / (tier.value - benefitTiers[index - 1 >= 0 ? index - 1 : 0]) * 100 + '%',
+                    '--cf-tier-progress':  (currentOrderValue - benefitTiers[index-- >= 0 ? index-- : 0].value) / (tier.value - benefitTiers[index-- >= 0 ? index-- : 0].value) * 100 + '%',
                   } as CSSProperties}
                 >
                   <div className="cf-tiers-tier-progress-text">
