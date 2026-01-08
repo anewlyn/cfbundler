@@ -381,7 +381,9 @@ p {
 }
 @media (max-width: 575.9px) {
   .cf-tiers-tier-default-text,
-  .cf-tiers-tier-progress-text {
+  .cf-tiers-tier-default-text span,
+  .cf-tiers-tier-progress-text,
+  .cf-tiers-tier-progress-text span {
     font-size: 12px;
   }
 }
