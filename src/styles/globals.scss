@@ -387,6 +387,7 @@ p {
   align-items: center;
   width: 100%;
   height: 100%;
+  text-align: center;
 }
 .cf-tiers-tier-progress-text {
   z-index: 920;
@@ -414,12 +415,6 @@ p {
   background-color: #000;
   transition: width 250ms ease-in-out;
 }
-
-.cf-tiers-tier-default-fill {
-  background-color: var(--color2);
-}
-
-
 
 // FOOTER
 
