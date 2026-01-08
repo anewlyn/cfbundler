@@ -17,18 +17,23 @@ export const Bundle = (customProductData) => {
   const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false)
+  const [scroll, setScroll] = useState(0)
   const [stuck, setStuck] = useState(false)
   const tierProgress = useRef(null)
 
   useEffect(() => {
+    console.log('\n\n\n benefitTiers', benefitTiers)
     console.log('\n\n mount tier', tierProgress.current.offsetTop, 'mount window', window.pageYOffset )
     const updateScroll = () => {
-      tierProgress.current.offsetTop <= window.pageYOffset ? setStuck(true) : setStuck(false)
-      console.log('\n\n updateScroll tier', tierProgress.current.offsetTop, 'updateScroll window', window.pageYOffset )
+      setScroll(window.pageYOffset)
     }
     window.addEventListener('scroll', updateScroll)
     return () => window.removeEventListener('scroll', updateScroll)
   }, [])
+
+  useEffect(() => {
+    setStuck(tierProgress.current.offsetTop <= scroll)
+  }, [scroll])
 
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
@@ -43,12 +48,6 @@ export const Bundle = (customProductData) => {
 
   const allProductTypes: Set<any> = new Set(customProductData.customProductData.map(product => product.productType))
   const productTypes: Array<string> = Array.from(allProductTypes)
-
-  useEffect(() => {
-    console.log('\n\n\n benefitTiers', benefitTiers)
-  }, [])
-
-  
 
   return (
     <div className="bundler-page">
