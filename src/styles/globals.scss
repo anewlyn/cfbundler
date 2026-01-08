@@ -335,7 +335,10 @@ p {
   z-index: 900;
   top: 0;
   position: sticky;
-  width: 100%;
+  gap: 16px;
+  max-width: 1400px;
+  padding: 1.5em 1.5em 0;
+  margin: 0 auto;
 }
 .cf-tiers-container {
   position: relative;

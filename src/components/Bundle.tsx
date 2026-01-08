@@ -53,27 +53,30 @@ export const Bundle = (customProductData) => {
           <p>
             Bundle more, save more.
           </p>
-          <div className="cf-tiers-wrapper">
-            <div className="cf-tiers-container">
-              {benefitTiers.map((tier, index) => 
-                <div 
-                  className="cf-tiers-tier"
-                  style={{
-                    '--cf-tier-progress':  Math.max(0, (currentOrderValue - (benefitTiers[index - 1]?.value ?? 0)) / (tier.value - (benefitTiers[index - 1]?.value ?? 0)) * 100) + '%',
-                  } as CSSProperties}
-                >
-                  <div className="cf-tiers-tier-progress-text">
-                    {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
-                  </div>
-                  <div className="cf-tiers-tier-progress-fill"></div>
-                  <div className="cf-tiers-tier-default-text">
-                    {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
-                  </div>
-                </div>
-              )}
+        </div>
+      </div>
+      <div className="cf-tiers-wrapper">
+        <div className="cf-tiers-container">
+          {benefitTiers.map((tier, index) => 
+            <div 
+              className="cf-tiers-tier"
+              style={{
+                '--cf-tier-progress':  Math.max(0, (currentOrderValue - (benefitTiers[index - 1]?.value ?? 0)) / (tier.value - (benefitTiers[index - 1]?.value ?? 0)) * 100) + '%',
+              } as CSSProperties}
+            >
+              <div className="cf-tiers-tier-progress-text">
+                {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
+              </div>
+              <div className="cf-tiers-tier-progress-fill"></div>
+              <div className="cf-tiers-tier-default-text">
+                {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
+              </div>
             </div>
-          </div>
-          {benefitTiers.map(tier => <p>{tier.subtitle}, {currencyFormatter(tier.value, 'USD', 0)} - {currentOrderValue}</p>)}
+          )}
+        </div>
+      </div>
+      <div className='cf-intro'>
+        <div className="cf-intro-content">
           <ul className='product-filters'>
             <li>
               <button
