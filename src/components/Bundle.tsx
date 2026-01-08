@@ -23,15 +23,16 @@ export const Bundle = (customProductData) => {
 
   useEffect(() => {
     console.log('\n\n\n benefitTiers', benefitTiers)
-    console.log('\n\n mount tier', tierProgress.current.offsetTop, 'mount window', window.pageYOffset )
     const updateScroll = () => {
       setScroll(window.pageYOffset)
+      console.log('\n\n tier', tierProgress.current.offsetTop, 'window', window.pageYOffset )
     }
     window.addEventListener('scroll', updateScroll)
     return () => window.removeEventListener('scroll', updateScroll)
   }, [])
 
   useEffect(() => {
+    console.log('\n\n scroll', scroll)
     setStuck(tierProgress.current.offsetTop <= scroll)
   }, [scroll])
 
