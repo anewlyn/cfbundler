@@ -350,7 +350,8 @@ p {
 .cf-tiers-tier {
   --cf-tier-progress: 0%;
   position: relative;
-  flex: 0 0 calc(33% - 4px);
+  // flex: 0 0 calc(33% - 4px);
+  padding: 8px;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -371,6 +372,7 @@ p {
   background: linear-gradient(90deg, var(--color1) 0%, var(--color1) 100%) no-repeat;
   background-size: var(--cf-tier-progress);
   background-clip: text;
+  transition: background-size 250ms ease-in-out;
 }
 .cf-tiers-tier-progress-fill {
   z-index: 910;
@@ -378,6 +380,7 @@ p {
   top: 0; left: 0;
   width: var(--cf-tier-progress); height: 100%;
   background-color: #000;
+  transition: width 250ms ease-in-out;
 }
 
 .cf-tiers-tier-default-text {

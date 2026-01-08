@@ -10,12 +10,11 @@ import { AllProductVariants } from '@/types/bundleTypes';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { Modal } from 'react-bootstrap';
 import ModalContent from './ModalContent';
-import BenefitTierProgressBar from './BenefitTierProgressBar';
 import { currencyFormatter } from '@/helpers/cartHelpers';
 
 export const Bundle = (customProductData) => {
   const [modalProduct, setModalProduct] = useState<null | any>(null)
-  const { products, bundle, benefitTiers, currentOrderValue } = useLoopContext()
+  const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false);
 
@@ -65,11 +64,17 @@ export const Bundle = (customProductData) => {
               } as CSSProperties}
             >
               <div className="cf-tiers-tier-progress-text">
-                {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
+                {currentOrderValue >= tier.value
+                  ? <><i className="material-icons check-icon">check</i> {tier.subtitle}</>
+                  : <>{tier.subtitle} <span>at {currencyFormatter(tier.value, 'USD', 0)}</span></>
+                }
               </div>
               <div className="cf-tiers-tier-progress-fill"></div>
               <div className="cf-tiers-tier-default-text">
-                {tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}
+                {currentOrderValue >= tier.value
+                  ? <><i className="material-icons check-icon">check</i> {tier.subtitle}</>
+                  : <>{tier.subtitle} <span>at {currencyFormatter(tier.value, 'USD', 0)}</span></>
+                }
               </div>
             </div>
           )}
