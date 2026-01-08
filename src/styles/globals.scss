@@ -224,7 +224,7 @@ p {
 .product-filters {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 8px;
   list-style: none;
@@ -312,7 +312,7 @@ p {
   padding: 1.5em 1.5em 0;
   margin: 0 auto;
   .cf-intro-content {
-    text-align: left;
+    text-align: center;
     h1 {
       font-size: 56px;
       line-height: 1;
@@ -335,9 +335,10 @@ p {
   z-index: 900;
   top: 0;
   position: sticky;
-  gap: 16px;
+  display: flex;
+  justify-content: center;
   max-width: 1400px;
-  padding: 4px 1.5em;
+  padding: 0 1.5em;
   margin: 0 auto;
 }
 .cf-tiers-container {
@@ -353,25 +354,13 @@ p {
   padding: 8px;
   border-radius: 5px;
   box-shadow: 0 0 16px #00000011;
-  transition: all 500ms ease-in-out;
 }
-.cf-tiers-wrapper.stuck {
-  
-}
-.cf-tiers-wrapper.stuck .cf-tiers-container {
-  left: 50%;
-  transform: translateX(-50%);
 
-  width: 100%;
-  padding: 4px;
-  border-radius: 0;
-  transition: all 500ms ease-in-out;
-}
 
 .cf-tiers-tier {
   --cf-tier-progress: 0%;
   position: relative;
-  flex: 0 0 calc(33% - 4px);
+  flex: 0 0 calc(33% - 2px);
   padding: 8px;
   border-radius: 4px;
   background: #FEE0DB;
@@ -387,6 +376,7 @@ p {
   width: 100%;
   height: 100%;
   font-size: 16px;
+  line-height: 1.25;
   text-align: center;
 }
 .cf-tiers-tier-progress-text {
@@ -414,17 +404,6 @@ p {
   width: var(--cf-tier-progress); height: 100%;
   background-color: #000;
   transition: width 250ms ease-in-out;
-}
-
-@media (max-width: 575.9px) {
-  .cf-tiers-wrapper.stuck .cf-tiers-container {
-    left: 0%;
-    transform: translateX(0%);
-  }
-  .cf-tiers-tier-default-text,
-  .cf-tiers-tier-progress-text {
-    font-size: 12px;
-  }
 }
 
 // FOOTER

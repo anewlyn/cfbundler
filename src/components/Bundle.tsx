@@ -17,17 +17,6 @@ export const Bundle = (customProductData) => {
   const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false)
-  const [stuck, setStuck] = useState(false)
-  const anchor = useRef(null)
-
-  useEffect(() => {
-    const updateScroll = () => {
-      console.log('\n\n tier', anchor.current.offsetTop, 'window', window.pageYOffset )
-      setStuck(anchor.current.offsetTop + 48 < window.pageYOffset)
-    }
-    window.addEventListener('scroll', updateScroll)
-    return () => window.removeEventListener('scroll', updateScroll)
-  }, [])
 
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
@@ -57,8 +46,7 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div style={{ display: 'block', width: '100%', height: '4px', background: '#000' }} ref={anchor}></div>
-      <div className={`cf-tiers-wrapper ${stuck ? 'stuck' : ''}`}>
+      <div className={`cf-tiers-wrapper`}>
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
             <div 
