@@ -344,7 +344,8 @@ p {
   position: relative;
   display: flex;
   gap: 4px;
-  width: max-content;
+  width: 100%;
+  max-width: 640px;
   background: #fff;
   padding: 8px;
   border-radius: 5px;
@@ -363,9 +364,10 @@ p {
 .cf-tiers-tier {
   --cf-tier-progress: 0%;
   position: relative;
-  // flex: 0 0 calc(33% - 4px);
+  flex: 0 0 calc(33% - 4px);
   padding: 8px;
   border-radius: 4px;
+  background: #FEE0DB;
   overflow: hidden;
 }
 
