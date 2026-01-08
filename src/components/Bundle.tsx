@@ -17,11 +17,12 @@ export const Bundle = (customProductData) => {
   const { products, benefitTiers, currentOrderValue } = useLoopContext()
   const [filter, setFilter] = useState('All')
   const [show, setShow] = useState(false)
-  const tiers = useRef()
+  const [scrollY, setScrollY] = useState(0)
+  const tierProgress = useRef(null)
 
   useEffect(() => {
-    console.log('tiers el', tiers)
-  }, [tiers])
+    console.log('tierProgress el', tierProgress)
+  }, [tierProgress])
 
   const handleClose = () => setShow(false);
   const handleShow = (product: AllProductVariants) => {
@@ -57,7 +58,7 @@ export const Bundle = (customProductData) => {
           </p>
         </div>
       </div>
-      <div className="cf-tiers-wrapper" ref="tiers">
+      <div className="cf-tiers-wrapper" ref="tierProgress">
         <div className="cf-tiers-container">
           {benefitTiers.map((tier, index) => 
             <div 
