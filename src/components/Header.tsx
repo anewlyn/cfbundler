@@ -58,13 +58,15 @@ const Header = () => {
           </Nav.Link>
         </Nav>
         <Navbar.Brand>
-          <Image 
-            style={{ width: 'auto', height: '40px' }}
-            alt='Cycling Frog Logo'
-            src={'https://cyclingfrog.com/cdn/shop/files/CyclingFrog_CMYK_Logo-LeftAlignedStacked-Regulated-Black_300x.png?v=1710802940'}
-            width={300}
-            height={150}
-          />
+          <a href="https://cyclingfrog.com">
+            <Image 
+              style={{ width: 'auto', height: '40px' }}
+              alt='Cycling Frog Logo'
+              src={'https://cyclingfrog.com/cdn/shop/files/CyclingFrog_CMYK_Logo-LeftAlignedStacked-Regulated-Black_300x.png?v=1710802940'}
+              width={300}
+              height={150}
+            />
+          </a>
         </Navbar.Brand>
         <span style={{ width: '5ch'}}></span>
         {benefitTiers &&
