@@ -337,7 +337,7 @@ p {
   position: sticky;
   gap: 16px;
   max-width: 1400px;
-  padding: 1.5em 1.5em 0;
+  padding: 4px 1.5em;
   margin: 0 auto;
 }
 .cf-tiers-container {
@@ -353,6 +353,7 @@ p {
 }
 .cf-tiers-wrapper.stuck {
   max-width: 100%;
+  padding: 4px 0;
 }
 .cf-tiers-wrapper.stuck .cf-tiers-container {
   width: 100%;

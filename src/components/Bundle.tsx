@@ -23,7 +23,7 @@ export const Bundle = (customProductData) => {
   useEffect(() => {
     const updateScroll = () => {
       console.log('\n\n tier', anchor.current.offsetTop, 'window', window.pageYOffset )
-      setStuck(anchor.current.offsetTop <= window.pageYOffset)
+      setStuck(anchor.current.offsetTop < window.pageYOffset)
     }
     window.addEventListener('scroll', updateScroll)
     return () => window.removeEventListener('scroll', updateScroll)
