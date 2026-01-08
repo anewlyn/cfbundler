@@ -55,11 +55,11 @@ export const Bundle = (customProductData) => {
           </p>
           <div className="cf-tiers-wrapper">
             <div className="cf-tiers-container">
-              {benefitTiers.map(tier => 
+              {benefitTiers.map((tier, index) => 
                 <div 
                   className="cf-tiers-tier"
                   style={{
-                    '--cf-tier-progress': (currentOrderValue / tier.value) * 100 + '%',
+                    '--cf-tier-progress':  (currentOrderValue - benefitTiers[index - 1 >= 0 ? index - 1 : 0]) / (tier.value - benefitTiers[index - 1 >= 0 ? index - 1 : 0]) * 100 + '%',
                   } as CSSProperties}
                 >
                   <div className="cf-tiers-tier-progress-text">
