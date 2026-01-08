@@ -27,8 +27,8 @@ export const Bundle = (customProductData) => {
       setScroll(window.pageYOffset)
       console.log('\n\n tier', tierProgress.current.offsetTop, 'window', window.pageYOffset )
     }
-    window.addEventListener('scroll', updateScroll)
-    return () => window.removeEventListener('scroll', updateScroll)
+    window.addEventListener('scroll', () => updateScroll())
+    return () => window.removeEventListener('scroll', () => updateScroll())
   }, [])
 
   useEffect(() => {
