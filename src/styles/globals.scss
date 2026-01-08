@@ -365,7 +365,7 @@ p {
 
 .cf-tiers-tier-default-text,
 .cf-tiers-tier-progress-text {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
@@ -374,24 +374,19 @@ p {
   height: 100%;
   padding: 8px;
   text-align: center;
-}
-.cf-tiers-tier-default-text i,
-.cf-tiers-tier-default-text span,
-.cf-tiers-tier-progress-text i,
-.cf-tiers-tier-progress-text span {
   font-size: 16px;
   font-weight: 600;
   line-height: 1.25;
 }
+
 @media (max-width: 575.9px) {
   .cf-tiers-wrapper {
     padding: 0 1.5em;
   }
-  .cf-tiers-tier-default-text i,
-  .cf-tiers-tier-default-text span,
-  .cf-tiers-tier-progress-text i,
-  .cf-tiers-tier-progress-text span {
+  .cf-tiers-tier-default-text,
+  .cf-tiers-tier-progress-text {
     font-size: 12px;
+    font-weight: 400;
   }
 }
 .cf-tiers-tier-progress-text {
