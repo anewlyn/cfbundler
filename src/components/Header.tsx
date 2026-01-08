@@ -1,53 +1,7 @@
-'use client'
-import { kiro_bold_400, kiro_extra_bold_700 } from '@/app/ui/fonts'
-import { useLoopContext, LoopContextType } from '@/contexts/LoopProvider'
 import Image from 'next/image'
-import { useEffect, useMemo, useRef, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 
-type PlanType = LoopContextType['sellingPlans'][number];
-
-// progress uses svg dash-array/offset in px, not traditional 0-100% progress calculation.
-const maxProgress = 200.96
-const minProgress = 0
-
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const { benefitTiers, currentOrderValue, currentDiscount, sellingPlans, cart } = useLoopContext()
-  const [progress, setProgress] = useState(maxProgress)
-
-  const toNum = (v: unknown) => {
-      if (typeof v === 'number') return v;
-      if (typeof v === 'string') {
-          const digits = v.replace(/[^\d]/g, '');
-          const n = Number(digits.length ? digits : v);
-          return Number.isNaN(n) ? -1 : n;
-      }
-      return -1;
-  }
-
-  const currentPlanIndex = useMemo(
-      () => Math.max(0, sellingPlans.findIndex((p: PlanType) => toNum(p.shopifyId) === cart.sellingPlanId)),
-      [sellingPlans, cart.sellingPlanId]
-  );
-  const currentPlan: PlanType = sellingPlans[currentPlanIndex] || sellingPlans[0];
-
-  useEffect(() => {
-    const stickyThreshold = 100;
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > stickyThreshold);
-    }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [])
-
-  useEffect(() => {
-    const topTier = benefitTiers[benefitTiers.length - 1].value
-    if(currentOrderValue > topTier) setProgress(minProgress)
-    if(currentOrderValue <= topTier) setProgress(maxProgress - (currentOrderValue / topTier * maxProgress))
-  }, [currentOrderValue])
-
   return (<>
     <Navbar style={{ backgroundColor: '#FFB3AB' }}>
       <Container>
@@ -69,23 +23,6 @@ const Header = () => {
           </a>
         </Navbar.Brand>
         <span style={{ width: '5ch'}}></span>
-        {benefitTiers &&
-          <div className="cf-bundle-progress" style={{ position: 'fixed'}}>
-            <div className={`${kiro_extra_bold_700.className} cf-bundle-progress-discount ${currentDiscount?.value ? 'active' : ''}`} style={{ color: currentDiscount?.value ? '#000' : '#888' }}>
-              <span className="cf-bundle-progress-discount-percentage">
-                {currentOrderValue < benefitTiers[0].value
-                  ? '10-20%'
-                  : currentDiscount?.value + '%'
-                }
-              </span>
-              <span className='cf-bundle-progress-discount-but-not-the-percentage-part-though'>Off</span>
-            </div>
-            <svg className="cf-bundle-progress-bar" width="64px" height="64px" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)'}}>
-              <circle r="32" cx="36" cy="36" fill="transparent" stroke="#ffb3ab" stroke-width="8"></circle>
-              <circle className='cf-bundle-progress-bar-fill' r="32" cx="36" cy="36" fill="transparent" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-dashoffset={progress} stroke-dasharray={maxProgress}></circle>
-            </svg>
-          </div>
-        }
       </Container>
     </Navbar>
   </>)
