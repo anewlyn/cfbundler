@@ -7,7 +7,7 @@ import ProductCard from '@/components/ProductCard';
 import ProductGrid from '@/components/ProductGrid';
 import { useLoopContext } from '@/contexts/LoopProvider';
 import { AllProductVariants } from '@/types/bundleTypes';
-import { kiro_extra_bold_700 } from '@/app/ui/fonts';
+import { kiro_bold_400, kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { Modal } from 'react-bootstrap';
 import ModalContent from './ModalContent';
 import { currencyFormatter } from '@/helpers/cartHelpers';
@@ -74,6 +74,8 @@ export const Bundle = (customProductData) => {
       </div>
       <div className='cf-intro'>
         <div className="cf-intro-content">
+          <h3 className={`${kiro_bold_400} d-block d-md-none`} style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' }}></h3>
+          <h3 className={`${kiro_bold_400} d-none d-md-block`} style={{ fontSize: '16px', letterSpacing: '1px', textTransform: 'uppercase' }}></h3>
           <ul className='product-filters'>
             <li>
               <button
