@@ -57,15 +57,15 @@ export const Bundle = (customProductData) => {
             >
               <div className="cf-tiers-tier-progress-text">
                 {currentOrderValue >= tier.value
-                  ? <><i className="material-icons check-icon">check</i> {tier.subtitle}</>
-                  : <>{tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}</>
+                  ? <><i className="material-icons check-icon">check</i> {tier.subtitle.spit("Get")[1].split("!")[0]}</>
+                  : <>{tier.subtitle.spit("Get")[1].split("!")[0]} at {currencyFormatter(tier.value, 'USD', 0)}</>
                 }
               </div>
               <div className="cf-tiers-tier-progress-fill"></div>
               <div className="cf-tiers-tier-default-text">
                 {currentOrderValue >= tier.value
-                  ? <><i className="material-icons check-icon">check</i> {tier.subtitle}</>
-                  : <>{tier.subtitle} at {currencyFormatter(tier.value, 'USD', 0)}</>
+                  ? <><i className="material-icons check-icon">check</i> {tier.subtitle.spit("Get")[1].split("!")[0]}</>
+                  : <>{tier.subtitle.spit("Get")[1].split("!")[0]} at {currencyFormatter(tier.value, 'USD', 0)}</>
                 }
               </div>
             </div>
