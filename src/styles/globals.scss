@@ -105,6 +105,23 @@ p {
 
 /*
 
+  NAVBAR 
+  NAV
+
+*/
+
+.navbar-nav {
+  flex: 1 1 0%;
+}
+.navbar-brand {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  margin-right: 0;
+}
+
+/*
+
     BUTTONS
     BTN
 

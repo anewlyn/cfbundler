@@ -15,15 +15,14 @@ const Header = () => {
   return (<>
     <Navbar style={{ backgroundColor: '#FFB3AB' }}>
       <Container>
-        {back 
-          ? <Nav>
+        <Nav>
+          {back && 
             <Nav.Link href={`https://cyclingfrog.com${back}`} className='d-flex p-2 justify-content-center align-items-center'>
               <i className='material-icons fs-6'>arrow_back</i> 
               Back
             </Nav.Link>
-          </Nav>
-          : <span style={{ width: '5ch'}}></span>
-        }
+          }
+        </Nav>
         <Navbar.Brand>
           <a href="https://cyclingfrog.com">
             <Image 
@@ -35,7 +34,7 @@ const Header = () => {
             />
           </a>
         </Navbar.Brand>
-        <span style={{ width: '5ch'}}></span>
+        <Nav></Nav>
       </Container>
     </Navbar>
   </>)
