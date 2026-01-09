@@ -74,8 +74,8 @@ export const Bundle = (customProductData) => {
       </div>
       <div className='cf-intro'>
         <div className="cf-intro-content">
-          <h3 className={`${kiro_bold_400} d-block d-md-none`} style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' }}></h3>
-          <h3 className={`${kiro_bold_400} d-none d-md-block`} style={{ fontSize: '16px', letterSpacing: '1px', textTransform: 'uppercase' }}></h3>
+          <h3 className={`${kiro_bold_400.className} d-block d-md-none`} style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' }}>Filter:</h3>
+          <h3 className={`${kiro_bold_400.className} d-none d-md-block`} style={{ fontSize: '16px', letterSpacing: '1px', textTransform: 'uppercase' }}>Filter:</h3>
           <ul className='product-filters'>
             <li>
               <button
