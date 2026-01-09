@@ -6,7 +6,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap'
 const Header = () => {
   const [back, setBack] = useState()
   useEffect(() => {
-    const location = new URLSearchParams(window.location.search);
+    const location = new URLSearchParams(window.location.search)
     const back = location.get('back')
     console.log('\n location', location, '\n back', back)
     setBack(back)
@@ -16,7 +16,7 @@ const Header = () => {
     <Navbar style={{ backgroundColor: '#FFB3AB' }}>
       <Container>
         <Nav>
-          <Nav.Link href={`https://cyclingfrog.com/${back}`} className='d-flex p-2 justify-content-center align-items-center'>
+          <Nav.Link href={`https://cyclingfrog.com${back}`} className='d-flex p-2 justify-content-center align-items-center'>
             <i className='material-icons fs-6'>arrow_back</i> 
             Back
           </Nav.Link>
