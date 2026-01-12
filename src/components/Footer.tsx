@@ -2,23 +2,42 @@
 
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, CSSProperties } from 'react';
 import { kiro_extra_bold_700 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater, getDiscountValue } from '@/helpers/cartHelpers';
-import FooterCarousel from './FooterCarousel';
+import { currencyFormatter, getDiscountValue } from '@/helpers/cartHelpers';
+import useEmblaCarousel from 'embla-carousel-react';
+import {
+  PrevButton,
+  NextButton,
+  usePrevNextButtons
+} from '@/components/CarouselButtons'
+import Frequency from './Frequency';
 
 type CarouselItem = {
   id: string;        
+  customTitle: string;
   name: string;
   image: string;
+  colors: string[],
   quantity: number;  // 0 for placeholders (non-removable)
   shopifyId?: number;
 };
 
-const StickyFooter = () => {
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [hasOverflow, setHasOverflow] = useState(false);
+const StickyFooter = ({ customProducts }) => {
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [hasOverflow, setHasOverflow] = useState(false)
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: false, 
+    dragFree: false, 
+  })
+
+  const {
+    prevBtnDisabled,
+    nextBtnDisabled,
+    onPrevButtonClick,
+    onNextButtonClick
+  } = usePrevNextButtons(emblaApi)
 
   const {
     products,
@@ -30,7 +49,7 @@ const StickyFooter = () => {
     addProductVariant,
     currentDiscount,
     submittingCart,
-  } = useLoopContext();
+  } = useLoopContext()
 
   const isDisabled =
     currentOrderValue <
@@ -50,7 +69,7 @@ const StickyFooter = () => {
       window.addEventListener('resize', checkOverflow);
       return () => window.removeEventListener('resize', checkOverflow);
     }
-  }, []);
+  }, [])
 
   const getFooterMessage = () => {
     if (
@@ -74,6 +93,10 @@ const StickyFooter = () => {
     if (!it.shopifyId || !it.quantity) return;
     addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity - 1 });
   };
+  const handleAddOne = (it: CarouselItem) => {
+    if (!it.shopifyId || !it.quantity) return;
+    addProductVariant({ shopifyId: it.shopifyId, quantity: it.quantity + 1 });
+  };
 
   // de-duplicated list
   const items: CarouselItem[] = useMemo(() => {
@@ -83,6 +106,8 @@ const StickyFooter = () => {
       const product = products.find((p) => p.shopifyId === cartProduct.shopifyId);
       if (!product) return;
 
+      const customData = customProducts.find(prod => prod.productId === product.looxReviewId)
+
       const qty = cartProduct.quantity || 0;
       const existing = map.get(product.shopifyId);
 
@@ -91,81 +116,129 @@ const StickyFooter = () => {
       } else {
         map.set(product.shopifyId, {
           id: String(product.shopifyId),
+          customTitle: customData.title,
           name: product.title,
+          colors: customData.colors,
           image:
             product.images?.[0]?.imageURL ||
-            'https://bundler.cyclingfrog.com/assets/lone-frog.png',
+            'https://cdn.shopify.com/s/files/1/0596/2966/6513/files/logo-cycling-frog-mark-black_4x_befef8cb-da45-44e2-a6c7-fbad9566250d.png?v=1695670600',
           quantity: qty,
           shopifyId: product.shopifyId,
         });
       }
     });
 
-    const arr = Array.from(map.values());
+    const arr = Array.from(map.values())
 
+    /*
     while (arr.length < 6) {
       arr.push({
-        id: `placeholder-${arr.length}`,
-        name: '',
-        image: 'https://bundler.cyclingfrog.com/assets/lone-frog.png',
-        quantity: 0,
-      });
+        id: `placeholder-${arr.length}`, 
+        customTitle: '', 
+        name: '', 
+        colors: ['#FFF2F0', '#ffffff00', '#ffffff00', '#ffffff00'], 
+        image: 'https://cdn.shopify.com/s/files/1/0596/2966/6513/files/logo-cycling-frog-mark-black_4x_befef8cb-da45-44e2-a6c7-fbad9566250d.png?v=1695670600', 
+        quantity: 0, 
+      })
     }
+    */
 
     return arr;
-  }, [cart.productVariants, products]);
+  }, [cart.productVariants, products])
 
   const renderProductPrice = () => {
-    let discountedPrice = currentOrderValue;
     if (currentDiscount) {
-      discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
-      return (
-        <div className="product-price">
-          <p className={classNames('discount-price', kiro_extra_bold_700.className)}>
-            {currencyFormater(currentOrderValue, bundle.currencyCode)}
-          </p>
-          <p className={classNames('discounted-price', kiro_extra_bold_700.className)}>
-            {currencyFormater(discountedPrice, bundle.currencyCode)}
-          </p>
-        </div>
-      );
+      const discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
+      return (<>
+        <span className="cf-product-price-discounted">
+          {currencyFormatter(discountedPrice, bundle.currencyCode)}
+        </span>
+        <span className="cf-product-price-original">
+          {currencyFormatter(currentOrderValue, bundle.currencyCode)}
+        </span>
+      </>)
     }
     return (
-      <p className={classNames('current-value', kiro_extra_bold_700.className)}>
-        {currencyFormater(discountedPrice, bundle.currencyCode)}
-      </p>
+      <span className={classNames('cf-product-price')}>
+        <span className='cf-product-price-original'>{currencyFormatter(currentOrderValue, bundle.currencyCode)}</span>
+      </span>
     );
   };
 
   return (
-    <div className="sticky-footer">
-      <div className="carousel" ref={carouselRef}>
-        {/* grouped carousel with arrows/keyboard support */}
-        <FooterCarousel
-          items={items}
-          onRemoveOne={handleRemoveOne}
-          ariaLabel="Selected bundle items"
-        />
-        <div className={classNames({ 'has-overflow': hasOverflow })} />
-      </div>
+    <div className="cf-footer">
+      <div className="cf-footer-container">
+        <div className={`cf-carousel ${items.length ? 'shown' : ''}`}>
+          {!prevBtnDisabled && <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />}
+          {!nextBtnDisabled && <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />}
+          <div className="cf-carousel-viewport" ref={emblaRef}>
+            <div className="cf-carousel-container">
+              {!!items.length && items.map((item) => (
+                <div 
+                  key={item.id}
+                  className={`cf-carousel-product ${item.name === '' ? 'cf-carousel-placeholder' : ''}`} 
+                  style={{
+                    '--color1': item.colors[0],
+                    '--color2': item.colors[1],
+                    '--color3': item.colors[2],
+                    '--color4': item.colors[3]
+                  } as CSSProperties}
+                >
+                  <div className="cf-carousel-product-image">
+                    <img 
+                      width="100%"
+                      src={item.image}
+                      alt={item.name}
+                    />
+                  </div>
+                  <div className="cf-carousel-product-details">
+                    <span className={`cf-carousel-product-title ${kiro_extra_bold_700.className}`}>{ item.customTitle }</span>
+                    <span className="cf-carousel-product-variant">{ item.name }</span>
+                    {handleRemoveOne && item.quantity > 0 && item.shopifyId && (
+                      <div className="cf-carousel-controls">
+                        <div 
+                          className="cf-carousel-remove"
+                          onClick={() => handleRemoveOne(item)}
+                        >
+                          { item.quantity === 1 
+                            ? <svg width="16px" viewBox="0 0 16 16"><path fill="currentColor" d="M5.2,13.6c-.3,0-.6-.1-.8-.4-.2-.2-.4-.5-.4-.8v-8h-.2c-.2,0-.3,0-.4-.2-.1-.1-.2-.3-.2-.4s0-.3.2-.4c.1-.1.3-.2.4-.2h2.6v-.2c0-.2,0-.3.2-.4.1-.1.3-.2.4-.2h2c.2,0,.3,0,.4.2s.2.3.2.4v.2h2.6c.2,0,.3,0,.4.2.1.1.2.3.2.4s0,.3-.2.4c-.1.1-.3.2-.4.2h-.2v8c0,.3-.1.6-.4.9-.2.2-.5.4-.8.4h-5.6ZM10.8,4.4h-5.6v8h5.6v-8ZM7,11.2c.2,0,.3,0,.4-.2.1-.1.2-.3.2-.4v-4.4c0-.2,0-.3-.2-.4-.1-.1-.3-.2-.4-.2s-.3,0-.4.2c-.1.1-.2.3-.2.4v4.4c0,.2,0,.3.2.4.1.1.3.2.4.2ZM9,11.2c.2,0,.3,0,.4-.2.1-.1.2-.3.2-.4v-4.4c0-.2,0-.3-.2-.4-.1-.1-.3-.2-.4-.2s-.3,0-.4.2c-.1.1-.2.3-.2.4v4.4c0,.2,0,.3.2.4.1.1.3.2.4.2Z"/></svg> 
+                            : <svg width="16px" viewBox="0 0 16 16"><path fill="currentColor" d="M4.3,9c-.3,0-.5,0-.7-.3-.2-.2-.3-.4-.3-.7s0-.5.3-.7c.2-.2.4-.3.7-.3h7.4c.3,0,.5,0,.7.3.2.2.3.4.3.7s0,.5-.3.7c-.2.2-.4.3-.7.3h-7.4Z"/></svg>
+                          }
+                        </div>
+                        <div className="cf-carousel-qty">{ item.quantity }</div>
+                        <div 
+                          className="cf-carousel-add"
+                          onClick={() => handleAddOne(item)}
+                        >
+                          <svg width="16px" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M7,9h-2.6c-.3,0-.5,0-.7-.3-.2-.2-.3-.4-.3-.7s0-.5.3-.7c.2-.2.4-.3.7-.3h2.6v-2.6c0-.3,0-.5.3-.7.2-.2.4-.3.7-.3s.5,0,.7.3c.2.2.3.4.3.7v2.6h2.6c.3,0,.5,0,.7.3.2.2.3.4.3.7s0,.5-.3.7c-.2.2-.4.3-.7.3h-2.6v2.6c0,.3,0,.5-.3.7-.2.2-.4.3-.7.3s-.5,0-.7-.3c-.2-.2-.3-.4-.3-.7v-2.6Z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-      <div className="order-info">
-        <p>{getFooterMessage()}</p>
-        <div className="current-info">
-          {renderProductPrice()}
+        {!items.length && <p className="cf-footer-message">
+          { getFooterMessage() }
+        </p>}
+        
+        <div className="cf-footer-actions">
+          <Frequency />
           <button
             onClick={handlePostTransaction}
-            className={classNames('add-button', { disabled: isDisabled })}
+            className={classNames('cf-btn-atc')}
             disabled={isDisabled || submittingCart}
           >
-            {submittingCart ? 'Adding to cart...' : 'Add to cart'}
+            { submittingCart ? `Adding to cart...` : `Add to Cart ` }
+            { renderProductPrice() }
           </button>
         </div>
       </div>
-
-      <Link href="https://cyclingfrog.com/pages/contact-us" className="sticky-button round-button">
-        <span>?</span>
-      </Link>
     </div>
   );
 };

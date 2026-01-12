@@ -1,6 +1,6 @@
 @import 'breakpoints';
 
-.modal-overlay {
+.product-modal-overlay {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   bottom: 0;
@@ -13,21 +13,21 @@
   z-index: 1000;
 }
 
-.modal {
+.product-modal {
   background-color: var(--cf-background-color);
   margin: 1.5rem;
   position: relative;
   border-radius: 8px;
 }
 
-.modal-content {
+.product-modal-content {
   height: 100%;
   margin: 1.5rem;
   max-height: calc(100dvh - 3rem);
   overflow-y: auto;
 }
 
-.modal-close-button {
+.product-modal-close-button {
   background-color: black;
   color: white;
   border-radius: 100%;
@@ -47,18 +47,18 @@
   }
 }
 
-.modal-close-mobile-button {
+.product-modal-close-mobile-button {
   display: none;
 }
 
 @include for_breakpoint('mobile') {
-  .modal {
+  .product-modal {
     margin: 0;
     width: 100%;
     max-width: 700px;
   }
 
-  .modal-close-mobile-button {
+  .product-modal-close-mobile-button {
     background-color: var(--cf-white);
     border: none;
     cursor: pointer;

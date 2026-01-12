@@ -14,8 +14,44 @@ query getBundlerProduct($id: ID!) {
     title: metafield(namespace:"dev", key:"product_title") {
       value
     }
+    productType
+    tagline: metafield(namespace:"custom", key: "tagline") {
+      value
+    }
+    preferTagline: metafield(namespace:"custom", key: "prefer_tagline") {
+      jsonValue
+    }
     colors: metafield(namespace:"custom", key:"scheme") {
       hex: jsonValue
+    }
+    feels: metafield(namespace:"custom", key:"feels") {
+      jsonValue
+      value
+    }
+    ingredients: metafield(namespace:"custom", key:"ingredients") {
+      jsonValue
+      value
+    }
+    fun_fact_title: metafield(namespace:"custom", key:"fun_fact_title") {
+      value
+    }
+    fun_fact: metafield(namespace:"custom", key:"fun_fact") {
+      jsonValue
+      value
+    }
+    nutritional_facts: metafield(namespace:"custom", key:"nutritional_facts") {
+    	reference {
+        __typename
+        ... on MediaImage {
+          image {
+            url
+          }
+        }
+      }
+    }
+    legal: metafield(namespace:"custom", key:"legal") {
+      jsonValue
+      value
     }
     variants(first: 10) {
       nodes {
@@ -151,10 +187,40 @@ async function getCustomProductData(ids: string) {
       productId: Number(idArray[i]),
       title: product.title.value,
       colors: product.colors.hex,
+      details: [
+        {
+          type: 'feels', 
+          title: 'How You\'ll Feel', 
+          value: product.feels?.value ?? null,
+        },
+        {
+          type: 'fun_fact', 
+          title: product.fun_fact_title?.value ?? null,
+          value: product.fun_fact?.value ?? null,
+        },
+        {
+          type: 'ingredients', 
+          title: 'Ingredients', 
+          value: product.ingredients?.value ?? null,
+        },
+        {
+          type: 'nutritional_facts', 
+          title: 'Nutritional Facts', 
+          value: product.nutritional_facts?.file?.image?.url ?? null,
+        },
+        {
+          type: 'legal', 
+          title: 'FDA Disclaimer & Legal', 
+          value: product.legal.value ?? null,
+        }
+      ],
+      tagline: product.tagline?.value ?? null,
+      preferTagline: product.preferTagline?.jsonValue ?? false,
+      productType: product.productType,
       variants: [...variants],
     })
   }
-  // console.log('productData', productData)
+  console.log('productData', productData)
   return productData
 }
 

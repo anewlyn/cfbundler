@@ -43,7 +43,7 @@
   height: 100%;
 }
 
-.modal-content {
+.product-modal-content {
   margin: 0;
 }
 
@@ -85,7 +85,9 @@
   }
 
   .subscription-button {
+    flex: 1 1 0%;
     &.not-subscribed {
+      flex: 1 1 0%;
       background-color: var(--cf-black);
       color: var(--cf-white);
       font-size: 16px;
@@ -191,7 +193,7 @@
 
 .loox-rating .loox-rating-content {
   svg.loox-icon {
-    color: var(--cf-rating-star);
+    color: #000;
   }
 }
 

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Script from 'next/script';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.scss';
 import { inter } from '@/app/ui/fonts';
 

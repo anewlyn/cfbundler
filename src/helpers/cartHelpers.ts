@@ -113,7 +113,7 @@ export const setProductsForRender = (
     .flat() as AllProductVariants[];
 };
 
-export const currencyFormater = (
+export const currencyFormatter = (
   value: number,
   currencyCode: string,
   maximumFractionDigits = 2,

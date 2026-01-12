@@ -79,14 +79,14 @@ export const Modal = ({
       <Portal onClose={onClose}>
         <aside
           ref={modalRef}
-          className={classNames('modal-overlay', appendClassName)}
+          className={classNames('product-modal-overlay', appendClassName)}
           aria-label={ariaModalLabel}
           tabIndex={-1}
         >
-          <div className="modal">
-            <div className="modal-content">{children}</div>
+          <div className="product-modal">
+            <div className="product-modal-content">{children}</div>
             {hasCloseButton && (
-              <button onClick={onClose} className="modal-close-button" aria-label={ariaCloseLabel}>
+              <button onClick={onClose} className="product-modal-close-button" aria-label={ariaCloseLabel}>
                 <i className="material-icons">{closeButtonIcon}</i>
               </button>
             )}

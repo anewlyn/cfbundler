@@ -1,64 +1,43 @@
-'use client';
-
-import classNames from 'classnames';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { kiro_bold_400 } from '@/app/ui/fonts';
-import { useLoopContext } from '@/contexts/LoopProvider';
-import BenefitTierProgressBar from './BenefitTierProgressBar';
-import DeliveryFrequencyDropdown from './DeliveryFrequencyDropdown';
+'use client'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { Container, Nav, Navbar } from 'react-bootstrap'
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [headerTitleHeight, setHeaderTitleHeight] = useState(0);
-  const { benefitTiers, currentOrderValue } = useLoopContext();
-  const headerTitleRef = useRef<HTMLDivElement>(null);
-
+  const [back, setBack] = useState(null)
   useEffect(() => {
-    const stickyThreshold = 100;
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > stickyThreshold);
-      setHeaderTitleHeight(headerTitleRef.current?.offsetHeight || 0);
-    };
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const location = new URLSearchParams(window.location.search)
+    const back = location.get('back')
+    console.log('\n location', location, '\n back', back)
+    setBack(back)
+  }, [])
 
-  const ScheduleButton = (className: string) => (
-    <DeliveryFrequencyDropdown className={className} />
-  );
-
-  return (
-    <header
-      className="header"
-      style={
-        { '--header-mobile-top': isScrolled ? `-${headerTitleHeight}px` : '0' } as React.CSSProperties
-      }
-    >
-      <div className="header-logo">
-        <a href="https://cyclingfrog.com">
-          <Image
-            alt="Logo"
-            className="logo"
-            height={93}
-            src="https://bundler.cyclingfrog.com/assets/cycling-frog-logo.png"
-            width={170}
-          />
-        </a>
-      </div>
-
-      <div ref={headerTitleRef} className={classNames('header-title', kiro_bold_400.className)}>
-        <h1 className="uppercase">My Subscription</h1>
-        {ScheduleButton('header-button')}
-      </div>
-
-      <div className="header-progress-bar">
-        <BenefitTierProgressBar currentValue={currentOrderValue} tiers={benefitTiers} />
-      </div>
-      
-    </header>
-  );
-};
+  return (<>
+    <Navbar style={{ backgroundColor: '#FFB3AB' }}>
+      <Container>
+        <Nav>
+          {back && 
+            <Nav.Link href={`https://cyclingfrog.com${back}`} className='d-flex p-2 justify-content-center align-items-center'>
+              <i className='material-icons fs-6'>arrow_back</i> 
+              Back
+            </Nav.Link>
+          }
+        </Nav>
+        <Navbar.Brand>
+          <a href="https://cyclingfrog.com">
+            <Image 
+              style={{ width: 'auto', height: '40px' }}
+              alt='Cycling Frog Logo'
+              src={'https://cyclingfrog.com/cdn/shop/files/CyclingFrog_CMYK_Logo-LeftAlignedStacked-Regulated-Black_300x.png?v=1710802940'}
+              width={300}
+              height={150}
+            />
+          </a>
+        </Navbar.Brand>
+        <Nav></Nav>
+      </Container>
+    </Navbar>
+  </>)
+}
 
 export default Header;

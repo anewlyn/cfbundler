@@ -4,7 +4,7 @@ import { useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { kiro_bold_400 } from '@/app/ui/fonts';
 import { useLoopContext } from '@/contexts/LoopProvider';
-import { currencyFormater } from '@/helpers/cartHelpers';
+import { currencyFormatter } from '@/helpers/cartHelpers';
 import { AllProductVariants } from '@/types/bundleTypes';
 import AddToButton from './AddToButton';
 import Carousel from './Carousel';
@@ -25,10 +25,6 @@ const InfoCard = ({
 
   const { maxValue } = limits[0];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-
-  // loox.io/widget/VJZ5Kxo3Xi/loox.1632874857413.js?shop=cyclingfrog.myshopify.com
-  // https://loox.io/widget/VJZ5Kxo3Xi/ratings?products_ids=no&h=1718658000000
-  // https://cyclingfrog.com/products/bluerazz-gummies?variant=40847671722193#looxReviews
 
   const handleProductQtyChange = (qty: number) => {
     addProductVariant({ shopifyId: shopifyId, quantity: qty });
@@ -90,7 +86,7 @@ const InfoCard = ({
       <div className="info-content">
         <section className="description">
           <p className={`${kiro_bold_400.className} product-title`}>{productTitle}</p>
-          <p>{currencyFormater(price, bundle.currencyCode)}</p>
+          <p>{currencyFormatter(price, bundle.currencyCode)}</p>
           <hr />
           <div className="loox-rating" data-fetch data-id={looxReviewId} />
 
