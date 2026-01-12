@@ -150,10 +150,10 @@ const StickyFooter = ({ customProducts }) => {
     if (currentDiscount) {
       const discountedPrice = getDiscountValue(currentDiscount.value, currentOrderValue);
       return (<>
-        <span className="cf-product-price-discounted">
+        <span className="cf-product-price-original">
           {currencyFormatter(currentOrderValue, bundle.currencyCode)}
         </span>
-        <span className="cf-product-price-original">
+        <span className="cf-product-price-discounted">
           {currencyFormatter(discountedPrice, bundle.currencyCode)}
         </span>
       </>)

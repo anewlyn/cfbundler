@@ -756,14 +756,12 @@ p {
 }
 
 .cf-product-price {}
-.cf-product-price-discounted {
+.cf-product-price-discounted {}
+.cf-product-price-original {
   text-decoration: line-through;
   font-style: italic;
   opacity: 0.5;
   margin-right: 0.5ch;
-}
-.cf-product-price-original {
-
 }
 
 
