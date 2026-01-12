@@ -58,7 +58,12 @@ const ProductCard = ({ filter, customProduct, product, handleOpenInfoModal, isPr
         '--color4': customProduct.colors[3]
       } as React.CSSProperties}
     >
-      <div className="product-image">
+      <div 
+        className="product-image" 
+        onClick={() => {
+          handleOpenInfoModal(product);
+        }}
+      >
         <ResponsiveImage
           src={imageURl}
           alt={productTitle}
