@@ -54,7 +54,13 @@ body {
 }
 
 #usntA42Toggle {
-  left: 8px; bottom: 8px;
+  left: 8px !important; bottom: 8px !important;
+}
+
+@media (max-width: 575.9px) {
+  #usntA42Toggle {
+    left: 0px !important; bottom: 0px !important;
+  }
 }
 
 .uppercase {
